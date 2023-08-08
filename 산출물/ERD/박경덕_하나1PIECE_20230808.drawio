@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-08-08T09:32:04.877Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="mCxclFv0Dc27tJ-A_kcs" version="21.6.6" type="device">
+<mxfile host="app.diagrams.net" modified="2023-08-08T14:56:37.542Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="yRBimW2iw7nG8YGoUBmJ" version="21.6.6" type="device">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="4844" dy="865" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="6364" dy="1466" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -563,11 +563,11 @@
             <mxRectangle width="430" height="25" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="JYj9bb4xTtoWjhOhDIQX-394" value="&lt;span style=&quot;font-size: 36px;&quot;&gt;실시간 매수 매도 시나리오&lt;br&gt;&lt;/span&gt;&lt;br&gt;1. 주문&lt;br&gt;2. 주문 상태&lt;br&gt;3. 실시간 호가 테이블&lt;br&gt;4. 개별 STO 종목 info 정보" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="1" vertex="1">
+        <mxCell id="JYj9bb4xTtoWjhOhDIQX-394" value="&lt;span style=&quot;font-size: 36px;&quot;&gt;실시간 매수 매도 시나리오&lt;br&gt;&lt;/span&gt;&lt;br&gt;1. 주문&amp;nbsp;&lt;br&gt;-거래수수료0.015% : 관리자 지갑 입금&lt;br&gt;&lt;br&gt;2. 실시간 호가 테이블&lt;br&gt;-&amp;gt; 주문 유형에 따른 호가 체결 서버 구축&lt;br&gt;&lt;br&gt;3. 주문 체결 상태&lt;br&gt;" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="1" vertex="1">
           <mxGeometry x="-2842" y="1760" width="380" height="270" as="geometry" />
         </mxCell>
         <mxCell id="JYj9bb4xTtoWjhOhDIQX-396" value="&lt;span style=&quot;font-size: 36px;&quot;&gt;관리자 페이지&lt;br&gt;&lt;br&gt;&lt;/span&gt;1. 공지사항 등록&lt;br&gt;2. 부동산 등록&lt;br&gt;3. 청약 등록&lt;br&gt;4. 매각 투표 등록&lt;br&gt;5. 배당금 지급" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="1" vertex="1">
-          <mxGeometry x="-2410" y="1780" width="380" height="270" as="geometry" />
+          <mxGeometry x="-2430" y="1780" width="380" height="270" as="geometry" />
         </mxCell>
         <mxCell id="JYj9bb4xTtoWjhOhDIQX-401" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERzeroToOne;startArrow=ERmandOne;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="JYj9bb4xTtoWjhOhDIQX-398" target="JYj9bb4xTtoWjhOhDIQX-217" edge="1">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
@@ -935,7 +935,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-115" value="REAL_ESTATE_SALE (부동산 매물)" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-2371" y="690" width="395" height="150" as="geometry" />
+          <mxGeometry x="-2371" y="690" width="395" height="120" as="geometry" />
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-116" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" parent="-MrJFI244WIY_XfIuMhO-115" vertex="1">
           <mxGeometry y="30" width="395" height="30" as="geometry" />
@@ -950,21 +950,8 @@
             <mxRectangle width="365" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="-MrJFI244WIY_XfIuMhO-122" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" parent="-MrJFI244WIY_XfIuMhO-115" vertex="1">
-          <mxGeometry y="60" width="395" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="-MrJFI244WIY_XfIuMhO-123" value="FK" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" parent="-MrJFI244WIY_XfIuMhO-122" vertex="1">
-          <mxGeometry width="30" height="30" as="geometry">
-            <mxRectangle width="30" height="30" as="alternateBounds" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="-MrJFI244WIY_XfIuMhO-124" value="&lt;i&gt;AREA_CODE VARCHAR2(10) NOT NULL&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;지역코드&lt;/i&gt;" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" parent="-MrJFI244WIY_XfIuMhO-122" vertex="1">
-          <mxGeometry x="30" width="365" height="30" as="geometry">
-            <mxRectangle width="365" height="30" as="alternateBounds" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="zbYEeOTznjCXyOoM0qA5-7" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="-MrJFI244WIY_XfIuMhO-115">
-          <mxGeometry y="90" width="395" height="30" as="geometry" />
+          <mxGeometry y="60" width="395" height="30" as="geometry" />
         </mxCell>
         <mxCell id="zbYEeOTznjCXyOoM0qA5-8" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;" vertex="1" parent="zbYEeOTznjCXyOoM0qA5-7">
           <mxGeometry width="30" height="30" as="geometry">
@@ -977,7 +964,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-125" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" parent="-MrJFI244WIY_XfIuMhO-115" vertex="1">
-          <mxGeometry y="120" width="395" height="30" as="geometry" />
+          <mxGeometry y="90" width="395" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-126" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" parent="-MrJFI244WIY_XfIuMhO-125" vertex="1">
           <mxGeometry width="30" height="30" as="geometry">
@@ -1864,8 +1851,8 @@
             <mxPoint x="-2420" y="700" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="PkdxglhGiyc6FRWSb-2s-3" value="&lt;span style=&quot;font-size: 36px;&quot;&gt;추가 고려 사항&lt;br&gt;&lt;br&gt;&lt;/span&gt;1. 회원가입 추천인 제도&lt;br&gt;- 둘다 5000원씩 지급&lt;br&gt;- 관리자 페이지 : 추천인 지급 내역 추가&lt;br&gt;&lt;br&gt;2. 앱 푸쉬 알림 + 웹뷰 앱 개발&lt;br&gt;- 청약, 배당금, 매각 알림 FCM 이용&lt;br&gt;&lt;br&gt;3. 카카오 API : 공유하기, 지도&lt;br&gt;&lt;br&gt;4. OCR&lt;br&gt;&lt;br&gt;5. 외부 부동산 시세에 따른 평가(저평가, 적정가, 고평가)&lt;br&gt;&lt;br&gt;6. 조각 모으기 : 가격 지정 - 시장가 예약 주문 / 스프링 스케줄러" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="1" vertex="1">
-          <mxGeometry x="-2070" y="1710" width="550" height="430" as="geometry" />
+        <mxCell id="PkdxglhGiyc6FRWSb-2s-3" value="&lt;span style=&quot;font-size: 36px;&quot;&gt;추가 고려 사항&lt;br&gt;&lt;/span&gt;1. 회원가입 추천인 제도&lt;br&gt;- 둘다 5000원씩 지급&lt;br&gt;- 관리자 페이지 : 추천인 지급 내역 추가&lt;br&gt;&lt;br&gt;2. 앱 푸쉬 알림 + 웹뷰 앱 개발&lt;br&gt;- 청약, 배당금, 매각 알림 FCM 이용&lt;br&gt;&lt;br&gt;3. 카카오 API : 공유하기, 지도&lt;br&gt;&lt;br&gt;4. OCR&lt;br&gt;&lt;br&gt;5. 외부 부동산 시세에 따른 평가(저평가, 적정가, 고평가)&lt;br&gt;-&amp;gt; 네이버 부동산 크롤링 REST 서버 구축 : &#39;저평가&#39;,&#39;적정가&#39;,&#39;고평가&#39;, &#39;측정불가&#39;&lt;br&gt;&lt;br&gt;6. 조각 모으기 : 가격 지정 - 시장가 예약 주문 / 스프링 스케줄러&lt;br&gt;-&amp;gt; 모은 날짜 마다 깃허브 잔디처럼 채우기" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="1" vertex="1">
+          <mxGeometry x="-2020" y="1720" width="550" height="430" as="geometry" />
         </mxCell>
         <mxCell id="zbYEeOTznjCXyOoM0qA5-5" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERzeroToOne;endFill=1;rounded=0;" edge="1" parent="1" source="JYj9bb4xTtoWjhOhDIQX-10" target="JYj9bb4xTtoWjhOhDIQX-42">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
