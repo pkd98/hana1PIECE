@@ -53,6 +53,7 @@ DROP SEQUENCE ACCOUNT_SERIAL_NUMBER_SEQ;
 DROP SEQUENCE BT_SEQ;
 DROP SEQUENCE LN_SEQ;
 DROP SEQUENCE BLOG_SEQ;
+DROP SEQUENCE WN_SEQ;
 DROP SEQUENCE WT_SEQ;
 DROP SEQUENCE ORDER_SEQ;
 DROP SEQUENCE OB_SEQ;
@@ -72,7 +73,6 @@ CREATE SEQUENCE ACCOUNT_SERIAL_NUMBER_SEQ
   NOCACHE
   NOCYCLE;
 
-
 -- 은행 거래내역 : 은행 거래내역 번호
 CREATE SEQUENCE BT_SEQ
   START WITH 1
@@ -87,6 +87,14 @@ CREATE SEQUENCE BLOG_SEQ
   NOCACHE
   NOCYCLE;
   
+-- 지갑 : 지갑 번호
+CREATE SEQUENCE WN_SEQ
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE
+  NOCYCLE;
+
+
 -- 지갑 거래내역 : 지갑 거래내역 번호
 CREATE SEQUENCE WT_SEQ
   START WITH 1
@@ -156,11 +164,11 @@ CREATE SEQUENCE SV_SEQ
 -- 은행 계좌
 CREATE TABLE ACCOUNT (
   ACCOUNT_NUMBER VARCHAR2(20) PRIMARY KEY,      -- 계좌 번호
-  PASSWORD NUMBER(4) NOT NULL,                  -- 계좌 비밀번호
+  PASSWORD VARCHAR2(4) NOT NULL,                  -- 계좌 비밀번호
   BALANCE NUMBER(13) DEFAULT 0 NOT NULL,        -- 잔액
   OPENING_DATE DATE DEFAULT SYSDATE NOT NULL,   -- 계좌 개설일
-  RESIDENT_NUMBER1 NUMBER(6) NOT NULL,          -- 주민등록번호
-  RESIDENT_NUMBER2 NUMBER(7) NOT NULL,          -- 주민등록번호
+  RESIDENT_NUMBER1 VARCHAR2(6) NOT NULL,          -- 주민등록번호
+  RESIDENT_NUMBER2 VARCHAR2(7) NOT NULL,          -- 주민등록번호
   NAME VARCHAR2(20) NOT NULL                    -- 성명
 );
 
@@ -169,10 +177,10 @@ CREATE TABLE BANK_TRANSACTION (
   TRANSACTION_NUMBER NUMBER(8) DEFAULT BT_SEQ.NEXTVAL PRIMARY KEY, -- 거래내역 번호
   ACCOUNT_NUMBER VARCHAR2(20) NOT NULL,                            -- 계좌번호
   CLASSIFICATION VARCHAR2(3) NOT NULL,                             -- 거래구분
-  NAME VARCHAR2(10) NOT NULL,                                      -- 거래명
+  NAME VARCHAR2(100) NOT NULL,                                     -- 거래명
   AMOUNT NUMBER(10) NOT NULL,                                      -- 거래금액
   BALANCE NUMBER(13) NOT NULL,                                     -- 거래후잔액
-  BANK_CODE VARCHAR2(5) DEFAULT 080 NOT NULL,                      -- 상대 은행 코드 (자행 080)
+  BANK_CODE VARCHAR2(5) DEFAULT '080' NOT NULL,                    -- 상대 은행 코드 (자행 080)
   RECIPIENT_ACCOUNT_NUMBER VARCHAR2(20) NOT NULL,                  -- 상대계좌번호
   TRANSACTION_DATE DATE DEFAULT SYSDATE NOT NULL,                  -- 거래일시
   
@@ -219,12 +227,12 @@ CREATE TABLE ONE_MEMBERS (
 
 -- 지갑
 CREATE TABLE WALLET (
-  WALLET_NUMBER VARCHAR2(20) PRIMARY KEY,		    -- 지갑번호
-  MEMBER_ID VARCHAR2(20) NOT NULL,                  -- 회원 아이디
-  ACCOUNT_NUMBER VARCHAR2(20) NOT NULL,             -- 연동 계좌번호
-  PASSWORD VARCHAR2(4) NOT NULL,                    -- 지갑 비밀번호
-  BALANCE VARCHAR2(13) NOT NULL,                    -- 잔액
-  OPENING_DATE DATE DEFAULT SYSDATE NOT NULL,       -- 지갑 개설일
+  WALLET_NUMBER NUMBER(8) DEFAULT WN_SEQ.NEXTVAL PRIMARY KEY,       -- 지갑번호
+  MEMBER_ID VARCHAR2(20) NOT NULL,                                     -- 회원 아이디
+  ACCOUNT_NUMBER VARCHAR2(20) NOT NULL,                                -- 연동 계좌번호
+  PASSWORD VARCHAR2(4) NOT NULL,                                       -- 지갑 비밀번호
+  BALANCE NUMBER(13) DEFAULT 0 NOT NULL,                                       -- 잔액
+  OPENING_DATE DATE DEFAULT SYSDATE NOT NULL,                          -- 지갑 개설일
   
   -- 외래키 지정 : 회원 아이디, 연동 계좌번호
   CONSTRAINT FK_WALLET_MEMBER_ID FOREIGN KEY (MEMBER_ID) REFERENCES one_members(id),
@@ -234,7 +242,7 @@ CREATE TABLE WALLET (
 -- 지갑 거래내역
 CREATE TABLE WALLET_TRANSACTION (
   TRANSACTION_NUMBER NUMBER(8) DEFAULT WT_SEQ.NEXTVAL PRIMARY KEY,  -- 거래내역 번호
-  WALLET_NUMBER VARCHAR2(20) NOT NULL,                              -- 지갑번호
+  WALLET_NUMBER NUMBER(8) NOT NULL,                              -- 지갑번호
   CLASSIFICATION VARCHAR2(3) NOT NULL,                              -- 거래구분
   AMOUNT NUMBER(10) NOT NULL,                                       -- 거래금액
   BALANCE NUMBER(13) NOT NULL,                                      -- 거래후잔액
@@ -344,7 +352,7 @@ CREATE TABLE ORDER_BOOK (
 
 -- 보유 토큰 (다대다 관계 중간 연결)
 CREATE TABLE STOS (
-  WALLET_NUMBER VARCHAR2(20),       -- 지갑번호
+  WALLET_NUMBER NUMBER(8),          -- 지갑번호
   LISTING_NUMBER NUMBER(8),         -- 매물번호
   AMOUNT NUMBER(8) NOT NULL,        -- 보유수량
   
