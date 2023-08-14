@@ -253,8 +253,9 @@ CREATE TABLE WALLET (
 -- 지갑 거래내역
 CREATE TABLE WALLET_TRANSACTION (
   TRANSACTION_NUMBER NUMBER(8) DEFAULT WT_SEQ.NEXTVAL PRIMARY KEY,  -- 거래내역 번호
-  WALLET_NUMBER NUMBER(8) NOT NULL,                              -- 지갑번호
+  WALLET_NUMBER NUMBER(8) NOT NULL,                                 -- 지갑번호
   CLASSIFICATION VARCHAR2(10) NOT NULL,                              -- 거래구분
+  NAME VARCHAR2(100),                                               -- 거래명
   AMOUNT NUMBER(10) NOT NULL,                                       -- 거래금액
   BALANCE NUMBER(13) NOT NULL,                                      -- 거래후잔액
   TRANSACTION_DATE DATE DEFAULT SYSDATE NOT NULL,                   -- 거래일시
@@ -355,7 +356,7 @@ CREATE TABLE ORDER_BOOK (
   LISTING_NUMBER NUMBER(8),                                     -- 매물번호
   TYPE VARCHAR2(4) NOT NULL,                                    -- 매수매도 유형
   PRICE NUMBER(8) NOT NULL,                                     -- 호가 가격
-  AMOUNT NUMBER(8) NOT NULL,                                    -- 거래량
+  AMOUNT NUMBER(8) DEFAULT 0 NOT NULL,                                    -- 거래량
   
   -- 외래키 지정 : 매물번호
   CONSTRAINT FK_ORDER_BOOK_LISTING_NUMBER FOREIGN KEY (LISTING_NUMBER) REFERENCES REAL_ESTATE_SALE(LISTING_NUMBER)

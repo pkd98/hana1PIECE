@@ -3,6 +3,7 @@ REM  제목 : [최종프로젝트] 하나1PIECE 조각투자 플랫폼 : 더미 
 REM  작성자 : 박경덕
 REM  작성 일자 : 2023-08-08 최초 작성
 REM            2023-08-11 각 시나리오 DML 작성
+REM            2023-08-14 시스템 프로시저 적용 시나리오 수정(배당금, 호가창 초기화)
 REM  ***************************************************************************
 --------------------------------------------------------------------------------
 -- 기본 데이터 : 관리자 계정, 관리자(사업자) 계좌
@@ -199,6 +200,8 @@ BEGIN
     );
 END;
 /
+
+select * from account;
 --------------------------------------------------------------------------------
 -- 지갑 현금 입금 : 계좌에 연동된 지갑에 현금 입금 - 마이페이지
 --------------------------------------------------------------------------------
@@ -236,7 +239,7 @@ BEGIN
 END;
 /
 
-
+select * from wallet;
 --------------------------------------------------------------------------------
 -- 지갑 현금 출금 : 연동 계좌로 현금 이체 - 마이페이지
 --------------------------------------------------------------------------------
@@ -305,6 +308,8 @@ REM  ***************************************************************************
 --------------------------------------------------------------------------------
 -- 사용자 : 공모 청약 신청 -> 총 발행량 다 팔리거나, 만료일에 마감 후 상장(상태->거래가능)
 --------------------------------------------------------------------------------
+DECLARE
+    v_BALANCE NUMBER;
 BEGIN
     -- 10개 5만원치 청약 신청
     -- 지갑 보유 금액 차감
@@ -312,8 +317,13 @@ BEGIN
     where wallet_number = 1;
     
     -- 지갑 거래 내역 기록
-    insert into wallet_transaction(wallet_number, classification, amount, balance)
-    values((select wallet_number from wallet where member_id = 'pkd98'), '청약', 50000, (select balance from wallet where wallet_number = 1));
+    select balance INTO v_BALANCE from wallet where wallet_number = 1;
+    HANA1PIECE_MNG.WRITE_WALLET_TRANSACTION(1, 'OUT', '청약', 50000, v_BALANCE);
+    
+    /*
+    insert into wallet_transaction(wallet_number, classification, name, amount, balance)
+    values(1, 'OUT', '청약', 50000, (select balance from wallet where wallet_number = 1));
+    */
     
     -- 공모 청약 신청
     INSERT INTO PUBLIC_OFFERING(LISTING_NUMBER, WALLET_NUMBER, QUANTITY)
@@ -331,9 +341,12 @@ BEGIN
     insert into stos(wallet_number, listing_number, amount)
     values(1, 1, 10);
     
-    -- 호가 테이블 셋팅 [추후 프로시저화]
+    -- 호가 테이블 셋팅 [프로시저 활용]
+    HANA1PIECE_MNG.INIT_ORDER_BOOK(1);
+    /*
     insert into order_book(listing_number, type, price, amount)
     values(1, 'sell', 5000, 0);
+    */
     
     commit;
 END;
@@ -353,11 +366,11 @@ REM  ***************************************************************************
 BEGIN
     -- 매도 주문
     insert into sto_orders(LISTING_NUMBER, wallet_number, order_type, amount, quantity, status)
-    values(1, 1, 'sell', 5000, 10, '미체결');
+    values(1, 1, 'SELL', 5000, 10, '미체결');
     
     -- 호가창 반영
-    update order_book set amount = (select amount from order_book where listing_number = 1 and type = 'sell' and price = 5000) + 10
-    where listing_number = 1 and type = 'sell' and price = 5000;
+    update order_book set amount = (select amount from order_book where listing_number = 1 and type = 'SELL' and price = 5000) + 10
+    where listing_number = 1 and type = 'SELL' and price = 5000;
 
     commit;
 END;
@@ -376,7 +389,7 @@ BEGIN
     
     -- 매수 주문 등록
     insert into sto_orders(LISTING_NUMBER, wallet_number, order_type, amount, quantity, status)
-    values(1, 2, 'buy', 5000, 10, '미체결');
+    values(1, 2, 'BUY', 5000, 10, '미체결');
     
     -- 체결 테이블 체결 주문 삽입
     insert into execution(order_id, executed_price, executed_quantity)
@@ -393,8 +406,8 @@ BEGIN
     where order_id = '2';
     
     -- 체결로 인한 호가창 반영
-    update order_book set amount = (select amount from order_book where listing_number = 1 and type = 'sell' and price = 5000) - 10
-    where listing_number = 1 and type = 'sell' and price = 5000;
+    update order_book set amount = (select amount from order_book where listing_number = 1 and type = 'SELL' and price = 5000) - 10
+    where listing_number = 1 and type = 'SELL' and price = 5000;
     
     -- 매도자 보유토큰 차감
     update stos set amount = (select amount from stos where wallet_number = 1 and listing_number = 1) - 10
@@ -422,9 +435,20 @@ select * from order_book;
 select * from stos;
 
 --------------------------------------------------------------------------------
--- 배당금 지급[추후 프로시저화] + 공지사항 자동 등록
+-- 배당금 지급 + 공지사항 자동 등록
 --------------------------------------------------------------------------------
 BEGIN
+    -- 1번 매물 보유 회원지갑에 토큰당 20원씩 배당금 지급
+    HANA1PIECE_MNG.PAY_DIVIDEND(
+        p_listing_number=>1,
+        p_payout=>20
+    );
+
+    -- 공지사항 등록
+    INSERT INTO ANNOUNCEMENT(TITLE, CONTENT)
+    VALUES('[0월 배당금]롯데월드타워 시그니엘 1층 1호', '롯데월드타워 시그니엘 1층 1호 0월 배당금 지급되었습니다.');
+
+    /*
     -- 배당금 지급 내역 기록
     INSERT INTO DIVIDEND_DETAILS(wallet_number, listing_number, payout)
     VALUES(2, 1, 200);
@@ -437,18 +461,15 @@ BEGIN
         p_name=>'배당금 지급',
         p_recipient_account_number=>'99900000021394'
     );
-    
-    -- 공지사항 등록
-    INSERT INTO ANNOUNCEMENT(TITLE, CONTENT)
-    VALUES('[0월 배당금]롯데월드타워 시그니엘 1층 1호', '롯데월드타워 시그니엘 1층 1호 0월 배당금 지급되었습니다.');
+    */
     
     commit;
 END;
 /
 
 select * from dividend_details;
-select * from account;
-select * from bank_transaction where name = '배당금 지급';
+select * from wallet;
+select * from wallet_transaction;
 --------------------------------------------------------------------------------
 -- 매각 투표 등록
 --------------------------------------------------------------------------------
@@ -465,7 +486,12 @@ BEGIN
     update real_estate_sale set state = '매각'
     where listing_number = 1;
     
-    -- 매각 배당금 지급 내역 기록
+    -- 1번 매물 보유 회원 지갑에 토큰당 매각 배당금 지급 및 내역 기록 
+    HANA1PIECE_MNG.PAY_DIVIDEND(
+        p_listing_number=>1,
+        p_payout=>5500
+    );
+    /*
     INSERT INTO DIVIDEND_DETAILS(wallet_number, listing_number, payout)
     VALUES(2, 1, 55000);
     
@@ -477,7 +503,7 @@ BEGIN
         p_name=>'매각 배당금 지급',
         p_recipient_account_number=>'99900000021394'
     );
-    
+    */
     -- 공지사항 등록
     INSERT INTO ANNOUNCEMENT(TITLE, CONTENT)
     VALUES('[매각 완료]롯데월드타워 시그니엘 1층 1호', '롯데월드타워 시그니엘 1층 1호 0월 매각되었습니다.');
@@ -491,3 +517,5 @@ select * from sell_vote;
 select * from DIVIDEND_DETAILS;
 select * from account;
 select * from bank_transaction;
+select * from wallet;
+select * from wallet_transaction;
