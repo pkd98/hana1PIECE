@@ -1,0 +1,177 @@
+/* Layout */
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* header */
+header {
+    background-image: url('../img/background.svg');
+}
+
+#loginBar {
+    display: flex;
+    justify-content: end;
+    text-decoration: none;
+}
+
+.btn.no-underline-black {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
+.mainLogo {
+    max-width: 251px;
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.navbar-collapse {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+/* 로그인 회원가입 모달 */
+/* 모달 스타일 */
+.xButton {
+    position: relative;
+    width: 100%;
+}
+
+.bbtn {
+    position: absolute;
+    right: 10px;
+}
+
+.modal-body>h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 35px;
+}
+
+.modalFooter>button {
+    background-color: #008485;
+    width: 100%;
+    height: 50px;
+}
+
+/* footer */
+footer {
+    margin: 0;
+    display: flex;
+    width: 100%;
+    min-height: 150px;
+    align-items: center;
+    place-items: center;
+    background: #d9d9d9;
+}
+
+.footerWrapper {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    place-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.address-text,
+.menu-links {
+    font-size: 2vw;
+    margin-bottom: 0;
+}
+
+.footerLogo {
+    flex-basis: calc(33.33% - 20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 200px;
+    width: 10vw;
+    height: auto;
+
+}
+@media (max-width: 768px) {
+    .footerLogo img {
+        width: 20vw;
+        /* 작은 화면에서는 로고 크기를 좀 더 크게 */
+    }
+}
+@media (min-width: 1200px) {
+    .footerLogo img {
+        width: 8vw;
+        /* 큰 화면에서는 로고 크기를 좀 더 작게 */
+    }
+}
+@media (max-width: 480px) {
+    .address-text,
+    .menu-links {
+        font-size: 2vw;
+        /* 작은 화면에서는 글자 크기를 좀 더 크게 */
+    }
+}
+
+/* index 페이지 메인 */
+.jumbotron {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    transform-origin: center center;
+}
+
+.jumbotron>.jumbotron_el {
+    margin-inline: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 500px;
+    height: 500px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 1055px) {
+    .jumbotron {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: scale(0.85);
+        flex-direction: column-reverse;
+
+    }
+}
+
+.lead {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.lead>.btn {
+    background-color: #008485;
+    width: 30%;
+}
+
+/* aside 배너 */
+aside a img {
+    width: 100%;  /* 넓이를 화면에 맞게 설정 */
+    height: auto; /* 높이는 원래 이미지의 비율에 맞게 자동으로 설정 */
+    display: block; /* 이미지의 밑에 생기는 작은 여백을 없애기 위해 block으로 설정 */
+}

@@ -1,0 +1,90 @@
+@import url(https://fonts.googleapis.com/css?family=La+Belle+Aurore|Fira+Sans:400,700);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+
+@font-face {
+    font-family: Hana2-Medium;
+    src: url('../font/Hana2.0_TTF/Hana2-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Hana2-Bold;
+    src: url('../font/Hana2.0_TTF/Hana2-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Hana2-Heavy;
+    src: url('../font/Hana2.0_TTF/Hana2-Heavy.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Hana2-Light;
+    src: url('../font/Hana2.0_TTF/Hana2-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Hana2-Regular;
+    src: url('../font/Hana2.0_TTF/Hana2-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    font-family: 'Hana2-Medium', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+header {
+    font-family: 'Hana2-Medium', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-weight: normal;
+    font-size:larger;
+
+}
+
+
+main {
+    font-family: 'Hana2-Regular', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-size: x-large;
+}
+
+main>h2 {
+    font-family: 'Hana2-Bold', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-size: xx-large;
+}
+
+main>#jumbotron {
+    font-family: 'Hana2-Bold', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-size: x-large;
+}
+
+.square>a>p {
+    font-family: Hana2-Heavy;
+    src: url('../font/Hana2.0_TTF/Hana2-Heavy.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 모달 폼 라벨 */
+.col-form-label {
+    font-family: 'Hana2-Bold', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-weight: normal;
+    font-size:xx-small;
+}
