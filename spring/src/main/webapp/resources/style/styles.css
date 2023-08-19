@@ -5,7 +5,6 @@ body {
     padding: 0;
 }
 
-
 /* header */
 header {
     background-image: url('../img/background.svg');
@@ -108,19 +107,23 @@ footer {
     height: auto;
 
 }
+
 @media (max-width: 768px) {
     .footerLogo img {
         width: 20vw;
         /* 작은 화면에서는 로고 크기를 좀 더 크게 */
     }
 }
+
 @media (min-width: 1200px) {
     .footerLogo img {
         width: 8vw;
         /* 큰 화면에서는 로고 크기를 좀 더 작게 */
     }
 }
+
 @media (max-width: 480px) {
+
     .address-text,
     .menu-links {
         font-size: 2vw;
@@ -171,7 +174,167 @@ footer {
 
 /* aside 배너 */
 aside a img {
-    width: 100%;  /* 넓이를 화면에 맞게 설정 */
-    height: auto; /* 높이는 원래 이미지의 비율에 맞게 자동으로 설정 */
-    display: block; /* 이미지의 밑에 생기는 작은 여백을 없애기 위해 block으로 설정 */
+    width: 100%;
+    /* 넓이를 화면에 맞게 설정 */
+    height: auto;
+    /* 높이는 원래 이미지의 비율에 맞게 자동으로 설정 */
+    display: block;
+    /* 이미지의 밑에 생기는 작은 여백을 없애기 위해 block으로 설정 */
+}
+
+/* 메인 제목 */
+.titleBar {
+    display: flex;
+    align-items: stretch;
+    place-items: center;
+    flex-direction: column;
+}
+
+.titleBar>h2 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Hana2-Regular', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+.titleBar>hr {
+    display: flex;
+    width: 90%;
+}
+
+/* 이벤트 페이지 */
+.event {
+    font-family: 'Hana2-Bold', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 수평 가운데 정렬 */
+    text-align: center;
+    /* 내부 텍스트 가운데 정렬 */
+}
+
+.event>div {
+    border: 1px solid #202020;
+    opacity: 0.7;
+    width: 35vw;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.event p {
+    margin: 0;
+    font-size: 2.8vw;
+    /* 뷰포트 너비의 2% */
+}
+
+.event>button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35vw;
+    background-color: #FAE100;
+    color: #000000;
+    padding: 5px 15px;
+}
+
+.event>button>img {
+    width: 3.5vh;
+    margin-right: 15px;
+}
+
+.event>h6 {
+    margin-top: 15px;
+    margin-bottom: 150px;
+}
+
+@media (max-width: 768px) {
+    .event p {
+        font-size: 5vw;
+    }
+}
+
+/* 공지사항 페이지 */
+.announcement>.table-bordered th,
+.announcement>.table-bordered td {
+    border-color: #aaa;
+    /* 테이블 테두리 색상 및 호버 색상 지정 */
+    /* 회색 계통으로 설정 */
+}
+
+.table-hover tbody tr {
+    cursor: pointer;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.pagination .page-link {
+    color: #008485;
+}
+
+.pagination .page-link:hover {
+    background-color: #008485;
+    color: #fff;
+}
+
+/* 공지사항 상세 페이지 */
+.notice-detail {
+    display: flex;
+    flex-direction: column;
+    min-height: 55vh;
+    background-color: #ffffff;
+    width: 80%;
+    padding: 2vh;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    flex-direction: column;
+    margin-bottom: 40px;
+    margin-top: 30px;
+}
+
+.notice-title {
+    font-size: 3vh;
+    font-weight: bold;
+    margin-bottom: 1vh;
+}
+
+.notice-info {
+    font-size: 1.5vh;
+    color: #888888;
+    margin-bottom: 2vh;
+}
+
+.notice-content {
+    font-size: 2vh;
+    line-height: 1.5;
+}
+
+.list-view-button {
+    margin-top: 3vh;
+    padding: 1vh 2vh;
+    font-size: 2vh;
+    background-color: #008485;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+}
+
+.list-view-button:hover {
+    background-color: #006363;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
 }
