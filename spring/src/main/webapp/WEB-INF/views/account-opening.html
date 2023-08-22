@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/style/styles.css">
+    <link rel="stylesheet" href="/resources/style/account-opening.css">
     <link rel="stylesheet" href="/resources/style/font.css">
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -14,11 +15,10 @@
     <!-- fabicon -->
     <link rel="icon" href="/resources/img/favicon.png">
     <title>하나1PIECE</title>
-    <!-- ajax -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
+
     <header>
         <!-- 로그인 표시 바 -->
         <div id="loginBar">
@@ -172,69 +172,35 @@
     </header>
 
     <div class="titleBar">
-        <h2>공지사항</h2>
+        <h2>계좌 개설</h2>
         <hr>
     </div>
 
-    <div class="announcement">
-        <div class="container mt-5">
-            <table class="table table-bordered table-hover">
-                <thead class="thead-light">
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>등록일</th>
-                        <th>조회수</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>공지사항 제목 1</td>
-                        <td>2023-08-16</td>
-                        <td>150</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>공지사항 제목 2</td>
-                        <td>2023-08-15</td>
-                        <td>200</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>공지사항 제목 3</td>
-                        <td>2023-08-14</td>
-                        <td>250</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>공지사항 제목 4</td>
-                        <td>2023-08-13</td>
-                        <td>80</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>공지사항 제목 5</td>
-                        <td>2023-08-12</td>
-                        <td>120</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
+    <div class="account-opening">
+        <div class="account-opening-title">
+            <h2>새로운 계좌 만들기</h2>
+        </div>
+        <div class="custom-div">
+            <img src="/resources/img/hanaLogo.svg" alt="계좌 이미지">
+            <div class="text-content">
+                <h4>종합 계좌 개설</h4>
+                <p>하나은행 계좌 개설 후 지갑과 연동하여 서비스를 이용할 수 있습니다.</p>
+            </div>
         </div>
 
+        <div class="account-opening-title">
+            <h2>기존 하나은행 계좌 연동</h2>
+        </div>
+
+        <div class="custom-div" style="background-color: #DEE2E6;">
+            <img src="/resources/img/hanaLogo.svg" alt="계좌 이미지">
+            <div class="text-content" style="color: black;">
+                <h4>기존 계좌 연동</h4>
+                <p>소유하고 계신 기존 하나은행 계좌를 지갑과 연동합니다.</p>
+            </div>
+        </div>
     </div>
+
 
     <footer>
         <div class="footerWrapper">
@@ -243,15 +209,6 @@
             <p class="menu-links">공지사항 | FAQ | 약관 및 정책</p>
         </div>
     </footer>
-
-    <script>
-        $(document).ready(function () {
-            $(".table-hover tbody tr").click(function () {
-                var recordId = $(this).find("td:first").text(); // 첫 번째 열의 텍스트(번호)를 가져옵니다.
-                window.location.href = "announcement-detail.html?id=" + recordId; // 해당 페이지로 이동합니다.
-            });
-        });
-    </script>
 
     <!-- jQuery and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -263,6 +220,8 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 
 </html>

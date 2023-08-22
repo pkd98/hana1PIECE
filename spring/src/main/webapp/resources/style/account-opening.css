@@ -1,0 +1,159 @@
+/* 계좌 개설 페이지 */
+.account-opening {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.account-opening-title {
+    font-family: 'Hana2-Bold', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* 기본 스타일 */
+.custom-div {
+    width: 100%;
+    /* 기본적으로 100%로 설정 */
+    max-width: 100%;
+    background-color: #008485;
+    padding: 10px 20px;
+    padding-right: 5rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* 중간 크기의 화면에 대한 스타일 */
+@media (min-width: 768px) {
+    .custom-div {
+        width: 60%;
+        max-height: 10%;
+    }
+    .checkbox-wrapper {
+        width: 100%;
+    }
+    .accordion {
+        width: 100%;
+    }
+}
+
+.custom-div img {
+    border-radius: 50%;
+    margin-right: 5rem;
+}
+
+.custom-div .text-content {
+    color: white;
+    flex: 1;
+    /* 화면 크기에 따라 콘텐츠 크기 조절 */
+}
+
+.custom-div .text-content h4,
+.custom-div .text-content p {
+    margin: 0;
+}
+
+/* 계좌 개설 약관 */
+.pagination {
+    margin-top: 20px;
+}
+
+.account-opening-process {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.terms-agreement {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    text-align: left; /* 왼쪽 정렬 추가 */
+    width: 100%; 
+}
+
+.accordion {
+    width: 100%; /* 약관 내용의 너비를 화면의 70%로 조절 */
+}
+
+.button-wrapper {
+    margin-top: 20px;
+}
+
+.button-wrapper .btn {
+    background-color: #008485;
+    color: white;
+    padding: 10px 20px; /* 버튼의 크기를 키우기 위해 패딩 조절 */
+    font-size: 18px; /* 글자 크기 조절 */
+}
+
+.pagination .page-link {
+    color: black;
+    background-color: #F8F9FA;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #008485;
+    border-color: #008485;
+    color: white;
+}
+
+#all-agree {
+    margin-right: 10px;
+}
+
+.checkbox-wrapper > label {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+/* 체크박스의 크기 조절 */
+.checkbox-wrapper input[type="checkbox"] {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #F8F9FA;
+    border: 1px solid #ced4da;
+    position: relative;
+    border-radius: 4px;
+}
+
+/* 체크되었을 때의 스타일 */
+.checkbox-wrapper input[type="checkbox"]:checked {
+    background-color: #008485;
+    border-color: #008485;
+}
+
+/* 체크되었을 때 체크 표시 (✔) */
+.checkbox-wrapper input[type="checkbox"]:checked:after {
+    content: '\2713'; /* 체크 표시 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}

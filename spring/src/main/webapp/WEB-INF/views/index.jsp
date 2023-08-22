@@ -24,7 +24,7 @@
             <!-- jumbotron -->
             <div id="jumbotron">
                 <div class="jumbotron">
-    
+
                     <div class="jumbotron_el">
                         <h1 class="display-6">신뢰받는 부동산 조각투자</h1>
                         <h1 class="display-5">이젠,<img class="animate__animated animate__pulse animate__repeat-3"
