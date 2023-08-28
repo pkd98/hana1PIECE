@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/style/styles.css">
+    <link rel="stylesheet" href="/resources/style/estate-details.css">
     <link rel="stylesheet" href="/resources/style/font.css">
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -13,10 +14,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- fabicon -->
     <link rel="icon" href="/resources/img/favicon.png">
+    <!-- kakao map api -->
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5082aba073eeee4dbd5606104fd17280"></script>
     <title>하나1PIECE</title>
 </head>
 
 <body>
+
     <header>
         <!-- 로그인 표시 바 -->
         <div id="loginBar">
@@ -170,27 +175,184 @@
     </header>
 
     <div class="titleBar">
-        <h2>친구초대 이벤트</h2>
+        <h2>투자하기</h2>
         <hr>
     </div>
 
-    <aside>
-        <a href="#">
-            <img src="/resources/img/banner2.png" alt="">
-        </a>
-    </aside>
+    <div class="estate-wrapper">
 
-    <div class="event">
-        <h3>내 코드</h3>
-        <div>
-            <p>1Q2W3</p>
+        <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
+
+        <div class="card mt-3" style="max-width: 500px; width: 100%">
+
+            <div class="card-header">
+                <h5 class="card-title">롯데타워 시그니엘 1층</h5>
+                <p class="address">서울시 송파구</p>
+            </div>
+            <div class="card-body">
+                <div class="card-content">
+                    <p class="value-title">건물가치</p>
+                    <h6 class="value">5,034원</h6>
+                    <small>(23.07.30)</small>
+                </div>
+                <div class="card-content">
+                    <p class="value-title">토큰 가격</p>
+                    <h6 class="value">4,505원</h6>
+                    <small>-17.7%</small>
+                </div>
+                <div class="card-content">
+                    <p class="value-title">건물가치 대비</p>
+                    <h6 class="value">-10%</h6>
+                    <small>매우 저평가</small>
+                </div>
+            </div>
         </div>
-        <button type="button" class="btn btn-primary"
-        onclick="handleLogin()"><img src="/resources/img/kakao.svg" alt="">공유하기</button>
-        <h6>나를 추천한 사람 : 3</h6>
+
+        <!-- 거래하기, 티끌모아 건물주 버튼 추가 -->
+        <div class="buttons">
+            <div class="mt-3 btn-group">
+                <button type="button" class="btn btn-primary">거래하기</button>
+                <button type="button" class="btn btn-primary">티끌모아 건물주</button>
+            </div>
+
+            <!-- 친구에게 공유하기 버튼 추가 -->
+            <div class="mt-1 kakao-share">
+                <button type="button" class="btn btn-primary" onclick="handleLogin()"><img
+                        src="/resources/img/kakao.svg" alt="">친구에게 공유하기</button>
+            </div>
+        </div>
+
+        <div class="wrapper">
+            <div class="profit-header">
+                <h3 class="profit-title">수익 배당</h3>
+            </div>
+
+            <div class="card mt-2" style="max-width: 500px; width: 100%">
+                <div class="card-body">
+                    <div class="card-content">
+                        <p class="detail-title">배당 기준일</p>
+                        <h6 class="detail-value">29일</h6>
+                    </div>
+                    <div class="card-content">
+                        <p class="detail-title">배당 지급일</p>
+                        <h6 class="detail-value">30일</h6>
+                    </div>
+                    <div class="card-content">
+                        <p class="detail-title">토큰 분배금</p>
+                        <h6 class="detail-value">20원</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper">
+            <div class="profit-header">
+                <h3 class="profit-title">주변 살펴보기</h3>
+                <p class="address">서울시 송파구</p>
+            </div>
+
+            <div id="map"></div>
+        </div>
+
+        <div class="wrapper">
+            <div class="profit-header">
+                <h3 class="profit-title">건물 정보</h3>
+            </div>
+
+            <div class="info-card">
+                <div class="info-item">
+                    <span class="info-label">층수</span>
+                    <span class="info-value">20층</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">용도 지역</span>
+                    <span class="info-value">상업지역</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">주용도</span>
+                    <span class="info-value">오피스</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">대지면적</span>
+                    <span class="info-value">1000m²</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">연면적</span>
+                    <span class="info-value">20,000m²</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">건폐율</span>
+                    <span class="info-value">60%</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">용적률</span>
+                    <span class="info-value">200%</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">준공일</span>
+                    <span class="info-value">2020.01.01</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="wrapper">
+            <div class="profit-header">
+                <h3 class="profit-title">발행 정보</h3>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-item">
+                    <span class="issue-label">공모대상</span>
+                    <span class="issue-value">롯데월드타워 1층 1호</span>
+                </div>
+                <div class="issue-item">
+                    <span class="issue-label">증권 종류</span>
+                    <span class="issue-value">수익 증권</span>
+                </div>
+                <div class="issue-item">
+                    <span class="issue-label">발행인</span>
+                    <span class="issue-value">하나자산신탁</span>
+                </div>
+                <div class="issue-item">
+                    <span class="issue-label">발행 증권수</span>
+                    <span class="issue-value">10,000 주</span>
+                </div>
+                <div class="issue-item">
+                    <span class="issue-label">총모집액</span>
+                    <span class="issue-value">100억 원</span>
+                </div>
+                <div class="issue-item">
+                    <span class="issue-label">청약일정</span>
+                    <span class="issue-value">2023.05.01 - 2023.06.01</span>
+                </div>
+                <div class="issue-item">
+                    <span class="issue-label">최초 배당 기준일</span>
+                    <span class="issue-value">2023.07.01</span>
+                </div>
+                <div class="issue-item">
+                    <span class="issue-label">배당 주기</span>
+                    <span class="issue-value">30일</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper">
+            <div class="profit-header">
+                <h3 class="profit-title">임차인 정보</h3>
+            </div>
+
+            <div class="tenant-card">
+                <div class="tenant-header">
+                    <span class="tenant-name">임차인명</span> | <span class="tenant-business">업종</span>
+                </div>
+                <div class="tenant-duration">
+                    계약기간 : <span>2023.01.01 ~ 2030.01.01</span>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-
 
     <footer>
         <div class="footerWrapper">
@@ -200,6 +362,30 @@
         </div>
     </footer>
 
+    <script>
+        var latitude = 37.5125000;
+        var longitude = 127.1027780;
+        
+
+        var container = document.getElementById('map');
+        var options = {
+            center: new kakao.maps.LatLng(latitude, longitude),
+            level: 3
+        };
+        // 지도 생성
+        var map = new kakao.maps.Map(container, options);
+        // 
+        var markerPosition  = new kakao.maps.LatLng(latitude, longitude); 
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
+
+    </script>
     <!-- jQuery and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

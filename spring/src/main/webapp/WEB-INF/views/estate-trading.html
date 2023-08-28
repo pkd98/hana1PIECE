@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/resources/style/styles.css">
+    <link rel="stylesheet" href="/resources/style/estate-trading.css">
+    <link rel="stylesheet" href="/resources/style/font.css">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <!-- animation cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- fabicon -->
+    <link rel="icon" href="/resources/img/favicon.png">
+    <!-- kakao map api -->
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5082aba073eeee4dbd5606104fd17280"></script>
+    <title>하나1PIECE</title>
+</head>
+
+<body>
+
+    <header>
+        <!-- 로그인 표시 바 -->
+        <div id="loginBar">
+            <div id="loginBar">
+                <!-- Varying modal -->
+                <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
+                    data-bs-target="#loginModal" data-whatever="@mdo">로그인</button>
+
+                <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
+                    data-bs-target="#signUpModal" data-whatever="@fat">회원가입</button>
+
+
+                <div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabelOne" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="xButton">
+                                    <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <h3 class="modal-title" id="exampleModalLabelOne">로그인</h3>
+
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">아이디</label>
+                                        <input type="text" class="form-control" id="recipient-name"
+                                            placeholder="아이디를 입력하세요.">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">비밀번호</label>
+                                        <input type="password" class="form-control" id="recipient-pwd"
+                                            placeholder="비밀번호를 입력하세요.">
+                                    </div>
+
+                                    <div class="modalFooter">
+                                        <button type="button" class="btn btn-primary"
+                                            onclick="handleLogin()">로그인하기</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabelOne" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="xButton">
+                                    <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <h3 class="modal-title" id="exampleModalLabelOne">회원가입</h3>
+
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">이름</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="이름">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">아이디</label>
+                                        <input type="text" class="form-control" id="recipient-name"
+                                            placeholder="아이디 (필수)">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">비밀번호</label>
+                                        <input type="password" class="form-control" id="recipient-name"
+                                            placeholder="비밀번호 (필수)">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">비밀번호 확인</label>
+                                        <input type="password" class="form-control" id="recipient-name"
+                                            placeholder="비밀번호 확인">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">전화번호</label>
+                                        <input type="text" class="form-control" id="recipient-name"
+                                            placeholder="휴대폰 번호 (필수)">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">이메일 주소</label>
+                                        <input type="text" class="form-control" id="recipient-name"
+                                            placeholder="이메일 주소 (필수)">
+                                    </div>
+                                    <div class="modalFooter">
+                                        <button type="button" class="btn btn-primary">회원가입 하기</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- nav bar -->
+        <div id="navBar">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="/"><img class="mainLogo" src="/resources/img/logo.png"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                투자하기
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">부동산 거래 가능 종목</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">부동산 매각 완료 종목</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">청약</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">마이페이지</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                고객지원
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">공지사항</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">자주 묻는 질문</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">약관 및 정책</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="titleBar">
+        <h2>투자하기</h2>
+        <hr>
+    </div>
+
+    <div class="wrapper">
+        <div class="wrapper2">
+            <h2 class="estate-title">롯데타워 시그니엘 1층 1호</h2>
+
+            <table class="orderbook-table">
+                <colgroup>
+                    <col style="width:33%;">
+                    <col style="width:33%;">
+                    <col style="width:33%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">매도잔량</th>
+                        <th scope="col">호가</th>
+                        <th scope="col">매수잔량</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 100%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 100%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 100%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 100%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 100%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 100%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 100%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 100%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 100%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="sell">
+                        <td class="sell-quantity">
+                            <div style="width: 10%;">13399</div>
+                        </td>
+                        <td class="price-th"><span class="price-stockUp">5000</span></td>
+                        <td></td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                    <tr class="buy">
+                        <td></td>
+                        <td class="price-th"><span class="price-stockUp">4900</span></td>
+                        <td class="buy-quantity">
+                            <div style="width: 12.3%;">123</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="wrapper2">
+            <div class="trading">
+                <div class="trading-items">
+                    <div class="buy-sell-change">
+                        <!-- Bootstrap Button Group -->
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-secondary active">구매</button>
+                            <button type="button" class="btn btn-secondary">판매</button>
+                        </div>
+                    </div>
+                    <div class="wallet-pw">
+                        <label for="wallet-password">지갑 비밀번호 </label>
+                        <input type="password" id="wallet-password" pattern="\d{4}" placeholder="4자리 숫자"
+                            maxlength="4" />
+                    </div>
+                    <div class="able-amount">
+                        거래 가능 금액: <span>123,456,789 원</span>
+                    </div>
+                    <div class="price">
+                        <span>구매 희망 단가</span>
+                        <button class="decrease">-</button>
+                        <input type="number" placeholder="가격" />
+                        <button class="increase">+</button>
+                    </div>
+                    <div class="quantity">
+                        <span>구매 희망 수량</span>
+                        <button class="decrease">-</button>
+                        <input type="number" placeholder="수량" />
+                        <button class="increase">+</button>
+                    </div>
+                    <div class="total-amount">
+                        주문 총 액: <span>0원</span>
+                    </div>
+                    <div class="buy-sell">
+                        <input class="btn btn-primary" type="button" value="매수">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 주문확인 모달 -->
+        <!-- 매수 모달 -->
+        <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="buyModalLabel">매수주문 확인</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><span>빌딩명:</span><span>롯데타워시그니엘 1층 1호</span></p>
+                        <p><span>가격:</span><span id="buyModalPrice">5,500원</span></p>
+                        <p><span>수량:</span> <span id="buyModalQuantity">10 STOS</span></p>
+                        <p><span>주문금액:</span><span id="buyModalTotal">55,000원</span></p>
+                        <p><span>거래 수수료 (0.015%):</span> <span id="buyModalFee">원</span></p>
+                        <p><span>정산금액:</span><span id="buyModalNet">원</span></p>
+                    </div>
+                    <div class="modal-footer" style="justify-content: center;">
+                        <button type="button" class="btn btn-danger" id="confirmBuy">매수하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 매도 모달 -->
+        <div class="modal fade" id="sellModal" tabindex="-1" aria-labelledby="sellModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="sellModalLabel">매도주문 확인</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><span>빌딩명:</span><span>롯데타워시그니엘 1층 1호</span></p>
+                        <p><span>가격:</span><span id="sellModalPrice">5,500원</span></p>
+                        <p>수량: <span id="sellModalQuantity">10 STOS</span></p>
+                        <p>주문금액: <span id="sellModalTotal">55,000원</span></p>
+                        <p>거래 수수료 (0.015%): <span id="sellModalFee">원</span></p>
+                        <p>정산금액: <span id="sellModalNet">원</span></p>
+                    </div>
+                    <div class="modal-footer" style="justify-content: center;">
+                        <button type="button" class="btn btn-primary" id="confirmSell">매도하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 성공 모달 -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body" style="height: 150px; justify-self: center;align-items: center;">
+                        주문이 성공적으로 처리되었습니다.
+                    </div>
+                    <div class="modal-footer" style="padding: 50px">
+                        <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal">닫기</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 실패 모달 -->
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body" style="padding: 50px">
+                        주문 처리 중 오류가 발생했습니다.
+                    </div>
+                    <div class="modal-footer" style="justify-content: center;">
+                        <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal">닫기</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footerWrapper">
+            <img src="/resources/img/hanastock.svg" alt="Logo" class="footerLogo">
+            <p class="address-text">서울특별시 영등포구 의사당대로 82(여의도동)</p>
+            <p class="menu-links">공지사항 | FAQ | 약관 및 정책</p>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = function () {
+            /**
+             *  구매 - 판매 토글 버튼 관련 로직
+             */
+            const buyButton = document.querySelector('.btn-group .btn:nth-child(1)');
+            const sellButton = document.querySelector('.btn-group .btn:nth-child(2)');
+            const priceLabel = document.querySelector('.price span');
+            const quantityLabel = document.querySelector('.quantity span');
+            const submitButton = document.querySelector('.buy-sell input');
+
+            buyButton.addEventListener('click', function () {
+                activateButton(buyButton, sellButton);
+                setTradingMode('구매');
+                submitButton.style.backgroundColor = '#E90061';
+            });
+
+            sellButton.addEventListener('click', function () {
+                activateButton(sellButton, buyButton);
+                setTradingMode('판매');
+                submitButton.style.backgroundColor = '#0074D9';
+            });
+
+            function activateButton(activeBtn, inactiveBtn) {
+                activeBtn.classList.add('active');
+                inactiveBtn.classList.remove('active');
+
+                if (activeBtn === sellButton) {
+                    activeBtn.classList.add('sell-active');
+                } else {
+                    sellButton.classList.remove('sell-active');
+                }
+            }
+
+            function setTradingMode(mode) {
+                priceLabel.textContent = `${mode} 희망 단가`;
+                quantityLabel.textContent = `${mode} 희망 수량`;
+                if (mode === '구매') {
+                    submitButton.value = '매수';
+                } else {
+                    submitButton.value = '매도';
+                }
+            }
+
+            /**
+             *  가격 및 수량 조절 관련 로직
+             */
+            const priceInput = document.querySelector('.price input');
+            const quantityInput = document.querySelector('.quantity input');
+            const totalAmountSpan = document.querySelector('.total-amount span');
+
+            document.querySelector('.price .decrease').addEventListener('click', function () {
+                adjustValue(priceInput, -100);
+            });
+
+            document.querySelector('.price .increase').addEventListener('click', function () {
+                adjustValue(priceInput, 100);
+            });
+
+            document.querySelector('.quantity .decrease').addEventListener('click', function () {
+                adjustValue(quantityInput, -1);
+            });
+
+            document.querySelector('.quantity .increase').addEventListener('click', function () {
+                adjustValue(quantityInput, 1);
+            });
+
+            function adjustValue(input, amount) {
+                const currentValue = parseInt(input.value) || 0;
+                input.value = currentValue + amount;
+                updateTotalAmount();
+            }
+
+            function updateTotalAmount() {
+                const price = parseInt(priceInput.value) || 0;
+                const quantity = parseInt(quantityInput.value) || 0;
+                const totalAmount = price * quantity;
+                totalAmountSpan.textContent = totalAmount.toLocaleString('ko-KR') + ' 원';
+            }
+
+            priceInput.addEventListener('input', updateTotalAmount);
+            quantityInput.addEventListener('input', updateTotalAmount);
+
+            /**
+             *  매수 - 매도 비동기 모달 처리
+             */
+            const buyModalPrice = document.getElementById('buyModalPrice');
+            const buyModalQuantity = document.getElementById('buyModalQuantity');
+            const buyModalTotal = document.getElementById('buyModalTotal');
+            const buyModalFee = document.getElementById('buyModalFee');
+            const buyModalNet = document.getElementById('buyModalNet');
+
+            const sellModalPrice = document.getElementById('sellModalPrice');
+            const sellModalQuantity = document.getElementById('sellModalQuantity');
+            const sellModalTotal = document.getElementById('sellModalTotal');
+            const sellModalFee = document.getElementById('sellModalFee');
+            const sellModalNet = document.getElementById('sellModalNet');
+
+
+            submitButton.addEventListener('click', function () {
+                const price = parseInt(priceInput.value) || 0;
+                const quantity = parseInt(quantityInput.value) || 0;
+                const total = price * quantity;
+                const fee = total * 0.015 / 100;
+                const net = Math.ceil(total - fee);  // 소수점 올림 처리
+
+                if (submitButton.value === "매수") {
+                    buyModalPrice.textContent = price.toLocaleString('ko-KR') + ' 원';
+                    buyModalQuantity.textContent = quantity + ' STOS';
+                    buyModalTotal.textContent = total.toLocaleString('ko-KR') + ' 원';
+                    buyModalFee.textContent = fee.toLocaleString('ko-KR') + ' 원';
+                    buyModalNet.textContent = net.toLocaleString('ko-KR') + ' 원';
+
+                    new bootstrap.Modal(document.getElementById('buyModal')).show();
+                } else if (submitButton.value === "매도") {
+                    sellModalPrice.textContent = price.toLocaleString('ko-KR') + ' 원';
+                    sellModalQuantity.textContent = quantity + ' STOS';
+                    sellModalTotal.textContent = total.toLocaleString('ko-KR') + ' 원';
+                    sellModalFee.textContent = fee.toLocaleString('ko-KR') + ' 원';
+                    sellModalNet.textContent = net.toLocaleString('ko-KR') + ' 원';
+
+                    new bootstrap.Modal(document.getElementById('sellModal')).show();
+                }
+            });
+
+            // 매수 및 매도 확인 버튼 클릭 시 AJAX 요청
+            document.getElementById('confirmBuy').addEventListener('click', function () {
+                handleOrder('BUY', this);
+            });
+
+            document.getElementById('confirmSell').addEventListener('click', function () {
+                handleOrder('SELL', this);
+            });
+
+            function handleOrder(orderType, btnElement) {
+                // Spinner 추가 및 버튼 텍스트 숨김
+                btnElement.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+                btnElement.disabled = true;  // 버튼을 비활성화
+
+                sendOrder(orderType, priceInput.value, quantityInput.value, btnElement);
+            }
+
+            function sendOrder(orderType, price, quantity, btnElement) {
+                // AJAX 요청 구현
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/order-endpoint');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({
+                    type: orderType,
+                    price: price,
+                    quantity: quantity
+                }));
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        new bootstrap.Modal(document.getElementById('successModal')).show();
+                    } else {
+                        new bootstrap.Modal(document.getElementById('errorModal')).show();
+                    }
+
+                    // 원래 버튼 상태로 복원
+                    if (orderType === "BUY") {
+                        btnElement.innerHTML = '매수하기';
+                    } else {
+                        btnElement.innerHTML = '매도하기';
+                    }
+                    
+                    btnElement.disabled = false;  // 버튼을 활성화
+                };
+            }
+
+            // 처리 후 모달 닫기 버튼 누르면 페이지 초기화
+            document.querySelectorAll('.modal-close-text').forEach(closeText => {
+                closeText.addEventListener('click', function () {
+                    location.reload();
+                });
+            });
+        }
+    </script>
+
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+
+</html>

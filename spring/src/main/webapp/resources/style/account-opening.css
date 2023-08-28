@@ -104,6 +104,10 @@
     color: white;
     padding: 10px 20px; /* 버튼의 크기를 키우기 위해 패딩 조절 */
     font-size: 18px; /* 글자 크기 조절 */
+    min-width: 100px;
+}
+.button-wrapper :last-child{
+    background-color: #E90061;
 }
 
 .pagination .page-link {
@@ -156,4 +160,55 @@
     color: white;
     font-size: 14px;
     font-weight: bold;
+}
+
+/* 계좌 개설 폼 */
+.account-opening-process2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-title {
+    margin-top: 30px;
+}
+
+/* 계좌 개설 완료 */
+.account-opening-complete {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.account-opening-complete > p {
+    font-size: 1.5rem;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+.account-opening-complete :last-child {
+    background-color: #E90061;
+}
+
+/* 버튼 스타일링 */
+.account-opening-complete button.btn-primary {
+    border: none; /* 테두리 제거 */
+    background-color: #E90061;
+    transition: background-color 0.3s; /* 호버 애니메이션 */
+    border-radius: 20px; /* 더 둥글게 만들기 */
+    padding: 10px 20px; /* 내용과의 간격 설정 */
+
+}
+
+.account-opening-complete button.btn-primary:hover {
+    background-color: #CC004F; /* 호버 시 배경색 변경 */
 }

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/style/styles.css">
+    <link rel="stylesheet" href="/resources/style/account-opening.css">
     <link rel="stylesheet" href="/resources/style/font.css">
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -17,6 +18,7 @@
 </head>
 
 <body>
+
     <header>
         <!-- 로그인 표시 바 -->
         <div id="loginBar">
@@ -170,24 +172,91 @@
     </header>
 
     <div class="titleBar">
-        <h2>친구초대 이벤트</h2>
+        <h2>계좌 개설</h2>
         <hr>
     </div>
 
-    <aside>
-        <a href="#">
-            <img src="/resources/img/banner2.png" alt="">
-        </a>
-    </aside>
+    <div class="account-opening-process2">
+        <!-- 부트스트랩 페이지네이션 -->
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+        </ul>
 
-    <div class="event">
-        <h3>내 코드</h3>
-        <div>
-            <p>1Q2W3</p>
+        <div class="account-opening-form">
+            <!-- 계정 정보 확인 -->
+            <div class="section">
+                <h3 class="sub-title"><strong>계정 정보 확인</strong></h3>
+                <label for="name">이름</label>
+                <input type="text" id="name" readonly>
+                <label for="userid">아이디</label>
+                <input type="text" id="userid" readonly>
+                <label for="email">이메일</label>
+                <input type="email" id="email" readonly>
+            </div>
+
+            <!-- 휴대폰 인증 -->
+            <div class="section">
+                <h3 class="sub-title"><strong>휴대폰 인증</strong></h3>
+                <input type="text" placeholder="01012345678 (-) 제외" style="margin-bottom: 5px;">
+                <input type="text" placeholder="인증 번호">
+                <small class="verification-status text-danger">인증실패. 다시 시도해주세요.</small>
+                <small class="verification-status text-success">인증되었습니다.</small>
+                <button class="btn btn-secondary" style="background-color: #008485; margin-bottom: 5px;">인증번호요청</button>
+                <button class="btn btn-primary" style="background-color: #E90061;">확인</button>
+            </div>
+
+            <!-- 본인 인증 -->
+            <div class="section">
+                <h3 class="sub-title"><strong>본인 인증</strong></h3>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">신분증 파일을 업로드 해주세요.</label>
+                    <input class="form-control" type="file" id="formFile">
+                </div>
+                <div>
+                    <input type="text" placeholder="생년월일"> -
+                    <input type="text" placeholder="주민등록번호 뒷자리">
+                </div>
+                <small class="verification-status text-danger">인증실패. 다시 시도해주세요.</small>
+                <small class="verification-status text-success">인증되었습니다.</small>
+            </div>
+
+            <!-- 계좌 정보 -->
+            <div class="section">
+                <h3 class="sub-title"><strong>계좌 정보</strong></h3>
+                <label for="account">신청계좌</label>
+                <input type="text" id="account" value="하나1PIECE 종합매매 계좌" readonly>
+                <br>
+                <label for="password">계좌 비밀번호 설정(4자리)</label>
+                <input type="password" maxlength="4">
+                <label for="password">계좌 비밀번호 확인</label>
+                <input type="password" maxlength="4">
+                <small class="password-status text-danger">비밀번호가 다릅니다.</small>
+                <small class="password-status text-success">비밀번호가 일치합니다.</small>
+            </div>
+
+            <!-- 지갑 연동 -->
+            <div class="section">
+                <h3 class="sub-title"><strong>지갑 연동</strong></h3>
+                
+                <label for="wallet-password">지갑 비밀번호 설정 (4자리)</label>
+                <input type="password" id="wallet-password" maxlength="4">
+                <label for="wallet-password">지갑 비밀번호 확인</label>
+                <input type="password" maxlength="4">
+                <small class="password-status text-danger">비밀번호가 다릅니다.</small>
+                <small class="password-status text-success">비밀번호가 일치합니다.</small>
+                <br>
+                <label for="referral">추천인 코드</label>
+                <input type="text" id="referral">
+            </div>
         </div>
-        <button type="button" class="btn btn-primary"
-        onclick="handleLogin()"><img src="/resources/img/kakao.svg" alt="">공유하기</button>
-        <h6>나를 추천한 사람 : 3</h6>
+
+
+        <!-- 다음 버튼 -->
+        <div class="button-wrapper">
+            <button class="btn btn-primary" style="margin-right: 10px;">이전</button>
+            <button class="btn btn-primary">계좌개설</button>
+        </div>
     </div>
 
 
