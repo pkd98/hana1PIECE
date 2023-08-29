@@ -4,6 +4,7 @@ REM  작성자 : 박경덕
 REM  작성 일자 : 2023-08-06 최초 작성
 REM            2023-08-07 제약 조건 및 초기화, 주석 추가
 REM            2023-08-11 체결 테이블 추가
+REM            2023-08-29 위도, 경도 (15,13), (15,12) 수정
 REM  ***************************************************************************
 --------------------------------------------------------------------------------
 -- 초기화
@@ -283,8 +284,8 @@ CREATE TABLE REAL_ESTATE_INFO (
   COVERAGE_RATIO NUMBER(3, 1) NOT NULL,         -- 건폐율
   FLOOR_AREA_RATIO NUMBER(5, 1) NOT NULL,       -- 용적률
   COMPLETION_DATE DATE NOT NULL,                -- 준공일
-  LATITUDE NUMBER(9, 7) NOT NULL,               -- 위도
-  LONGITUDE NUMBER(10, 7) NOT NULL,              -- 경도
+  LATITUDE NUMBER(15, 13) NOT NULL,               -- 위도
+  LONGITUDE NUMBER(15, 12) NOT NULL,              -- 경도
   IMAGE1 VARCHAR2(100),                         -- 이미지 1
   IMAGE2 VARCHAR2(100),                         -- 이미지 2
   IMAGE3 VARCHAR2(100),                         -- 이미지 3

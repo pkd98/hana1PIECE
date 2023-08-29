@@ -13,11 +13,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- fabicon -->
     <link rel="icon" href="/resources/img/favicon.png">
-    <title>하나1PIECE</title>
+    <!-- Bootstrap Datepicker CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <!-- jQuery (Standard Version) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- kakao map api -->
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5082aba073eeee4dbd5606104fd17280&libraries=services"></script>
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true
+            });
+        });
+    </script>
 </head>
 
 <body>
-
     <header>
         <!-- nav bar -->
         <div id="navBar">
@@ -34,7 +48,7 @@
     </header>
 
     <div class="titleBar">
-        <h2>Dashboard</h2>
+        <h2>관리자 대시보드</h2>
         <hr>
     </div>
 
@@ -46,7 +60,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">배당금 지급</h5>
-                        <button class="btn btn-custom-color btn-block">배당금 지급</button>
+                        <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
+                            data-bs-target="#dividendModal">배당금 지급</button>
                     </div>
                 </div>
             </div>
@@ -55,7 +70,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">공모/청약 등록</h5>
-                        <button class="btn btn-custom-color btn-block">공모/청약 등록</button>
+                        <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
+                            data-bs-target="#publicOfferModal">공모/청약 등록</button>
                     </div>
                 </div>
             </div>
@@ -64,7 +80,245 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">매각 투표</h5>
-                        <button class="btn btn-custom-color btn-block">매각투표 등록</button>
+                        <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
+                            data-bs-target="#saleVoteModal">매각투표 등록</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 배당금 지급 모달 -->
+        <div class="modal fade" id="dividendModal" tabindex="-1" aria-labelledby="dividendModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="dividendModalLabel">배당금 지급</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 text-left">
+                                <label for="buildingInput">빌딩</label>
+                            </div>
+                            <div class="col-6 text-right">
+                                <select class="form-control" id="buildingInput">
+                                    <!-- 여기에 선택 항목을 추가할 수 있습니다. -->
+                                    <option>예시 빌딩 1</option>
+                                    <option>예시 빌딩 2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6 text-left">
+                                <label for="amountInput">토큰당 지급액</label>
+                            </div>
+                            <div class="col-6 text-right">
+                                <input type="number" class="form-control" id="amountInput" placeholder="금액을 입력하세요">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="justify-content: center;">
+                        <button type="button" class="btn" style="background-color: #008485; color: white;">지급
+                            확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 공모/청약 등록 모달 -->
+        <div class="modal fade" id="publicOfferModal" tabindex="-1" aria-labelledby="publicOfferModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="publicOfferModalLabel">공모/청약 등록</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-padding"> <!-- 패딩을 적용할 div로 모든 내용을 감싸줍니다. -->
+                            <!-- 매물 상세 정보 -->
+                            <h6 class="mb-3">매물 상세 정보</h6>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">건물명:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">건물상세주소:</div>
+                                <div class="col-8 text-right">
+                                    <input type="text" id="sample3_address" class="form-control d-inline-block"
+                                        style="width: 80%;">
+                                    <button onclick="sample3_execDaumPostcode()"
+                                        class="btn btn-secondary d-inline-block"
+                                        style="width: 18%; background-color: #008485;">검색</button>
+                                </div>
+                            </div>
+
+                            <!-- 카카오 주소 api-->
+                            <div id="wrap"
+                                style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+                                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                                    style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1"
+                                    onclick="foldDaumPostcode()" alt="접기 버튼">
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">층 수:</div>
+                                <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">주용도:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">대지면적:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">연면적:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">건폐율:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">용적률:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">위도:</div>
+                                <div class="col-8 text-right"><input id="latitude-input" type="number" stem="any" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">경도:</div>
+                                <div class="col-8 text-right"><input id="longitude-input" type="number" stem="any" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">이미지1:</div>
+                                <div class="col-8 text-right"><input type="file" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">이미지2:</div>
+                                <div class="col-8 text-right"><input type="file" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">이미지3:</div>
+                                <div class="col-8 text-right"><input type="file" class="form-control"></div>
+                            </div>
+                            <hr>
+                            <!-- 발행 정보 -->
+                            <h6 class="mt-3 mb-3">발행 정보</h6>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">발행인:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">발행 증권 수:</div>
+                                <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">발행가액:</div>
+                                <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">모집액:</div>
+                                <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">청약 기간:</div>
+                                <div class="col-8 text-right">
+                                    <input type="text" class="form-control datepicker d-inline-block"
+                                        style="width: 45%;" placeholder="시작일">
+                                    <span class="d-inline-block mx-1">~</span>
+                                    <input type="text" class="form-control datepicker d-inline-block"
+                                        style="width: 45%;" placeholder="종료일">
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">최초 배당 기준일:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control datepicker"
+                                        placeholder="기준일"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">배당 주기:</div>
+                                <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">배당액:</div>
+                                <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                            </div>
+                            <hr>
+                            <!-- 임차인 정보 -->
+                            <h6 class="mt-3 mb-3">임차인 정보</h6>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">임차인명:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4 text-left">업종:</div>
+                                <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-4 text-left">계약기간:</div>
+                                <div class="col-8 text-right">
+                                    <input type="text" class="form-control datepicker d-inline-block"
+                                        style="width: 45%;" placeholder="시작일">
+                                    <span class="d-inline-block mx-1">~</span>
+                                    <input type="text" class="form-control datepicker d-inline-block"
+                                        style="width: 45%;" placeholder="종료일">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="justify-content: center;">
+                            <button type="button" class="btn" style="background-color: #008485; color: white;">등록
+                                확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 매각투표 등록 모달 -->
+        <div class="modal fade" id="saleVoteModal" tabindex="-1" aria-labelledby="saleVoteModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="saleVoteModalLabel">매각투표 등록</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="buildingName">빌딩명</label>
+                            <select class="form-control" id="buildingName">
+                                <!-- 여기에 선택 항목을 추가할 수 있습니다. -->
+                                <option>예시 빌딩 1</option>
+                                <option>예시 빌딩 2</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="voteStartDate">투표기간</label>
+                            <div>
+                                <input type="text" class="form-control datepicker d-inline-block" style="width: 47%;"
+                                    placeholder="시작일">
+                                <span class="d-inline-block mx-1">~</span>
+                                <input type="text" class="form-control datepicker d-inline-block" style="width: 47%;"
+                                    placeholder="종료일">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="saleAmount">매각 금액</label>
+                            <input type="number" class="form-control" id="saleAmount" placeholder="금액을 입력하세요">
+                        </div>
+                        <div class="mb-3">
+                            <label for="saleDividend">매각 배당금</label>
+                            <input type="number" class="form-control" id="saleDividend" placeholder="배당금을 입력하세요">
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="justify-content: center;">
+                        <button type="button" class="btn" style="background-color: #008485; color: white;">등록
+                            확인</button>
                     </div>
                 </div>
             </div>
@@ -80,7 +334,7 @@
 
     <div class="container mt-5">
         <div class="mypage-title">
-            <h2>트랜잭션 스캔</h2>
+            <h2>주문 트랜잭션 스캔</h2>
         </div>
     </div>
 
@@ -165,25 +419,168 @@
                 </ul>
             </nav>
         </div>
+    </div>
 
+    <div class="container mt-5">
+        <div class="mypage-title">
+            <h2>배당금 지급 내역</h2>
+        </div>
+    </div>
+
+    <div class="announcement">
+        <div class="container mt-3">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>주문번호</th>
+                        <th>거래대상</th>
+                        <th>지갑번호</th>
+                        <th>유형</th>
+                        <th>거래상태</th>
+                        <th>거래수량</th>
+                        <th>거래금액</th>
+                        <th>주문일시</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1001</td>
+                        <td>롯데타워</td>
+                        <td>xyz12345abc</td>
+                        <td>매수</td>
+                        <td>완료</td>
+                        <td>10</td>
+                        <td>1,000,000원</td>
+                        <td>2023-08-25 10:00</td>
+                    </tr>
+                    <tr>
+                        <td>1002</td>
+                        <td>삼성타워</td>
+                        <td>abc78901xyz</td>
+                        <td>매도</td>
+                        <td>대기중</td>
+                        <td>20</td>
+                        <td>2,000,000원</td>
+                        <td>2023-08-25 11:00</td>
+                    </tr>
+                    <tr>
+                        <td>1003</td>
+                        <td>하나타워</td>
+                        <td>uvw45678rst</td>
+                        <td>매수</td>
+                        <td>완료</td>
+                        <td>30</td>
+                        <td>3,000,000원</td>
+                        <td>2023-08-26 10:00</td>
+                    </tr>
+                    <tr>
+                        <td>1004</td>
+                        <td>우리타워</td>
+                        <td>lmn23456opq</td>
+                        <td>매도</td>
+                        <td>대기중</td>
+                        <td>40</td>
+                        <td>4,000,000원</td>
+                        <td>2023-08-26 11:00</td>
+                    </tr>
+                    <tr>
+                        <td>1005</td>
+                        <td>KB타워</td>
+                        <td>ijk90123lmn</td>
+                        <td>매수</td>
+                        <td>완료</td>
+                        <td>50</td>
+                        <td>5,000,000원</td>
+                        <td>2023-08-27 10:00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 
 
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        // 우편번호 찾기 찾기 화면을 넣을 element
+        var element_wrap = document.getElementById('wrap');
+        // 위도 경도 좌표 저장 변수
+        var geocoder = new daum.maps.services.Geocoder();
+
+        function foldDaumPostcode() {
+            // iframe을 넣은 element를 안보이게 한다.
+            element_wrap.style.display = 'none';
+        }
+
+        function sample3_execDaumPostcode() {
+            // 현재 scroll 위치를 저장해놓는다.
+            var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    var addr = ''; // 주소 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById("sample3_address").value = addr;
+
+                    // iframe을 넣은 element를 안보이게 한다.
+                    // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                    element_wrap.style.display = 'none';
+
+                    // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+                    document.body.scrollTop = currentScroll;
 
 
+                    // 주소로 상세 정보를 검색
+                    geocoder.addressSearch(data.address, function (results, status) {
+                        // 정상적으로 검색이 완료됐으면
+                        if (status === daum.maps.services.Status.OK) {
 
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
-        crossorigin="anonymous"></script>
+                            var result = results[0]; //첫번째 결과의 값을 활용
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- ajax -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                            // 해당 주소에 대한 좌표 인풋창 반영
+                            document.getElementById("latitude-input").value = result.y;
+                            document.getElementById("longitude-input").value = result.x;
+                        }
+                    });
+                },
+                // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+                onresize: function (size) {
+                    element_wrap.style.height = size.height + 'px';
+                },
+                width: '100%',
+                height: '100%'
+            }).embed(element_wrap);
+
+            // iframe을 넣은 element를 보이게 한다.
+            element_wrap.style.display = 'block';
+        }
+    </script>
+    <!-- Bootstrap Datepicker JS -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <!-- Popper.js and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>

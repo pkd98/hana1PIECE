@@ -1,5 +1,6 @@
 /* Layout */
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     min-width: 456px;
@@ -87,7 +88,7 @@ header {
     align-items: center;
 }
 
-.button-area > button {
+.button-area>button {
     width: 50%;
     background-color: #008485;
     border-color: #008485;
@@ -101,7 +102,7 @@ header {
 }
 
 
-.card-body > button {
+.card-body>button {
     background-color: #008485;
     border-color: #008485;
     color: #ffffff;
@@ -132,4 +133,26 @@ header {
 .pagination .page-link:hover {
     background-color: #008485;
     color: #fff;
+}
+
+/* 모달의 스타일을 수정합니다. */
+.modal-content {
+    max-width: 700px;
+    /* 모달의 최대 너비 설정 */
+    max-height: 800px;
+    /* 모달의 최대 높이 설정 */
+    overflow-y: auto;
+    /* 스크롤 추가 */
+}
+
+/* 소제목 크기 조절 */
+.modal-body h6 {
+    font-size: 1.4rem;
+    /* 크기 조절 */
+}
+
+/* 모달 바디의 좌우 여백 추가 */
+.modal-padding {
+    padding: 0 80px;
+    /* 좌우로 20px의 패딩 적용 */
 }
