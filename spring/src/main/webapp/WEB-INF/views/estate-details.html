@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -212,8 +213,8 @@
 
         <!-- 친구에게 공유하기 버튼 추가 -->
         <div class="mt-1 kakao-share">
-            <button type="button" class="btn btn-primary" onclick="handleLogin()"><img src="/resources/img/kakao.svg"
-                    alt="">친구에게 공유하기</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:kakaoShare()"><img
+                    src="/resources/img/kakao.svg" alt="">친구에게 공유하기</button>
         </div>
     </div>
 
@@ -545,6 +546,44 @@
                 location.reload();
             });
         });
+    }
+</script>
+
+<!-- kakao sdk 호출 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+<!-- 공유하기 기능 구현 -->
+<script type="text/javascript">
+    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('5082aba073eeee4dbd5606104fd17280');
+
+    // SDK 초기화 여부를 판단합니다.
+    console.log(Kakao.isInitialized());
+
+    function kakaoShare() {
+        Kakao.Link.sendDefault({
+            objectType: 'feed',
+            content: {
+                title: '하나1PIECE',
+                description: '지금바로 부동산 조각 매물을 확인해보세요!',
+                imageUrl: 'https://raw.githubusercontent.com/pkd98/hana1PIECE/c87221038bd864c65e8d8ff4bc09beb9bb94808c/spring/src/main/webapp/resources/img/lotterTower.jpg?token=GHSAT0AAAAAACEYJYU7V2Q7CXCMCF5462ZWZHNZBOQ',
+                link: {
+                    mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                    webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                },
+            },
+            buttons: [
+                {
+                    title: '지금 건물주 되기!',
+                    link: {
+                        mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                        webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                    },
+                },
+            ],
+            // 카카오톡 미설치 시 카카오톡 설치 경로이동
+            installTalk: true,
+        })
     }
 </script>
 

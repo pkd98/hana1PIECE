@@ -16,7 +16,6 @@ public class DatabaseConnectionTest {
 
     @Test
     public void testConnection() {
-
         try {
             Connection con = dataSource.getConnection();
             System.out.println(con.getMetaData());
@@ -24,6 +23,5 @@ public class DatabaseConnectionTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

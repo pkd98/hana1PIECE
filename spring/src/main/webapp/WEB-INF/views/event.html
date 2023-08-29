@@ -185,8 +185,8 @@
         <div>
             <p>1Q2W3</p>
         </div>
-        <button type="button" class="btn btn-primary"
-        onclick="handleLogin()"><img src="/resources/img/kakao.svg" alt="">공유하기</button>
+        <button type="button" class="btn btn-primary" onclick="kakaoShare()"><img src="/resources/img/kakao.svg"
+                alt="">공유하기</button>
         <h6>나를 추천한 사람 : 3</h6>
     </div>
 
@@ -199,6 +199,45 @@
             <p class="menu-links">공지사항 | FAQ | 약관 및 정책</p>
         </div>
     </footer>
+
+
+    <!-- kakao sdk 호출 -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+    <!-- 공유하기 기능 구현 -->
+    <script type="text/javascript">
+        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('5082aba073eeee4dbd5606104fd17280');
+
+        // SDK 초기화 여부를 판단합니다.
+        console.log(Kakao.isInitialized());
+
+        function kakaoShare() {
+            Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '하나1PIECE',
+                    description: '지금바로 부동산 조각 매물을 확인해보세요!',
+                    imageUrl: 'https://raw.githubusercontent.com/pkd98/hana1PIECE/c87221038bd864c65e8d8ff4bc09beb9bb94808c/spring/src/main/webapp/resources/img/lotterTower.jpg?token=GHSAT0AAAAAACEYJYU7V2Q7CXCMCF5462ZWZHNZBOQ',
+                    link: {
+                        mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                        webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                    },
+                },
+                buttons: [
+                    {
+                        title: '지금 건물주 되기!',
+                        link: {
+                            mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                            webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                        },
+                    },
+                ],
+                // 카카오톡 미설치 시 카카오톡 설치 경로이동
+                installTalk: true,
+            })
+        }
+    </script>
 
     <!-- jQuery and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
