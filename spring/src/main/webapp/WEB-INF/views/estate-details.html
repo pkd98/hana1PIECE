@@ -19,385 +19,545 @@
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5082aba073eeee4dbd5606104fd17280"></script>
     <title>하나1PIECE</title>
 </head>
-
-<body>
-
-    <header>
-        <!-- 로그인 표시 바 -->
+<header>
+    <!-- 로그인 표시 바 -->
+    <div id="loginBar">
         <div id="loginBar">
-            <div id="loginBar">
-                <!-- Varying modal -->
-                <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
-                    data-bs-target="#loginModal" data-whatever="@mdo">로그인</button>
+            <!-- Varying modal -->
+            <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
+                data-bs-target="#loginModal" data-whatever="@mdo">로그인</button>
 
-                <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
-                    data-bs-target="#signUpModal" data-whatever="@fat">회원가입</button>
+            <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
+                data-bs-target="#signUpModal" data-whatever="@fat">회원가입</button>
 
 
-                <div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabelOne" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelOne"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
 
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="xButton">
-                                    <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-
-                                <h3 class="modal-title" id="exampleModalLabelOne">로그인</h3>
-
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="recipient-name" class="col-form-label">아이디</label>
-                                        <input type="text" class="form-control" id="recipient-name"
-                                            placeholder="아이디를 입력하세요.">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="message-text" class="col-form-label">비밀번호</label>
-                                        <input type="password" class="form-control" id="recipient-pwd"
-                                            placeholder="비밀번호를 입력하세요.">
-                                    </div>
-
-                                    <div class="modalFooter">
-                                        <button type="button" class="btn btn-primary"
-                                            onclick="handleLogin()">로그인하기</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabelOne" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="xButton">
-                                    <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-
-                                <h3 class="modal-title" id="exampleModalLabelOne">회원가입</h3>
-
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="message-text" class="col-form-label">이름</label>
-                                        <input type="text" class="form-control" id="recipient-name" placeholder="이름">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="recipient-name" class="col-form-label">아이디</label>
-                                        <input type="text" class="form-control" id="recipient-name"
-                                            placeholder="아이디 (필수)">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="message-text" class="col-form-label">비밀번호</label>
-                                        <input type="password" class="form-control" id="recipient-name"
-                                            placeholder="비밀번호 (필수)">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="message-text" class="col-form-label">비밀번호 확인</label>
-                                        <input type="password" class="form-control" id="recipient-name"
-                                            placeholder="비밀번호 확인">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="message-text" class="col-form-label">전화번호</label>
-                                        <input type="text" class="form-control" id="recipient-name"
-                                            placeholder="휴대폰 번호 (필수)">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="message-text" class="col-form-label">이메일 주소</label>
-                                        <input type="text" class="form-control" id="recipient-name"
-                                            placeholder="이메일 주소 (필수)">
-                                    </div>
-                                    <div class="modalFooter">
-                                        <button type="button" class="btn btn-primary">회원가입 하기</button>
-                                    </div>
-                                </form>
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="xButton">
+                                <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
 
+                            <h3 class="modal-title" id="exampleModalLabelOne">로그인</h3>
+
+                            <form>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">아이디</label>
+                                    <input type="text" class="form-control" id="recipient-name"
+                                        placeholder="아이디를 입력하세요.">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">비밀번호</label>
+                                    <input type="password" class="form-control" id="recipient-pwd"
+                                        placeholder="비밀번호를 입력하세요.">
+                                </div>
+
+                                <div class="modalFooter">
+                                    <button type="button" class="btn btn-primary" onclick="handleLogin()">로그인하기</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- nav bar -->
-        <div id="navBar">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="/"><img class="mainLogo" src="/resources/img/logo.png"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                투자하기
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">부동산 거래 가능 종목</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">부동산 매각 완료 종목</a>
+
+            <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelOne"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="xButton">
+                                <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
-                        </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">청약</a>
-                        </li>
+                            <h3 class="modal-title" id="exampleModalLabelOne">회원가입</h3>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">마이페이지</a>
-                        </li>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">이름</label>
+                                    <input type="text" class="form-control" id="recipient-name" placeholder="이름">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">아이디</label>
+                                    <input type="text" class="form-control" id="recipient-name" placeholder="아이디 (필수)">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">비밀번호</label>
+                                    <input type="password" class="form-control" id="recipient-name"
+                                        placeholder="비밀번호 (필수)">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">비밀번호 확인</label>
+                                    <input type="password" class="form-control" id="recipient-name"
+                                        placeholder="비밀번호 확인">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">전화번호</label>
+                                    <input type="text" class="form-control" id="recipient-name"
+                                        placeholder="휴대폰 번호 (필수)">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">이메일 주소</label>
+                                    <input type="text" class="form-control" id="recipient-name"
+                                        placeholder="이메일 주소 (필수)">
+                                </div>
+                                <div class="modalFooter">
+                                    <button type="button" class="btn btn-primary">회원가입 하기</button>
+                                </div>
+                            </form>
+                        </div>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                고객지원
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">공지사항</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">자주 묻는 질문</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">약관 및 정책</a>
-                            </div>
-                        </li>
-                    </ul>
+                    </div>
                 </div>
-            </nav>
+            </div>
         </div>
-    </header>
+    </div>
+    <!-- nav bar -->
+    <div id="navBar">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/"><img class="mainLogo" src="/resources/img/logo.png"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            투자하기
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">부동산 거래 가능 종목</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">부동산 매각 완료 종목</a>
+                        </div>
+                    </li>
 
-    <div class="titleBar">
-        <h2>투자하기</h2>
-        <hr>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">청약</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">마이페이지</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            고객지원
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">공지사항</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">자주 묻는 질문</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">약관 및 정책</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="titleBar">
+    <h2>투자하기</h2>
+    <hr>
+</div>
+
+<div class="estate-wrapper">
+
+    <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
+
+    <div class="card mt-3" style="max-width: 500px; width: 100%">
+
+        <div class="card-header">
+            <h5 class="card-title">롯데타워 시그니엘 1층</h5>
+            <p class="address">서울시 송파구</p>
+        </div>
+        <div class="card-body">
+            <div class="card-content">
+                <p class="value-title">건물가치</p>
+                <h6 class="value">5,034원</h6>
+                <small>(23.07.30)</small>
+            </div>
+            <div class="card-content">
+                <p class="value-title">토큰 가격</p>
+                <h6 class="value">4,505원</h6>
+                <small>-17.7%</small>
+            </div>
+            <div class="card-content">
+                <p class="value-title">건물가치 대비</p>
+                <h6 class="value">-10%</h6>
+                <small>매우 저평가</small>
+            </div>
+        </div>
     </div>
 
-    <div class="estate-wrapper">
+    <!-- 거래하기, 티끌모아 건물주 버튼 추가 -->
+    <div class="buttons">
+        <div class="mt-3 btn-group">
+            <button type="button" class="btn btn-primary">거래하기</button>
+            <button type="button" class="btn btn-primary" id="preOrderButton">티끌모아 건물주</button>
+        </div>
 
-        <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
+        <!-- 친구에게 공유하기 버튼 추가 -->
+        <div class="mt-1 kakao-share">
+            <button type="button" class="btn btn-primary" onclick="handleLogin()"><img src="/resources/img/kakao.svg"
+                    alt="">친구에게 공유하기</button>
+        </div>
+    </div>
 
-        <div class="card mt-3" style="max-width: 500px; width: 100%">
+    <div class="wrapper">
+        <div class="profit-header">
+            <h3 class="profit-title">수익 배당</h3>
+        </div>
 
-            <div class="card-header">
-                <h5 class="card-title">롯데타워 시그니엘 1층</h5>
-                <p class="address">서울시 송파구</p>
-            </div>
+        <div class="card mt-2" style="max-width: 500px; width: 100%">
             <div class="card-body">
                 <div class="card-content">
-                    <p class="value-title">건물가치</p>
-                    <h6 class="value">5,034원</h6>
-                    <small>(23.07.30)</small>
+                    <p class="detail-title">배당 기준일</p>
+                    <h6 class="detail-value">29일</h6>
                 </div>
                 <div class="card-content">
-                    <p class="value-title">토큰 가격</p>
-                    <h6 class="value">4,505원</h6>
-                    <small>-17.7%</small>
+                    <p class="detail-title">배당 지급일</p>
+                    <h6 class="detail-value">30일</h6>
                 </div>
                 <div class="card-content">
-                    <p class="value-title">건물가치 대비</p>
-                    <h6 class="value">-10%</h6>
-                    <small>매우 저평가</small>
+                    <p class="detail-title">토큰 분배금</p>
+                    <h6 class="detail-value">20원</h6>
                 </div>
             </div>
         </div>
-
-        <!-- 거래하기, 티끌모아 건물주 버튼 추가 -->
-        <div class="buttons">
-            <div class="mt-3 btn-group">
-                <button type="button" class="btn btn-primary">거래하기</button>
-                <button type="button" class="btn btn-primary">티끌모아 건물주</button>
-            </div>
-
-            <!-- 친구에게 공유하기 버튼 추가 -->
-            <div class="mt-1 kakao-share">
-                <button type="button" class="btn btn-primary" onclick="handleLogin()"><img
-                        src="/resources/img/kakao.svg" alt="">친구에게 공유하기</button>
-            </div>
-        </div>
-
-        <div class="wrapper">
-            <div class="profit-header">
-                <h3 class="profit-title">수익 배당</h3>
-            </div>
-
-            <div class="card mt-2" style="max-width: 500px; width: 100%">
-                <div class="card-body">
-                    <div class="card-content">
-                        <p class="detail-title">배당 기준일</p>
-                        <h6 class="detail-value">29일</h6>
-                    </div>
-                    <div class="card-content">
-                        <p class="detail-title">배당 지급일</p>
-                        <h6 class="detail-value">30일</h6>
-                    </div>
-                    <div class="card-content">
-                        <p class="detail-title">토큰 분배금</p>
-                        <h6 class="detail-value">20원</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="wrapper">
-            <div class="profit-header">
-                <h3 class="profit-title">주변 살펴보기</h3>
-                <p class="address">서울시 송파구</p>
-            </div>
-
-            <div id="map"></div>
-        </div>
-
-        <div class="wrapper">
-            <div class="profit-header">
-                <h3 class="profit-title">건물 정보</h3>
-            </div>
-
-            <div class="info-card">
-                <div class="info-item">
-                    <span class="info-label">층수</span>
-                    <span class="info-value">20층</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">용도 지역</span>
-                    <span class="info-value">상업지역</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">주용도</span>
-                    <span class="info-value">오피스</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">대지면적</span>
-                    <span class="info-value">1000m²</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">연면적</span>
-                    <span class="info-value">20,000m²</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">건폐율</span>
-                    <span class="info-value">60%</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">용적률</span>
-                    <span class="info-value">200%</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">준공일</span>
-                    <span class="info-value">2020.01.01</span>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="wrapper">
-            <div class="profit-header">
-                <h3 class="profit-title">발행 정보</h3>
-            </div>
-
-            <div class="issue-card">
-                <div class="issue-item">
-                    <span class="issue-label">공모대상</span>
-                    <span class="issue-value">롯데월드타워 1층 1호</span>
-                </div>
-                <div class="issue-item">
-                    <span class="issue-label">증권 종류</span>
-                    <span class="issue-value">수익 증권</span>
-                </div>
-                <div class="issue-item">
-                    <span class="issue-label">발행인</span>
-                    <span class="issue-value">하나자산신탁</span>
-                </div>
-                <div class="issue-item">
-                    <span class="issue-label">발행 증권수</span>
-                    <span class="issue-value">10,000 주</span>
-                </div>
-                <div class="issue-item">
-                    <span class="issue-label">총모집액</span>
-                    <span class="issue-value">100억 원</span>
-                </div>
-                <div class="issue-item">
-                    <span class="issue-label">청약일정</span>
-                    <span class="issue-value">2023.05.01 - 2023.06.01</span>
-                </div>
-                <div class="issue-item">
-                    <span class="issue-label">최초 배당 기준일</span>
-                    <span class="issue-value">2023.07.01</span>
-                </div>
-                <div class="issue-item">
-                    <span class="issue-label">배당 주기</span>
-                    <span class="issue-value">30일</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="wrapper">
-            <div class="profit-header">
-                <h3 class="profit-title">임차인 정보</h3>
-            </div>
-
-            <div class="tenant-card">
-                <div class="tenant-header">
-                    <span class="tenant-name">임차인명</span> | <span class="tenant-business">업종</span>
-                </div>
-                <div class="tenant-duration">
-                    계약기간 : <span>2023.01.01 ~ 2030.01.01</span>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <footer>
-        <div class="footerWrapper">
-            <img src="/resources/img/hanastock.svg" alt="Logo" class="footerLogo">
-            <p class="address-text">서울특별시 영등포구 의사당대로 82(여의도동)</p>
-            <p class="menu-links">공지사항 | FAQ | 약관 및 정책</p>
+    <div class="wrapper">
+        <div class="profit-header">
+            <h3 class="profit-title">주변 살펴보기</h3>
+            <p class="address">서울시 송파구</p>
         </div>
-    </footer>
 
-    <script>
-        var latitude = 37.5125000;
-        var longitude = 127.1027780;
-        
+        <div id="map"></div>
+    </div>
 
-        var container = document.getElementById('map');
-        var options = {
-            center: new kakao.maps.LatLng(latitude, longitude),
-            level: 3
-        };
-        // 지도 생성
-        var map = new kakao.maps.Map(container, options);
-        // 
-        var markerPosition  = new kakao.maps.LatLng(latitude, longitude); 
+    <div class="wrapper">
+        <div class="profit-header">
+            <h3 class="profit-title">건물 정보</h3>
+        </div>
 
-        // 마커를 생성합니다
-        var marker = new kakao.maps.Marker({
-            position: markerPosition
+        <div class="info-card">
+            <div class="info-item">
+                <span class="info-label">층수</span>
+                <span class="info-value">20층</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">용도 지역</span>
+                <span class="info-value">상업지역</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">주용도</span>
+                <span class="info-value">오피스</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">대지면적</span>
+                <span class="info-value">1000m²</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">연면적</span>
+                <span class="info-value">20,000m²</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">건폐율</span>
+                <span class="info-value">60%</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">용적률</span>
+                <span class="info-value">200%</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">준공일</span>
+                <span class="info-value">2020.01.01</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="wrapper">
+        <div class="profit-header">
+            <h3 class="profit-title">발행 정보</h3>
+        </div>
+
+        <div class="issue-card">
+            <div class="issue-item">
+                <span class="issue-label">공모대상</span>
+                <span class="issue-value">롯데월드타워 1층 1호</span>
+            </div>
+            <div class="issue-item">
+                <span class="issue-label">증권 종류</span>
+                <span class="issue-value">수익 증권</span>
+            </div>
+            <div class="issue-item">
+                <span class="issue-label">발행인</span>
+                <span class="issue-value">하나자산신탁</span>
+            </div>
+            <div class="issue-item">
+                <span class="issue-label">발행 증권수</span>
+                <span class="issue-value">10,000 주</span>
+            </div>
+            <div class="issue-item">
+                <span class="issue-label">총모집액</span>
+                <span class="issue-value">100억 원</span>
+            </div>
+            <div class="issue-item">
+                <span class="issue-label">청약일정</span>
+                <span class="issue-value">2023.05.01 - 2023.06.01</span>
+            </div>
+            <div class="issue-item">
+                <span class="issue-label">최초 배당 기준일</span>
+                <span class="issue-value">2023.07.01</span>
+            </div>
+            <div class="issue-item">
+                <span class="issue-label">배당 주기</span>
+                <span class="issue-value">30일</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="profit-header">
+            <h3 class="profit-title">임차인 정보</h3>
+        </div>
+
+        <div class="tenant-card">
+            <div class="tenant-header">
+                <span class="tenant-name">임차인명</span> | <span class="tenant-business">업종</span>
+            </div>
+            <div class="tenant-duration">
+                계약기간 : <span>2023.01.01 ~ 2030.01.01</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 예약 주문 모달 -->
+    <div class="modal fade" id="pre-orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pre-orderModalLabel">티끌모아 건물주 주문</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="pre-orderModalName">
+                        <p id="building-name">롯데타워시그니엘 1층 1호</p>
+                        <p>몇개씩 모을까요?</p>
+                    </div>
+                    <div class="trading">
+                        <div class="trading-items">
+                            <div class="quantity">
+                                <button class="decrease">-</button>
+                                <input type="number" placeholder="수량" />
+                                <button class="increase">+</button>
+                            </div>
+                            <div class="explanation">
+                                <p>* 매일 아침9시 시장가로 예약 주문됩니다.</p>
+                                <p>* 시작일: <span class="today"></span> ~ 해지시까지</p>
+                                <p>* 지갑 예치금이 부족할 경우 자동 해지됩니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <button type="button" class="btn btn-danger" id="confirmOrder">주문 확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 비밀번호 입력 모달 -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="height: 300px; justify-self: center;align-items: center;">
+                    <div class="wallet-pw">
+                        <label for="wallet-password">지갑 비밀번호</label>
+                        <input type="password" id="wallet-password" pattern="\d{4}" placeholder="4자리 숫자"
+                            maxlength="4" />
+                    </div>
+                    <div class="modal-footer" style="justify-content: center;">
+                        <button type="button" class="btn btn-primary" id="cancle">취소</button>
+                        <button type="button" class="btn btn-danger" id="final-confirm">주문 확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 성공 모달 -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="height: 150px; justify-self: center;align-items: center;">
+                    주문이 성공적으로 처리되었습니다.
+                </div>
+                <div class="modal-footer" style="padding: 50px">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal">닫기</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 실패 모달 -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 50px">
+                    주문 처리 중 오류가 발생했습니다.
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal">닫기</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <div class="footerWrapper">
+        <img src="/resources/img/hanastock.svg" alt="Logo" class="footerLogo">
+        <p class="address-text">서울특별시 영등포구 의사당대로 82(여의도동)</p>
+        <p class="menu-links">공지사항 | FAQ | 약관 및 정책</p>
+    </div>
+</footer>
+
+<script>
+    var latitude = 37.5125000;
+    var longitude = 127.1027780;
+
+    var container = document.getElementById('map');
+    var options = {
+        center: new kakao.maps.LatLng(latitude, longitude),
+        level: 3
+    };
+    // 지도 생성
+    var map = new kakao.maps.Map(container, options);
+    // 
+    var markerPosition = new kakao.maps.LatLng(latitude, longitude);
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+
+</script>
+<script>
+    // '티끌모아 건물주' 버튼 클릭시, 모달 표시
+    document.getElementById('preOrderButton').addEventListener('click', function () {
+        var preorderModal = new bootstrap.Modal(document.getElementById('pre-orderModal'));
+        preorderModal.show();
+    });
+
+    document.getElementById('confirmOrder').addEventListener('click', function () {
+        // 현재 모달을 숨깁니다
+        var preorderModal = bootstrap.Modal.getInstance(document.getElementById('pre-orderModal'));
+        preorderModal.hide();
+
+        // passwordModal을 표시합니다. (이전에 successModal로 되어 있었습니다.)
+        var passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'));
+        passwordModal.show();
+    });
+
+    document.getElementById('cancle').addEventListener('click', function () {
+        var passwordModal = bootstrap.Modal.getInstance(document.getElementById('passwordModal'));
+        passwordModal.hide();
+    });
+
+    window.onload = function () {
+        /**
+         *  수량 조절 관련 로직
+         */
+        const quantityInput = document.querySelector('.quantity input');
+
+        document.querySelector('.quantity .decrease').addEventListener('click', function () {
+            adjustValue(quantityInput, -1);
         });
 
-        // 마커가 지도 위에 표시되도록 설정합니다
-        marker.setMap(map);
+        document.querySelector('.quantity .increase').addEventListener('click', function () {
+            adjustValue(quantityInput, 1);
+        });
 
-    </script>
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
-        crossorigin="anonymous"></script>
+        function adjustValue(input, amount) {
+            const currentValue = parseInt(input.value) || 0;
+            input.value = currentValue + amount;
+            const quantity = parseInt(quantityInput.value) || 0;
+        }
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- ajax -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        /**
+         *  예약 주문 최종 전송
+         */
+        document.getElementById('final-confirm').addEventListener('click', function () {
+            handleOrder(this);
+        });
+
+        function handleOrder(btnElement) {
+            // Spinner 추가 및 버튼 텍스트 숨김
+            btnElement.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+            btnElement.disabled = true;  // 버튼을 비활성화
+
+            sendOrder(quantityInput.value, btnElement);
+        }
+
+        function sendOrder(quantity, btnElement) {
+            // AJAX 요청 구현
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/order-endpoint');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                // 추후 매물번호, 지갑번호 필요
+                quantity: quantity
+            }));
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    new bootstrap.Modal(document.getElementById('successModal')).show();
+                } else {
+                    new bootstrap.Modal(document.getElementById('errorModal')).show();
+                }
+                btnElement.disabled = false;  // 버튼을 활성화
+            };
+        }
+
+        // 처리 후 모달 닫기 버튼 누르면 페이지 초기화
+        document.querySelectorAll('.modal-close-text').forEach(closeText => {
+            closeText.addEventListener('click', function () {
+                location.reload();
+            });
+        });
+    }
+</script>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+    crossorigin="anonymous"></script>
+
+<!-- ajax -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 
 </html>

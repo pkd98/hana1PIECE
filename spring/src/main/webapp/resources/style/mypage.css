@@ -188,6 +188,36 @@
     justify-content: center;
 }
 
+/* 티끌모아 건물주 */
+.no-preorder {
+    display: flex;
+    place-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+}
+.no-preorder > p {
+    color: #008485;
+    font-size: 1.5rem;
+}
+
+.preorder-button-section {
+    width: 100%;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+#preorder-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    margin-top: 10px;
+    background-color: #E90061;
+    width: 20%;
+    height: 30px;
+    border-color: white;
+}
 
 /* 매각 투표 */
 .sold-title {
@@ -205,6 +235,7 @@
     margin-top: 20px;
     margin-bottom: 100px;
 }
+
 .no-sold > p {
     color: #008485;
     font-size: 1.5rem;
