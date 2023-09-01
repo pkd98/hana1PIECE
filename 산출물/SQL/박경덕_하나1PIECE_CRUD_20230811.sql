@@ -239,7 +239,18 @@ BEGIN
 END;
 /
 
-select * from wallet;
+BEGIN
+    hana_bank_mng.withdraw(
+        p_account_number=>'99900000001394',
+        p_password=>'1234',
+        p_amount=>50000000,
+        p_name=>'출금테스트',
+        p_recipient_account_number=>'CD'
+    );
+END;
+/
+
+select * from account;
 --------------------------------------------------------------------------------
 -- 지갑 현금 출금 : 연동 계좌로 현금 이체 - 마이페이지
 --------------------------------------------------------------------------------
