@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.announcement.model.mapper.AnnouncementMapper">
+
+    <select id="findAll" resultType="com.hana1piece.announcement.model.vo.AnnouncementVO">
+        select id, title, content, to_char(write_date, 'yyyy-MM-dd') as writeDate, count from announcement order by id desc
+    </select>
+
+    <select id="findByPageNo" parameterType="int" resultType="com.hana1piece.announcement.model.vo.AnnouncementVO">
+        SELECT * FROM (
+        SELECT a.*, ROWNUM rnum FROM (
+        SELECT * FROM announcement ORDER BY write_date DESC
+        ) a WHERE ROWNUM &lt;= (10 * #{pageNo})
+        )
+        WHERE rnum > 10 * (#{pageNo} - 1)
+    </select>
+
+    <select id="getTotalAnnouncement" resultType="int">
+        select count(*) from announcement
+    </select>
+
+
+    <select id="findById" parameterType="int" resultType="com.hana1piece.announcement.model.vo.AnnouncementVO">
+        select id, title, content, to_char(write_date, 'yyyy-MM-dd') as writeDate, count from announcement
+        where id = #{id}
+    </select>
+
+    <insert id="insertAnnouncement" parameterType="com.hana1piece.announcement.model.vo.AnnouncementVO">
+        insert into announcement(title, content)
+        values(#{title}, #{content})
+    </insert>
+
+    <delete id="deleteById" parameterType="int">
+        delete from announcement where id = #{id}
+    </delete>
+
+    <update id="updateAnnouncement" parameterType="com.hana1piece.announcement.model.vo.AnnouncementVO">
+        update announcement set title = #{title}, content = #{content}
+    </update>
+
+    <update id="increaseAnnouncementCountById" parameterType="int">
+        UPDATE announcement
+        SET count = count + 1
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>

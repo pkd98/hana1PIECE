@@ -432,7 +432,8 @@ CREATE TABLE ANNOUNCEMENT (
   ID NUMBER(8) DEFAULT ANNOUNCEMENT_SEQ.NEXTVAl PRIMARY KEY,    -- 공지사항번호
   TITLE VARCHAR2(300) NOT NULL,                                 -- 제목
   CONTENT VARCHAR2(1000) NOT NULL,                              -- 내용
-  WRITE_DATE DATE DEFAULT SYSDATE NOT NULL                      -- 등록일
+  WRITE_DATE DATE DEFAULT SYSDATE NOT NULL,                     -- 등록일
+  COUNT NUMBER(8) DEFAULT 0 NOT NULL                            -- 조회수
 );
 
 -- 공통코드M

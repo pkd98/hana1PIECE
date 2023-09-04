@@ -184,6 +184,7 @@ aside a img {
 
 /* 메인 제목 */
 .titleBar {
+    margin-top: 30px;
     display: flex;
     align-items: stretch;
     place-items: center;
@@ -261,6 +262,10 @@ aside a img {
 }
 
 /* 공지사항 페이지 */
+.announcement {
+    margin-bottom: 15vh;
+}
+
 .announcement>.table-bordered th,
 .announcement>.table-bordered td {
     border-color: #aaa;
@@ -268,12 +273,31 @@ aside a img {
     /* 회색 계통으로 설정 */
 }
 
+.announcement>.table-bordered th {
+    background-color: #008485;
+    color: white;
+}
+
+.announcement .table-bordered th:nth-child(1),
+.announcement .table-bordered td:nth-child(1),
+.announcement .table-bordered th:nth-child(3),
+.announcement .table-bordered td:nth-child(3),
+.announcement .table-bordered th:nth-child(4),
+.announcement .table-bordered td:nth-child(4) {
+    width: 15%;
+}
+
+
 .table-hover tbody tr {
     cursor: pointer;
 }
 
 .table-hover tbody tr:hover {
     background-color: #f5f5f5;
+}
+
+.announcement .table-bordered td {
+    text-align: center;
 }
 
 .pagination .page-link {
@@ -316,6 +340,13 @@ aside a img {
     font-size: 2vh;
     line-height: 1.5;
 }
+
+.pagination .page-item.active .page-link {
+    background-color: #008485;
+    border-color: #008485;
+    color: white;
+}
+
 
 .list-view-button {
     margin-top: 3vh;

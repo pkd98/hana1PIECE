@@ -129,7 +129,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">마이페이지</a>
+                        <a class="nav-link" href="/mypage">마이페이지</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -138,7 +138,7 @@
                             고객지원
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">공지사항</a>
+                            <a class="dropdown-item" href="/announcement">공지사항</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">자주 묻는 질문</a>
                             <div class="dropdown-divider"></div>
