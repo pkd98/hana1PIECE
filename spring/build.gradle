@@ -23,9 +23,8 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
 	implementation 'org.springframework.session:spring-session-core'
 	compileOnly 'org.projectlombok:lombok'
@@ -36,6 +35,10 @@ dependencies {
 
 	implementation 'commons-io:commons-io:2.11.0'
 	implementation 'org.springframework.boot:spring-boot-devtools'
+
+	// JSP 렌더링을 위한 의존성
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	// JSTL 라이브러리
 	implementation 'javax.servlet:jstl'
 
 	// JUnit 5 의존성 추가
