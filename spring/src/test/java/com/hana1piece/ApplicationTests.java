@@ -1,4 +1,4 @@
-package com.hana1piece.spring;
+package com.hana1piece;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.hana1piece.spring;
+package com.hana1piece;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
