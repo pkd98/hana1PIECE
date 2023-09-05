@@ -206,7 +206,7 @@ CREATE TABLE BANK_EXCEPTION_LOG (
   LOG_CODE VARCHAR2(20),                                -- 로그코드
   OCCUR_DATE DATE DEFAULT SYSDATE,                      -- 발생일시
   PROGRAM VARCHAR2(30),                                 -- 발생프로그램
-  MSG VARCHAR2(100),                                    -- 에러메시지
+  MSG VARCHAR2(10000),                                  -- 에러메시지
   NOTE VARCHAR2(50)                                     -- 비고
 );
 
@@ -457,6 +457,6 @@ CREATE TABLE EXCEPTION_LOG (
   LOG_CODE VARCHAR2(20),                            -- 로그 코드
   OCCUR_DATE DATE DEFAULT SYSDATE,                  -- 발생일시
   PROGRAM VARCHAR2(30),                             -- 발생프로그램
-  MSG VARCHAR2(100),                                -- 에러메시지
+  MSG VARCHAR2(10000),                              -- 에러메시지
   NOTE VARCHAR2(50)                                 -- 비고
 );

@@ -27,12 +27,21 @@ public class LoggerService {
         log.setProgram(program);
         log.setMsg(msg);
         log.setNote(note);
-        logging(log);
+        try {
+            logging(log);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Transactional
-    public void logging(Log log) {
-        loggerMapper.insertLog(log);
-        logger.info("로그 저장 완료: {}", log.getMsg()); // 콘솔에 출력됨
+    public void logging(Log log) throws Exception {
+        try {
+            loggerMapper.insertLog(log);
+            logger.info("로그 저장 완료: {}", log.getMsg());
+            System.out.println("로그 저장 완료");
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

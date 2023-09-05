@@ -56,6 +56,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         } catch (Exception e) {
             e.printStackTrace();
             loggerService.logException("ERR:WA", "writeAnnouncement", e.getMessage(), "");
+            throw e;
         }
     }
 
@@ -66,6 +67,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         } catch (Exception e) {
             e.printStackTrace();
             loggerService.logException("ERR:DA", "deleteAnnouncementById", e.getMessage(), "");
+            throw e;
         }
     }
 
@@ -76,6 +78,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         } catch (Exception e) {
             e.printStackTrace();
             loggerService.logException("ERR:UA", "updateAnnouncement", e.getMessage(), "");
+            throw e;
         }
     }
 }

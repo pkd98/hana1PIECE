@@ -13,3 +13,10 @@ SELECT * FROM (
 WHERE rnum > 10 * (1 - 1);
 
 select count(*) from ANNOUNCEMENT;
+
+select * from ONE_MEMBERS;
+truncate table ONE_MEMBERS;
+
+select HANA1PIECE_MNG.GENERATE_REFERRAL_CODE from dual;
+
+select * from EXCEPTION_LOG;

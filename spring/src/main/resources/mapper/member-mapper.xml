@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.member.model.mapper.MemberMapper">
+    <resultMap type="com.hana1piece.member.model.vo.OneMembersVO" id="OneMembersMap">
+        <result column="referral_code" property="referralCode" />
+        <result column="referral_count" property="referralCount" />
+    </resultMap>
+
+    <select id="findMemberAll" resultType="com.hana1piece.member.model.vo.OneMembersVO">
+        select * from one_members order by id desc
+    </select>
+
+    <select id="findMemberById" parameterType="string" resultType="com.hana1piece.member.model.vo.OneMembersVO">
+        select * from one_members where id = #{id}
+    </select>
+
+    <select id="getReferralCode" statementType="CALLABLE" resultType="string">
+        select HANA1PIECE_MNG.GENERATE_REFERRAL_CODE from dual
+    </select>
+
+    <insert id="insertMember" parameterType="com.hana1piece.member.model.vo.OneMembersVO">
+        INSERT INTO ONE_MEMBERS (ID, NAME, PASSWORD, PHONE, EMAIL, REFERRAL_CODE)
+        VALUES (#{id}, #{name}, #{password}, #{phone}, #{email}, #{referralCode})
+    </insert>
+
+</mapper>

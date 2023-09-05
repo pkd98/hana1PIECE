@@ -1,105 +1,166 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<script>
+    /**
+     * 비밀번호 확인 유효성 검사
+     */
+    function validatePassword() {
+        var password = document.getElementById('password');
+        var passwordCheck = document.getElementById('passwordCheck');
+        if (password.value !== passwordCheck.value) {
+            passwordCheck.setCustomValidity('비밀번호가 일치하지 않습니다.');
+        } else {
+            passwordCheck.setCustomValidity(''); // no error
+        }
+    }
+
+    /**
+     *  성공 모달 띄우는 함수
+     */
+    function showSuccessModal() {
+        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+    }
+
+    /**
+     * 실패 모달 띄우는 함수
+     */
+    function showErrorModal(error) {
+        const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+        errorModal.show();
+    }
+
+    /**
+     *  메인페이지로 리다이렉트
+     */
+    function redirectToHome() {
+        window.location.href = "/";
+    }
+
+</script>
+<script>
+    $(document).ready(function() {
+        $('#signupForm').on('submit', function (event) {
+            event.preventDefault(); // 기본 폼 제출 방법을 중지
+
+            var formData = {
+                'name': $('#name').val(),
+                'id': $('#id').val(),
+                'password': $('#password').val(),
+                'passwordCheck': $('#passwordCheck').val(),
+                'phone': $('#phone').val(),
+                'email': $('#email').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/signup', // 실제 서버 URL로 변경해야 합니다.
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function () {
+                    showSuccessModal();
+                },
+                error: function (error) {
+                    showErrorModal();
+                    console.error('error:', error);
+                }
+            });
+        });
+    });
+</script>
+
 <header>
     <!-- 로그인 표시 바 -->
     <div id="loginBar">
-        <div id="loginBar">
-            <!-- Varying modal -->
-            <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
-                    data-bs-target="#loginModal" data-whatever="@mdo">로그인</button>
+        <!-- Varying modal -->
+        <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
+                data-bs-target="#loginModal" data-whatever="@mdo">로그인
+        </button>
 
-            <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
-                    data-bs-target="#signUpModal" data-whatever="@fat">회원가입</button>
+        <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
+                data-bs-target="#signUpModal" data-whatever="@fat">회원가입
+        </button>
 
-
-            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalLabelOne" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="xButton">
-                                <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-
-                            <h3 class="modal-title" id="exampleModalLabelOne">로그인</h3>
-
-                            <form>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">아이디</label>
-                                    <input type="text" class="form-control" id="recipient-name"
-                                           placeholder="아이디를 입력하세요.">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">비밀번호</label>
-                                    <input type="password" class="form-control" id="recipient-pwd"
-                                           placeholder="비밀번호를 입력하세요.">
-                                </div>
-
-                                <div class="modalFooter">
-                                    <button type="button" class="btn btn-primary"
-                                            onclick="handleLogin()">로그인하기</button>
-                                </div>
-                            </form>
+        <!-- login Form modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabelOne" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="xButton">
+                            <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
+
+                        <h3 class="modal-title" id="loginForm">로그인</h3>
+
+                        <form>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">아이디</label>
+                                <input type="text" class="form-control" id="recipient-name"
+                                       placeholder="아이디를 입력하세요.">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">비밀번호</label>
+                                <input type="password" class="form-control" id="recipient-pwd"
+                                       placeholder="비밀번호를 입력하세요.">
+                            </div>
+                            <div class="modalFooter">
+                                <button type="button" class="btn btn-primary"
+                                        onclick="login()">로그인하기
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalLabelOne" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="xButton">
-                                <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-
-                            <h3 class="modal-title" id="exampleModalLabelOne">회원가입</h3>
-
-                            <form>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">이름</label>
-                                    <input type="text" class="form-control" id="recipient-name" placeholder="이름">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">아이디</label>
-                                    <input type="text" class="form-control" id="recipient-name"
-                                           placeholder="아이디 (필수)">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">비밀번호</label>
-                                    <input type="password" class="form-control" id="recipient-name"
-                                           placeholder="비밀번호 (필수)">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">비밀번호 확인</label>
-                                    <input type="password" class="form-control" id="recipient-name"
-                                           placeholder="비밀번호 확인">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">전화번호</label>
-                                    <input type="text" class="form-control" id="recipient-name"
-                                           placeholder="휴대폰 번호 (필수)">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">이메일 주소</label>
-                                    <input type="text" class="form-control" id="recipient-name"
-                                           placeholder="이메일 주소 (필수)">
-                                </div>
-                                <div class="modalFooter">
-                                    <button type="button" class="btn btn-primary">회원가입 하기</button>
-                                </div>
-                            </form>
+        <!-- signup Form modal -->
+        <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabelOne" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="xButton">
+                            <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
-
+                        <h3 class="modal-title" id="signup">회원가입</h3>
+                        <form id="signupForm">
+                            <div class="mb-3">
+                                <label for="name" class="col-form-label">성명 (필수)</label>
+                                <input type="text" class="form-control" id="name" placeholder="성명" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id" class="col-form-label">아이디 (필수)</label>
+                                <input type="text" class="form-control" id="id" placeholder="영문 숫자 혼합 6자리 이상" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" title="영문자와 숫자를 포함한 6자리 이상의 아이디를 입력해주세요." required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="col-form-label">비밀번호 (필수)</label>
+                                <input type="password" class="form-control" id="password" placeholder="영문 숫자 혼합 6자리 이상" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" title="영문자와 숫자를 포함한 6자리 이상의 비밀번호를 입력해주세요." required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="passwordCheck" class="col-form-label">비밀번호 확인 (필수)</label>
+                                <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호 확인" oninput="validatePassword()" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="col-form-label">전화번호 (필수)</label>
+                                <input type="text" class="form-control" id="phone" placeholder="01012345678" pattern="^010\d{8}$" title="010으로 시작하는 11자리의 전화번호를 입력해주세요." required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="col-form-label">이메일 주소 (필수)</label>
+                                <input type="email" class="form-control" id="email" placeholder="이메일 주소 (필수)" required>
+                            </div>
+                            <div class="modalFooter">
+                                <button type="submit" class="btn btn-primary">회원가입 하기</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- nav bar -->
     <div id="navBar">
         <!-- Navbar -->
@@ -113,7 +174,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             투자하기
                         </a>
@@ -133,7 +194,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             고객지원
                         </a>
@@ -148,5 +209,33 @@
                 </ul>
             </div>
         </nav>
+    </div>
+
+    <!-- 성공 모달 -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 50px; justify-content: center; text-align: center;">
+                    성공적으로 처리되었습니다.
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal" onclick="redirectToHome()">닫기</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 실패 모달 -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 50px; justify-content: center; text-align: center;">
+                    처리 중 오류가 발생했습니다.
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal" onclick="redirectToHome()">닫기</strong>
+                </div>
+            </div>
+        </div>
     </div>
 </header>

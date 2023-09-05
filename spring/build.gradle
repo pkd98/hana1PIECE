@@ -36,6 +36,9 @@ dependencies {
 	implementation 'commons-io:commons-io:2.11.0'
 	implementation 'org.springframework.boot:spring-boot-devtools'
 
+	// 유효성 검사용
+	implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
+
 	// JSP 렌더링을 위한 의존성
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	// JSTL 라이브러리
