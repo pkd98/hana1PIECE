@@ -38,7 +38,7 @@
 
 </script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#signupForm').on('submit', function (event) {
             event.preventDefault(); // 기본 폼 제출 방법을 중지
 
@@ -97,17 +97,15 @@
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">아이디</label>
                                 <input type="text" class="form-control" id="recipient-name"
-                                       placeholder="아이디를 입력하세요.">
+                                       placeholder="아이디를 입력하세요." required>
                             </div>
                             <div class="mb-3">
                                 <label for="message-text" class="col-form-label">비밀번호</label>
                                 <input type="password" class="form-control" id="recipient-pwd"
-                                       placeholder="비밀번호를 입력하세요.">
+                                       placeholder="비밀번호를 입력하세요." required>
                             </div>
                             <div class="modalFooter">
-                                <button type="button" class="btn btn-primary"
-                                        onclick="login()">로그인하기
-                                </button>
+                                <button type="submit" class="btn btn-primary">로그인하기</button>
                             </div>
                         </form>
                     </div>
@@ -133,19 +131,25 @@
                             </div>
                             <div class="mb-3">
                                 <label for="id" class="col-form-label">아이디 (필수)</label>
-                                <input type="text" class="form-control" id="id" placeholder="영문 숫자 혼합 6자리 이상" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" title="영문자와 숫자를 포함한 6자리 이상의 아이디를 입력해주세요." required>
+                                <input type="text" class="form-control" id="id" placeholder="영문 숫자 혼합 6자리 이상"
+                                       pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+                                       title="영문자와 숫자를 포함한 6자리 이상의 아이디를 입력해주세요." required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="col-form-label">비밀번호 (필수)</label>
-                                <input type="password" class="form-control" id="password" placeholder="영문 숫자 혼합 6자리 이상" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" title="영문자와 숫자를 포함한 6자리 이상의 비밀번호를 입력해주세요." required>
+                                <input type="password" class="form-control" id="password" placeholder="영문 숫자 혼합 6자리 이상"
+                                       pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+                                       title="영문자와 숫자를 포함한 6자리 이상의 비밀번호를 입력해주세요." required>
                             </div>
                             <div class="mb-3">
                                 <label for="passwordCheck" class="col-form-label">비밀번호 확인 (필수)</label>
-                                <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호 확인" oninput="validatePassword()" required>
+                                <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호 확인"
+                                       oninput="validatePassword()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="phone" class="col-form-label">전화번호 (필수)</label>
-                                <input type="text" class="form-control" id="phone" placeholder="01012345678" pattern="^010\d{8}$" title="010으로 시작하는 11자리의 전화번호를 입력해주세요." required>
+                                <input type="text" class="form-control" id="phone" placeholder="01012345678"
+                                       pattern="^010\d{8}$" title="010으로 시작하는 11자리의 전화번호를 입력해주세요." required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="col-form-label">이메일 주소 (필수)</label>
@@ -219,7 +223,8 @@
                     성공적으로 처리되었습니다.
                 </div>
                 <div class="modal-footer" style="justify-content: center;">
-                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal" onclick="redirectToHome()">닫기</strong>
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal"
+                            onclick="redirectToHome()">닫기</strong>
                 </div>
             </div>
         </div>
@@ -233,7 +238,8 @@
                     처리 중 오류가 발생했습니다.
                 </div>
                 <div class="modal-footer" style="justify-content: center;">
-                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal" onclick="redirectToHome()">닫기</strong>
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal"
+                            onclick="redirectToHome()">닫기</strong>
                 </div>
             </div>
         </div>
