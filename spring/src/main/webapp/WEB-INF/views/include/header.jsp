@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
     /**
      * 비밀번호 확인 유효성 검사
@@ -30,15 +31,27 @@
     }
 
     /**
-     *  메인페이지로 리다이렉트
+     *  리다이렉트
      */
     function redirectToHome() {
         window.location.href = "/";
     }
 
+    function redirectToMypage() {
+        window.location.href = "/mypage";
+    }
+
+    function logout() {
+        window.location.href = "/logout";
+    }
+
+
 </script>
 <script>
     $(document).ready(function () {
+        /**
+         *  회원가입 비동기 처리
+         */
         $('#signupForm').on('submit', function (event) {
             event.preventDefault(); // 기본 폼 제출 방법을 중지
 
@@ -65,55 +78,89 @@
                 }
             });
         });
+
+        /**
+         *  로그인 비동기 처리
+         */
+        $('#loginForm').on('submit', function (event) {
+            event.preventDefault(); // 기본 폼 제출 방법을 중지
+
+            var formData = {
+                'id': $('#loginId').val(),
+                'password': $('#loginPassword').val(),
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/login', // 실제 서버 URL로 변경해야 합니다.
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function () {
+                    window.location.href = "/";
+                },
+                error: function (error) {
+                    showErrorModal();
+                    console.error('error:', error);
+                }
+            });
+        });
+
     });
 </script>
 
 <header>
     <!-- 로그인 표시 바 -->
     <div id="loginBar">
-        <!-- Varying modal -->
-        <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
-                data-bs-target="#loginModal" data-whatever="@mdo">로그인
-        </button>
+        <c:choose>
+            <c:when test="${empty sessionScope.member}">
+                <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
+                        data-bs-target="#loginModal" data-whatever="@mdo">로그인
+                </button>
 
-        <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
-                data-bs-target="#signUpModal" data-whatever="@fat">회원가입
-        </button>
+                <button type="button" class="btn btn-link no-underline-black" data-bs-toggle="modal"
+                        data-bs-target="#signUpModal" data-whatever="@fat">회원가입
+                </button>
 
-        <!-- login Form modal -->
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLabelOne" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="xButton">
-                            <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                <div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabelOne" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="xButton">
+                                    <button type="button" class="btn-close bbtn" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+
+                                <h3 class="modal-title" id="login">로그인</h3>
+                                <form id="loginForm">
+                                    <div class="mb-3">
+                                        <label for="loginId" class="col-form-label">아이디</label>
+                                        <input type="text" class="form-control" id="loginId"
+                                               placeholder="아이디를 입력하세요." required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="loginPassword" class="col-form-label">비밀번호</label>
+                                        <input type="password" class="form-control" id="loginPassword"
+                                               placeholder="비밀번호를 입력하세요." required>
+                                    </div>
+                                    <div class="modalFooter">
+                                        <button type="submit" class="btn btn-primary">로그인하기</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
-                        <h3 class="modal-title" id="loginForm">로그인</h3>
-
-                        <form>
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">아이디</label>
-                                <input type="text" class="form-control" id="recipient-name"
-                                       placeholder="아이디를 입력하세요." required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="message-text" class="col-form-label">비밀번호</label>
-                                <input type="password" class="form-control" id="recipient-pwd"
-                                       placeholder="비밀번호를 입력하세요." required>
-                            </div>
-                            <div class="modalFooter">
-                                <button type="submit" class="btn btn-primary">로그인하기</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
-            </div>
-        </div>
+            </c:when>
+                <c:otherwise>
+                    <button id="memberNameButton" type="button" class="btn btn-link no-underline-black" onclick="redirectToMypage()">${sessionScope.member.name}님
+                    </button>
 
-        <!-- signup Form modal -->
+                    <button id="logoutButton" type="button" class="btn btn-link no-underline-black" onclick="logout()">로그아웃
+                    </button>
+                </c:otherwise>
+        </c:choose>
+
         <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabelOne" aria-hidden="true">
             <div class="modal-dialog" role="document">

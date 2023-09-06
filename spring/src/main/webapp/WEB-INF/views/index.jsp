@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,9 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- fabicon -->
     <link rel="icon" href="/resources/img/favicon.png">
-    <title>하나1PIECE</title>
     <!-- ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>하나1PIECE</title>
 </head>
 
 <body>
@@ -65,12 +64,12 @@
 </main>
 
 <aside>
-    <a href="#">
-        <img src="/resources/img/banner1.png" alt="">
+    <a href="/account-opening">
+        <img src="/resources/img/banner1.png" alt="banner">
 
     </a>
     <a href="#">
-        <img src="/resources/img/banner2.png" alt="">
+        <img src="/resources/img/banner2.png" alt="banner">
     </a>
 </aside>
 

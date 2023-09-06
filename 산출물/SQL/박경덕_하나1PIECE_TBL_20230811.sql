@@ -229,7 +229,7 @@ CREATE TABLE ONE_MEMBERS (
   PHONE VARCHAR2(11) NOT NULL,                      -- 휴대전화
   EMAIL VARCHAR2(50) NOT NULL,                      -- 이메일
   REFERRAL_CODE VARCHAR2(5) NOT NULL,               -- 추천코드
-  REFFERAL_COUNT NUMBER(8) DEFAULT 0 NOT NULL,      -- 추천수
+  REFERRAL_COUNT NUMBER(8) DEFAULT 0 NOT NULL,      -- 추천수
   
   -- 유니크 키 지정 : 휴대전화, 이메일, 추천코드
   CONSTRAINT uk_one_members_phone UNIQUE (phone),

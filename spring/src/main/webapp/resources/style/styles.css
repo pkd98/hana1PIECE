@@ -14,6 +14,11 @@ header {
     display: flex;
     justify-content: end;
     text-decoration: none;
+    margin-right: 70px;
+}
+
+#loginBar > a {
+    margin: 10px;
 }
 
 .btn.no-underline-black {
@@ -27,7 +32,6 @@ header {
     align-items: center;
     margin-left: 20px;
     margin-right: 20px;
-
 }
 
 .mainLogo {
@@ -157,8 +161,11 @@ footer {
         align-items: center;
         transform: scale(0.85);
         flex-direction: column-reverse;
-
     }
+    #loginBar {
+        margin-right: 10px;
+    }
+
 }
 
 .lead {
