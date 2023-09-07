@@ -20,6 +20,10 @@ public interface MemberService {
     /**
      *  SMS 인증번호 요청
      */
-    void getSmsCertificationNumber(String phoneNumber) throws CoolsmsException;
+    void getSmsCertificationNumber(String phoneNumber, HttpSession session) throws CoolsmsException;
 
+    /**
+     *  인증번호 검증
+     */
+    boolean isVerifySms(String userInput, HttpSession session);
 }

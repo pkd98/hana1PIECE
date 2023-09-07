@@ -85,11 +85,12 @@ public class MemberServiceImpl implements MemberService {
      * SMS 인증번호 요청 (CoolSMS 이용)
      */
     @Override
-    public void getSmsCertificationNumber(String phoneNumber) throws CoolsmsException {
+    public void getSmsCertificationNumber(String phoneNumber, HttpSession session) throws CoolsmsException {
         try {
             Random random = new Random();
             Message coolsms = new Message(smsApiKey, smsApiSecret);
 
+            // 인증번호 생성
             String numStr = "";
             for (int i = 0; i < 5; i++) {
                 numStr += Integer.toString(random.nextInt(10));
@@ -100,9 +101,13 @@ public class MemberServiceImpl implements MemberService {
             params.put("from", myPhone); // 발신 전화번호
             params.put("type", "sms");
             params.put("text", "[하나1PIECE] \n인증번호는 [" + numStr + "] 입니다.");
-            coolsms.send(params);
+            //coolsms.send(params);
+
+            // 세션에 인증번호 저장 (유효기간 3분)
+            session.setAttribute("smsCertificationNumber", numStr);
 
             System.out.println(numStr);
+            System.out.println(session.getAttribute("smsCertificationNumber"));
 
         } catch (Exception e) {
             loggerService.logException("ERR", "getSmsCertificationNumber", e.getMessage(), "");
@@ -110,5 +115,20 @@ public class MemberServiceImpl implements MemberService {
             throw e;
         }
     }
+
+    @Override
+    public boolean isVerifySms(String userInput, HttpSession session) {
+        // 세션에서 인증번호 가져옴
+        System.out.println(session.getAttribute("smsCertificationNumber"));
+        String smsData = (String) session.getAttribute("smsCertificationNumber");
+        if (smsData != null) {
+            if (userInput.equals(smsData)) {
+                // 사용자가 올바른 인증번호를 입력한 경우
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

@@ -51,12 +51,15 @@
         <!-- 휴대폰 인증 -->
         <div class="section">
             <h3 class="sub-title"><strong>휴대폰 인증</strong></h3>
-            <input type="text" class="form-control" placeholder="01012345678 (-) 제외" style="margin-bottom: 5px;">
-            <input type="text" class="form-control" placeholder="인증 번호">
-            <small class="verification-status text-danger">인증실패. 다시 시도해주세요.</small>
-            <small class="verification-status text-success">인증되었습니다.</small>
-            <button class="btn btn-secondary" style="background-color: #008485; margin-bottom: 5px;">인증번호요청</button>
-            <button class="btn btn-primary" style="background-color: #E90061;">확인</button>
+            <input type="text" id="phoneInput" class="form-control" placeholder="01012345678 (-) 제외"
+                   style="margin-bottom: 5px;">
+            <input type="text" id="phoneCodeInput" class="form-control" placeholder="인증 번호" style="margin-bottom: 10px;"
+                   hidden>
+            <small id="InvalidPhoneNumber" class="verification-status text-danger" hidden>유효하지 않은 전화번호입니다.</small>
+            <small id="InvalidCode" class="verification-status text-danger" hidden>인증실패. 다시 시도해주세요.</small>
+            <small id="validCode" class="verification-status text-success" hidden>인증되었습니다.</small>
+            <button id="requestCodeButton" class="btn btn-secondary" style="background-color: #008485; margin-bottom: 5px; margin-top: 5px;">인증번호요청</button>
+            <button id="phoneCodeSubmitButton" class="btn btn-primary" style="background-color: #E90061;" hidden>확인</button>
         </div>
 
         <!-- 본인 인증 -->
@@ -108,25 +111,83 @@
     <!-- 다음 버튼 -->
     <div class="button-wrapper">
         <button class="btn btn-primary" style="margin-right: 10px;">이전</button>
-        <button class="btn btn-primary">계좌개설</button>
+        <button class="btn btn-primary" disabled>계좌개설</button>
     </div>
 </div>
 
 
 <%@ include file="include/footer.jsp" %>
 
+<script>
+
+    $(document).ready(function () {
+        // 인증번호 요청 버튼 클릭
+        $("#requestCodeButton").click(function () {
+            let phone = $("#phoneInput").val();
+
+            if (phone) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/sms',
+                    data: {
+                        phone: phone
+                    },
+                    success: function () {
+                        // 인증번호 입력창 띄우기
+                        $("#phoneCodeInput").removeAttr("hidden");
+                        document.getElementById("requestCodeButton").disabled = true;
+                        document.getElementById("phoneCodeSubmitButton").hidden = false;
+
+                    },
+                    error: function (error) {
+                        // 유효하지 않은 휴대전화
+                        $("#InvalidPhoneNumber").removeAttr("hidden");
+                    }
+                });
+
+            } else {
+                alert("휴대폰 번호를 입력해주세요.");
+            }
+        });
+
+        // 확인 버튼 클릭
+        $("#phoneCodeSubmitButton").click(function () {
+            let code = $("#phoneCodeInput").val();
+
+            if (code) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/sms',
+                    data: {
+                        phoneCodeInput: code
+                    },
+                    success: function () {
+                        // 인증번호 입력창 띄우기
+                        $("#validCode").removeAttr("hidden");
+                        document.getElementById("InvalidCode").hidden = true;
+                    },
+                    error: function (error) {
+                        // 유효하지 않은 휴대전화
+                        $("#InvalidCode").removeAttr("hidden");
+                    }
+                });
+            } else {
+                alert("인증번호를 입력해주세요.");
+            }
+        });
+    });
+
+</script>
+
 <!-- jQuery and Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
         crossorigin="anonymous"></script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- ajax -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 
 </html>

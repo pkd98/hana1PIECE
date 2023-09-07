@@ -3,6 +3,7 @@ package com.hana1piece.member.controller;
 import com.hana1piece.member.model.dto.LoginDTO;
 import com.hana1piece.member.model.dto.SignupDTO;
 import com.hana1piece.member.service.MemberService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -82,7 +83,7 @@ public class MemberController {
     }
 
     /**
-     *  계좌 개설
+     * 계좌 개설
      */
     @GetMapping("/account-opening")
     public String accountOpening() {
@@ -90,7 +91,7 @@ public class MemberController {
     }
 
     /**
-     *  종합 계좌 개설 프로세스 1
+     * 종합 계좌 개설 프로세스 1
      */
     @GetMapping("/accountOpeningProcess1")
     public String accountOpeningProcess1() {
@@ -98,7 +99,7 @@ public class MemberController {
     }
 
     /**
-     *  종합 계좌 개설 프로세스 2
+     * 종합 계좌 개설 프로세스 2
      */
     @GetMapping("/accountOpeningProcess2")
     public String accountOpeningProcess2() {
@@ -106,22 +107,32 @@ public class MemberController {
     }
 
     /**
-     *  CoolSMS 이용 SMS 인증번호 요청
+     * CoolSMS 이용 SMS 인증번호 요청
      */
     @GetMapping("/sms")
-    public ResponseEntity sendSMS(@RequestParam("phone") String phone) {
+    public ResponseEntity sendSMS(@RequestParam("phone") String phone, HttpSession session) {
         try {
-            // sms 전송
-            System.out.println("test");
-            memberService.getSmsCertificationNumber(phone);
-            System.out.println("Test");
+            // SMS 전송
+            memberService.getSmsCertificationNumber(phone, session);
             // 정상 전송됨
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send SMS");
         }
     }
 
+    /**
+     *  사용자 입력 인증코드 검증
+     */
+    @PostMapping("/sms")
+    public ResponseEntity verifySmsCode(@RequestParam("phoneCodeInput") String phoneCodeInput, HttpSession session) {
+        // SMS 전송
+        if (memberService.isVerifySms(phoneCodeInput, session)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid SMS code");
+        }
+    }
 
 
 }
