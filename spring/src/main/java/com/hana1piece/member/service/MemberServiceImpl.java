@@ -1,21 +1,27 @@
 package com.hana1piece.member.service;
 
+import com.google.gson.Gson;
 import com.hana1piece.logger.service.LoggerService;
-import com.hana1piece.member.model.dto.LoginDTO;
-import com.hana1piece.member.model.dto.SignupDTO;
+import com.hana1piece.member.model.dto.*;
 import com.hana1piece.member.model.mapper.MemberMapper;
 import com.hana1piece.member.model.vo.OneMembersVO;
-import net.nurigo.java_sdk.Coolsms;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Random;
+
+
 
 @Service
 @Transactional
@@ -30,6 +36,8 @@ public class MemberServiceImpl implements MemberService {
     private String smsApiSecret;
     @Value("${myphone}")
     private String myPhone;
+    @Value("${hanabank.server.url}")
+    private String bankServerUrl;
 
     @Autowired
     public MemberServiceImpl(MemberMapper memberMapper, LoggerService loggerService) {
@@ -41,6 +49,7 @@ public class MemberServiceImpl implements MemberService {
      * 회원가입
      */
     @Override
+    @Transactional
     public void signup(SignupDTO signupDTO) {
         try {
             OneMembersVO oneMembersVO = new OneMembersVO();
@@ -105,6 +114,7 @@ public class MemberServiceImpl implements MemberService {
 
             // 세션에 인증번호 저장 (유효기간 3분)
             session.setAttribute("smsCertificationNumber", numStr);
+            session.setMaxInactiveInterval(180);
 
             System.out.println(numStr);
             System.out.println(session.getAttribute("smsCertificationNumber"));
@@ -116,6 +126,9 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    /**
+     *  인증번호 확인 검사
+     */
     @Override
     public boolean isVerifySms(String userInput, HttpSession session) {
         // 세션에서 인증번호 가져옴
@@ -127,6 +140,94 @@ public class MemberServiceImpl implements MemberService {
                 return true;
             }
         }
+        return false;
+    }
+
+    /**
+     *  계좌 개설 및 지갑 연동 프로세스
+     * @param member
+     * @param accountAndWalletOpeningDTO
+     */
+    @Override
+    @Transactional
+    public void accountAndWalletOpening(OneMembersVO member, AccountAndWalletOpeningDTO accountAndWalletOpeningDTO) {
+        try {
+            AccountOpeningDTO accountOpeningDTO = new AccountOpeningDTO();
+            accountOpeningDTO.setName(member.getName());
+            accountOpeningDTO.setPassword(accountAndWalletOpeningDTO.getAccountPassword());
+            accountOpeningDTO.setResidentNumber1(accountAndWalletOpeningDTO.getRegistrationNumber1());
+            accountOpeningDTO.setResidentNumber2(accountAndWalletOpeningDTO.getRegistrationNumber2());
+            String accountNumber = accountOpening(accountOpeningDTO);
+
+            WalletOpeningDTO walletOpeningDTO = new WalletOpeningDTO();
+            walletOpeningDTO.setAccountNumber(accountNumber); // 생성한 계좌번호
+            walletOpeningDTO.setMemberId(member.getId());
+            walletOpeningDTO.setPassword(accountAndWalletOpeningDTO.getWalletPassword());
+            walletOpening(walletOpeningDTO);
+        } catch (Exception e){
+            loggerService.logException("ERR", "accountAndWalletOpening", e.getMessage(), "");
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 하나은행 모듈에 계좌 개설 요청
+     * @param accountOpeningDTO
+     * @return
+     */
+    @Override
+    @Transactional
+    public String accountOpening(AccountOpeningDTO accountOpeningDTO) {
+        System.out.println(accountOpeningDTO.toString());
+        OkHttpClient client = new OkHttpClient();
+        Gson gson = new Gson();
+
+        // AccountOpeningDTO 객체를 JSON 문자열로 직렬화
+        String jsonInputString = gson.toJson(accountOpeningDTO);
+
+        // JSON 요청 데이터
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, jsonInputString);
+
+        Request request = new Request.Builder()
+                .url(bankServerUrl + "account/opening")
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String accountNumber = response.body().string();
+            System.out.println("응답 코드: " + response.code());
+            System.out.println("응답 본문: " + accountNumber);
+            return accountNumber;
+
+        } catch (Exception e) {
+            loggerService.logException("ERR", "accountAndWalletOpening", e.getMessage(), "");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 지갑 개설
+     * @param walletOpeningDTO
+     */
+    @Override
+    @Transactional
+    public void walletOpening(WalletOpeningDTO walletOpeningDTO) {
+        memberMapper.insertWallet(walletOpeningDTO);
+    }
+
+    /**
+     * 추천인 이벤트: 추천인 추천자 5000원 지급
+     * @param memberId
+     * @param referralCode
+     * @return
+     */
+    @Override
+    @Transactional
+    public boolean event(String memberId, String referralCode) {
         return false;
     }
 

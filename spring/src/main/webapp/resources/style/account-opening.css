@@ -207,6 +207,7 @@
 .RRNContainer {
     display: flex;
     align-items: center;
+    max-width: 359px;
 }
 
 .RRNContainer > span {
@@ -224,13 +225,17 @@
     margin-bottom: 100px;
 }
 
-.account-opening-complete > p {
-    font-size: 1.5rem;
+.content-text {
+    font-size: 1.7rem;
     margin-top: 50px;
-    margin-bottom: 100px;
+    margin-bottom: 80px;
 }
 
-.account-opening-complete :last-child {
+#event-participation {
+    font-size: 1.2rem;
+}
+
+.account-opening-complete > button {
     background-color: #E90061;
 }
 

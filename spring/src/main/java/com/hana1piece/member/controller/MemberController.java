@@ -1,14 +1,19 @@
 package com.hana1piece.member.controller;
 
+import com.hana1piece.member.model.dto.AccountAndWalletOpeningDTO;
+import com.hana1piece.member.model.dto.AccountOpeningDTO;
 import com.hana1piece.member.model.dto.LoginDTO;
 import com.hana1piece.member.model.dto.SignupDTO;
+import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.member.service.MemberService;
+import org.apache.ibatis.annotations.One;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.Errors;
 
@@ -83,11 +88,55 @@ public class MemberController {
     }
 
     /**
-     * 계좌 개설
+     * 계좌 개설 페이지
      */
     @GetMapping("/account-opening")
     public String accountOpening() {
         return "account-opening";
+    }
+
+    /**
+     *  계좌 개설 및 지갑 연동 서비스 처리
+     */
+    @PostMapping("/account-opening")
+    public ResponseEntity accountOpeningProcess(@Valid AccountAndWalletOpeningDTO accountAndWalletOpeningDTO, BindingResult br, HttpSession session) {
+        System.out.println(accountAndWalletOpeningDTO.toString());
+        try {
+            OneMembersVO member = (OneMembersVO) session.getAttribute("member");
+            // 세션 만료 리턴
+            if (member == null) {
+                return null;
+            }
+
+            if (!br.hasErrors()) {
+                // 계좌, 지갑 개설 및 연동
+                System.out.println("test");
+                memberService.accountAndWalletOpening(member, accountAndWalletOpeningDTO);
+
+                // 추천인 이벤트
+                boolean eventState = (accountAndWalletOpeningDTO.getReferralCode() != null) ? memberService.event(member.getId(), accountAndWalletOpeningDTO.getReferralCode()) : false;
+
+                // 추천인 이벤트 정상 참여한 경우
+                if (eventState) {
+                    return ResponseEntity.ok().body("{\"event\" : \"ok\"}");
+                } else {
+                    return ResponseEntity.ok().build();
+                }
+            } else {
+                // 유효성검사 실패
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("bad request");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("server error");
+        }
+    }
+
+    /**
+     * 개설 완료 리다이렉트
+     */
+    @GetMapping("/account-opening-complete")
+    public String completeAccountOpening() {
+        return "/account-opening-complete";
     }
 
     /**

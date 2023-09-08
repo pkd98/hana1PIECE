@@ -29,4 +29,9 @@
         VALUES (#{id}, #{name}, #{password}, #{phone}, #{email}, #{referralCode})
     </insert>
 
+    <insert id="insertWallet" parameterType="com.hana1piece.member.model.dto.WalletOpeningDTO">
+        INSERT INTO wallet (member_id, account_number, password)
+        VALUES (#{memberId}, #{accountNumber}, #{password})
+    </insert>
+
 </mapper>

@@ -21,3 +21,7 @@ select HANA1PIECE_MNG.GENERATE_REFERRAL_CODE from dual;
 
 select * from EXCEPTION_LOG;
 
+
+select * from account;
+
+select * from wallet;

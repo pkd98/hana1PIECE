@@ -72,9 +72,10 @@ public class BankController {
      */
     @ResponseBody
     @PostMapping("/account/opening")
-    public void accountOpening(@RequestBody AccountOpeningDTO accountOpeningDTO) {
+    public String accountOpening(@RequestBody AccountOpeningDTO accountOpeningDTO) {
         // System.out.println(accountOpeningDTO.toString());
-        bankService.accountOpening(accountOpeningDTO);
+        // 개설된 계좌번호 리턴
+        return bankService.accountOpening(accountOpeningDTO);
     }
 
 

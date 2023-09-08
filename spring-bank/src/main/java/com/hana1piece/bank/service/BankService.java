@@ -18,7 +18,7 @@ public interface BankService {
 
     /* 프로시저 패키지 사용 */
     // 계좌 개설
-    void accountOpening(AccountOpeningDTO accountOpeningDTO);
+    String accountOpening(AccountOpeningDTO accountOpeningDTO);
 
     // 입금
     void deposit(DepositDTO depositDTO);

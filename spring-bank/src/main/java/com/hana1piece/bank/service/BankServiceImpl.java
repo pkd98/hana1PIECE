@@ -33,7 +33,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public void accountOpening(AccountOpeningDTO accountOpeningDTO) {
+    public String accountOpening(AccountOpeningDTO accountOpeningDTO) {
         /**
          *  [계좌 번호 생성] : 999-ZZZZZZ-ZZ394
          *  앞 999, 뒤 194 고정 및 Z 부분 Sequence 이용 생성
@@ -50,6 +50,13 @@ public class BankServiceImpl implements BankService {
          */
         accountOpeningDTO.setAccountNumber(sb.toString());
         bankMapper.callAccountOpening(accountOpeningDTO);
+
+        if(findAccountByAccountNumber(sb.toString()) != null){
+            // 생성한 계좌번호 리턴
+            return sb.toString();
+        } else {
+            return null;
+        }
     }
 
     @Override
