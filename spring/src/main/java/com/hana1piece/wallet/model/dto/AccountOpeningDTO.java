@@ -1,13 +1,11 @@
-package com.hana1piece.member.model.vo;
+package com.hana1piece.wallet.model.dto;
 
 import lombok.Data;
 
 @Data
-public class AccountVO {
+public class AccountOpeningDTO {
     private String accountNumber;
     private String password;
-    private long balance;
-    private String openingDate;
     private String residentNumber1;
     private String residentNumber2;
     private String name;

@@ -2,6 +2,9 @@ package com.hana1piece.member.service;
 
 import com.hana1piece.member.model.dto.*;
 import com.hana1piece.member.model.vo.OneMembersVO;
+import com.hana1piece.wallet.model.dto.AccountAndWalletOpeningDTO;
+import com.hana1piece.wallet.model.dto.AccountOpeningDTO;
+import com.hana1piece.wallet.model.dto.WalletOpeningDTO;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 import javax.servlet.http.HttpSession;

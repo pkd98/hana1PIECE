@@ -25,3 +25,11 @@ select * from EXCEPTION_LOG;
 select * from account;
 
 select * from wallet;
+
+update wallet set BALANCE = BALANCE + -10 where wallet_number = 6;
+
+select * from WALLET_TRANSACTION;
+desc WALLET_TRANSACTION;
+
+insert into WALLET_TRANSACTION()
+VALUES();

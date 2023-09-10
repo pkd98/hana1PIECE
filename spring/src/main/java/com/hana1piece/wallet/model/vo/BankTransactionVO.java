@@ -1,4 +1,4 @@
-package com.hana1piece.member.model.vo;
+package com.hana1piece.wallet.model.vo;
 
 import lombok.Data;
 

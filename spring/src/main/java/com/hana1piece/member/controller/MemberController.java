@@ -1,25 +1,18 @@
 package com.hana1piece.member.controller;
 
-import com.hana1piece.member.model.dto.AccountAndWalletOpeningDTO;
-import com.hana1piece.member.model.dto.AccountOpeningDTO;
+import com.hana1piece.wallet.model.dto.AccountAndWalletOpeningDTO;
 import com.hana1piece.member.model.dto.LoginDTO;
 import com.hana1piece.member.model.dto.SignupDTO;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.member.service.MemberService;
-import org.apache.ibatis.annotations.One;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.validation.Errors;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Random;
 
 @Controller
 public class MemberController {

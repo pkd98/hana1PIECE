@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.servlet.http.HttpSession;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 
 @SpringBootTest
@@ -26,9 +27,13 @@ public class smsTest {
     }
 
     @Test
-    @DisplayName("LoggerService 예외 로그 작성 테스트")
-    public void smsTest() throws CoolsmsException {
-        memberService.getSmsCertificationNumber("01012341234", session);
+    @DisplayName("SMS 테스트")
+    public void smsTest() {
+        try {
+            memberService.getSmsCertificationNumber("01012341234", session);
+        } catch(Exception e) {
+            fail("SMS 에러 발생" + e.getMessage());
+        }
     }
 
 }

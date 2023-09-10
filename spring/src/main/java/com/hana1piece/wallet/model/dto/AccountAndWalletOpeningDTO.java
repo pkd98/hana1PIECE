@@ -1,4 +1,4 @@
-package com.hana1piece.member.model.dto;
+package com.hana1piece.wallet.model.dto;
 
 import lombok.Data;
 

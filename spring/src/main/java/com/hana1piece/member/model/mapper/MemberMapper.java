@@ -1,8 +1,7 @@
 package com.hana1piece.member.model.mapper;
 
 import com.hana1piece.member.model.dto.LoginDTO;
-import com.hana1piece.member.model.dto.SignupDTO;
-import com.hana1piece.member.model.dto.WalletOpeningDTO;
+import com.hana1piece.wallet.model.dto.WalletOpeningDTO;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import org.apache.ibatis.annotations.Mapper;
 
