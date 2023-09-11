@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.manager.model.mapper.ManagerMapper">
+
+    <select id="login" parameterType="com.hana1piece.manager.model.dto.ManagerLoginDTO" resultType="com.hana1piece.manager.model.vo.ManagerVO">
+        select id, name, enroll_date as enrollDate, image, position, introduction from manager where id = #{id} and password = #{password}
+    </select>
+
+</mapper>

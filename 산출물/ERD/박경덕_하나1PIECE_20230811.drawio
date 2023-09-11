@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-09-10T06:16:45.435Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="mOWph-d50a7S3KKpRF0V" version="21.7.2" type="device">
+<mxfile host="app.diagrams.net" modified="2023-09-11T13:39:12.796Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="SysuFHpGpWDUTQD4MRoh" version="21.7.2" type="device">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="3911" dy="1129" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="4388" dy="527" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -602,7 +602,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-1" value="MANAGER (관리자)" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;fillColor=#eeeeee;strokeColor=#36393d;" parent="1" vertex="1">
-          <mxGeometry x="-3260" y="120" width="401" height="150" as="geometry">
+          <mxGeometry x="-3260" y="120" width="401" height="240" as="geometry">
             <mxRectangle x="10" y="10" width="120" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -654,6 +654,45 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-16" value="ENROLL_DATE DATE DEFAULT SYSDATE NOT NULL.     등록일" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="-MrJFI244WIY_XfIuMhO-14" vertex="1">
+          <mxGeometry x="30" width="371" height="30" as="geometry">
+            <mxRectangle width="371" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-2" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="-MrJFI244WIY_XfIuMhO-1">
+          <mxGeometry y="150" width="401" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-3" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;" vertex="1" parent="lLIDbCIssbnMuZEUqozc-2">
+          <mxGeometry width="30" height="30" as="geometry">
+            <mxRectangle width="30" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-4" value="IMAGE VARCHAR2(100)                                                       이미지" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="lLIDbCIssbnMuZEUqozc-2">
+          <mxGeometry x="30" width="371" height="30" as="geometry">
+            <mxRectangle width="371" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-6" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="-MrJFI244WIY_XfIuMhO-1">
+          <mxGeometry y="180" width="401" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-7" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;" vertex="1" parent="lLIDbCIssbnMuZEUqozc-6">
+          <mxGeometry width="30" height="30" as="geometry">
+            <mxRectangle width="30" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-8" value="POSITION VARCHAR2(100) NOT NULL                                직책" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="lLIDbCIssbnMuZEUqozc-6">
+          <mxGeometry x="30" width="371" height="30" as="geometry">
+            <mxRectangle width="371" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-10" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="-MrJFI244WIY_XfIuMhO-1">
+          <mxGeometry y="210" width="401" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-11" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;" vertex="1" parent="lLIDbCIssbnMuZEUqozc-10">
+          <mxGeometry width="30" height="30" as="geometry">
+            <mxRectangle width="30" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-12" value="INTRODUCTION VARCHAR2(200) NOT NULL                    소개글" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="lLIDbCIssbnMuZEUqozc-10">
           <mxGeometry x="30" width="371" height="30" as="geometry">
             <mxRectangle width="371" height="30" as="alternateBounds" />
           </mxGeometry>
@@ -1644,7 +1683,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-348" value="ANNOUNCEMENT (공지사항)" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;fillColor=#eeeeee;strokeColor=#36393d;" parent="1" vertex="1">
-          <mxGeometry x="-3259" y="320" width="400" height="180" as="geometry" />
+          <mxGeometry x="-3260" y="420" width="400" height="180" as="geometry" />
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-349" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" parent="-MrJFI244WIY_XfIuMhO-348" vertex="1">
           <mxGeometry y="30" width="400" height="30" as="geometry" />

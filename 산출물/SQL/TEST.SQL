@@ -1,3 +1,7 @@
+INSERT INTO MANAGER (ID, NAME, PASSWORD, ENROLL_DATE, IMAGE, POSITION, INTRODUCTION)
+VALUES ('admin', '관리자', 'admin', TO_DATE('2023-08-08', 'YYYY-MM-DD'), 'manager.jpg', 'Web Back-end Developer', '매사 긍정적이고 성실하게 배우려 노력하는<br>IT 개발자입니다.');
+
+
 select * from ANNOUNCEMENT;
 insert into ANNOUNCEMENT(title, CONTENT) VALUES ('test', 'test');
 commit;
@@ -53,3 +57,6 @@ END;
 select * from account;
 
 select * from BANK_TRANSACTION;
+
+
+select * from manager;

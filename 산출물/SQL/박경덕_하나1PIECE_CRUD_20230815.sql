@@ -9,8 +9,8 @@ REM  ***************************************************************************
 -- 기본 데이터 : 관리자 계정, 관리자(사업자) 계좌
 --------------------------------------------------------------------------------
 -- 관리자 계정 등록
-INSERT INTO MANAGER (ID, NAME, PASSWORD, ENROLL_DATE)
-VALUES ('admin', '관리자', 'admin', TO_DATE('2023-08-08', 'YYYY-MM-DD'));
+INSERT INTO MANAGER (ID, NAME, PASSWORD, ENROLL_DATE, IMAGE, POSITION, INTRODUCTION)
+VALUES ('admin', '관리자', 'admin', TO_DATE('2023-08-08', 'YYYY-MM-DD'), 'manager.jpg', 'Web Back-end Developer', '매사 긍정적이고 성실하게 배우려 노력하는<br>IT 개발자입니다.');
 
 INSERT INTO ACCOUNT (ACCOUNT_NUMBER, PASSWORD, BALANCE, RESIDENT_NUMBER1, RESIDENT_NUMBER2, NAME)
 VALUES ('99900000000394', '1234', 100000000, 981010, 0000000, '(주)하나1PIECE');

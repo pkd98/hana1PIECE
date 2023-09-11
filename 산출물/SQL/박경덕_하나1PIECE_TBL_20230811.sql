@@ -218,7 +218,10 @@ CREATE TABLE MANAGER (
   ID VARCHAR2(15) PRIMARY KEY,                      -- 관리자 아이디
   NAME VARCHAR2(30) NOT NULL,                       -- 관리자 이름
   PASSWORD VARCHAR2(30) NOT NULL,                   -- 비밀번호
-  ENROLL_DATE DATE DEFAULT SYSDATE NOT NULL         -- 등록일
+  ENROLL_DATE DATE DEFAULT SYSDATE NOT NULL,        -- 등록일
+  IMAGE VARCHAR2(100),                              -- 이미지
+  POSITION VARCHAR2(100),                           -- 직책
+  INTRODUCTION VARCHAR2(200)                        -- 소개글
 );
 
 -- 통합 회원

@@ -4,10 +4,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.hana1piece.manager.model.vo.ManagerVO;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 public class LoginInterceptor implements HandlerInterceptor {
+
+    /*
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        HttpSession session = request.getSession();
+        ManagerVO manager = (ManagerVO) session.getAttribute("manager");
+        return (manager == null) ? false : true;
+    }
+     */
+
+
 /*
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
