@@ -36,11 +36,11 @@
     <div class="event">
         <h3>내 코드</h3>
         <div>
-            <p id="myCode">1Q2W3</p>
+            <p id="myCode">${sessionScope.member.referralCode}</p>
         </div>
         <button type="button" class="btn btn-primary" onclick="kakaoShare()"><img src="/resources/img/kakao.svg"
                 alt="">공유하기</button>
-        <h6>나를 추천한 사람 : 3</h6>
+        <h6>나를 추천한 사람 : ${sessionScope.member.referralCount}</h6>
     </div>
 
 

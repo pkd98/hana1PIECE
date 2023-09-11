@@ -15,9 +15,10 @@
 
     <select id="findBankTransactionByAccountNumber" parameterType="string"
             resultType="com.hana1piece.bank.vo.BankTransactionVO">
-        SELECT account_number as accountNumber, classification, name, amount, balance, bank_code as bankCode, recipient_account_number as recipientAccountNumber, to_char(transaction_date, 'yyyy-MM-dd HH:mm:ss') as transactionDate
+        SELECT transaction_number as transactionNumber, account_number as accountNumber, classification, name, amount, balance, bank_code as bankCode, recipient_account_number as recipientAccountNumber, to_char(transaction_date, 'yyyy-MM-dd HH:mm:ss') as transactionDate
         FROM BANK_TRANSACTION
         WHERE ACCOUNT_NUMBER = #{accountNumber}
+        ORDER BY transactionNumber desc
     </select>
 
     <insert id="callAccountOpening" parameterType="com.hana1piece.bank.dto.AccountOpeningDTO" statementType="CALLABLE">

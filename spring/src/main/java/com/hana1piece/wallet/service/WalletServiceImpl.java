@@ -1,11 +1,16 @@
 package com.hana1piece.wallet.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hana1piece.logger.service.LoggerService;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.wallet.model.dto.DepositDTO;
 import com.hana1piece.wallet.model.dto.TransferDTO;
 import com.hana1piece.wallet.model.dto.WithdrawDTO;
 import com.hana1piece.wallet.model.mapper.WalletMapper;
+import com.hana1piece.wallet.model.vo.AccountVO;
+import com.hana1piece.wallet.model.vo.BankTransactionVO;
 import com.hana1piece.wallet.model.vo.WalletTransactionVO;
 import com.hana1piece.wallet.model.vo.WalletVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +19,9 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @Transactional
@@ -25,12 +33,14 @@ public class WalletServiceImpl implements WalletService {
     private final LoggerService loggerService;
     private final WalletMapper walletMapper;
     private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    WalletServiceImpl(LoggerService loggerService, WalletMapper walletMapper, RestTemplate restTemplate) {
+    WalletServiceImpl(LoggerService loggerService, WalletMapper walletMapper, RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.loggerService = loggerService;
         this.walletMapper = walletMapper;
         this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -41,6 +51,11 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public WalletVO findWalletByMemberId(String memberId) {
         return walletMapper.findWalletByMemberId(memberId);
+    }
+
+    @Override
+    public List<WalletTransactionVO> findWalletTransactionByWalletNumber(int walletNumber) {
+        return walletMapper.findWalletTransactionByWN(walletNumber);
     }
 
     /**
@@ -57,6 +72,13 @@ public class WalletServiceImpl implements WalletService {
             WalletVO oldWallet = findWalletByMemberId(member.getId());
 
             /**
+             *  계좌 비밀번호 유효성 검사
+             */
+            if(!requestBankAccount(oldWallet.getAccountNumber()).getPassword().equals(deposit.getAccountPassword())){
+                throw new Exception();
+            }
+
+            /**
              *  1. 하나은행 사용자 계좌에서 관리자 계좌로 이체 요청
              */
             TransferDTO transferDTO = new TransferDTO();
@@ -66,7 +88,7 @@ public class WalletServiceImpl implements WalletService {
             transferDTO.setName("(주)하나1PIECE 지갑 입금");
             transferDTO.setRecipientAccountNumber("99900000000394"); // 관리자 계좌
             boolean isSuccess = requestBankAccountTransfer(transferDTO);
-            if(!isSuccess) {
+            if (!isSuccess) {
                 throw new Exception();
             }
             /**
@@ -112,6 +134,13 @@ public class WalletServiceImpl implements WalletService {
             walletTransactionVO.setBalance(oldWallet.getBalance() - withdraw.getAmount());
 
             /**
+             *  지갑 비밀번호 유효성 검사
+             */
+            if(!withdraw.getWalletPassword().equals(oldWallet.getPassword())) {
+                throw new Exception();
+            }
+
+            /**
              *   1. 사용자 지갑에 현금 출금
              */
             withdraw.setWalletNumber(oldWallet.getWalletNumber());
@@ -132,7 +161,7 @@ public class WalletServiceImpl implements WalletService {
             transferDTO.setName("(주)하나1PIECE 지갑 출금");
             transferDTO.setRecipientAccountNumber(oldWallet.getAccountNumber());
             boolean isSuccess = requestBankAccountTransfer(transferDTO);
-            if(!isSuccess) {
+            if (!isSuccess) {
                 throw new Exception();
             }
 
@@ -143,6 +172,11 @@ public class WalletServiceImpl implements WalletService {
         }
     }
 
+    /**
+     * 지갑 거래 내역 기록
+     *
+     * @param walletTransactionVO
+     */
     @Override
     public void recordTransaction(WalletTransactionVO walletTransactionVO) {
         try {
@@ -154,8 +188,16 @@ public class WalletServiceImpl implements WalletService {
         }
     }
 
+    /**
+     * 하나은행 PUT 요청 [RestTemplate 이용]
+     *
+     * @param transferDTO
+     * @return
+     */
     @Override
     public boolean requestBankAccountTransfer(TransferDTO transferDTO) {
+        String url = bankServerUrl + "transfer";
+
         // HTTP 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -165,7 +207,7 @@ public class WalletServiceImpl implements WalletService {
 
         // HTTP PUT 요청 보내기
         ResponseEntity<String> responseEntity = restTemplate.exchange(
-                bankServerUrl,
+                url,
                 HttpMethod.PUT,
                 requestEntity,
                 String.class
@@ -181,4 +223,80 @@ public class WalletServiceImpl implements WalletService {
             return false;
         }
     }
+
+    /**
+     * 하나은행 계좌 정보 Get 요청 [RestTemplate 이용]
+     *
+     * @param accountNumber
+     * @return
+     */
+    @Override
+    public AccountVO requestBankAccount(String accountNumber) {
+        String url = bankServerUrl + "account/" + accountNumber;
+
+        // GET 요청을 보내고 응답을 JSON 형식의 String으로 받음
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+
+        // 응답 확인
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            String responseBody = responseEntity.getBody();
+            System.out.println(responseBody);
+            // JSON 문자열을 AccountVO 객체로 매핑
+            try {
+                // JSON 응답의 "data" 필드의 값만 추출
+                JsonNode root = objectMapper.readTree(responseBody);
+                JsonNode dataNode = root.path("data");
+
+                // "data" 필드의 JSON 값을 AccountVO 객체로 변환
+                AccountVO accountVO = objectMapper.treeToValue(dataNode, AccountVO.class);
+                System.out.println(accountVO.toString());
+                return accountVO;
+            } catch (Exception e) {
+                loggerService.logException("ERR", "requestBankAccount", e.getMessage(), "");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("요청 실패: " + responseEntity.getStatusCode());
+        }
+        return null;
+    }
+
+    /**
+     * 하나은행 계좌 거래내역 Get 요청 [RestTemplate 이용]
+     *
+     * @param accountNumber
+     * @return
+     */
+    @Override
+    public List<BankTransactionVO> requestBankAccountTransaction(String accountNumber) {
+        String url = bankServerUrl + "bankTransaction/" + accountNumber;
+
+        // GET 요청을 보내고 응답을 String으로 받음
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+
+        // 응답 확인
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            String responseBody = responseEntity.getBody();
+
+            // JSON 문자열을 ObjectMapper를 사용하여 JsonNode로 읽음
+            try {
+                JsonNode root = objectMapper.readTree(responseBody);
+                JsonNode dataNode = root.get("data");
+
+                // JsonNode를 List<BankTransactionVO>로 매핑
+                List<BankTransactionVO> transactionList = objectMapper.readValue(
+                        dataNode.toString(),
+                        new TypeReference<List<BankTransactionVO>>() {}
+                );
+                return transactionList;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("요청 실패: " + responseEntity.getStatusCode());
+        }
+
+        return Collections.emptyList();
+    }
+
 }

@@ -68,7 +68,7 @@
         <img src="/resources/img/banner1.png" alt="banner">
 
     </a>
-    <a href="#">
+    <a href="/event">
         <img src="/resources/img/banner2.png" alt="banner">
     </a>
 </aside>

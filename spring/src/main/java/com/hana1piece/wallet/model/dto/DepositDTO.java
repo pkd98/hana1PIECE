@@ -2,6 +2,7 @@ package com.hana1piece.wallet.model.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 @Data
@@ -13,6 +14,6 @@ public class DepositDTO {
     private int walletNumber;
     @NotEmpty
     private String accountPassword;
-    @NotEmpty
+    @Min(1)
     private long amount;
 }

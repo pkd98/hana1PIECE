@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -61,7 +62,7 @@
 <div class="container mt-2">
     <!-- 제목 -->
     <div class="mypage-title">
-        <span class="username">사용자</span><span class="asset-title">님의 보유 자산</span>
+        <span class="username">${sessionScope.member.name}</span><span class="asset-title">님의 보유 자산</span>
     </div>
 
     <!-- 총 자산 & 파이 차트 영역 -->
@@ -71,11 +72,11 @@
             <div class="card total-asset">
                 <div class="card-header">총 자산</div>
                 <div class="card-body flex1" id="total-asset-body">
-                    <h3>123,456원 <span class="percentage">(+0.00%)</span></h3>
+                    <h3 class="formatted-number">123,456원 <span class="percentage">(+0.00%)</span></h3>
                     <hr>
-                    <p>예치금: 999,999원</p>
-                    <p>투자 금액: 10,000원</p>
-                    <p>투자 수익: 999,999,999,999원</p>
+                    <p class="formatted-number">예치금: 999,999원</p>
+                    <p class="formatted-number">투자 금액: 10,000원</p>
+                    <p class="formatted-number">투자 수익: 999,999,999,999원</p>
                 </div>
             </div>
         </div>
@@ -102,7 +103,7 @@
                     </a>
                 </div>
                 <div class="col-md-6 button-right">
-                    <p class="wallet-amount">총 123,456,789 원</p>
+                    <p class="wallet-amount">총 <span class="formatted-number">${wallet.balance}</span> 원</p>
                     <button class="btn bank-btn" data-bs-toggle="modal" data-bs-target="#depositModal">입금</button>
                     <button class="btn bank-btn" data-bs-toggle="modal" data-bs-target="#withdrawModal">출금</button>
                     <button class="btn bank-transaction-btn" data-bs-toggle="modal"
@@ -123,23 +124,24 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-between">
                         <span>연동 계좌:</span>
-                        <span>999-000000-01394</span>
+                        <span>${wallet.accountNumber}</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>계좌 잔액:</span>
-                        <span>1,000,000원</span>
+                        <span class="formatted-number">${account.balance}원</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
                         <span>계좌 비밀번호:</span>
-                        <input type="password" pattern="[0-9]{4}" placeholder="비밀번호 4자리" required>
+                        <input id="account-password" type="password" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                               placeholder="비밀번호 4자리" required>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
                         <span>입금 금액:</span>
-                        <input type="text" placeholder="금액 입력">
+                        <input id="deposit-amount" type="number" placeholder="금액 입력">
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-primary"
+                    <button type="button" class="btn btn-primary" id="deposit-button"
                             style="background-color: #008485; width: 50%;">입금신청
                     </button>
                 </div>
@@ -157,31 +159,32 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex justify-content-between">
-                        <span>출금 계좌번호:</span>
-                        <span>999-000000-01394</span>
+                        <span>연동 계좌번호:</span>
+                        <span>${wallet.accountNumber}</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>출금 가능액:</span>
-                        <span>100,000원</span>
+                        <span class="formatted-number">${wallet.balance}원</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
                         <span>지갑 비밀번호:</span>
-                        <input type="password" pattern="[0-9]{4}" placeholder="비밀번호 4자리" required>
+                        <input id="wallet-password" type="password" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                               placeholder="비밀번호 4자리" required>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
                         <span>출금 금액:</span>
-                        <input type="text" placeholder="금액 입력">
+                        <input id="withdraw-amount" type="number" placeholder="금액 입력">
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-primary"
+                    <button id="withdraw-button" type="button" class="btn btn-primary"
                             style="background-color: #008485; width: 50%;">출금신청
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 지갑 입출금 거래내역 모달 -->
+    <!-- 지갑 거래내역 모달 -->
     <div class="modal fade" id="transactionHistory" tabindex="-1" aria-labelledby="transactionHistoryLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -191,6 +194,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-default filter-btn1 active" data-filter="all">전체</button>
+                        <button class="btn btn-default filter-btn1" data-filter="IN">입금</button>
+                        <button class="btn btn-default filter-btn1" data-filter="OUT">출금</button>
+                    </div>
                     <table class="table custom-table">
                         <thead>
                         <tr>
@@ -203,15 +211,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- 예제 데이터 -->
-                        <tr>
-                            <td>12345678</td>
-                            <td>OUT</td>
-                            <td>하나1PIECE</td>
-                            <td>10000</td>
-                            <td>1000000</td>
-                            <td>2023-08-21 13:00:00</td>
-                        </tr>
+                        <c:forEach var="walletTransaction" items="${walletTransactionList}">
+                            <tr>
+                                <td>${walletTransaction.transactionNumber}</td>
+                                <td>${walletTransaction.classification}</td>
+                                <td>${walletTransaction.name}</td>
+                                <td class="formatted-number">${walletTransaction.amount}</td>
+                                <td class="formatted-number">${walletTransaction.balance}</td>
+                                <td>${walletTransaction.transactionDate}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -231,6 +240,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-default filter-btn2 active" data-filter="all">전체</button>
+                        <button class="btn btn-default filter-btn2" data-filter="IN">입금</button>
+                        <button class="btn btn-default filter-btn2" data-filter="OUT">출금</button>
+                    </div>
                     <table class="table custom-table">
                         <thead>
                         <tr>
@@ -246,16 +260,18 @@
                         </thead>
                         <tbody>
                         <!-- 예제 데이터 -->
-                        <tr>
-                            <td>12345678</td>
-                            <td>OUT</td>
-                            <td>하나1PIECE</td>
-                            <td>10000</td>
-                            <td>1000000</td>
-                            <td>080</td>
-                            <td>999-000000-01394</td>
-                            <td>2023-08-21 13:00:00</td>
-                        </tr>
+                        <c:forEach var="bankTransaction" items="${bankTransactionList}">
+                            <tr>
+                                <td>${bankTransaction.transactionNumber}</td>
+                                <td>${bankTransaction.classification}</td>
+                                <td>${bankTransaction.name}</td>
+                                <td class="formatted-number">${bankTransaction.amount}</td>
+                                <td class="formatted-number">${bankTransaction.balance}</td>
+                                <td>${bankTransaction.bankCode}</td>
+                                <td>${bankTransaction.recipientAccountNumber}</td>
+                                <td>${bankTransaction.transactionDate}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -313,14 +329,14 @@
                 </div>
                 <div class="card-body flex1">
                     <small>1STO가격</small>
-                    <h3>5,100원 <span class="percentage">(+4.00%)</span></h3>
+                    <h3 class="formatted-number">5,100원 <span class="percentage">(+4.00%)</span></h3>
                     <hr>
                     <p>보유수량: <span>123STO</span></p>
-                    <p>매수 평균가: <span>4,400원</span></p>
-                    <p>평가금액: <span>1,111,111원</span></p>
-                    <p>투자금액: <span>1,000,000원</span></p>
+                    <p>매수 평균가: <span class="formatted-number">4,400원</span></p>
+                    <p>평가금액: <span class="formatted-number">1,111,111원</span></p>
+                    <p>투자금액: <span class="formatted-number">1,000,000원</span></p>
                     <div class="dividend-button-section">
-                        <button type="button" class="btn btn-primary" id="dividend-button" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-primary" id="detailsTransaction" data-bs-toggle="modal"
                                 data-bs-target="#transactionModal">거래내역
                         </button>
                     </div>
@@ -378,13 +394,13 @@
                         <span class="card-title dividend-title">최근 6개월 누적 배당금</span>
                     </div>
                     <div class="dividend-amount-container">
-                        <span class="card-title dividend-amount">총 550원</span>
+                        <span class="card-title dividend-amount">총 <span class="formatted-number">550원</span></span>
                     </div>
                 </div>
                 <div class="dividend-button-section">
                     <!-- 데이터 토글과 대상 설정 추가 -->
-                    <button type="button" class="btn btn-primary" id="dividend-button" data-toggle="modal"
-                            data-target="#dividendModal">상세 지급 내역
+                    <button type="button" class="btn btn-primary" id="dividend-button" data-bs-toggle="modal"
+                            data-bs-target="#dividendModal">상세 지급 내역
                     </button>
                 </div>
             </div>
@@ -398,7 +414,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title text-center w-100 font-weight-bold">배당금 지급 내역</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -424,7 +440,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">이전</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">이전</button>
                 </div>
             </div>
         </div>
@@ -454,7 +470,7 @@
                     </div>
                 </div>
                 <div class="preorder-button-section">
-                    <button type="button" class="btn btn-primary" id="preorder-button">취소하기</button>
+                    <button type="button" class="btn btn-primary" id="preorder-button1">취소하기</button>
                 </div>
             </div>
 
@@ -469,7 +485,7 @@
                     </div>
                 </div>
                 <div class="preorder-button-section">
-                    <button type="button" class="btn btn-primary" id="preorder-button">취소하기</button>
+                    <button type="button" class="btn btn-primary" id="preorder-button2">취소하기</button>
                 </div>
             </div>
 
@@ -505,8 +521,8 @@
                         </div>
 
                         <div class="dividend-button-section">
-                            <button id="dividend-button" type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#votingModal">투표하기
+                            <button type="button" class="btn btn-primary" id="voteButton" data-bs-toggle="modal"
+                                    data-bs-target="#votingModal">투표하기
                             </button>
                         </div>
                     </div>
@@ -519,8 +535,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-center w-100 font-weight-bold">매각 투표</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal"
-                                    aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" style="padding: 20px 40px;"> <!-- 양 끝쪽 여백 설정 -->
                             <div class="row">
@@ -528,16 +543,21 @@
                                 <div class="col-md-6 text-right" style="font-weight: bold;">롯데월드타워 1층 1호</div>
                                 <!-- bold 처리 -->
                                 <div class="col-md-6 text-left">공모가 :</div>
-                                <div class="col-md-6 text-right" style="font-weight: bold;">1,000,000,000원</div>
+                                <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
+                                    1,000,000,000원
+                                </div>
                                 <!-- bold 처리 -->
                                 <div class="col-md-6 text-left">매각액 :</div>
-                                <div class="col-md-6 text-right" style="font-weight: bold;">1,300,000,000원</div>
+                                <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
+                                    1,300,000,000원
+                                </div>
                                 <!-- bold 처리 -->
                                 <div class="col-md-6 text-left">보유 STO :</div>
                                 <div class="col-md-6 text-right" style="font-weight: bold;">123STO</div>
                                 <!-- bold 처리 -->
                                 <div class="col-md-6 text-left">예상 매각 배당금 :</div>
-                                <div class="col-md-6 text-right" style="font-weight: bold;">6,500원</div>
+                                <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">6,500원
+                                </div>
                                 <!-- bold 처리 -->
                             </div>
                             <hr>
@@ -562,9 +582,185 @@
             </div>
         </div>
     </div>
+    <!-- 성공 모달 -->
+    <div class="modal fade" id="myPageSuccessModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 50px; justify-content: center; text-align: center;">
+                    성공적으로 처리되었습니다.
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal"
+                            onclick="redirectToMyPage()">닫기</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 실패 모달 -->
+    <div class="modal fade" id="myPageErrorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 50px; justify-content: center; text-align: center;">
+                    처리 중 오류가 발생했습니다.
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal"
+                            onclick="redirectToMyPage()">닫기</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <%@ include file="include/footer.jsp" %>
+
+<script>
+    function redirectToMyPage() {
+        window.location.href = "/mypage";
+    }
+
+    function formatNumbers() {
+        $('.formatted-number').each(function() {
+            var number = $(this).text();
+            var formattedNumber = numberWithCommas(number);
+            $(this).text(formattedNumber);
+        });
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    $(document).ready(function() {
+        /**
+         *  금액 천단위 구분 쉼표 추가
+         */
+        formatNumbers();
+
+
+
+        /**
+         *  지갑 입금 PUT 비동기 요청
+         */
+        $("#deposit-button").on('click', function() {
+            // 데이터 가져오기
+            let accountPassword = $("#account-password").val();
+            let depositAmount = $("#deposit-amount").val();
+            // 스피너 시작
+            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 처리중...');
+            $(this).prop('disabled', true);
+
+            $.ajax({
+                type: "PUT",
+                url: "/deposit",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    accountPassword: accountPassword,
+                    amount: depositAmount
+                }),
+                success: function(response) {
+                    // 스피너 정지 및 초기화
+                    $("#deposit-button").html('입금신청').prop('disabled', false);
+                    // 성공 모달 표시
+                    $("#myPageSuccessModal").modal('show');
+                },
+                error: function(error) {
+                    // 스피너 정지 및 초기화
+                    $("#deposit-button").html('입금신청').prop('disabled', false);
+                    // 실패 모달 표시
+                    $("#myPageErrorModal").modal('show');
+                }
+            });
+        });
+
+        /**
+         *  지갑 출금 PUT 비동기 요청
+         */
+        $("#withdraw-button").on('click', function() {
+            // 데이터 가져오기
+            let walletPassword = $("#wallet-password").val();
+            let withdrawAmount = $("#withdraw-amount").val();
+            // 스피너 시작
+            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 처리중...');
+            $(this).prop('disabled', true);
+
+            $.ajax({
+                type: "PUT",
+                url: "/withdraw",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    walletPassword: walletPassword,
+                    amount: withdrawAmount
+                }),
+                success: function(response) {
+                    // 스피너 정지 및 초기화
+                    $("#withdraw-button").html('출금신청').prop('disabled', false);
+                    // 성공 모달 표시
+                    $("#myPageSuccessModal").modal('show');
+                },
+                error: function(error) {
+                    // 스피너 정지 및 초기화
+                    $("#withdraw-button").html('출금신청').prop('disabled', false);
+                    // 실패 모달 표시
+                    $("#myPageErrorModal").modal('show');
+                }
+            });
+        });
+
+        /**
+         *  입출금 내역 필터링
+         */
+        $('.filter-btn1').on('click', function() {
+            $('.filter-btn1').removeClass('active');  // 모든 버튼의 active 클래스를 제거
+            $(this).addClass('active');  // 현재 클릭된 버튼에 active 클래스를 추가
+
+            var filterValue = $(this).data('filter');
+
+            $('tbody tr').each(function() {
+                var classification = $(this).find('td:nth-child(2)').text();
+
+                if (filterValue === 'all') {
+                    $(this).show();
+                } else {
+                    if (classification === filterValue) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+            });
+        });
+        /**
+         *  은행 거래내역 필터링 구현
+         */
+        $('.filter-btn2').on('click', function() {
+            $('.filter-btn2').removeClass('active');  // 모든 버튼의 active 클래스를 제거
+            $(this).addClass('active');  // 현재 클릭된 버튼에 active 클래스를 추가
+
+            var filterValue = $(this).data('filter');
+
+            $('tbody tr').each(function() {
+                var classification = $(this).find('td:nth-child(2)').text();
+
+                if (filterValue === 'all') {
+                    $(this).show();
+                } else {
+                    if (classification === filterValue) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+            });
+        });
+
+
+
+    });
+
+</script>
 
 <!-- jQuery and Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

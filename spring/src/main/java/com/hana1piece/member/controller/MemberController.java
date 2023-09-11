@@ -81,6 +81,14 @@ public class MemberController {
     }
 
     /**
+     *  이벤트 페이지
+     */
+    @GetMapping("/event")
+    public String event() {
+        return "/event";
+    }
+
+    /**
      * 계좌 개설 페이지
      */
     @GetMapping("/account-opening")

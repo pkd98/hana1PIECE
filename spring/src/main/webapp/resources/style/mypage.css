@@ -121,6 +121,23 @@
 
 }
 
+.btn-group > button {
+    color: #000000;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 0px;  /* 버튼의 모서리를 사각형으로 만듭니다 */
+}
+
+.btn-group > button.active, .btn-group > button:hover {
+    background-color: #E90061;
+    color: white;
+}
+
+.btn-group > button:not(:last-child) {
+    border-right: none; /* 마지막 버튼이 아닌 버튼의 오른쪽 테두리를 제거 */
+}
+
+
 /* 보유 빌딩 */
 .public-offering { 
     margin-bottom: 20px;
@@ -154,16 +171,6 @@
     text-align: right;
 }
 
-#dividend-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;  
-    margin-top: 10px;
-    background-color: #008485;
-    width: 30%;
-    height: 30px;
-}
-
 .dividend-text {
     display: flex;
     justify-content: space-between;
@@ -188,6 +195,16 @@
     justify-content: center;
 }
 
+.dividend-button-section > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    background-color: #008485;
+    width: 30%;
+    height: 30px;
+}
+
 /* 티끌모아 건물주 */
 .no-preorder {
     display: flex;
@@ -208,10 +225,11 @@
     justify-content: center;
     margin-bottom: 10px;
 }
-#preorder-button {
+
+.preorder-button-section > button {
     display: flex;
     align-items: center;
-    justify-content: center;  
+    justify-content: center;
     margin-top: 10px;
     background-color: #E90061;
     width: 20%;

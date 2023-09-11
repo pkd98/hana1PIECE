@@ -23,13 +23,33 @@ select * from EXCEPTION_LOG;
 
 
 select * from account;
+delete from account where not ACCOUNT_NUMBER = 99900000009394;
+select * from BANK_TRANSACTION;
 
 select * from wallet;
 
-update wallet set BALANCE = BALANCE + -10 where wallet_number = 6;
+update wallet set BALANCE = BALANCE + 1000000 where wallet_number = 6;
 
 select * from WALLET_TRANSACTION;
 desc WALLET_TRANSACTION;
 
 insert into WALLET_TRANSACTION()
 VALUES();
+
+
+commit;
+
+
+-- 계좌 입금
+BEGIN
+    hana_bank_mng.deposit(
+    p_account_number => '99900000009394',
+    p_amount=>500000,
+    p_name=>'무통장 입금',
+    p_recipient_account_number=>'CD'
+    );
+END;
+/
+select * from account;
+
+select * from BANK_TRANSACTION;
