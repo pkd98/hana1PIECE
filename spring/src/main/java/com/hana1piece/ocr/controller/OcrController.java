@@ -38,17 +38,13 @@ public class OcrController {
                     OcrDTO ocrDTO = ocrService.getReadRegistrationCard(multipartFile);
                     // 판독된 OcrDTO - 주민등록번호 리턴
                     return ResponseEntity.ok().body(ocrDTO);
-
                 } else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid File");
                 }
-
             } else {
                 // 빈 파일 업로드
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid File");
             }
-
-
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
         }

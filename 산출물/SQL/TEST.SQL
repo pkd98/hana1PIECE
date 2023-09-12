@@ -55,8 +55,18 @@ BEGIN
 END;
 /
 select * from account;
-
 select * from BANK_TRANSACTION;
-
-
 select * from manager;
+
+
+-- 매물 등록
+INSERT INTO REAL_ESTATE_SALE(STATE) VALUES ('청약');
+
+-- 최근 매물 번호 가져오기
+select * from (select listing_number from real_estate_sale order by LISTING_NUMBER desc) where rownum = 1;
+
+INSERT INTO TENANT_INFO(LISTING_NUMBER, LESSEE, SECTOR, CONTRACT_DATE, EXPIRATION_DATE)
+VALUES(1, 'test', 'test', TO_DATE('2023-01-01', 'YYYY-MM-DD'), TO_DATE('2023-01-02', 'YYYY-MM-DD'));
+
+
+select * from REAL_ESTATE_INFO;

@@ -289,9 +289,9 @@ CREATE TABLE REAL_ESTATE_INFO (
   COMPLETION_DATE DATE NOT NULL,                -- 준공일
   LATITUDE NUMBER(15, 13) NOT NULL,               -- 위도
   LONGITUDE NUMBER(15, 12) NOT NULL,              -- 경도
-  IMAGE1 VARCHAR2(100),                         -- 이미지 1
-  IMAGE2 VARCHAR2(100),                         -- 이미지 2
-  IMAGE3 VARCHAR2(100),                         -- 이미지 3
+  IMAGE1 VARCHAR2(1000),                         -- 이미지 1
+  IMAGE2 VARCHAR2(1000),                         -- 이미지 2
+  IMAGE3 VARCHAR2(1000),                         -- 이미지 3
   
   -- 외래키 지정 : 매물 번호 - 1:1 식별 관계
   CONSTRAINT FK_REAL_ESTATE_INFO_LISTING_NUMBER FOREIGN KEY (LISTING_NUMBER) REFERENCES REAL_ESTATE_SALE(LISTING_NUMBER)

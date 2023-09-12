@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.estate.model.mapper.EstateMapper">
+    <resultMap type="com.hana1piece.estate.model.vo.RealEstateSaleVO" id="RealEstateSaleMap">
+        <result column="listing_number" property="listingNumber" />
+    </resultMap>
+    <resultMap type="com.hana1piece.estate.model.vo.RealEstateInfoVO" id="RealEstateInfoMap">
+        <result column="listing_number" property="listingNumber" />
+        <result column="building_name" property="buildingName" />
+        <result column="land_area" property="landArea" />
+        <result column="floor_area" property="floorArea" />
+        <result column="coverage_ratio" property="coverageRatio" />
+        <result column="floor_area_ratio" property="floorAreaRatio" />
+        <result column="completion_date" property="completionDate" />
+    </resultMap>
+    <resultMap type="com.hana1piece.estate.model.vo.PublicationInfoVO" id="PublicationInfoMap">
+        <result column="listing_number" property="listingNumber" />
+        <result column="issue_price" property="issuePrice" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="start_date" property="startDate" />
+        <result column="expiration_date" property="expirationDate" />
+        <result column="first_dividend_date" property="firstDividendDate" />
+        <result column="dividend_cycle" property="dividendCycle" />
+    </resultMap>
+    <resultMap type="com.hana1piece.estate.model.vo.TenantInfoVO" id="TenantInfoMap">
+        <result column="listing_number" property="listingNumber" />
+        <result column="contract_date" property="contractDate" />
+        <result column="expiration_date" property="expirationDate" />
+    </resultMap>
+    <resultMap type="com.hana1piece.estate.model.vo.SoldBuildingVO" id="SoldBuildingMap">
+        <result column="listing_number" property="listingNumber" />
+        <result column="sold_date" property="soldDate" />
+    </resultMap>
+
+    <select id="getRecentListingNumber" resultType="int">
+        select * from (select listing_number from real_estate_sale order by LISTING_NUMBER desc) where rownum = 1
+    </select>
+
+    <select id="findRealEstateSaleAll" resultMap="RealEstateSaleMap">
+        select * from real_estate_sale order by listing_number desc
+    </select>
+
+    <select id="findRealEstateInfoAll" resultMap="RealEstateInfoMap">
+        select * from real_estate_info order by listing_number desc
+    </select>
+
+    <select id="findPublicationInfoAll" resultMap="PublicationInfoMap">
+        select * from publication_info order by listing_number desc
+    </select>
+
+    <select id="findTenantInfoAll" resultMap="TenantInfoMap">
+        select * from tenant_info order by listing_number desc
+    </select>
+
+    <select id="findSoldBuildingAll" resultMap="SoldBuildingMap">
+        select * from sold_building order by listing_number desc
+    </select>
+
+    <select id="findRealEstateSaleByLN" parameterType="int" resultMap="RealEstateSaleMap">
+        select * from real_estate_sale where listing_number = #{LN}
+    </select>
+
+    <select id="findRealEstateInfoByLN" parameterType="int" resultMap="RealEstateInfoMap">
+        select * from real_estate_info where listing_number = #{LN}
+    </select>
+
+    <select id="findPublicationInfoByLN" parameterType="int" resultMap="PublicationInfoMap">
+        select * from publication_info where listing_number = #{LN}
+    </select>
+
+    <select id="findTenantInfoByLN" parameterType="int" resultMap="TenantInfoMap">
+        select * from tenant_info where listing_number = #{LN}
+    </select>
+
+    <select id="findSoldBuildingByLN" parameterType="int" resultMap="SoldBuildingMap">
+        select * from sold_building where listing_number = #{LN}
+    </select>
+
+    <insert id="insertRealEstateSale">
+        insert into real_estate_sale(state)
+        values('청약')
+    </insert>
+
+    <update id="updateRealEstateSale" parameterType="com.hana1piece.estate.model.vo.RealEstateSaleVO">
+        UPDATE real_estate_sale
+        <set>
+            <if test="evaluation != null">evaluation = #{evaluation},</if>
+            <if test="state != null">state = #{state},</if>
+        </set>
+        WHERE listing_number = #{listingNumber}
+    </update>
+
+    <insert id="insertRealEstateInfo" parameterType="com.hana1piece.estate.model.vo.RealEstateInfoVO">
+        insert into real_estate_info(listing_number, building_name, address, floors, usage, land_area, floor_area, coverage_ratio, floor_area_ratio, completion_date, latitude, longitude, image1, image2, image3)
+        values(#{listingNumber}, #{buildingName}, #{address}, #{floors}, #{usage}, #{landArea}, #{floorArea}, #{coverageRatio}, #{floorAreaRatio}, #{completionDate}, #{latitude}, #{longitude}, #{image1}, #{image2}, #{image3})
+    </insert>
+
+    <insert id="insertPublicationInfo" parameterType="com.hana1piece.estate.model.vo.PublicationInfoVO">
+        insert into publication_info(LISTING_NUMBER, SUBJECT, TYPE, PUBLISHER, VOLUME, ISSUE_PRICE, TOTAL_AMOUNT, START_DATE, EXPIRATION_DATE, FIRST_DIVIDEND_DATE, DIVIDEND_CYCLE, DIVIDEND)
+        values(#{listingNumber}, #{subject}, #{type}, #{publisher}, #{volume}, #{issuePrice}, #{totalAmount}, #{startDate}, #{expirationDate}, #{firstDividendDate}, #{dividendCycle}, #{dividend})
+    </insert>
+
+    <insert id="insertTenantInfo" parameterType="com.hana1piece.estate.model.vo.TenantInfoVO">
+        insert into tenant_info(LISTING_NUMBER, LESSEE, SECTOR, CONTRACT_DATE, EXPIRATION_DATE)
+        values(#{listingNumber}, #{lessee}, #{sector}, to_date(#{contractDate}, 'YYYY-MM-DD'), to_date(#{expirationDate}, 'YYYY-MM-DD'))
+    </insert>
+
+    <insert id="insertSoldBuilding" parameterType="com.hana1piece.estate.model.vo.SoldBuildingVO">
+        insert into sold_building(listing_number, sold_date, amount)
+        values(#{listing_number}, #{soldDate}, #{amount})
+    </insert>
+
+</mapper>

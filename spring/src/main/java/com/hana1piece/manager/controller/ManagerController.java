@@ -1,16 +1,17 @@
 package com.hana1piece.manager.controller;
 
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
+import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.vo.ManagerVO;
 import com.hana1piece.manager.service.ManagerService;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -18,7 +19,6 @@ import javax.validation.Valid;
 
 @Controller
 public class ManagerController {
-
     private final ManagerService managerService;
 
     @Autowired
@@ -31,6 +31,10 @@ public class ManagerController {
         ManagerVO manager = (ManagerVO) session.getAttribute("manager");
         return (manager == null) ? "manager-login" : "manager";
     }
+
+    /**
+     * 관리자 로그인
+     */
     @PostMapping("/manager/login")
     @ResponseBody
     public String manager(@Valid @RequestBody ManagerLoginDTO loginDTO, Errors errors, BindingResult bindingResult, HttpSession session) {
@@ -67,6 +71,20 @@ public class ManagerController {
     public String signout(HttpSession session) {
         session.removeAttribute("manager");
         return "redirect:/manager";
+    }
+
+    /**
+     *  청약 공모 등록
+     */
+    @PostMapping("/manager/public-offering/registration")
+    public ResponseEntity publicOfferingRegistration(@ModelAttribute PublicOfferingRegistrationDTO publicOfferingRegistrationDTO) {
+        try {
+            // 서비스 로직 처리
+            managerService.publicOfferingRegistration(publicOfferingRegistrationDTO);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+        }
     }
 
 

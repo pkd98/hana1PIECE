@@ -97,13 +97,7 @@
                                     <!-- Side Nav START -->
                                     <ul class="nav nav-link-secondary flex-column fw-bold gap-2">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#button-area"><span>배당금 지급</span></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#button-area"><span>공모/청약 등록</span></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#button-area"><span>매각 투표</span></a>
+                                            <a class="nav-link" href="#register"><span>배당금 | 공모/청약 | 매각 등록</span></a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="#transaction-analysis"><span>거래 분석</span></a>
@@ -144,7 +138,12 @@
             </div>
 
             <div class="col-lg-9">
-                <div class="container mt-5">
+
+                <div class="container mt-3">
+                    <div class="mypage-title">
+                        <h2 id="register">등록 처리</h2>
+                    </div>
+
                     <div id="button-area" class="row">
                         <!-- First Card -->
                         <div class="col">
@@ -227,17 +226,17 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="modal-padding"> <!-- 패딩을 적용할 div로 모든 내용을 감싸줍니다. -->
+                                    <div class="modal-padding">
                                         <!-- 매물 상세 정보 -->
                                         <h6 class="mb-3">매물 상세 정보</h6>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">건물명:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="building_name" type="text" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">건물상세주소:</div>
                                             <div class="col-8 text-right">
-                                                <input type="text" id="sample3_address" class="form-control d-inline-block"
+                                                <input id="address" type="text" id="sample3_address" class="form-control d-inline-block"
                                                        style="width: 80%;">
                                                 <button onclick="sample3_execDaumPostcode()"
                                                         class="btn btn-secondary d-inline-block"
@@ -255,27 +254,27 @@
 
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">층 수:</div>
-                                            <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="floors" type="number" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">주용도:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="usage" type="text" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">대지면적:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="land_area" type="text" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">연면적:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="floor_area" type="text" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">건폐율:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="coverage_ratio" type="text" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">용적률:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="floor_area_ratio" type="text" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">위도:</div>
@@ -286,83 +285,88 @@
                                             <div class="col-8 text-right"><input id="longitude-input" type="number" stem="any" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
+                                            <div class="col-4 text-left">준공일:</div>
+                                            <div class="col-8 text-right"><input id="completion_date" type="text" class="form-control datepicker"
+                                                                                 placeholder="준공일"></div>
+                                        </div>
+                                        <div class="row mb-2">
                                             <div class="col-4 text-left">이미지1:</div>
-                                            <div class="col-8 text-right"><input type="file" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="image1" type="file" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">이미지2:</div>
-                                            <div class="col-8 text-right"><input type="file" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="image2" type="file" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">이미지3:</div>
-                                            <div class="col-8 text-right"><input type="file" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="image3" type="file" class="form-control"></div>
                                         </div>
                                         <hr>
                                         <!-- 발행 정보 -->
                                         <h6 class="mt-3 mb-3">발행 정보</h6>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">발행인:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="publisher" type="text" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">발행 증권 수:</div>
-                                            <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="volume" type="number" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">발행가액:</div>
-                                            <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="issue_price" type="number" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">모집액:</div>
-                                            <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="total_amount" type="number" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">청약 기간:</div>
                                             <div class="col-8 text-right">
-                                                <input type="text" class="form-control datepicker d-inline-block"
+                                                <input id="start_date" type="text" class="form-control datepicker d-inline-block"
                                                        style="width: 45%;" placeholder="시작일">
                                                 <span class="d-inline-block mx-1">~</span>
-                                                <input type="text" class="form-control datepicker d-inline-block"
+                                                <input id="expiration_date" type="text" class="form-control datepicker d-inline-block"
                                                        style="width: 45%;" placeholder="종료일">
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">최초 배당 기준일:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control datepicker"
+                                            <div class="col-8 text-right"><input id="first_dividend_date" type="text" class="form-control datepicker"
                                                                                  placeholder="기준일"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">배당 주기:</div>
-                                            <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="dividend_cycle" type="number" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">배당액:</div>
-                                            <div class="col-8 text-right"><input type="number" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="dividend" type="number" class="form-control"></div>
                                         </div>
                                         <hr>
                                         <!-- 임차인 정보 -->
                                         <h6 class="mt-3 mb-3">임차인 정보</h6>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">임차인명:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="lessee" type="text" class="form-control"></div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">업종:</div>
-                                            <div class="col-8 text-right"><input type="text" class="form-control"></div>
+                                            <div class="col-8 text-right"><input id="sector" type="text" class="form-control"></div>
                                         </div>
                                         <div class="row mb-4">
                                             <div class="col-4 text-left">계약기간:</div>
                                             <div class="col-8 text-right">
-                                                <input type="text" class="form-control datepicker d-inline-block"
+                                                <input id="contract_date" type="text" class="form-control datepicker d-inline-block"
                                                        style="width: 45%;" placeholder="시작일">
                                                 <span class="d-inline-block mx-1">~</span>
-                                                <input type="text" class="form-control datepicker d-inline-block"
+                                                <input id="lessee_expiration_date" type="text" class="form-control datepicker d-inline-block"
                                                        style="width: 45%;" placeholder="종료일">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer" style="justify-content: center;">
-                                        <button type="button" class="btn" style="background-color: #008485; color: white;">등록
+                                        <button id="publicOfferingButton" type="button" class="btn" style="background-color: #008485; color: white;">등록
                                             확인</button>
                                     </div>
                                 </div>
@@ -604,9 +608,108 @@
             </div>
         </div>
     </div>
+    <!-- 성공 모달 -->
+    <div class="modal fade" id="managerSuccessModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 50px; justify-content: center; text-align: center;">
+                    성공적으로 처리되었습니다.
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal"
+                            onclick="redirectToManager()">닫기</strong>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- 실패 모달 -->
+    <div class="modal fade" id="managerErrorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 50px; justify-content: center; text-align: center;">
+                    처리 중 오류가 발생했습니다.
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal">닫기</strong>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        function redirectToManager() {
+            window.location.href = "/manager";
+        }
 
+        $(document).ready(function () {
+            /**
+             *  공모/청약 등록
+             */
+            $("#publicOfferingButton").click(function () {
+                // FormData 객체 생성
+                var formData = new FormData();
+
+                // 스피너 시작
+                $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 처리중...');
+                $(this).prop('disabled', true);
+
+                // input 요소들의 값을 객체에 담기
+                formData.append('buildingName', $("#building_name").val());
+                formData.append('address', $("#address").val());
+                formData.append('floors', $("#floors").val());
+                formData.append('usage', $("#usage").val());
+                formData.append('landArea', $("#land_area").val());
+                formData.append('floorArea', $("#floor_area").val());
+                formData.append('coverageRatio', $("#coverage_ratio").val());
+                formData.append('floorAreaRatio', $("#floor_area_ratio").val());
+                formData.append('latitude', $("#latitude-input").val());
+                formData.append('longitude', $("#longitude-input").val());
+                formData.append('completionDate', $("#completion_date").val());
+
+                // 파일 추가
+                formData.append('image1', $('#image1')[0].files[0]);
+                formData.append('image2', $('#image2')[0].files[0]);
+                formData.append('image3', $('#image3')[0].files[0]);
+
+                formData.append('publisher', $("#publisher").val());
+                formData.append('volume', $("#volume").val());
+                formData.append('issuePrice', $("#issue_price").val());
+                formData.append('totalAmount', $("#total_amount").val());
+                formData.append('startDate', $("#start_date").val());
+                formData.append('expirationDate', $("#expiration_date").val());
+                formData.append('firstDividendDate', $("#first_dividend_date").val());
+                formData.append('dividendCycle', $("#dividend_cycle").val());
+                formData.append('dividend', $("#dividend").val());
+
+                formData.append('lessee', $("#lessee").val());
+                formData.append('sector', $("#sector").val());
+                formData.append('contractDate', $("#contract_date").val());
+                formData.append('lesseeExpirationDate', $("#lessee_expiration_date").val());
+
+                // AJAX를 사용하여 POST 요청 수행
+                $.ajax({
+                    url: '/manager/public-offering/registration',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false, // contentType을 false로 설정해야 FormData가 올바른 contentType을 설정
+                    processData: false, // processData를 false로 설정해야 jQuery가 data를 문자열로 변환하지 않음
+                    success: function (response) {
+                        // 스피너 정지 및 초기화
+                        $("#publicOfferingButton").html('등록 확인').prop('disabled', false);
+                        // 성공 모달 표시
+                        $("#managerSuccessModal").modal('show');
+                    },
+                    error: function (error) {
+                        // 스피너 정지 및 초기화
+                        $("#publicOfferingButton").html('등록 확인').prop('disabled', false);
+                        // 실패 모달 표시
+                        $("#managerErrorModal").modal('show');
+                    }
+                });
+            });
+        });
+    </script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
         // 우편번호 찾기 찾기 화면을 넣을 element
@@ -678,5 +781,4 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
 </body>
-
 </html>
