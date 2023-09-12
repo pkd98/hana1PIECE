@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-09-12T06:05:09.426Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="F-6Reg3AbfVXxB93Jgi-" version="21.7.2" type="device">
+<mxfile host="app.diagrams.net" modified="2023-09-12T10:40:37.055Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="SElpSPCbU1VpTwMBKSmN" version="21.7.2" type="device">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="3871" dy="832" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="4518" dy="1975" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -987,7 +987,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-115" value="REAL_ESTATE_SALE (부동산 매물)" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="-2364.5" y="650" width="395" height="120" as="geometry" />
+          <mxGeometry x="-2364.5" y="610" width="395" height="150" as="geometry" />
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-116" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" parent="-MrJFI244WIY_XfIuMhO-115" vertex="1">
           <mxGeometry y="30" width="395" height="30" as="geometry" />
@@ -1015,8 +1015,21 @@
             <mxRectangle width="365" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="-MrJFI244WIY_XfIuMhO-125" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" parent="-MrJFI244WIY_XfIuMhO-115" vertex="1">
+        <mxCell id="lLIDbCIssbnMuZEUqozc-18" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="-MrJFI244WIY_XfIuMhO-115">
           <mxGeometry y="90" width="395" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-19" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;" vertex="1" parent="lLIDbCIssbnMuZEUqozc-18">
+          <mxGeometry width="30" height="30" as="geometry">
+            <mxRectangle width="30" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lLIDbCIssbnMuZEUqozc-20" value="INTRODUCTION VARCHAR2(300)                                    소개글" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="lLIDbCIssbnMuZEUqozc-18">
+          <mxGeometry x="30" width="365" height="30" as="geometry">
+            <mxRectangle width="365" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-MrJFI244WIY_XfIuMhO-125" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" parent="-MrJFI244WIY_XfIuMhO-115" vertex="1">
+          <mxGeometry y="120" width="395" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-MrJFI244WIY_XfIuMhO-126" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" parent="-MrJFI244WIY_XfIuMhO-125" vertex="1">
           <mxGeometry width="30" height="30" as="geometry">
@@ -1905,8 +1918,8 @@
             <mxPoint x="-2420" y="700" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="PkdxglhGiyc6FRWSb-2s-3" value="&lt;span style=&quot;font-size: 36px;&quot;&gt;추가 고려 사항&lt;br&gt;&lt;/span&gt;1. 회원가입 추천인 제도&lt;br&gt;- 둘다 5000원씩 지급&lt;br&gt;- 관리자 페이지 : 추천인 지급 내역 추가&lt;br&gt;&lt;br&gt;2. 앱 푸쉬 알림 + 웹뷰 앱 개발&lt;br&gt;- 청약, 배당금, 매각 알림 FCM 이용&lt;br&gt;&lt;br&gt;3. 카카오 API : 공유하기, 지도&lt;br&gt;&lt;br&gt;4. OCR&lt;br&gt;&lt;br&gt;5. 외부 부동산 시세에 따른 평가(저평가, 적정가, 고평가)&lt;br&gt;-&amp;gt; 네이버 부동산 크롤링 REST 서버 구축 : &#39;저평가&#39;,&#39;적정가&#39;,&#39;고평가&#39;, &#39;측정불가&#39;&lt;br&gt;&lt;br&gt;6. 조각 모으기 : 가격 지정 - 시장가 예약 주문 / 스프링 스케줄러&lt;br&gt;-&amp;gt; 모은 날짜 마다 깃허브 잔디처럼 채우기" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="1" vertex="1">
-          <mxGeometry x="-1990" y="1720" width="550" height="430" as="geometry" />
+        <mxCell id="PkdxglhGiyc6FRWSb-2s-3" value="&lt;span style=&quot;font-size: 36px;&quot;&gt;추가 고려 사항&lt;br&gt;&lt;/span&gt;1. 회원가입 추천인 제도&lt;br&gt;- 둘다 5000원씩 지급&lt;br&gt;- 관리자 페이지 : 추천인 지급 내역 추가&lt;br&gt;&lt;br&gt;매물 상태: 청약 -&amp;gt; 거래 -&amp;gt; 매각&lt;br&gt;&lt;br&gt;2. 앱 푸쉬 알림 + 웹뷰 앱 개발&lt;br&gt;- 청약, 배당금, 매각 알림 FCM 이용&lt;br&gt;&lt;br&gt;3. 카카오 API : 공유하기, 지도&lt;br&gt;&lt;br&gt;4. OCR&lt;br&gt;&lt;br&gt;5. 외부 부동산 시세에 따른 평가(저평가, 적정가, 고평가)&lt;br&gt;-&amp;gt; 네이버 부동산 크롤링 REST 서버 구축 : &#39;저평가&#39;,&#39;적정가&#39;,&#39;고평가&#39;, &#39;측정불가&#39;&lt;br&gt;&lt;br&gt;6. 조각 모으기 : 가격 지정 - 시장가 예약 주문 / 스프링 스케줄러&lt;br&gt;-&amp;gt; 모은 날짜 마다 깃허브 잔디처럼 채우기" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="1" vertex="1">
+          <mxGeometry x="-1990" y="1740" width="550" height="430" as="geometry" />
         </mxCell>
         <mxCell id="zbYEeOTznjCXyOoM0qA5-5" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERzeroToOne;endFill=1;rounded=0;" parent="1" source="JYj9bb4xTtoWjhOhDIQX-10" target="JYj9bb4xTtoWjhOhDIQX-45" edge="1">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
@@ -2025,9 +2038,6 @@
             <mxPoint x="-2290" y="1100" as="sourcePoint" />
             <mxPoint x="-2190" y="1000" as="targetPoint" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="lLIDbCIssbnMuZEUqozc-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="-MrJFI244WIY_XfIuMhO-208" target="-MrJFI244WIY_XfIuMhO-208">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

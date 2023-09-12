@@ -236,7 +236,7 @@
                                         <div class="row mb-2">
                                             <div class="col-4 text-left">건물상세주소:</div>
                                             <div class="col-8 text-right">
-                                                <input id="address" type="text" id="sample3_address" class="form-control d-inline-block"
+                                                <input id="address" type="text" class="form-control d-inline-block"
                                                        style="width: 80%;">
                                                 <button onclick="sample3_execDaumPostcode()"
                                                         class="btn btn-secondary d-inline-block"
@@ -363,6 +363,11 @@
                                                 <input id="lessee_expiration_date" type="text" class="form-control datepicker d-inline-block"
                                                        style="width: 45%;" placeholder="종료일">
                                             </div>
+                                        </div>
+                                        <hr>
+                                        <h6 class="mt-3 mb-3">건물 소개</h6>
+                                        <div class="row mb-2">
+                                            <div class="col-12 text-right"><input id="introduction" type="text" class="form-control"></div>
                                         </div>
                                     </div>
                                     <div class="modal-footer" style="justify-content: center;">
@@ -687,6 +692,7 @@
                 formData.append('contractDate', $("#contract_date").val());
                 formData.append('lesseeExpirationDate', $("#lessee_expiration_date").val());
 
+                formData.append('introduction', $("#introduction").val());
                 // AJAX를 사용하여 POST 요청 수행
                 $.ajax({
                     url: '/manager/public-offering/registration',
@@ -739,7 +745,7 @@
                     }
 
                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById("sample3_address").value = addr;
+                    document.getElementById("address").value = addr;
 
                     // iframe을 넣은 element를 안보이게 한다.
                     // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)

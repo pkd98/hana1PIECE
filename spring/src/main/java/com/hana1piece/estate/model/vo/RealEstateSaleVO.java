@@ -5,5 +5,6 @@ import lombok.Data;
 public class RealEstateSaleVO {
     private int listingNumber;
     private String evaluation;
+    private String introduction;
     private String state;
 }

@@ -13,11 +13,13 @@
     height: 480px;
     border-radius: 10px;
 }
-
 .card {
     width: 100%;
     max-width: 480px;
     border: 1px solid #e0e0e0;
+}
+.clickable-card:hover {
+    cursor: pointer;
 }
 
 .card-body {

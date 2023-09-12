@@ -68,5 +68,24 @@ select * from (select listing_number from real_estate_sale order by LISTING_NUMB
 INSERT INTO TENANT_INFO(LISTING_NUMBER, LESSEE, SECTOR, CONTRACT_DATE, EXPIRATION_DATE)
 VALUES(1, 'test', 'test', TO_DATE('2023-01-01', 'YYYY-MM-DD'), TO_DATE('2023-01-02', 'YYYY-MM-DD'));
 
+desc real_estate_sale;
 
+select * from REAL_ESTATE_SALE;
 select * from REAL_ESTATE_INFO;
+select * from TENANT_INFO;
+select * from PUBLICATION_INFO;
+
+truncate table PUBLICATION_INFO;
+truncate table TENANT_INFO;
+truncate table REAL_ESTATE_INFO;
+truncate table REAL_ESTATE_SALE;
+
+select REI.LISTING_NUMBER as listingNumber, REI.IMAGE1 as image1, REI.IMAGE2 as image2, REI.IMAGE3 as image3, REI.BUILDING_NAME as buildingName, res.INTRODUCTION as introduction
+from real_estate_sale res INNER JOIN real_estate_info rei
+ON res.listing_number = rei.LISTING_NUMBER
+where state = '청약';
+
+select REI.LISTING_NUMBER as listingNumber, REI.IMAGE1 as image1, REI.IMAGE2 as image2, REI.IMAGE3 as image3, REI.BUILDING_NAME as buildingName,res.EVALUATION as evaluation
+from real_estate_sale res INNER JOIN real_estate_info rei
+ON res.listing_number = rei.LISTING_NUMBER
+where state = '거래';

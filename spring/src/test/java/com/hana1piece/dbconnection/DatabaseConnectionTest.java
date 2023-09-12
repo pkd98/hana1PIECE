@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 /**
- *  DataSource Oracle Cloud 연결 테스트
+ * DataSource Oracle Cloud 연결 테스트
  */
 @SpringBootTest
 public class DatabaseConnectionTest {
@@ -28,4 +28,5 @@ public class DatabaseConnectionTest {
             e.printStackTrace();
         }
     }
+
 }

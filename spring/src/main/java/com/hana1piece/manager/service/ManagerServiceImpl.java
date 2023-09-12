@@ -58,19 +58,30 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
+    /**
+     * [공모/청약 등록]
+     * 1. 이미지 저장
+     * 2. 매물 등록
+     * 3. 매물 상세 정보 등록
+     * 4. 발행 정보 등록
+     * 5. 임차인 정보 등록
+     *
+     * @param publicOfferingRegistrationDTO
+     * @throws IOException
+     */
     @Override
     public void publicOfferingRegistration(PublicOfferingRegistrationDTO publicOfferingRegistrationDTO) throws IOException {
         try {
-            // 이미지 파일 저장
-            convertMultiPartToFile(publicOfferingRegistrationDTO.getImage1());
-            convertMultiPartToFile(publicOfferingRegistrationDTO.getImage2());
-            convertMultiPartToFile(publicOfferingRegistrationDTO.getImage3());
-
             // 매물 등록
-            estateMapper.insertRealEstateSale();
+            registerEstateSale();
 
             // 등록된 매물 번호 가져오기
             int listingNumber = getRecentListingNumber();
+
+            // 이미지 파일 저장
+            convertMultiPartToFile(publicOfferingRegistrationDTO.getImage1(), listingNumber);
+            convertMultiPartToFile(publicOfferingRegistrationDTO.getImage2(), listingNumber);
+            convertMultiPartToFile(publicOfferingRegistrationDTO.getImage3(), listingNumber);
 
             // 매물 상세 정보 등록
             RealEstateInfoVO realEstateInfoVO = new RealEstateInfoVO();
@@ -89,7 +100,7 @@ public class ManagerServiceImpl implements ManagerService {
             realEstateInfoVO.setImage3(publicOfferingRegistrationDTO.getImage3().getOriginalFilename());
             realEstateInfoVO.setLatitude(publicOfferingRegistrationDTO.getLatitude());
             realEstateInfoVO.setLongitude(publicOfferingRegistrationDTO.getLongitude());
-            estateMapper.insertRealEstateInfo(realEstateInfoVO);
+            registerEstateInfo(realEstateInfoVO);
 
             // 발행 정보 등록
             PublicationInfoVO publicationInfoVO = new PublicationInfoVO();
@@ -105,7 +116,7 @@ public class ManagerServiceImpl implements ManagerService {
             publicationInfoVO.setFirstDividendDate(publicOfferingRegistrationDTO.getFirstDividendDate());
             publicationInfoVO.setDividendCycle(publicOfferingRegistrationDTO.getDividendCycle());
             publicationInfoVO.setDividend(publicOfferingRegistrationDTO.getDividend());
-            estateMapper.insertPublicationInfo(publicationInfoVO);
+            registerPublicationInfo(publicationInfoVO);
 
             // 임차인 정보 등록
             TenantInfoVO tenantInfoVO = new TenantInfoVO();
@@ -114,7 +125,13 @@ public class ManagerServiceImpl implements ManagerService {
             tenantInfoVO.setSector(publicOfferingRegistrationDTO.getSector());
             tenantInfoVO.setContractDate(publicOfferingRegistrationDTO.getContractDate());
             tenantInfoVO.setExpirationDate(publicOfferingRegistrationDTO.getLesseeExpirationDate());
-            estateMapper.insertTenantInfo(tenantInfoVO);
+            registerTenantInfo(tenantInfoVO);
+
+            // 건물 소개글 업데이트
+            RealEstateSaleVO realEstateSaleVO = new RealEstateSaleVO();
+            realEstateSaleVO.setListingNumber(listingNumber);
+            realEstateSaleVO.setIntroduction(publicOfferingRegistrationDTO.getIntroduction());
+            estateMapper.updateRealEstateSale(realEstateSaleVO);
 
         } catch (Exception e) {
             // 예기치 못한 에러
@@ -126,7 +143,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public void registerEstateSale() {
-
+        estateMapper.insertRealEstateSale();
     }
 
     @Override
@@ -136,24 +153,30 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public void registerEstateInfo(RealEstateInfoVO realEstateInfoVO) {
-
+        estateMapper.insertRealEstateInfo(realEstateInfoVO);
     }
 
     @Override
     public void registerPublicationInfo(PublicationInfoVO publicationInfoVO) {
-
+        estateMapper.insertPublicationInfo(publicationInfoVO);
     }
 
     @Override
     public void registerTenantInfo(TenantInfoVO tenantInfoVO) {
-
+        estateMapper.insertTenantInfo(tenantInfoVO);
     }
 
     /**
      * MultipartFile 타입에서 File 타입으로 변환
      */
-    public File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
-        File file = new File(imgFilePath + multipartFile.getOriginalFilename()); // 파일 저장
+    public File convertMultiPartToFile(MultipartFile multipartFile, int listingNumber) throws IOException {
+        // 디렉터리 생성
+        File directory = new File(imgFilePath + listingNumber);
+        if (!directory.exists()) {
+            directory.mkdirs(); // 디렉터리가 존재하지 않으면 생성
+        }
+
+        File file = new File(directory, multipartFile.getOriginalFilename()); // 파일 저장
         multipartFile.transferTo(file); // MultipartFile의 내용을 파일로 복사
         return file;
     }

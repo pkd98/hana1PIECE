@@ -32,5 +32,5 @@ public class PublicOfferingRegistrationDTO {
     private String sector;
     private String contractDate;
     private String lesseeExpirationDate;
-
+    private String introduction;
 }

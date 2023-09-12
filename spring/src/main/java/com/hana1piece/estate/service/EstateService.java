@@ -1,14 +1,12 @@
-package com.hana1piece.estate.model.mapper;
+package com.hana1piece.estate.service;
 
 import com.hana1piece.estate.model.dto.EstateListDTO;
 import com.hana1piece.estate.model.dto.PublicOfferingListDTO;
 import com.hana1piece.estate.model.vo.*;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
-public interface EstateMapper {
+public interface EstateService {
     List<RealEstateSaleVO> findRealEstateSaleAll();
 
     List<RealEstateInfoVO> findRealEstateInfoAll();
@@ -29,22 +27,9 @@ public interface EstateMapper {
 
     SoldBuildingVO findSoldBuildingByLN(int LN);
 
-    void insertRealEstateSale();
-
-    int getRecentListingNumber();
-
     void updateRealEstateSale(RealEstateSaleVO realEstateSaleVO);
-
-    void insertRealEstateInfo(RealEstateInfoVO realEstateInfoVO);
-
-    void insertPublicationInfo(PublicationInfoVO publicationInfoVO);
-
-    void insertTenantInfo(TenantInfoVO tenantInfoVO);
-
-    void insertSoldBuilding(SoldBuildingVO soldBuildingVO);
 
     List<PublicOfferingListDTO> findPublicOfferingListDTO();
 
     List<EstateListDTO> findEstateListDTO();
-
 }

@@ -230,14 +230,14 @@
                             투자하기
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">부동산 거래 가능 종목</a>
+                            <a class="dropdown-item" href="/estate-list">부동산 거래 가능 종목</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">부동산 매각 완료 종목</a>
+                            <a class="dropdown-item" href="/sold-list">부동산 매각 완료 종목</a>
                         </div>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">청약</a>
+                        <a class="nav-link" href="/public-offering">청약</a>
                     </li>
 
                     <li class="nav-item">
