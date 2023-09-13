@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.estate.model.mapper.PublicOfferingMapper">
+    <resultMap type="com.hana1piece.estate.model.vo.PublicOfferingVO" id="PublicOfferingMap">
+        <result column="public_offering" property="publicOffering"/>
+        <result column="listing_number" property="listingNumber"/>
+        <result column="wallet_number" property="walletNumber"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="PublicOfferingMap">
+        select * from public_offering order by id desc
+    </select>
+
+    <select id="findByWalletNumber" parameterType="int" resultMap="PublicOfferingMap">
+        select * from public_offering where wallet_number = #{walletNumber}
+    </select>
+
+    <insert id="insertPublicOffering" parameterType="com.hana1piece.estate.model.vo.PublicOfferingVO">
+        insert into public_offering(listing_number, wallet_number, quantity)
+        values(#{listingNumber}, #{walletNumber}, #{quantity})
+    </insert>
+
+    <select id="findMembersOrderPublicationOfferingByWalletNumber" parameterType="int" resultType="com.hana1piece.member.model.dto.MembersOrderPublicOfferingDTO">
+        select pi.listing_number  as listingNumber,
+               WALLET_NUMBER   as walletNumber,
+               QUANTITY,
+               image1,
+               BUILDING_NAME   as buildingName,
+               EXPIRATION_DATE as expirationDate
+        from (select po.listing_number as listing_number, po.wallet_number, po.QUANTITY, rei.BUILDING_NAME, rei.IMAGE1
+              from PUBLIC_OFFERING po
+                       inner join real_estate_info rei
+                                  on po.LISTING_NUMBER = rei.LISTING_NUMBER) a
+                 inner join PUBLICATION_INFO pi
+                            on a.listing_number = pi.LISTING_NUMBER
+        where wallet_number = #{walletNumber}
+    </select>
+
+</mapper>

@@ -7,12 +7,14 @@ import com.hana1piece.logger.service.LoggerService;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.wallet.model.dto.DepositDTO;
 import com.hana1piece.wallet.model.dto.TransferDTO;
+import com.hana1piece.wallet.model.dto.UpdateWalletBalanceDTO;
 import com.hana1piece.wallet.model.dto.WithdrawDTO;
 import com.hana1piece.wallet.model.mapper.WalletMapper;
 import com.hana1piece.wallet.model.vo.AccountVO;
 import com.hana1piece.wallet.model.vo.BankTransactionVO;
 import com.hana1piece.wallet.model.vo.WalletTransactionVO;
 import com.hana1piece.wallet.model.vo.WalletVO;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -167,6 +169,24 @@ public class WalletServiceImpl implements WalletService {
 
         } catch (Exception e) {
             loggerService.logException("ERR", "walletWithdraw", e.getMessage(), "");
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     *  지갑 잔액 업데이트
+     */
+    @Override
+    public void updateWalletBalance(WalletVO walletVO, WalletTransactionVO walletTransactionVO) {
+        try {
+            UpdateWalletBalanceDTO updateWalletBalanceDTO = new UpdateWalletBalanceDTO();
+            updateWalletBalanceDTO.setWalletNumber(walletVO.getWalletNumber());
+            updateWalletBalanceDTO.setAmount(walletTransactionVO.getAmount());
+            recordTransaction(walletTransactionVO);
+            walletMapper.updateWalletBalance(updateWalletBalanceDTO);
+        } catch (Exception e) {
+            loggerService.logException("ERR", "recordTransaction", e.getMessage(), "");
             e.printStackTrace();
             throw e;
         }

@@ -293,35 +293,23 @@
 
     <!-- 청약중 -->
     <div class="public-offering">
-        <div class="my-wallet card">
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center flex-grow-1">
-                    <img class="bank-logo" src="/resources/img/lotterTower.jpg" alt="Bank" class="bank-image">
-                    <span class="card-title building-name ml-2 text-center mb-0">롯데월드 타워 1층 1호</span>
-                </div>
-                <div class="text-center">
-                    <p class="building-name mb-0">결과 발표 D-10</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="my-wallet card">
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center flex-grow-1">
-                    <img class="bank-logo" src="/resources/img/lotterTower.jpg" alt="Bank" class="bank-image">
-                    <span class="card-title building-name ml-2 text-center mb-0">롯데월드 타워 1층 1호</span>
-                </div>
-                <div class="text-center">
-                    <p class="building-name mb-0">결과 발표 D-10</p>
+        <c:forEach var="list" items="${membersOrderPublicOfferingDTOList}">
+            <div class="my-wallet card">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center flex-grow-1">
+                        <img class="bank-logo" src="/resources/upload/${list.listingNumber}/${list.image1}" alt="image1" class="bank-image">
+                        <span class="card-title building-name ml-2 text-center mb-0">${list.buildingName} (${list.quantity} STO)</span>
+                    </div>
+                    <div class="text-center">
+                        <p class="building-name mb-0 expirationDate" data-date="${list.expirationDate}"></p>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </c:forEach>
     </div>
 
     <!-- 보유 빌딩 -->
     <div class="row equal-height-row">
-
         <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
             <div class="card total-asset">
                 <div class="card-header">
@@ -753,10 +741,27 @@
                 }
             });
         });
-
-
-
     });
+
+    /**
+     *  청약 마감일 (D-day 변환) 표기
+     */
+    window.onload = function() {
+        // 모든 expirationDate 요소 선택
+        let expirationDates = document.querySelectorAll('.expirationDate');
+
+        // 현재 날짜 설정
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);  // 시간, 분, 초, 밀리초 초기화
+
+        expirationDates.forEach((element) => {
+            let endDate = new Date(element.getAttribute('data-date'));
+            let diffTime = endDate.getTime() - today.getTime();
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            element.textContent = '결과 발표 D-' + diffDays;
+        });
+    }
 
 </script>
 

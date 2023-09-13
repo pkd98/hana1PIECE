@@ -46,6 +46,10 @@
         update wallet set balance = balance - #{amount} where wallet_number = #{walletNumber} and password = #{walletPassword}
     </update>
 
+    <update id="updateWalletBalance" parameterType="com.hana1piece.wallet.model.dto.UpdateWalletBalanceDTO">
+        update wallet set balance = balance + #{amount} where wallet_number = #{walletNumber}
+    </update>
+
     <insert id="insertWalletTransaction" parameterType="com.hana1piece.wallet.model.vo.WalletTransactionVO">
         insert into wallet_transaction(wallet_number, classification, name, amount, balance)
         values(#{walletNumber}, #{classification}, #{name}, #{amount}, #{balance})

@@ -89,3 +89,12 @@ select REI.LISTING_NUMBER as listingNumber, REI.IMAGE1 as image1, REI.IMAGE2 as 
 from real_estate_sale res INNER JOIN real_estate_info rei
 ON res.listing_number = rei.LISTING_NUMBER
 where state = '거래';
+
+select * from PUBLIC_OFFERING;
+
+select pi.listing_number as listingNumber, WALLET_NUMBER as walletNumber, QUANTITY, image1, BUILDING_NAME as buildingName, EXPIRATION_DATE as expirationDate
+from (select po.listing_number as listing_number, po.wallet_number, po.QUANTITY, rei.BUILDING_NAME, rei.IMAGE1
+from PUBLIC_OFFERING po inner join real_estate_info rei 
+on po.LISTING_NUMBER = rei.LISTING_NUMBER) a inner join PUBLICATION_INFO pi
+on a.listing_number = pi.LISTING_NUMBER
+where wallet_number = 6;

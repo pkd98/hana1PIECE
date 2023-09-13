@@ -36,7 +36,7 @@
 
     <!-- <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid"> -->
     <div class="imageCarousel">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="0">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="d-block w-100"
@@ -54,16 +54,14 @@
                          alt="image3">
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
-               data-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button"
-               data-slide="next">
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
 
@@ -257,29 +255,28 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- 청약 주문 모달 -->
-    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="orderModalLabel">청약 주문 확인</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p><span>빌딩명:</span><span id="orderModalName">${realEstateInfo.buildingName}</span></p>
-                    <p><span>공모가:</span><span id="orderModalPrice">5,000원</span></p>
-                    <p><span>수량:</span> <span id="orderModalQuantity"></span></p>
-                    <p><span>주문금액:</span><span id="orderModalTotal"></span></p>
-                </div>
-                <div class="modal-footer" style="justify-content: center;">
-                    <button type="button" class="btn btn-danger" id="confirmOrder">청약신청</button>
-                </div>
+<!-- 청약 주문 모달 -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">청약 주문 확인</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <p><span>빌딩명:</span><span id="orderModalName">${realEstateInfo.buildingName}</span></p>
+                <p><span>공모가:</span><span id="orderModalPrice">5,000원</span></p>
+                <p><span>수량:</span> <span id="orderModalQuantity"></span></p>
+                <p><span>주문금액:</span><span id="orderModalTotal"></span></p>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" class="btn btn-danger" id="confirmOrder">청약신청</button>
             </div>
         </div>
     </div>
-
-
 </div>
 
 <!-- 성공 모달 -->
@@ -314,6 +311,20 @@
 
 
 <script>
+    function formatNumbers() {
+        $('.formatted-number').each(function() {
+            var number = $(this).text();
+            var formattedNumber = numberWithCommas(number);
+            $(this).text(formattedNumber);
+        });
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+
+
     var listingNumber = ${publicationInfo.listingNumber};
     var walletNumber = ${wallet.walletNumber};
 
@@ -375,6 +386,11 @@
 <script>
     window.onload = function () {
         /**
+         *  금액 천단위 구분 쉼표 추가
+         */
+        formatNumbers();
+
+        /**
          *  가격 및 수량 조절 관련 로직
          */
         const quantityInput = document.querySelector('.quantity input');
@@ -432,6 +448,11 @@
             // Spinner 추가 및 버튼 텍스트 숨김
             btnElement.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
             btnElement.disabled = true;  // 버튼을 비활성화
+
+            // 청약 주문 확인 모달 닫기
+            var orderModalInstance = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
+            orderModalInstance.hide();
+
             var walletPassword = document.getElementById("wallet-password").value;
             sendOrder(walletPassword, quantityInput.value, btnElement);
         }
@@ -448,15 +469,15 @@
                     listingNumber: listingNumber,
                     walletNumber: walletNumber,
                     quantity: quantity,
-                    password: password
+                    walletPassword: password
                 }),
                 success: function(response) {
-                    new bootstrap.Modal(document.getElementById('successModal')).show();
                     btnElement.disabled = false;  // 버튼을 활성화
+                    new bootstrap.Modal(document.getElementById('successModal')).show();
                 },
                 error: function(error) {
-                    new bootstrap.Modal(document.getElementById('errorModal')).show();
                     btnElement.disabled = false;  // 버튼을 활성화
+                    new bootstrap.Modal(document.getElementById('errorModal')).show();
                 }
             });
         }
@@ -479,8 +500,6 @@
         integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
         crossorigin="anonymous"></script>
 
-<!-- carousel 용도 bootstrap4 -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

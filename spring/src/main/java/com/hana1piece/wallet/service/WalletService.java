@@ -23,6 +23,8 @@ public interface WalletService {
 
     void walletWithdraw(OneMembersVO member, WithdrawDTO withdrawDTO) throws Exception;
 
+    void updateWalletBalance(WalletVO walletVO, WalletTransactionVO walletTransactionVO);
+
     void recordTransaction(WalletTransactionVO walletTransactionVO);
 
     boolean requestBankAccountTransfer(TransferDTO transferDTO);
