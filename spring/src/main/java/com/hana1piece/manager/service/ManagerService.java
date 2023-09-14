@@ -21,6 +21,11 @@ public interface ManagerService {
      */
     void publicOfferingRegistration(PublicOfferingRegistrationDTO publicOfferingRegistrationDTO) throws IOException;
 
+    /**
+     *  매물 상장
+     */
+    void estateListing(int listingNumber);
+
     // 매물 등록
     void registerEstateSale();
 

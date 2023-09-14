@@ -1,6 +1,7 @@
 package com.hana1piece.estate.service;
 
 import com.hana1piece.estate.model.dto.OrderPublicOfferingDTO;
+import com.hana1piece.estate.model.dto.PublicOfferingProgressDTO;
 import com.hana1piece.estate.model.mapper.EstateMapper;
 import com.hana1piece.estate.model.mapper.PublicOfferingMapper;
 import com.hana1piece.estate.model.vo.PublicOfferingVO;
@@ -85,5 +86,25 @@ public class PublicOfferingServiceImpl implements PublicOfferingService {
     @Override
     public List<MembersOrderPublicOfferingDTO> findMembersOrderPublicationOfferingByWalletNumber(int walletNumber) {
         return publicOfferingMapper.findMembersOrderPublicationOfferingByWalletNumber(walletNumber);
+    }
+
+    @Override
+    public List<PublicOfferingVO> findAll() {
+        return publicOfferingMapper.findAll();
+    }
+
+    @Override
+    public List<PublicOfferingVO> findByWalletNumber(int walletNumber) {
+        return publicOfferingMapper.findByWalletNumber(walletNumber);
+    }
+
+    @Override
+    public List<PublicOfferingVO> findByListingNumber(int listingNumber) {
+        return publicOfferingMapper.findByListingNumber(listingNumber);
+    }
+
+    @Override
+    public PublicOfferingProgressDTO findPublicOfferingProgressByListingNumber(int LN) {
+        return publicOfferingMapper.findPublicOfferingProgressByListingNumber(LN);
     }
 }

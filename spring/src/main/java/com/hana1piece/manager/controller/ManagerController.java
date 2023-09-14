@@ -1,11 +1,12 @@
 package com.hana1piece.manager.controller;
 
+import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.vo.ManagerVO;
 import com.hana1piece.manager.service.ManagerService;
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,16 +21,22 @@ import javax.validation.Valid;
 @Controller
 public class ManagerController {
     private final ManagerService managerService;
+    private final EstateService estateService;
 
     @Autowired
-    public ManagerController(ManagerService managerService) {
+    public ManagerController(ManagerService managerService, EstateService estateService) {
         this.managerService = managerService;
+        this.estateService = estateService;
     }
 
     @GetMapping("/manager")
-    public String managerIndex(HttpSession session) {
+    public ModelAndView managerIndex(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
         ManagerVO manager = (ManagerVO) session.getAttribute("manager");
-        return (manager == null) ? "manager-login" : "manager";
+        String view = (manager == null) ? "manager-login" : "manager";
+        mav.addObject("findPublicOfferingList", estateService.findPublicOfferingListDTO());
+        mav.setViewName(view);
+        return mav;
     }
 
     /**
@@ -87,5 +94,17 @@ public class ManagerController {
         }
     }
 
+    /**
+     *  매물 상장
+     */
+    @PutMapping("/manager/estate-listing")
+    public ResponseEntity estateListing(@RequestParam int listingNumber) {
+        try {
+            managerService.estateListing(listingNumber);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+        }
+    }
 
 }

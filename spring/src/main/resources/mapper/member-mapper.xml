@@ -34,4 +34,9 @@
         VALUES (#{memberId}, #{accountNumber}, #{password})
     </insert>
 
+    <insert id="insertStos" parameterType="com.hana1piece.member.model.vo.Stos">
+        insert into stos(wallet_number, listing_number, amount)
+        values(#{walletNumber}, #{listingNumber}, #{amount})
+    </insert>
+
 </mapper>

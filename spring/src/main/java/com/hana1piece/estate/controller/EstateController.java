@@ -55,7 +55,7 @@ public class EstateController {
      * 청약 상세 페이지
      */
     @GetMapping("/public-offering/{LN}")
-    public ModelAndView publicOfferingDetails(@PathVariable String LN, HttpSession session) {
+    public ModelAndView publicOfferingDetails(@PathVariable int LN, HttpSession session) {
         ModelAndView mav = new ModelAndView("public-offering-details");
         OneMembersVO member = (OneMembersVO) session.getAttribute("member");
         // 세션 만료 리턴
@@ -64,9 +64,10 @@ public class EstateController {
             return mav;
         }
         mav.addObject("wallet", walletService.findWalletByMemberId(member.getId()));
-        mav.addObject("realEstateInfo", estateService.findRealEstateInfoByLN(Integer.parseInt(LN)));
-        mav.addObject("publicationInfo", estateService.findPublicationInfoByLN(Integer.parseInt(LN)));
-        mav.addObject("tenantInfo", estateService.findTenantInfoByLN(Integer.parseInt(LN)));
+        mav.addObject("realEstateInfo", estateService.findRealEstateInfoByLN(LN));
+        mav.addObject("publicationInfo", estateService.findPublicationInfoByLN(LN));
+        mav.addObject("tenantInfo", estateService.findTenantInfoByLN(LN));
+        mav.addObject("publicOfferingProgress", publicOfferingService.findPublicOfferingProgressByListingNumber(LN));
         return mav;
     }
 

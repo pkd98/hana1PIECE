@@ -94,14 +94,24 @@
         <div class="subscription-card">
             <div class="flex-row">
                 <span class="rate-title">청약모집률</span>
-                <span class="count-number">5,124명 청약 완료</span>
+                <span class="count-number">${publicOfferingProgress.countWalletNumber}명(${publicOfferingProgress.sumQuantity}STO) 청약 완료</span>
             </div>
             <div class="flex-row mt-2">
-                <span class="rate-percentage">99%</span>
-                <span class="count-time">청약 마감까지 <span id="d-day2"></span>일 전</span>
+                <c:choose>
+                    <c:when test="${publicOfferingProgress.sumQuantity lt publicationInfo.volume}">
+                        <span class="rate-percentage">${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%</span>
+                        <span class="count-time">청약 마감까지 <span id="d-day2"></span>일 전</span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="rate-percentage" hidden>${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%</span>
+                        <span class="count-time" hidden>청약 마감까지 <span id="d-day2"></span>일 전</span>
+                        <span class="rate-percentage">${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%</span>
+                        <span class="count-time">조기 마감되었습니다!</span>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="progress-bar mt-3">
-                <div class="progress-fill" style="width: 99%; background-color: #008485;"></div>
+                <div class="progress-fill" style="width: ${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%; background-color: #008485;"></div>
             </div>
         </div>
         <!-- 청약 주문 -->
@@ -130,7 +140,7 @@
                     청약 주문 총 액: <span>0원</span>
                 </div>
                 <div class="order">
-                    <input class="btn btn-primary" type="button" value="청약 주문">
+                    <input class="btn btn-primary" type="button" <c:if test="${publicOfferingProgress.sumQuantity ge publicationInfo.volume}"> value="마감"</c:if> value="청약 주문" <c:if test="${publicOfferingProgress.sumQuantity ge publicationInfo.volume}"> disabled </c:if>>
                 </div>
             </div>
         </div>

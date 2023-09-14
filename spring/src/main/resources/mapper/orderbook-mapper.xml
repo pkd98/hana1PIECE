@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.trading.model.mapper.OrderBookMapper">
+
+    <select id="init" parameterType="com.hana1piece.manager.model.dto.ManagerLoginDTO" statementType="CALLABLE">
+        {CALL HANA1PIECE_MNG.INIT_ORDER_BOOK(#{listingNumber})}
+    </select>
+
+</mapper>

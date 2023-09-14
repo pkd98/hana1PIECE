@@ -80,6 +80,8 @@ truncate table TENANT_INFO;
 truncate table REAL_ESTATE_INFO;
 truncate table REAL_ESTATE_SALE;
 
+select * from REAL_ESTATE_SALE where state='청약';
+
 select REI.LISTING_NUMBER as listingNumber, REI.IMAGE1 as image1, REI.IMAGE2 as image2, REI.IMAGE3 as image3, REI.BUILDING_NAME as buildingName, res.INTRODUCTION as introduction
 from real_estate_sale res INNER JOIN real_estate_info rei
 ON res.listing_number = rei.LISTING_NUMBER
@@ -98,3 +100,36 @@ from PUBLIC_OFFERING po inner join real_estate_info rei
 on po.LISTING_NUMBER = rei.LISTING_NUMBER) a inner join PUBLICATION_INFO pi
 on a.listing_number = pi.LISTING_NUMBER
 where wallet_number = 6;
+
+
+select listingNumber, walletNumber, QUANTITY, image1, buildingName, expirationDate, state from
+        (select pi.listing_number  as listingNumber,
+               WALLET_NUMBER   as walletNumber,
+               QUANTITY,
+               image1,
+               BUILDING_NAME   as buildingName,
+               EXPIRATION_DATE as expirationDate
+        from (select po.listing_number as listing_number, po.wallet_number, po.QUANTITY, rei.BUILDING_NAME, rei.IMAGE1
+              from PUBLIC_OFFERING po
+                       inner join real_estate_info rei
+                                  on po.LISTING_NUMBER = rei.LISTING_NUMBER) a
+                 inner join PUBLICATION_INFO pi
+                            on a.listing_number = pi.LISTING_NUMBER) b inner join REAL_ESTATE_SALE RES
+                                on b.LISTINGNUMBER = RES.LISTING_NUMBER
+        where walletNumber = 6 and state = '청약';
+
+
+
+
+
+select count(WALLET_NUMBER) AS countWalletNumber, NVL(sum(quantity), 0) as sumQuantity
+from public_offering
+where LISTING_NUMBER = 19;
+
+
+
+select NVL(SUM(QUANTITY), 0) / VOLUME ,count(WALLET_NUMBER) AS countWalletNumber, NVL(sum(quantity), 0) as sumQuantity
+from (select PUBLIC_OFFERING.LISTING_NUMBER, WALLET_NUMBER, QUANTITY,volume
+from PUBLICATION_INFO inner join PUBLIC_OFFERING
+on publication_info.listing_number = PUBLIC_OFFERING.LISTING_NUMBER)
+where LISTING_NUMBER = 19;

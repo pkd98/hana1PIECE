@@ -1,15 +1,17 @@
 package com.hana1piece.manager.service;
 
 import com.hana1piece.estate.model.mapper.EstateMapper;
-import com.hana1piece.estate.model.vo.PublicationInfoVO;
-import com.hana1piece.estate.model.vo.RealEstateInfoVO;
-import com.hana1piece.estate.model.vo.RealEstateSaleVO;
-import com.hana1piece.estate.model.vo.TenantInfoVO;
+import com.hana1piece.estate.model.mapper.PublicOfferingMapper;
+import com.hana1piece.estate.model.vo.*;
 import com.hana1piece.logger.service.LoggerService;
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.mapper.ManagerMapper;
 import com.hana1piece.manager.model.vo.ManagerVO;
+import com.hana1piece.member.model.mapper.MemberMapper;
+import com.hana1piece.member.model.vo.Stos;
+import com.hana1piece.member.service.MemberService;
+import com.hana1piece.trading.model.mapper.OrderBookMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @Transactional
@@ -26,15 +29,21 @@ public class ManagerServiceImpl implements ManagerService {
 
     private final ManagerMapper managerMapper;
     private final EstateMapper estateMapper;
+    private final PublicOfferingMapper publicOfferingMapper;
+    private final MemberMapper memberMapper;
+    private final OrderBookMapper orderBookMapper;
     private final LoggerService loggerService;
 
     @Value("${imgFilePath}")
     private String imgFilePath;
 
     @Autowired
-    public ManagerServiceImpl(ManagerMapper managerMapper, EstateMapper estateMapper, LoggerService loggerService) {
+    public ManagerServiceImpl(ManagerMapper managerMapper, EstateMapper estateMapper, PublicOfferingMapper publicOfferingMapper, MemberService memberService, MemberMapper memberMapper, OrderBookMapper orderBookMapper, LoggerService loggerService) {
         this.managerMapper = managerMapper;
         this.estateMapper = estateMapper;
+        this.publicOfferingMapper = publicOfferingMapper;
+        this.memberMapper = memberMapper;
+        this.orderBookMapper = orderBookMapper;
         this.loggerService = loggerService;
     }
 
@@ -136,6 +145,41 @@ public class ManagerServiceImpl implements ManagerService {
         } catch (Exception e) {
             // 예기치 못한 에러
             loggerService.logException("ERR", "publicOfferingRegistration", e.getMessage(), "");
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 매물 상장
+     * 1. 매물 상태 청약 -> 거래 변경
+     * 2. 청약 신청 회원 보유 토큰 : 조각 지급
+     * 3. 호가창 셋팅
+     */
+    @Override
+    public void estateListing(int listingNumber) {
+        try {
+            // 1. 매물 상태 변경
+            RealEstateSaleVO realEstateSaleVO = new RealEstateSaleVO();
+            realEstateSaleVO.setListingNumber(listingNumber);
+            realEstateSaleVO.setState("거래");
+            estateMapper.updateRealEstateSale(realEstateSaleVO);
+
+            // 2. 토큰 지급
+            List<PublicOfferingVO> publicOfferingVOList = publicOfferingMapper.findByListingNumber(listingNumber);
+            for(PublicOfferingVO publicOfferingVO : publicOfferingVOList) {
+                Stos stos = new Stos();
+                stos.setListingNumber(publicOfferingVO.getListingNumber());
+                stos.setWalletNumber(publicOfferingVO.getWalletNumber());
+                stos.setAmount(publicOfferingVO.getQuantity());
+                memberMapper.insertStos(stos);
+            }
+
+            // 3. 호가창 셋팅
+            orderBookMapper.init(listingNumber);
+
+        } catch (Exception e) {
+            loggerService.logException("ERR", "estateListing", e.getMessage(), "");
             e.printStackTrace();
             throw e;
         }

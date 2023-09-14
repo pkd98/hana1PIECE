@@ -17,25 +17,43 @@
         select * from public_offering where wallet_number = #{walletNumber}
     </select>
 
+    <select id="findByListingNumber" parameterType="int" resultMap="PublicOfferingMap">
+        select * from public_offering where listing_number = ${listingNumber}
+    </select>
+
     <insert id="insertPublicOffering" parameterType="com.hana1piece.estate.model.vo.PublicOfferingVO">
         insert into public_offering(listing_number, wallet_number, quantity)
         values(#{listingNumber}, #{walletNumber}, #{quantity})
     </insert>
 
     <select id="findMembersOrderPublicationOfferingByWalletNumber" parameterType="int" resultType="com.hana1piece.member.model.dto.MembersOrderPublicOfferingDTO">
-        select pi.listing_number  as listingNumber,
-               WALLET_NUMBER   as walletNumber,
-               QUANTITY,
-               image1,
-               BUILDING_NAME   as buildingName,
-               EXPIRATION_DATE as expirationDate
-        from (select po.listing_number as listing_number, po.wallet_number, po.QUANTITY, rei.BUILDING_NAME, rei.IMAGE1
-              from PUBLIC_OFFERING po
-                       inner join real_estate_info rei
-                                  on po.LISTING_NUMBER = rei.LISTING_NUMBER) a
-                 inner join PUBLICATION_INFO pi
-                            on a.listing_number = pi.LISTING_NUMBER
-        where wallet_number = #{walletNumber}
+        select listingNumber, walletNumber, QUANTITY, image1, buildingName, expirationDate, state
+        from (select pi.listing_number as listingNumber,
+                     WALLET_NUMBER     as walletNumber,
+                     QUANTITY,
+                     image1,
+                     BUILDING_NAME     as buildingName,
+                     EXPIRATION_DATE   as expirationDate
+              from (select po.listing_number as listing_number,
+                           po.wallet_number,
+                           po.QUANTITY,
+                           rei.BUILDING_NAME,
+                           rei.IMAGE1
+                    from PUBLIC_OFFERING po
+                             inner join real_estate_info rei
+                                        on po.LISTING_NUMBER = rei.LISTING_NUMBER) a
+                       inner join PUBLICATION_INFO pi
+                                  on a.listing_number = pi.LISTING_NUMBER) b
+                 inner join REAL_ESTATE_SALE RES
+                            on b.LISTINGNUMBER = RES.LISTING_NUMBER
+        where walletNumber = 6
+          and state = '청약'
+    </select>
+
+    <select id="findPublicOfferingProgressByListingNumber" parameterType="int" resultType="com.hana1piece.estate.model.dto.PublicOfferingProgressDTO">
+        select count(WALLET_NUMBER) AS countWalletNumber, NVL(sum(quantity), 0) as sumQuantity
+        from public_offering
+        where LISTING_NUMBER = #{LN}
     </select>
 
 </mapper>
