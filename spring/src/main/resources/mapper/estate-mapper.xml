@@ -128,6 +128,7 @@
         <set>
             <if test="evaluation != null">evaluation = #{evaluation},</if>
             <if test="state != null">state = #{state},</if>
+            <if test="price != null">state = #{price},</if>
             <if test="introduction != null">introduction = #{introduction},</if>
         </set>
         WHERE listing_number = #{listingNumber}
@@ -183,6 +184,15 @@
         from real_estate_sale res
                  INNER JOIN real_estate_info rei
                             ON res.listing_number = rei.LISTING_NUMBER
+        where state = '거래'
+    </select>
+
+    <select id="findListedEstateListDTO" resultType="com.hana1piece.estate.model.dto.ListedEstateListDTO">
+        select *
+        from (select res.LISTING_NUMBER as listingNumber, evaluation, introduction, price, state, building_name as buildingName, image1
+              from REAL_ESTATE_SALE res
+                       inner join REAL_ESTATE_INFO rei
+                                  on res.listing_number = rei.listing_number)
         where state = '거래'
     </select>
 

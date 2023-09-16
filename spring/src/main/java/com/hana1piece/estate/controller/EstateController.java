@@ -33,10 +33,55 @@ public class EstateController {
         this.publicOfferingService = publicOfferingService;
     }
 
+    /**
+     * 매물 리스트 페이지
+     */
     @GetMapping("/estate-list")
     public ModelAndView estateList() {
         ModelAndView mav = new ModelAndView("estate-list");
-        // mav.addObject(estateService.findRe)
+        mav.addObject("listedEstateList", estateService.findListedEstateListDTO());
+        return mav;
+    }
+
+    /**
+     * 매물 상세 페이지
+     */
+    @GetMapping("/estate-list/{LN}")
+    public ModelAndView estateDetails(@PathVariable int LN, HttpSession session) {
+        ModelAndView mav = new ModelAndView("estate-details");
+        OneMembersVO member = (OneMembersVO) session.getAttribute("member");
+        // 세션 만료 리턴
+        if (member == null) {
+            mav.setViewName("redirect:/");
+            return mav;
+        }
+        mav.addObject("wallet", walletService.findWalletByMemberId(member.getId()));
+        mav.addObject("realEstateSale", estateService.findRealEstateSaleByLN(LN));
+        mav.addObject("realEstateInfo", estateService.findRealEstateInfoByLN(LN));
+        mav.addObject("publicationInfo", estateService.findPublicationInfoByLN(LN));
+        mav.addObject("tenantInfo", estateService.findTenantInfoByLN(LN));
+        mav.addObject("publicOfferingProgress", publicOfferingService.findPublicOfferingProgressByListingNumber(LN));
+        return mav;
+    }
+
+    /**
+     * 매물 거래 페이지
+     */
+    @GetMapping("/estate-trading/{LN}")
+    public ModelAndView estateTrading(@PathVariable int LN, HttpSession session) {
+        ModelAndView mav = new ModelAndView("estate-trading");
+        OneMembersVO member = (OneMembersVO) session.getAttribute("member");
+        // 세션 만료 리턴
+        if (member == null) {
+            mav.setViewName("redirect:/");
+            return mav;
+        }
+        mav.addObject("wallet", walletService.findWalletByMemberId(member.getId()));
+        mav.addObject("realEstateSale", estateService.findRealEstateSaleByLN(LN));
+        mav.addObject("realEstateInfo", estateService.findRealEstateInfoByLN(LN));
+        mav.addObject("publicationInfo", estateService.findPublicationInfoByLN(LN));
+        mav.addObject("tenantInfo", estateService.findTenantInfoByLN(LN));
+        mav.addObject("publicOfferingProgress", publicOfferingService.findPublicOfferingProgressByListingNumber(LN));
         return mav;
     }
 

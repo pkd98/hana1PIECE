@@ -133,3 +133,25 @@ from (select PUBLIC_OFFERING.LISTING_NUMBER, WALLET_NUMBER, QUANTITY,volume
 from PUBLICATION_INFO inner join PUBLIC_OFFERING
 on publication_info.listing_number = PUBLIC_OFFERING.LISTING_NUMBER)
 where LISTING_NUMBER = 19;
+
+
+select * from (
+select res.LISTING_NUMBER as listingNumber, evaluation, introduction, price, state, building_name as buildingName, image1 from REAL_ESTATE_SALE res inner join REAL_ESTATE_INFO rei
+on res.listing_number = rei.listing_number)
+where state = '거래';
+
+
+update order_book set amount = 0;
+update order_book set amount = 1
+where listing_number = 20 and type = 'SELL' and price >= 5000;
+update order_book set amount = 1
+where listing_number = 20 and type = 'BUY' and price < 5000;
+
+commit;
+
+select * from order_book;
+select * from order_book where listing_number = 20 and amount > 0 and type = 'SELL' order by price desc;
+select * from order_book where listing_number = 20 and amount > 0 and type = 'BUY' order by price desc;
+
+
+

@@ -4,8 +4,24 @@
 
 <mapper namespace="com.hana1piece.trading.model.mapper.OrderBookMapper">
 
+    <resultMap type="com.hana1piece.trading.model.vo.OrderBookVO" id="OrderBookMap">
+        <result column="listing_number" property="listingNumber" />
+    </resultMap>
+
     <select id="init" parameterType="com.hana1piece.manager.model.dto.ManagerLoginDTO" statementType="CALLABLE">
         {CALL HANA1PIECE_MNG.INIT_ORDER_BOOK(#{listingNumber})}
+    </select>
+
+    <select id="findOrderBookListByLN" parameterType="int" resultMap="OrderBookMap">
+        select * from order_book where listing_number = #{listingNumber} order by id desc
+    </select>
+
+    <select id="findSellOrderBookListByLN" parameterType="int" resultMap="OrderBookMap">
+        select * from order_book where listing_number = #{listingNumber} and amount > 0 and type = 'SELL' order by price desc
+    </select>
+
+    <select id="findBuyOrderBookListByLN" parameterType="int" resultMap="OrderBookMap">
+        select * from order_book where listing_number = #{listingNumber} and amount > 0 and type = 'BUY' order by price desc
     </select>
 
 </mapper>

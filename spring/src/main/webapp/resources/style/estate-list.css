@@ -11,9 +11,13 @@
 
 .card-title {
     font-weight: bold;
+    font-size: 1.5rem;
 }
 
 .text-right p:last-child {
     /* 가격의 글자 크기 조절 */
     font-size: 1.8rem;
+}
+.clickable-card:hover {
+    cursor: pointer;
 }

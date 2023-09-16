@@ -273,6 +273,7 @@ CREATE TABLE REAL_ESTATE_SALE (
   LISTING_NUMBER NUMBER(8) DEFAULT LN_SEQ.NEXTVAL PRIMARY KEY,      -- 매물번호
   EVALUATION VARCHAR2(20) DEFAULT '평가없음',                         -- 평가
   INTRODUCTION VARCHAR2(300),                                       -- 소개글
+  PRICE NUMBER(12) DEFAULT 5000,                                    -- 토큰 가격
   STATE VARCHAR2(20) DEFAULT '청약' NOT NULL                         -- 상태
 );
 

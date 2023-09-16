@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -31,85 +32,36 @@
 
 <div class="container mt-5">
     <div class="row">
-        <!-- 매물 1 -->
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                    <p class="text-danger small mb-2">저평가</p>
-                    <div class="text-right">
-                        <p class="small text-muted mb-1">1 STO 가격</p>
-                        <p>5,000원</p>
+        <c:forEach var="item" items="${listedEstateList}">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <img src="/resources/upload/${item.listingNumber}/${item.image1}" alt="부동산 이미지" class="img-fluid">
+                <div class="card clickable-card" data-listing="${item.listingNumber}">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.buildingName}</h5>
+                        <p class="text-danger small mb-2">${item.evaluation}</p>
+                        <div class="text-right">
+                            <p class="small text-muted mb-1">1 STO 가격</p>
+                            <p>${item.price}원</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- 매물 1 -->
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                    <p class="text-danger small mb-2">저평가</p>
-                    <div class="text-right">
-                        <p class="small text-muted mb-1">1 STO 가격</p>
-                        <p>5,000원</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 매물 1 -->
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                    <p class="text-danger small mb-2">저평가</p>
-                    <div class="text-right">
-                        <p class="small text-muted mb-1">1 STO 가격</p>
-                        <p>5,000원</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 매물 1 -->
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                    <p class="text-danger small mb-2">저평가</p>
-                    <div class="text-right">
-                        <p class="small text-muted mb-1">1 STO 가격</p>
-                        <p>5,000원</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 매물 1 -->
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                    <p class="text-danger small mb-2">저평가</p>
-                    <div class="text-right">
-                        <p class="small text-muted mb-1">1 STO 가격</p>
-                        <p>5,000원</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        </c:forEach>
     </div>
 </div>
 
 <%@ include file="include/footer.jsp" %>
+<script>
+    /**
+     *  카드 요소 누르면 상세 페이지 이동
+     */
+    $(document).ready(function () {
+        $(".clickable-card").click(function () {
+            var listingNumber = $(this).data("listing");
+            window.location.href = "/estate-list/" + listingNumber;
+        });
+    });
+</script>
 
 <!-- jQuery and Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

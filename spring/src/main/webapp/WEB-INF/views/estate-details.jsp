@@ -3,38 +3,36 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/style/styles.css">
-    <link rel="stylesheet" href="/resources/style/public-offering-order.css">
+    <link rel="stylesheet" href="/resources/style/estate-details.css">
     <link rel="stylesheet" href="/resources/style/font.css">
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <!-- animation cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- fabicon -->
     <link rel="icon" href="/resources/img/favicon.png">
     <!-- kakao map api -->
     <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5082aba073eeee4dbd5606104fd17280"></script>
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5082aba073eeee4dbd5606104fd17280"></script>
     <!-- ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>하나1PIECE</title>
 </head>
-
 <%@ include file="include/header.jsp" %>
 
 <div class="titleBar">
-    <h2>청약</h2>
+    <h2>투자하기</h2>
     <hr>
 </div>
 
-
 <div class="estate-wrapper">
 
-    <!-- <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid"> -->
     <div class="imageCarousel">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -73,84 +71,64 @@
         </div>
         <div class="card-body">
             <div class="card-content">
-                <p class="value-title">청약 마감</p>
-                <h6 class="value" style="color: #E90061"><span id="d-day"></span></h6>
-                <small>(${publicationInfo.expirationDate})</small>
+                <p class="value-title">건물가치</p>
+                <h6 class="value">5,034원</h6>
+                <small>(23.07.30)</small>
             </div>
             <div class="card-content">
-                <p class="value-title">공모 가격</p>
-                <h6 class="value">5,000원</h6>
-                <small>총 ${publicationInfo.totalAmount}원</small>
+                <p class="value-title">토큰 가격</p>
+                <h6 class="value">${realEstateSale.price}원</h6>
+                <small>-17.7%</small>
             </div>
             <div class="card-content">
-                <p class="value-title">연 수익 배당</p>
-                <h6 class="value">약 <span id="odds"></span>%</h6>
-                <small>1토큰당 ${publicationInfo.dividend}원</small>
+                <p class="value-title">건물가치 대비</p>
+                <h6 class="value">-10%</h6>
+                <small>${realEstateSale.evaluation}</small>
             </div>
         </div>
     </div>
 
-    <div class="public-offering-wrapper">
-        <div class="subscription-card">
-            <div class="flex-row">
-                <span class="rate-title">청약모집률</span>
-                <span class="count-number">${publicOfferingProgress.countWalletNumber}명(${publicOfferingProgress.sumQuantity}STO) 청약 완료</span>
-            </div>
-            <div class="flex-row mt-2">
-                <c:choose>
-                    <c:when test="${publicOfferingProgress.sumQuantity lt publicationInfo.volume}">
-                        <span class="rate-percentage">${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%</span>
-                        <span class="count-time">청약 마감까지 <span id="d-day2"></span>일 전</span>
-                    </c:when>
-                    <c:otherwise>
-                        <span class="rate-percentage" hidden>${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%</span>
-                        <span class="count-time" hidden>청약 마감까지 <span id="d-day2"></span>일 전</span>
-                        <span class="rate-percentage">${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%</span>
-                        <span class="count-time">조기 마감되었습니다!</span>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-            <div class="progress-bar mt-3">
-                <div class="progress-fill" style="width: ${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%; background-color: #008485;"></div>
-            </div>
-        </div>
-        <!-- 청약 주문 -->
-        <div class="trading">
-            <div class="trading-items">
-                <div class="wallet-pw">
-                    <label for="wallet-password">지갑 비밀번호 </label>
-                    <input type="password" id="wallet-password" pattern="\d{4}" placeholder="4자리 숫자" maxlength="4"/>
-                </div>
-                <div class="able-amount">
-                    청약 가능 금액: <span id="orderAvailable">원</span>
-                </div>
-                <div class="price">
-                    <span>공모가</span>
-                    <input type="number" value="5000" readonly/>
-                </div>
-                <div class="quantity">
-                    <span>청약 수량</span>
-                    <div class="quantity-area">
-                        <button class="decrease">-</button>
-                        <input type="number" placeholder="수량"/>
-                        <button class="increase">+</button>
-                    </div>
-                </div>
-                <div class="total-amount">
-                    청약 주문 총 액: <span>0원</span>
-                </div>
-                <div class="order">
-                    <input class="btn btn-primary" type="button" <c:if test="${publicOfferingProgress.sumQuantity ge publicationInfo.volume}"> value="마감"</c:if> value="청약 주문" <c:if test="${publicOfferingProgress.sumQuantity ge publicationInfo.volume}"> disabled </c:if>>
-                </div>
-            </div>
+    <!-- 거래하기, 티끌모아 건물주 버튼 추가 -->
+    <div class="buttons">
+        <div class="mt-3 btn-group">
+            <button type="button" class="btn btn-primary" onclick="goToTrading()">거래하기</button>
+            <button type="button" class="btn btn-primary" id="preOrderButton">티끌모아 건물주</button>
         </div>
 
+        <!-- 친구에게 공유하기 버튼 추가 -->
+        <div class="mt-1 kakao-share">
+            <button type="button" class="btn btn-primary" onclick="javascript:kakaoShare()"><img
+                    src="/resources/img/kakao.svg" al기t="">친구에게 공유하기</button>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="profit-header">
+            <h3 class="profit-title">수익 배당</h3>
+        </div>
+
+        <div class="card mt-2" style="max-width: 500px; width: 100%">
+            <div class="card-body">
+                <div class="card-content">
+                    <p class="detail-title">배당 기준일</p>
+                    <h6 class="detail-value" id="firstDividendDate">${publicationInfo.firstDividendDate}일</h6>
+                </div>
+                <div class="card-content">
+                    <p class="detail-title">배당 지급일</p>
+                    <h6 class="detail-value">${publicationInfo.dividendCycle}개월</h6>
+                </div>
+                <div class="card-content">
+                    <p class="detail-title">토큰 분배금</p>
+                    <h6 class="detail-value">${publicationInfo.dividend}원</h6>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="wrapper">
         <div class="profit-header">
             <h3 class="profit-title">주변 살펴보기</h3>
-            <p class="address">${realEstateInfo.address}</p>
+            <p class="address">서울시 송파구</p>
         </div>
 
         <div id="map"></div>
@@ -265,62 +243,106 @@
             </div>
         </div>
     </div>
-</div>
 
-<!-- 청약 주문 모달 -->
-<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">청약 주문 확인</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">
-                <p><span>빌딩명:</span><span id="orderModalName">${realEstateInfo.buildingName}</span></p>
-                <p><span>공모가:</span><span id="orderModalPrice">5,000원</span></p>
-                <p><span>수량:</span> <span id="orderModalQuantity"></span></p>
-                <p><span>주문금액:</span><span id="orderModalTotal"></span></p>
-            </div>
-            <div class="modal-footer" style="justify-content: center;">
-                <button type="button" class="btn btn-danger" id="confirmOrder">청약신청</button>
+    <!-- 예약 주문 모달 -->
+    <div class="modal fade" id="pre-orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pre-orderModalLabel">티끌모아 건물주 주문</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="pre-orderModalName">
+                        <p id="building-name">${realEstateInfo.buildingName}</p>
+                        <p>몇개씩 모을까요?</p>
+                    </div>
+                    <div class="trading">
+                        <div class="trading-items">
+                            <div class="quantity">
+                                <button class="decrease">-</button>
+                                <input type="number" placeholder="수량" />
+                                <button class="increase">+</button>
+                            </div>
+                            <div class="explanation">
+                                <p>* 매일 아침9시 시장가로 예약 주문됩니다.</p>
+                                <p>* 시작일: <span class="today"></span> ~ 해지시까지</p>
+                                <p>* 지갑 예치금이 부족할 경우 자동 해지됩니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <button type="button" class="btn btn-danger" id="confirmOrder">주문 확인</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- 성공 모달 -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body" style="height: 150px; justify-self: center;align-items: center;">
-                주문이 성공적으로 처리되었습니다.
-            </div>
-            <div class="modal-footer" style="padding: 50px">
-                <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal">닫기</strong>
+    <!-- 비밀번호 입력 모달 -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="height: 300px; justify-self: center;align-items: center;">
+                    <div class="wallet-pw">
+                        <label for="wallet-password">지갑 비밀번호</label>
+                        <input type="password" id="wallet-password" pattern="\d{4}" placeholder="4자리 숫자"
+                            maxlength="4" />
+                    </div>
+                    <div class="modal-footer" style="justify-content: center;">
+                        <button type="button" class="btn btn-primary" id="cancle">취소</button>
+                        <button type="button" class="btn btn-danger" id="final-confirm">주문 확인</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- 실패 모달 -->
-<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body" style="padding: 50px">
-                주문 처리 중 오류가 발생했습니다.
-            </div>
-            <div class="modal-footer" style="justify-content: center;">
-                <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal">닫기</strong>
+    <!-- 성공 모달 -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="height: 150px; justify-self: center;align-items: center;">
+                    주문이 성공적으로 처리되었습니다.
+                </div>
+                <div class="modal-footer" style="padding: 50px">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal">닫기</strong>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- 실패 모달 -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 50px">
+                    주문 처리 중 오류가 발생했습니다.
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <strong style="cursor: pointer;" class="modal-close-text" data-bs-dismiss="modal">닫기</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <%@ include file="include/footer.jsp" %>
 
-
 <script>
+    /**
+     *  배당 기준일 문자 포멧 변경
+     */
+    var fullDate = "${publicationInfo.firstDividendDate}";
+    var dateParts = fullDate.split('.');
+    if (dateParts.length === 3) {
+        document.getElementById("firstDividendDate").textContent = dateParts[2] + "일";
+    }
+
+    /**
+     * 천단위 구분
+     */
     function formatNumbers() {
         $('.formatted-number').each(function() {
             var number = $(this).text();
@@ -328,51 +350,22 @@
             $(this).text(formattedNumber);
         });
     }
-
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-
-
 
     var listingNumber = ${publicationInfo.listingNumber};
     var walletNumber = ${wallet.walletNumber};
 
     /**
-     *  청약 마감일 D-day 계산 후 띄우기
+     * 거래하기 이동
      */
-    var expirationDate = new Date("${publicationInfo.expirationDate}");
-    // 오늘 날짜를 가져오기
-    var today = new Date();
-    // D-day 계산
-    var timeDiff = expirationDate - today;
-    var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    // D-day 값을 HTML에 출력
-    document.getElementById("d-day").textContent = "D-" + daysDiff;
-    document.getElementById("d-day2").textContent = daysDiff;
+    function goToTrading() {
+        window.location.href = "/estate-trading/" + listingNumber;
+    }
 
-
-    /**
-     *  수익 배당율 계산 후 띄우기
-     */
-    var dividend = ${publicationInfo.dividend};
-    var yearDividendRatio = (dividend * 100) / 5000;
-    document.getElementById("odds").textContent = yearDividendRatio;
-
-    /**
-     *  청약 가능 금액 구하기
-     */
-    var balance = ${wallet.balance};
-    var price = 5000;
-    var avail = Math.trunc(balance / price) * 5000;
-    document.getElementById("orderAvailable").textContent = avail;
-
-    /**
-     *  지도 띄우기
-     */
     var latitude = ${realEstateInfo.latitude};
     var longitude = ${realEstateInfo.longitude};
-
 
     var container = document.getElementById('map');
     var options = {
@@ -392,8 +385,28 @@
     // 마커가 지도 위에 표시되도록 설정합니다
     marker.setMap(map);
 </script>
-
 <script>
+    // '티끌모아 건물주' 버튼 클릭시, 모달 표시
+    document.getElementById('preOrderButton').addEventListener('click', function () {
+        var preorderModal = new bootstrap.Modal(document.getElementById('pre-orderModal'));
+        preorderModal.show();
+    });
+
+    document.getElementById('confirmOrder').addEventListener('click', function () {
+        // 현재 모달을 숨깁니다
+        var preorderModal = bootstrap.Modal.getInstance(document.getElementById('pre-orderModal'));
+        preorderModal.hide();
+
+        // passwordModal을 표시합니다. (이전에 successModal로 되어 있었습니다.)
+        var passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'));
+        passwordModal.show();
+    });
+
+    document.getElementById('cancle').addEventListener('click', function () {
+        var passwordModal = bootstrap.Modal.getInstance(document.getElementById('passwordModal'));
+        passwordModal.hide();
+    });
+
     window.onload = function () {
         /**
          *  금액 천단위 구분 쉼표 추가
@@ -401,11 +414,9 @@
         formatNumbers();
 
         /**
-         *  가격 및 수량 조절 관련 로직
+         *  수량 조절 관련 로직
          */
         const quantityInput = document.querySelector('.quantity input');
-        const totalAmountSpan = document.querySelector('.total-amount span');
-        const submitButton = document.querySelector('.order input');
 
         document.querySelector('.quantity .decrease').addEventListener('click', function () {
             adjustValue(quantityInput, -1);
@@ -418,39 +429,13 @@
         function adjustValue(input, amount) {
             const currentValue = parseInt(input.value) || 0;
             input.value = currentValue + amount;
-            updateTotalAmount();
-        }
-
-        function updateTotalAmount() {
-            const price = 5000;
             const quantity = parseInt(quantityInput.value) || 0;
-            const totalAmount = price * quantity;
-            totalAmountSpan.textContent = totalAmount.toLocaleString('ko-KR') + ' 원';
         }
-
-        quantityInput.addEventListener('input', updateTotalAmount);
 
         /**
-         *  비동기 주문 모달 처리
+         *  예약 주문 최종 전송
          */
-        const orderModalPrice = document.getElementById('orderModalPrice');
-        const orderModalQuantity = document.getElementById('orderModalQuantity');
-        const orderModalTotal = document.getElementById('orderModalTotal');
-
-        // 모달 띄우기
-        submitButton.addEventListener('click', function () {
-            const quantity = parseInt(quantityInput.value) || 0;
-            const total = price * quantity;
-
-            orderModalPrice.textContent = price.toLocaleString('ko-KR') + ' 원';
-            orderModalQuantity.textContent = quantity + ' STOS';
-            orderModalTotal.textContent = total.toLocaleString('ko-KR') + ' 원';
-
-            new bootstrap.Modal(document.getElementById('orderModal')).show();
-        });
-
-        // 매수 및 매도 확인 버튼 클릭 시 AJAX 요청
-        document.getElementById('confirmOrder').addEventListener('click', function () {
+        document.getElementById('final-confirm').addEventListener('click', function () {
             handleOrder(this);
         });
 
@@ -459,37 +444,27 @@
             btnElement.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
             btnElement.disabled = true;  // 버튼을 비활성화
 
-            // 청약 주문 확인 모달 닫기
-            var orderModalInstance = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
-            orderModalInstance.hide();
-
-            var walletPassword = document.getElementById("wallet-password").value;
-            sendOrder(walletPassword, quantityInput.value, btnElement);
+            sendOrder(quantityInput.value, btnElement);
         }
 
-        /**
-         * 청약 신청
-         */
-        function sendOrder(password, quantity, btnElement) {
-            $.ajax({
-                type: "POST",
-                url: "/public-offering",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    listingNumber: listingNumber,
-                    walletNumber: walletNumber,
-                    quantity: quantity,
-                    walletPassword: password
-                }),
-                success: function(response) {
-                    btnElement.disabled = false;  // 버튼을 활성화
+        function sendOrder(quantity, btnElement) {
+            // AJAX 요청 구현
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/order-endpoint');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                // 추후 매물번호, 지갑번호 필요
+                quantity: quantity
+            }));
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
                     new bootstrap.Modal(document.getElementById('successModal')).show();
-                },
-                error: function(error) {
-                    btnElement.disabled = false;  // 버튼을 활성화
+                } else {
                     new bootstrap.Modal(document.getElementById('errorModal')).show();
                 }
-            });
+                btnElement.disabled = false;  // 버튼을 활성화
+            };
         }
 
         // 처리 후 모달 닫기 버튼 누르면 페이지 초기화
@@ -499,7 +474,48 @@
             });
         });
     }
+
+
 </script>
+
+<!-- kakao sdk 호출 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+<!-- 공유하기 기능 구현 -->
+<script type="text/javascript">
+    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('5082aba073eeee4dbd5606104fd17280');
+
+    // SDK 초기화 여부를 판단합니다.
+    console.log(Kakao.isInitialized());
+
+    function kakaoShare() {
+        Kakao.Link.sendDefault({
+            objectType: 'feed',
+            content: {
+                title: '하나1PIECE',
+                description: '지금바로 부동산 조각 매물을 확인해보세요!',
+                imageUrl: 'https://raw.githubusercontent.com/pkd98/hana1PIECE/c87221038bd864c65e8d8ff4bc09beb9bb94808c/spring/src/main/webapp/resources/img/lotterTower.jpg?token=GHSAT0AAAAAACEYJYU7V2Q7CXCMCF5462ZWZHNZBOQ',
+                link: {
+                    mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                    webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                },
+            },
+            buttons: [
+                {
+                    title: '지금 건물주 되기!',
+                    link: {
+                        mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                        webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                    },
+                },
+            ],
+            // 카카오톡 미설치 시 카카오톡 설치 경로이동
+            installTalk: true,
+        })
+    }
+</script>
+
 
 <!-- jQuery and Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -509,7 +525,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
         crossorigin="anonymous"></script>
-
 </body>
 
 </html>

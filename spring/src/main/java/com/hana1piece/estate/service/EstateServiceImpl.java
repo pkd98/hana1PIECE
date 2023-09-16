@@ -1,6 +1,7 @@
 package com.hana1piece.estate.service;
 
 import com.hana1piece.estate.model.dto.EstateListDTO;
+import com.hana1piece.estate.model.dto.ListedEstateListDTO;
 import com.hana1piece.estate.model.dto.PublicOfferingListDTO;
 import com.hana1piece.estate.model.mapper.EstateMapper;
 import com.hana1piece.estate.model.vo.*;
@@ -79,6 +80,11 @@ public class EstateServiceImpl implements EstateService {
     @Override
     public List<PublicOfferingListDTO> findPublicOfferingListDTO() {
         return estateMapper.findPublicOfferingListDTO();
+    }
+
+    @Override
+    public List<ListedEstateListDTO> findListedEstateListDTO() {
+        return estateMapper.findListedEstateListDTO();
     }
 
     @Override

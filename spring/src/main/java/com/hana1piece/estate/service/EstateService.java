@@ -1,6 +1,7 @@
 package com.hana1piece.estate.service;
 
 import com.hana1piece.estate.model.dto.EstateListDTO;
+import com.hana1piece.estate.model.dto.ListedEstateListDTO;
 import com.hana1piece.estate.model.dto.PublicOfferingListDTO;
 import com.hana1piece.estate.model.vo.*;
 
@@ -30,6 +31,7 @@ public interface EstateService {
     void updateRealEstateSale(RealEstateSaleVO realEstateSaleVO);
 
     List<PublicOfferingListDTO> findPublicOfferingListDTO();
+    List<ListedEstateListDTO> findListedEstateListDTO();
 
     List<EstateListDTO> findEstateListDTO();
 }
