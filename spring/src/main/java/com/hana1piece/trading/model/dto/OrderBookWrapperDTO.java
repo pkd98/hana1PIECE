@@ -1,4 +1,4 @@
-package com.hana1piece.trading.model;
+package com.hana1piece.trading.model.dto;
 
 import com.hana1piece.trading.model.vo.OrderBookVO;
 import lombok.Data;

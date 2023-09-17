@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.trading.model.mapper.StoOrdersMapper">
+
+    <resultMap type="com.hana1piece.trading.model.vo.StoOrdersVO" id="StoOrdersMap">
+        <result column="order_id" property="orderId" />
+        <result column="listing_number" property="listingNumber" />
+        <result column="wallet_number" property="walletNumber" />
+        <result column="order_type" property="orderType" />
+        <result column="order_date" property="orderDate" />
+        <result column="executed_price_avg" property="executedPriceAvg" />
+        <result column="executed_quantity" property="executedQuantity" />
+    </resultMap>
+
+    <select id="findAll" resultMap="StoOrdersMap">
+        select * from sto_orders order by execution_id desc
+    </select>
+
+    <insert id="insertOrder" parameterType="com.hana1piece.trading.model.vo.StoOrdersVO">
+        insert into sto_orders(listing_number, wallet_number, order_type, amount, quantity)
+        values(#{listingNumber}, #{walletNumber}, #{orderType}, #{amount}, #{quantity})
+    </insert>
+
+    <update id="updateOrder" parameterType="com.hana1piece.trading.model.vo.StoOrdersVO">
+        update sto_orders
+        <set>
+            <if test="status != null">status = #{status},</if>
+            <if test="executedPriceAvg != null">executed_price_avg = #{executedPriceAvg},</if>
+            <if test="executedQuantity != null">executed_quantity = #{executedQuantity},</if>
+        </set>
+        WHERE order_id = #{orderId}
+    </update>
+
+    <select id="findSellOrderDetailByAmountAndLN" parameterType="map" resultMap="StoOrdersMap">
+        select * from sto_orders where amount = #{amount} and listing_number = #{LN} and (status = 'N' or status = 'P') and order_type = 'SELL'
+        order by order_id asc
+    </select>
+
+    <select id="findBuyOrderDetailByAmountAndLN" parameterType="map" resultMap="StoOrdersMap">
+        select * from sto_orders where amount = #{amount} and listing_number = #{LN} and (status = 'N' or status = 'P') and order_type = 'BUY'
+        order by order_id asc
+    </select>
+
+    <select id="getOrderSeqCrrval" resultType="int">
+        select ORDER_SEQ.CURRVAL from dual
+    </select>
+
+
+</mapper>

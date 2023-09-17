@@ -3,10 +3,11 @@ package com.hana1piece.trading.model.vo;
 import lombok.Data;
 
 @Data
-public class Execution {
+public class ExecutionVO {
     private int executionId;
-    private int orderId;
+    private int buyOrderId;
+    private int sellOrderId;
     private int executedPrice;
-    private int quantity;
+    private int executedQuantity;
     private String executionDate;
 }

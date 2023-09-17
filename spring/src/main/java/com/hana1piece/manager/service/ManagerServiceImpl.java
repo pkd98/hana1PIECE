@@ -9,7 +9,8 @@ import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.mapper.ManagerMapper;
 import com.hana1piece.manager.model.vo.ManagerVO;
 import com.hana1piece.member.model.mapper.MemberMapper;
-import com.hana1piece.member.model.vo.Stos;
+import com.hana1piece.wallet.model.mapper.StosMapper;
+import com.hana1piece.wallet.model.vo.StosVO;
 import com.hana1piece.member.service.MemberService;
 import com.hana1piece.trading.model.mapper.OrderBookMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class ManagerServiceImpl implements ManagerService {
     private final EstateMapper estateMapper;
     private final PublicOfferingMapper publicOfferingMapper;
     private final MemberMapper memberMapper;
+    private final StosMapper stosMapper;
     private final OrderBookMapper orderBookMapper;
     private final LoggerService loggerService;
 
@@ -38,11 +40,12 @@ public class ManagerServiceImpl implements ManagerService {
     private String imgFilePath;
 
     @Autowired
-    public ManagerServiceImpl(ManagerMapper managerMapper, EstateMapper estateMapper, PublicOfferingMapper publicOfferingMapper, MemberService memberService, MemberMapper memberMapper, OrderBookMapper orderBookMapper, LoggerService loggerService) {
+    public ManagerServiceImpl(ManagerMapper managerMapper, EstateMapper estateMapper, PublicOfferingMapper publicOfferingMapper, MemberService memberService, MemberMapper memberMapper, StosMapper stosMapper, OrderBookMapper orderBookMapper, LoggerService loggerService) {
         this.managerMapper = managerMapper;
         this.estateMapper = estateMapper;
         this.publicOfferingMapper = publicOfferingMapper;
         this.memberMapper = memberMapper;
+        this.stosMapper = stosMapper;
         this.orderBookMapper = orderBookMapper;
         this.loggerService = loggerService;
     }
@@ -168,11 +171,11 @@ public class ManagerServiceImpl implements ManagerService {
             // 2. 토큰 지급
             List<PublicOfferingVO> publicOfferingVOList = publicOfferingMapper.findByListingNumber(listingNumber);
             for(PublicOfferingVO publicOfferingVO : publicOfferingVOList) {
-                Stos stos = new Stos();
+                StosVO stos = new StosVO();
                 stos.setListingNumber(publicOfferingVO.getListingNumber());
                 stos.setWalletNumber(publicOfferingVO.getWalletNumber());
                 stos.setAmount(publicOfferingVO.getQuantity());
-                memberMapper.insertStos(stos);
+                stosMapper.insertStos(stos);
             }
 
             // 3. 호가창 셋팅

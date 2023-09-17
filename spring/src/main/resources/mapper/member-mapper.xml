@@ -8,6 +8,12 @@
         <result column="referral_count" property="referralCount" />
     </resultMap>
 
+    <resultMap type="com.hana1piece.wallet.model.vo.StosVO" id="StosMap">
+        <result column="wallet_number" property="walletNumber" />
+        <result column="listing_number" property="listingNumber" />
+    </resultMap>
+
+
     <select id="findMemberAll" resultMap="OneMembersMap">
         select * from one_members order by id desc
     </select>
@@ -32,11 +38,6 @@
     <insert id="insertWallet" parameterType="com.hana1piece.wallet.model.dto.WalletOpeningDTO">
         INSERT INTO wallet (member_id, account_number, password)
         VALUES (#{memberId}, #{accountNumber}, #{password})
-    </insert>
-
-    <insert id="insertStos" parameterType="com.hana1piece.member.model.vo.Stos">
-        insert into stos(wallet_number, listing_number, amount)
-        values(#{walletNumber}, #{listingNumber}, #{amount})
     </insert>
 
 </mapper>

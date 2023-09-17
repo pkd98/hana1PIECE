@@ -75,7 +75,7 @@
                            maxlength="4"/>
                 </div>
                 <div class="able-amount">
-                    거래 가능 금액: <span>${wallet.balance} 원</span>
+                    <span id="ableAmountName">거래 가능 금액:</span> <span id="ableAmountValue">${wallet.balance} 원</span>
                 </div>
                 <div class="price">
                     <span>구매 희망 단가</span>
@@ -178,6 +178,9 @@
 <%@ include file="include/footer.jsp" %>
 
 <script>
+    let walletBalance = ${wallet.balance} !== null ? ${wallet.balance} : "";
+    let stosAmount = ${stos.amount} !== null ? ${stos.amount} : "";
+
     let stompClient;
     let LN = ${realEstateInfo.listingNumber};
     function connect() {
@@ -188,7 +191,7 @@
             function(frame) { // Connection success callback
                 stompClient.subscribe("/topic/orderBook/" + LN, function(message) {
                     try {
-                        console.log("Received message:", message.body);
+                        // console.log("Received message:", message.body);
                         updateOrderBookTable(JSON.parse(message.body));
                     } catch (error) {
                         console.error("Error processing the message:", error);
@@ -215,7 +218,7 @@
             let tdSell = document.createElement('td');
             tdSell.classList.add('sell-quantity');
             let div = document.createElement('div');
-            div.style.width = '100%'; // 실제로는 해당 매도 잔량에 따라 비율로 설정하면 됩니다.
+            div.style.width = order.amount + '%'; // 비율
             div.innerText = order.amount;
             tdSell.appendChild(div);
 
@@ -241,7 +244,7 @@
             let tdBuy = document.createElement('td');
             tdBuy.classList.add('buy-quantity');
             let div = document.createElement('div');
-            div.style.width = '100%'; // 실제로는 해당 매수 잔량에 따라 비율로 설정하면 됩니다.
+            div.style.width = order.amount + '%';
             div.innerText = order.amount;
             tdBuy.appendChild(div);
 
@@ -273,6 +276,8 @@
         const priceLabel = document.querySelector('.price span');
         const quantityLabel = document.querySelector('.quantity span');
         const submitButton = document.querySelector('.buy-sell input');
+        const ableAmountName = document.getElementById("ableAmountName");
+        const ableAmountValue = document.getElementById("ableAmountValue");
 
         buyButton.addEventListener('click', function () {
             activateButton(buyButton, sellButton);
@@ -298,11 +303,15 @@
         }
 
         function setTradingMode(mode) {
-            priceLabel.textContent = `${mode} 희망 단가`;
-            quantityLabel.textContent = `${mode} 희망 수량`;
+            priceLabel.textContent = mode + ' 희망 단가';
+            quantityLabel.textContent = mode + ' 희망 수량';
             if (mode === '구매') {
+                ableAmountName.innerText = "거래 가능 금액: ";
+                ableAmountValue.innerText = walletBalance;
                 submitButton.value = '매수';
             } else {
+                ableAmountName.innerText = "매도 가능 수량: ";
+                ableAmountValue.innerText = stosAmount;
                 submitButton.value = '매도';
             }
         }
@@ -367,9 +376,9 @@
             const quantity = parseInt(quantityInput.value) || 0;
             const total = price * quantity;
             const fee = total * 0.015 / 100;
-            const net = Math.ceil(total + fee);  // 소수점 올림 처리
 
             if (submitButton.value === "매수") {
+                const net = Math.ceil(total + fee);  // 소수점 올림 처리
                 buyModalPrice.textContent = price.toLocaleString('ko-KR') + ' 원';
                 buyModalQuantity.textContent = quantity + ' STOS';
                 buyModalTotal.textContent = total.toLocaleString('ko-KR') + ' 원';
@@ -378,6 +387,7 @@
 
                 new bootstrap.Modal(document.getElementById('buyModal')).show();
             } else if (submitButton.value === "매도") {
+                const net = Math.ceil(total - fee);  // 소수점 올림 처리
                 sellModalPrice.textContent = price.toLocaleString('ko-KR') + ' 원';
                 sellModalQuantity.textContent = quantity + ' STOS';
                 sellModalTotal.textContent = total.toLocaleString('ko-KR') + ' 원';
@@ -406,32 +416,47 @@
         }
 
         function sendOrder(orderType, price, quantity, btnElement) {
-            // AJAX 요청 구현
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/order-endpoint');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({
-                type: orderType,
-                price: price,
-                quantity: quantity
-            }));
+            var password = document.getElementById("wallet-password").value;
 
-            xhr.onload = function () {
-                if (xhr.status === 200) {
+            $.ajax({
+                url: '/order',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    stoOrdersVO: {
+                        // StoOrdersVO 객체의 필드들을 여기에 포함해야 합니다.
+                        listingNumber: LN,
+                        orderType: orderType,
+                        amount: price,
+                        quantity: quantity
+                    },
+                    walletPassword: password
+                }),
+                success: function () {
                     new bootstrap.Modal(document.getElementById('successModal')).show();
-                } else {
+
+                    // 원래 버튼 상태로 복원
+                    if (orderType === "BUY") {
+                        btnElement.innerHTML = '매수하기';
+                    } else {
+                        btnElement.innerHTML = '매도하기';
+                    }
+
+                    btnElement.disabled = false;  // 버튼을 활성화
+                },
+                error: function () {
                     new bootstrap.Modal(document.getElementById('errorModal')).show();
-                }
 
-                // 원래 버튼 상태로 복원
-                if (orderType === "BUY") {
-                    btnElement.innerHTML = '매수하기';
-                } else {
-                    btnElement.innerHTML = '매도하기';
-                }
+                    // 원래 버튼 상태로 복원
+                    if (orderType === "BUY") {
+                        btnElement.innerHTML = '매수하기';
+                    } else {
+                        btnElement.innerHTML = '매도하기';
+                    }
 
-                btnElement.disabled = false;  // 버튼을 활성화
-            };
+                    btnElement.disabled = false;  // 버튼을 활성화
+                }
+            });
         }
 
         // 처리 후 모달 닫기 버튼 누르면 페이지 초기화

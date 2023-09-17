@@ -1,10 +1,11 @@
 package com.hana1piece.member.model.mapper;
 
 import com.hana1piece.member.model.dto.LoginDTO;
-import com.hana1piece.member.model.vo.Stos;
+import com.hana1piece.wallet.model.vo.StosVO;
 import com.hana1piece.wallet.model.dto.WalletOpeningDTO;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,5 +24,4 @@ public interface MemberMapper {
 
     void insertWallet(WalletOpeningDTO walletOpeningDTO);
 
-    void insertStos(Stos stos);
 }

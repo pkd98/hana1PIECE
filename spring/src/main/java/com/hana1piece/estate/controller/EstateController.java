@@ -5,6 +5,8 @@ import com.hana1piece.estate.model.dto.PublicOfferingListDTO;
 import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.estate.service.PublicOfferingService;
 import com.hana1piece.member.model.vo.OneMembersVO;
+import com.hana1piece.wallet.model.vo.WalletVO;
+import com.hana1piece.wallet.service.StosService;
 import com.hana1piece.wallet.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +26,14 @@ import java.util.List;
 public class EstateController {
     private final EstateService estateService;
     private final WalletService walletService;
+    private final StosService stosService;
     private final PublicOfferingService publicOfferingService;
 
     @Autowired
-    public EstateController(EstateService estateService, WalletService walletService, PublicOfferingService publicOfferingService) {
+    public EstateController(EstateService estateService, WalletService walletService, StosService stosService, PublicOfferingService publicOfferingService) {
         this.estateService = estateService;
         this.walletService = walletService;
+        this.stosService = stosService;
         this.publicOfferingService = publicOfferingService;
     }
 
@@ -76,12 +80,11 @@ public class EstateController {
             mav.setViewName("redirect:/");
             return mav;
         }
-        mav.addObject("wallet", walletService.findWalletByMemberId(member.getId()));
-        mav.addObject("realEstateSale", estateService.findRealEstateSaleByLN(LN));
+
+        WalletVO wallet = walletService.findWalletByMemberId(member.getId());
+        mav.addObject("wallet", wallet);
+        mav.addObject("stos", stosService.findStosByWalletNumberAndListingNumber(wallet.getWalletNumber(), LN));
         mav.addObject("realEstateInfo", estateService.findRealEstateInfoByLN(LN));
-        mav.addObject("publicationInfo", estateService.findPublicationInfoByLN(LN));
-        mav.addObject("tenantInfo", estateService.findTenantInfoByLN(LN));
-        mav.addObject("publicOfferingProgress", publicOfferingService.findPublicOfferingProgressByListingNumber(LN));
         return mav;
     }
 

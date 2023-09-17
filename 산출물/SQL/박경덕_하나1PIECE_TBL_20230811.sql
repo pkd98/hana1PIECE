@@ -10,7 +10,8 @@ REM  ***************************************************************************
 -- 초기화
 --------------------------------------------------------------------------------
 -- 제약조건 비활성화
-ALTER TABLE EXECUTION DROP CONSTRAINT FK_EXECUTION_ORDER_ID;
+ALTER TABLE EXECUTION DROP CONSTRAINT FK_EXECUTION_BUY_ORDER_ID;
+ALTER TABLE EXECUTION DROP CONSTRAINT FK_EXECUTION_SELL_ORDER_ID;
 ALTER TABLE STOS DROP CONSTRAINT FK_STOS_LISTING_NUMBER;
 ALTER TABLE STOS DROP CONSTRAINT FK_STOS_WALLET_NUMBER;
 ALTER TABLE STO_ORDERS DROP CONSTRAINT FK_ORDER_LISTING_NUMBER;
@@ -348,9 +349,10 @@ CREATE TABLE STO_ORDERS (
   ORDER_TYPE VARCHAR2(4) NOT NULL,                              -- 주문 유형
   AMOUNT NUMBER(8) NOT NULL,                                    -- 주문 금액
   QUANTITY NUMBER(8) NOT NULL,                                  -- 주문 수량
-  STATUS VARCHAR2(10) NOT NULL,                                 -- 주문 상태
+  STATUS VARCHAR2(10) DEFAULT 'N',                              -- 주문 상태
   ORDER_DATE DATE DEFAULT SYSDATE NOT NULL,                     -- 주문일시
-  
+  EXECUTED_PRICE_AVG DEFAULT 0,                                 -- 체결 가격 평균
+  EXECUTED_QUANTITY DEFAULT 0,                                  -- 체결 수량
   -- 외래키 지정 : 매물번호, 회원 아이디
   CONSTRAINT FK_ORDER_LISTING_NUMBER FOREIGN KEY (LISTING_NUMBER) REFERENCES REAL_ESTATE_SALE(LISTING_NUMBER),
   CONSTRAINT FK_ORDER_WALLET_NUMBER FOREIGN KEY (WALLET_NUMBER) REFERENCES WALLET(WALLET_NUMBER)
@@ -371,13 +373,16 @@ CREATE TABLE ORDER_BOOK (
 -- 체결
 CREATE TABLE Execution (
     execution_id NUMBER(8) DEFAULT EID_SEQ.NEXTVAL PRIMARY KEY,   -- 체결 ID (자동 증가)
-    order_id NUMBER(8) NOT NULL,                                  -- 주문 ID
+    buy_order_id NUMBER(8) NOT NULL,                              -- 매수 주문 ID
+    sell_order_id NUMBER(8) NOT NULL,                             -- 매도 주문 ID
     executed_price NUMBER(8) NOT NULL,                            -- 체결 가격
     executed_quantity NUMBER(8) NOT NULL,                         -- 체결 수량
     execution_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,  -- 체결 일시
     
-    -- 외래키 지정 : 주문 번호
-    CONSTRAINT FK_EXECUTION_ORDER_ID FOREIGN KEY (order_id) REFERENCES STO_ORDERS(order_id)
+    -- 외래키 지정 : 매수 주문 번호
+    CONSTRAINT FK_EXECUTION_BUY_ORDER_ID FOREIGN KEY (buy_order_id) REFERENCES STO_ORDERS(order_id)
+    -- 외래키 지정 : 매도 주문 번호
+    CONSTRAINT FK_EXECUTION_SELL_ORDER_ID FOREIGN KEY (sell_order_id) REFERENCES STO_ORDERS(order_id)
 );
 
 -- 보유 토큰 (다대다 관계 중간 연결)

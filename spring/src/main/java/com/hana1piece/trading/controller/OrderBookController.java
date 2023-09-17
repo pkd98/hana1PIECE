@@ -1,19 +1,16 @@
 package com.hana1piece.trading.controller;
 
-import com.hana1piece.trading.model.OrderBookWrapperDTO;
+import com.hana1piece.trading.model.dto.OrderBookWrapperDTO;
 import com.hana1piece.trading.model.vo.OrderBookVO;
 import com.hana1piece.trading.service.OrderBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.List;

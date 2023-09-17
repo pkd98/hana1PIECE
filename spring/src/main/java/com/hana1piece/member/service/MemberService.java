@@ -50,5 +50,4 @@ public interface MemberService {
      */
     boolean event(String memberId, String referralCode);
 
-
 }

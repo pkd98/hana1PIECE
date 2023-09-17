@@ -440,8 +440,8 @@
         });
 
         function handleOrder(btnElement) {
-            // Spinner 추가 및 버튼 텍스트 숨김
-            btnElement.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+            // Spinner 추가 및 버튼텍스트 숨김
+            btnElement.innerHTML =  '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
             btnElement.disabled = true;  // 버튼을 비활성화
 
             sendOrder(quantityInput.value, btnElement);

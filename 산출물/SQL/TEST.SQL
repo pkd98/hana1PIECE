@@ -140,18 +140,46 @@ select res.LISTING_NUMBER as listingNumber, evaluation, introduction, price, sta
 on res.listing_number = rei.listing_number)
 where state = '거래';
 
-
-update order_book set amount = 0;
 update order_book set amount = 1
 where listing_number = 20 and type = 'SELL' and price >= 5000;
 update order_book set amount = 1
 where listing_number = 20 and type = 'BUY' and price < 5000;
 
+update order_book set amount = 0;
 commit;
 
 select * from order_book;
 select * from order_book where listing_number = 20 and amount > 0 and type = 'SELL' order by price desc;
 select * from order_book where listing_number = 20 and amount > 0 and type = 'BUY' order by price desc;
 
+        update order_book set amount = amount + 10
+        where listing_number = 20 and type = 'BUY' and price = 4990;
+
+select * from EXECUTION;
+select * from STO_ORDERS;
 
 
+
+-- 체결 테이블 구조 변경
+ALTER TABLE Execution
+ADD buy_order_id NUMBER(8) NOT NULL;
+
+ALTER TABLE Execution
+ADD sell_order_id NUMBER(8) NOT NULL;
+
+-- 매수 주문 외래키 제약 조건 추가
+ALTER TABLE Execution
+ADD CONSTRAINT FK_EXECUTION_BUY_ORDER_ID FOREIGN KEY (buy_order_id) REFERENCES STO_ORDERS(order_id);
+
+-- 매도 주문 외래키 제약 조건 추가
+ALTER TABLE Execution
+ADD CONSTRAINT FK_EXECUTION_SELL_ORDER_ID FOREIGN KEY (sell_order_id) REFERENCES STO_ORDERS(order_id);
+
+
+-- EXECUTED_PRICE_AVG와 EXECUTED_QUANTITY 컬럼 추가
+ALTER TABLE STO_ORDERS
+ADD (EXECUTED_PRICE_AVG NUMBER(8) DEFAULT 0);
+
+
+truncate table STO_ORDERS;
+truncate table execution;
