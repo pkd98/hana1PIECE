@@ -128,7 +128,7 @@
         <set>
             <if test="evaluation != null">evaluation = #{evaluation},</if>
             <if test="state != null">state = #{state},</if>
-            <if test="price != null">state = #{price},</if>
+            <if test="price != null">price = #{price},</if>
             <if test="introduction != null">introduction = #{introduction},</if>
         </set>
         WHERE listing_number = #{listingNumber}

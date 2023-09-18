@@ -30,4 +30,9 @@
           AND listing_number = #{listingNumber}
     </select>
 
+    <update id="updateAmount" parameterType="com.hana1piece.wallet.model.vo.StosVO">
+        update stos set amount = #{amount}
+        where wallet_number = #{walletNumber} and listing_number = #{listingNumber}
+    </update>
+
 </mapper>

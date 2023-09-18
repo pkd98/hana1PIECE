@@ -5,13 +5,13 @@ import com.hana1piece.trading.model.dto.OrderRequestDTO;
 import com.hana1piece.trading.model.vo.StoOrdersVO;
 import com.hana1piece.trading.service.OrderMatchingService;
 import com.hana1piece.wallet.model.vo.WalletVO;
+import com.hana1piece.wallet.service.StosService;
 import com.hana1piece.wallet.service.WalletService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -21,10 +21,12 @@ public class TradingController {
 
     private final OrderMatchingService orderMatchingService;
     private final WalletService walletService;
+    private final StosService stosService;
 
-    public TradingController(OrderMatchingService orderMatchingService, WalletService walletService) {
+    public TradingController(OrderMatchingService orderMatchingService, WalletService walletService, StosService stosService) {
         this.orderMatchingService = orderMatchingService;
         this.walletService = walletService;
+        this.stosService = stosService;
     }
 
     @PostMapping("/order")
@@ -47,11 +49,29 @@ public class TradingController {
                 return ResponseEntity.badRequest().build();
             }
 
+            StoOrdersVO order = requestDTO.getStoOrdersVO();
+
+            if(order.getOrderType().equals("BUY")){
+                // 잔액 부족
+                if((long) order.getAmount() * (long )order.getQuantity() > wallet.getBalance()) {
+                    return ResponseEntity.badRequest().build();
+                }
+            }
+            else if(order.getOrderType().equals("SELL")){
+                // 토큰 부족
+                if(stosService.findStosByWalletNumberAndListingNumber(wallet.getWalletNumber(), order.getListingNumber()).getAmount() < order.getQuantity()) {
+                    return ResponseEntity.badRequest().build();
+                }
+            } else {
+                // 잘못된 주문
+                return ResponseEntity.badRequest().build();
+            }
+
             // 주문정보에 지갑 아이디 등록
-            requestDTO.getStoOrdersVO().setWalletNumber(wallet.getWalletNumber());
+            order.setWalletNumber(wallet.getWalletNumber());
 
             // 주문 로직 처리
-            orderMatchingService.processOrder(requestDTO.getStoOrdersVO());
+            orderMatchingService.processOrder(order);
 
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -59,5 +79,4 @@ public class TradingController {
             return ResponseEntity.badRequest().build();
         }
     }
-
 }

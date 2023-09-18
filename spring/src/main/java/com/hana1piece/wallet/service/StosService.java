@@ -10,5 +10,6 @@ public interface StosService {
     List<StosVO> findStosByListingNumber(int listingNumber);
     StosVO findStosByWalletNumberAndListingNumber(@Param("walletNumber") int walletNumber, @Param("listingNumber") int listingNumber);
     void insertStos(StosVO stos);
+    void updateAmount(StosVO stos);
 
 }

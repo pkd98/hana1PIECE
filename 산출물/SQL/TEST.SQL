@@ -31,6 +31,7 @@ delete from account where not ACCOUNT_NUMBER = 99900000009394;
 select * from BANK_TRANSACTION;
 
 select * from wallet;
+select * from WALLET_TRANSACTION;
 
 update wallet set BALANCE = BALANCE + 1000000 where wallet_number = 6;
 
@@ -157,7 +158,7 @@ select * from order_book where listing_number = 20 and amount > 0 and type = 'BU
 
 select * from EXECUTION;
 select * from STO_ORDERS;
-
+select * from stos;
 
 
 -- 체결 테이블 구조 변경
@@ -183,3 +184,7 @@ ADD (EXECUTED_PRICE_AVG NUMBER(8) DEFAULT 0);
 
 truncate table STO_ORDERS;
 truncate table execution;
+
+update stos set amount = 100
+where WALLET_NUMBER = 6 and LISTING_NUMBER = 20;
+select * from stos;

@@ -8,6 +8,6 @@ public class WalletVO {
     private String memberId;
     private String accountNumber;
     private String password;
-    private int balance;
+    private long balance;
     private String openingDate;
 }

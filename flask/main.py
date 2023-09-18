@@ -64,12 +64,12 @@ class BuildingEvaluation(Resource):
         try:
             # Json 데이터 Python 객체로 변환
             data = request.json
-            buildingName = data.get("buildingName")
-            latitude = data.get("latitude")
-            longitude = data.get("longitude")
-            size = data.get("size")
-            price = data.get("price")
-            issueVolume = data.get("volume")
+            buildingName = data.get("buildingName") # 건물명
+            latitude = data.get("latitude") # 위도
+            longitude = data.get("longitude") # 경도
+            size = data.get("size") # 평수
+            price = data.get("price") # 현재 토큰 가격
+            issueVolume = data.get("volume") #발행량
 
             # 네이버 부동산 페이지
             url = "https://m.land.naver.com/map/{}:{}:18:/APT:OPST:GM/A1".format(latitude, longitude)
@@ -99,7 +99,8 @@ class BuildingEvaluation(Resource):
 
             # JSON 형식으로 평가 결과 반환
             response_data = {
-                'evaluation': evaluation
+                'evaluation': evaluation,
+                'resonablePrice': (target_price * size) / issueVolume
             }
 
             response = json.dumps(response_data, ensure_ascii=False, indent=4)
