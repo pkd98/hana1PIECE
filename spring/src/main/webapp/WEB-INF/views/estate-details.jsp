@@ -397,7 +397,7 @@
         var preorderModal = bootstrap.Modal.getInstance(document.getElementById('pre-orderModal'));
         preorderModal.hide();
 
-        // passwordModal을 표시합니다. (이전에 successModal로 되어 있었습니다.)
+        // passwordModal을 표시합니다.
         var passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'));
         passwordModal.show();
     });
@@ -448,23 +448,36 @@
         }
 
         function sendOrder(quantity, btnElement) {
-            // AJAX 요청 구현
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/order-endpoint');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({
-                // 추후 매물번호, 지갑번호 필요
-                quantity: quantity
-            }));
+            const password = document.getElementById('wallet-password').value;
+            var passwordModal = bootstrap.Modal.getInstance(document.getElementById('passwordModal'));
 
-            xhr.onload = function () {
-                if (xhr.status === 200) {
+            $.ajax({
+                url: '/reservation-order',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    reservationOrdersVO: {
+                        listingNumber: listingNumber,
+                        walletNumber: walletNumber,
+                        quantity: quantity
+                    },
+                    walletPassword: password
+                }),
+                success: function (data) {
+                    passwordModal.hide();
+
+                    // 성공적으로 처리된 경우
                     new bootstrap.Modal(document.getElementById('successModal')).show();
-                } else {
+                    btnElement.disabled = false;  // 버튼을 활성화
+                },
+                error: function () {
+                    passwordModal.hide();
+
+                    // 오류 발생한 경우
                     new bootstrap.Modal(document.getElementById('errorModal')).show();
+                    btnElement.disabled = false;  // 버튼을 활성화
                 }
-                btnElement.disabled = false;  // 버튼을 활성화
-            };
+            });
         }
 
         // 처리 후 모달 닫기 버튼 누르면 페이지 초기화
@@ -515,7 +528,6 @@
         })
     }
 </script>
-
 
 <!-- jQuery and Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

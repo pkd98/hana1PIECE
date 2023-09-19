@@ -9,5 +9,6 @@ public class ListedEstateListDTO {
     private int listingNumber;
     private String evaluation;
     private int price;
+    private int reasonablePrice;
     private String state;
 }

@@ -1,20 +1,27 @@
 package com.hana1piece.trading.controller;
 
+import com.hana1piece.estate.model.vo.RealEstateSaleVO;
+import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.trading.model.dto.OrderRequestDTO;
+import com.hana1piece.trading.model.dto.ReservationOrderRequestDTO;
+import com.hana1piece.trading.model.dto.ReservationTerminateRequestDTO;
+import com.hana1piece.trading.model.vo.ReservationOrdersVO;
 import com.hana1piece.trading.model.vo.StoOrdersVO;
 import com.hana1piece.trading.service.OrderMatchingService;
+import com.hana1piece.trading.service.ReservationOrderService;
 import com.hana1piece.wallet.model.vo.WalletVO;
 import com.hana1piece.wallet.service.StosService;
 import com.hana1piece.wallet.service.WalletService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class TradingController {
@@ -22,11 +29,15 @@ public class TradingController {
     private final OrderMatchingService orderMatchingService;
     private final WalletService walletService;
     private final StosService stosService;
+    private final ReservationOrderService reservationOrderService;
+    private final EstateService estateService;
 
-    public TradingController(OrderMatchingService orderMatchingService, WalletService walletService, StosService stosService) {
+    public TradingController(OrderMatchingService orderMatchingService, WalletService walletService, StosService stosService, ReservationOrderService reservationOrderService, EstateService estateService) {
         this.orderMatchingService = orderMatchingService;
         this.walletService = walletService;
         this.stosService = stosService;
+        this.reservationOrderService = reservationOrderService;
+        this.estateService = estateService;
     }
 
     @PostMapping("/order")
@@ -77,6 +88,84 @@ public class TradingController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/reservation-order")
+    public ResponseEntity reservationOrder(@Valid @RequestBody ReservationOrderRequestDTO reservationOrderRequestDTO, BindingResult br, HttpSession session) {
+        if(br.hasErrors()) {
+            return ResponseEntity.badRequest().body("Validation failed: " + br.getAllErrors());
+        }
+        OneMembersVO member = (OneMembersVO) session.getAttribute("member");
+        // 세션 만료 리턴
+        if (member == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        try {
+            WalletVO wallet = walletService.findWalletByMemberId(member.getId());
+            if(!wallet.getPassword().equals(reservationOrderRequestDTO.getWalletPassword())) {
+                return ResponseEntity.badRequest().build();
+            }
+            reservationOrderService.insertReservation(reservationOrderRequestDTO.getReservationOrdersVO());
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/reservation-terminate")
+    public ResponseEntity terminateReservation(@RequestBody ReservationTerminateRequestDTO request, HttpSession session) {
+        OneMembersVO member = (OneMembersVO) session.getAttribute("member");
+        // 세션 만료 리턴
+        if (member == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        try {
+            ReservationOrdersVO reservationOrdersVO = reservationOrderService.findById(request.getId());
+            reservationOrdersVO.setTerminationDate("Terminated");
+            reservationOrdersVO.setStatus("T");
+            reservationOrderService.updateReservation(reservationOrdersVO);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    /**
+     *  오전 9시에 예약 주문 실행
+     */
+    @Scheduled(cron = "0 0 9 * * ?")
+    public void orderForReservation() {
+        try {
+            List<ReservationOrdersVO> reservationOrdersVOList = reservationOrderService.findAll();
+
+            for(ReservationOrdersVO reservationOrdersVO : reservationOrdersVOList) {
+                WalletVO wallet = walletService.findWalletByWN(reservationOrdersVO.getWalletNumber());
+                RealEstateSaleVO estate = estateService.findRealEstateSaleByLN(reservationOrdersVO.getListingNumber());
+
+                // 잔액 부족 예약 주문 취소
+                if(wallet.getBalance() < reservationOrdersVO.getQuantity() * estate.getPrice()) {
+                    reservationOrdersVO.setTerminationDate("Terminated");
+                    reservationOrdersVO.setStatus("T");
+                    reservationOrderService.updateReservation(reservationOrdersVO);
+                    continue;
+                } else {
+                    // 주문 등록 처리
+                    StoOrdersVO order = new StoOrdersVO();
+                    order.setWalletNumber(reservationOrdersVO.getWalletNumber());
+                    order.setListingNumber(reservationOrdersVO.getListingNumber());
+                    order.setQuantity(reservationOrdersVO.getQuantity());
+                    order.setAmount((int) estate.getPrice());
+                    order.setOrderType("BUY");
+
+                    // 주문 로직 처리
+                    orderMatchingService.processOrder(order);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

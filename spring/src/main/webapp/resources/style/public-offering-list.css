@@ -9,13 +9,13 @@
 }
 
 .public-offering-wrapper > img {
-    width: 480px;
-    height: 480px;
+    width: 380px;
+    height: 380px;
     border-radius: 10px;
 }
 .card {
     width: 100%;
-    max-width: 480px;
+    max-width: 380px;
     border: 1px solid #e0e0e0;
 }
 .clickable-card:hover {

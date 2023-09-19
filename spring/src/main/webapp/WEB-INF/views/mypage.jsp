@@ -132,7 +132,8 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
                         <span>계좌 비밀번호:</span>
-                        <input id="account-password" type="password" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                        <input id="account-password" type="password" maxlength="4"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                placeholder="비밀번호 4자리" required>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
@@ -168,7 +169,8 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
                         <span>지갑 비밀번호:</span>
-                        <input id="wallet-password" type="password" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                        <input id="wallet-password" type="password" maxlength="4"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                placeholder="비밀번호 4자리" required>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
@@ -297,7 +299,8 @@
             <div class="my-wallet card">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center flex-grow-1">
-                        <img class="bank-logo" src="/resources/upload/${list.listingNumber}/${list.image1}" alt="image1" class="bank-image">
+                        <img class="bank-logo" src="/resources/upload/${list.listingNumber}/${list.image1}" alt="image1"
+                             class="bank-image">
                         <span class="card-title building-name ml-2 text-center mb-0">${list.buildingName} (${list.quantity} STO)</span>
                     </div>
                     <div class="text-center">
@@ -441,45 +444,38 @@
             <span class="holding-title">티끌모아 건물주</span>
         </div>
 
-        <div class="no-preorder">
-            <p>진행 중인 예약 주문이 없습니다.</p>
-        </div>
-
-        <!-- 티끌모아 건물주 -->
-        <div class="pre-order">
-            <div class="my-wallet card">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center flex-grow-1">
-                        <img class="bank-logo" src="/resources/img/lotterTower.jpg" alt="Bank" class="bank-image">
-                        <span class="card-title building-name ml-2 text-center mb-0">롯데월드 타워 1층 1호</span>
-                    </div>
-                    <div class="text-center">
-                        <p class="building-name mb-0"><span>0</span>일 동안 모았어요!</p>
-                    </div>
+        <c:choose>
+            <c:when test="${membersReservationOrdersDTOList == null || empty membersReservationOrdersDTOList}">
+                <div class="no-preorder">
+                    <p>진행 중인 예약 주문이 없습니다.</p>
                 </div>
-                <div class="preorder-button-section">
-                    <button type="button" class="btn btn-primary" id="preorder-button1">취소하기</button>
+            </c:when>
+            <c:otherwise>
+                <div class="pre-order">
+                    <c:forEach var="item" items="${membersReservationOrdersDTOList}">
+                        <div class="my-wallet card">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center flex-grow-1">
+                                    <img class="bank-logo"
+                                         src="/resources/upload/${item.realEstateInfoVO.listingNumber}/${item.realEstateInfoVO.image1}"
+                                         alt="건물" class="bank-image">
+                                    <span class="card-title building-name ml-2 text-center mb-0">${item.realEstateInfoVO.buildingName}</span>
+                                </div>
+                                <div class="text-center">
+                                    <p class="building-name mb-0">
+                                        <span data-date="${item.reservationOrdersVO.orderDate}"></span>일 동안 모았어요!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="preorder-button-section">
+                                <button type="button" class="btn btn-primary cancel-button" data-id="${item.reservationOrdersVO.id}">취소하기</button>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
-            </div>
-
-            <div class="my-wallet card">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center flex-grow-1">
-                        <img class="bank-logo" src="/resources/img/lotterTower.jpg" alt="Bank" class="bank-image">
-                        <span class="card-title building-name ml-2 text-center mb-0">롯데월드 타워 1층 1호</span>
-                    </div>
-                    <div class="text-center">
-                        <p class="building-name mb-0"><span>0</span>일 동안 모았어요!</p>
-                    </div>
-                </div>
-                <div class="preorder-button-section">
-                    <button type="button" class="btn btn-primary" id="preorder-button2">취소하기</button>
-                </div>
-            </div>
-
-        </div>
+            </c:otherwise>
+        </c:choose>
     </div>
-
 
     <div class="container mt-2">
         <!-- 제목 -->
@@ -571,7 +567,8 @@
         </div>
     </div>
     <!-- 성공 모달 -->
-    <div class="modal fade" id="myPageSuccessModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myPageSuccessModal" tabindex="-1" aria-labelledby="successModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body" style="padding: 50px; justify-content: center; text-align: center;">
@@ -610,7 +607,7 @@
     }
 
     function formatNumbers() {
-        $('.formatted-number').each(function() {
+        $('.formatted-number').each(function () {
             var number = $(this).text();
             var formattedNumber = numberWithCommas(number);
             $(this).text(formattedNumber);
@@ -621,7 +618,7 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         /**
          *  금액 천단위 구분 쉼표 추가
          */
@@ -630,7 +627,7 @@
         /**
          *  지갑 입금 PUT 비동기 요청
          */
-        $("#deposit-button").on('click', function() {
+        $("#deposit-button").on('click', function () {
             // 데이터 가져오기
             let accountPassword = $("#account-password").val();
             let depositAmount = $("#deposit-amount").val();
@@ -646,13 +643,13 @@
                     accountPassword: accountPassword,
                     amount: depositAmount
                 }),
-                success: function(response) {
+                success: function (response) {
                     // 스피너 정지 및 초기화
                     $("#deposit-button").html('입금신청').prop('disabled', false);
                     // 성공 모달 표시
                     $("#myPageSuccessModal").modal('show');
                 },
-                error: function(error) {
+                error: function (error) {
                     // 스피너 정지 및 초기화
                     $("#deposit-button").html('입금신청').prop('disabled', false);
                     // 실패 모달 표시
@@ -664,7 +661,7 @@
         /**
          *  지갑 출금 PUT 비동기 요청
          */
-        $("#withdraw-button").on('click', function() {
+        $("#withdraw-button").on('click', function () {
             // 데이터 가져오기
             let walletPassword = $("#wallet-password").val();
             let withdrawAmount = $("#withdraw-amount").val();
@@ -680,13 +677,13 @@
                     walletPassword: walletPassword,
                     amount: withdrawAmount
                 }),
-                success: function(response) {
+                success: function (response) {
                     // 스피너 정지 및 초기화
                     $("#withdraw-button").html('출금신청').prop('disabled', false);
                     // 성공 모달 표시
                     $("#myPageSuccessModal").modal('show');
                 },
-                error: function(error) {
+                error: function (error) {
                     // 스피너 정지 및 초기화
                     $("#withdraw-button").html('출금신청').prop('disabled', false);
                     // 실패 모달 표시
@@ -698,13 +695,13 @@
         /**
          *  입출금 내역 필터링
          */
-        $('.filter-btn1').on('click', function() {
+        $('.filter-btn1').on('click', function () {
             $('.filter-btn1').removeClass('active');  // 모든 버튼의 active 클래스를 제거
             $(this).addClass('active');  // 현재 클릭된 버튼에 active 클래스를 추가
 
             var filterValue = $(this).data('filter');
 
-            $('tbody tr').each(function() {
+            $('tbody tr').each(function () {
                 var classification = $(this).find('td:nth-child(2)').text();
 
                 if (filterValue === 'all') {
@@ -721,13 +718,13 @@
         /**
          *  은행 거래내역 필터링 구현
          */
-        $('.filter-btn2').on('click', function() {
+        $('.filter-btn2').on('click', function () {
             $('.filter-btn2').removeClass('active');  // 모든 버튼의 active 클래스를 제거
             $(this).addClass('active');  // 현재 클릭된 버튼에 active 클래스를 추가
 
             var filterValue = $(this).data('filter');
 
-            $('tbody tr').each(function() {
+            $('tbody tr').each(function () {
                 var classification = $(this).find('td:nth-child(2)').text();
 
                 if (filterValue === 'all') {
@@ -743,11 +740,11 @@
         });
     });
 
-    /**
-     *  청약 마감일 (D-day 변환) 표기
-     */
-    window.onload = function() {
-        // 모든 expirationDate 요소 선택
+    window.onload = function () {
+        /**
+         *  청약 마감일 (D-day 변환) 표기
+         */
+            // 모든 expirationDate 요소 선택
         let expirationDates = document.querySelectorAll('.expirationDate');
 
         // 현재 날짜 설정
@@ -761,7 +758,47 @@
 
             element.textContent = '결과 발표 D-' + diffDays;
         });
+
+
+        /**
+         * 티끌모아 건물주 (Day 변환) 표기
+         */
+        let reservationOrderDates = document.querySelectorAll('.building-name > span');
+
+        reservationOrderDates.forEach((element) => {
+            let orderDate = new Date(element.getAttribute('data-date').split(" ")[0]); // 시간 부분을 제외하고 날짜만 사용
+            let diffTime = today.getTime() - orderDate.getTime();
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            element.textContent = diffDays;
+        });
+
+        /**
+         *  티끌모아 건물주 취소하기
+         */
+        $('.cancel-button').on('click', function() {
+            let reservationId = $(this).data('id');
+
+            $.ajax({
+                url: '/reservation-terminate',
+                type: 'PUT',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    id: reservationId
+                }),
+                success: function(response) {
+                    // 성공 모달 표시
+                    $("#myPageSuccessModal").modal('show');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // 실패 모달 표시
+                    $("#myPageErrorModal").modal('show');
+                }
+            });
+        });
+
     }
+
 
 </script>
 

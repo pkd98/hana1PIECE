@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.trading.model.mapper.ReservationOrdersMapper">
+
+    <resultMap type="com.hana1piece.trading.model.vo.ReservationOrdersVO" id="ReservationOrdersMap">
+        <result column="listing_number" property="listingNumber" />
+        <result column="wallet_number" property="walletNumber" />
+        <result column="order_date" property="orderDate" />
+        <result column="termination_date" property="terminationDate" />
+    </resultMap>
+
+    <select id="findAll" resultMap="ReservationOrdersMap">
+        select * from reservation_orders
+        where not status = 'T'
+        order by id desc
+    </select>
+
+    <select id="findByWN" parameterType="int" resultMap="ReservationOrdersMap">
+        select * from reservation_orders
+        where wallet_number = #{WN} and not status = 'T'
+        order by id desc
+    </select>
+
+    <select id="findByLN" parameterType="int" resultMap="ReservationOrdersMap">
+        select * from reservation_orders
+        where listing_number = #{LN}
+        order by id desc
+    </select>
+
+    <select id="findById" parameterType="int" resultMap="ReservationOrdersMap">
+        select * from reservation_orders
+        where id = #{id}
+        order by id desc
+    </select>
+
+    <select id="findByWNAndLN" parameterType="map" resultMap="ReservationOrdersMap">
+        select * from reservation_orders
+        where wallet_number = #{WN} and listing_number = #{LN}
+        order by id desc
+    </select>
+
+    <insert id="insertReservation" parameterType="com.hana1piece.trading.model.vo.ReservationOrdersVO">
+        insert into reservation_orders(listing_number, wallet_number, quantity)
+        values(#{listingNumber}, #{walletNumber}, #{quantity})
+    </insert>
+
+    <update id="updateReservation" parameterType="com.hana1piece.trading.model.vo.ReservationOrdersVO">
+        update reservation_orders
+        <set>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="terminationDate != null">termination_date = sysdate,</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

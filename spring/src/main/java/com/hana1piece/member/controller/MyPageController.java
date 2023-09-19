@@ -1,23 +1,29 @@
 package com.hana1piece.member.controller;
 
 import com.hana1piece.estate.model.mapper.PublicOfferingMapper;
+import com.hana1piece.estate.model.vo.RealEstateInfoVO;
 import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.estate.service.PublicOfferingService;
 import com.hana1piece.member.model.dto.MembersOrderPublicOfferingDTO;
+import com.hana1piece.member.model.dto.MembersReservationOrdersDTO;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.member.service.MemberService;
 import com.hana1piece.member.service.MyPageService;
+import com.hana1piece.trading.model.vo.ReservationOrdersVO;
+import com.hana1piece.trading.service.ReservationOrderService;
 import com.hana1piece.wallet.model.vo.AccountVO;
 import com.hana1piece.wallet.model.vo.BankTransactionVO;
 import com.hana1piece.wallet.model.vo.WalletTransactionVO;
 import com.hana1piece.wallet.model.vo.WalletVO;
 import com.hana1piece.wallet.service.WalletService;
+import org.apache.commons.collections.list.SynchronizedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,13 +33,17 @@ public class MyPageController {
     private final MyPageService myPageService;
     private final WalletService walletService;
     private final PublicOfferingService publicOfferingService;
+    private final ReservationOrderService reservationOrderService;
+    private final EstateService estateService;
 
     @Autowired
-    public MyPageController(MemberService memberService, MyPageService myPageService, WalletService walletService, EstateService estateService, PublicOfferingMapper publicOfferingMapper, PublicOfferingService publicOfferingService) {
+    public MyPageController(MemberService memberService, MyPageService myPageService, WalletService walletService, EstateService estateService, PublicOfferingMapper publicOfferingMapper, PublicOfferingService publicOfferingService, ReservationOrderService reservationOrderService, EstateService estateService1) {
         this.memberService = memberService;
         this.myPageService = myPageService;
         this.walletService = walletService;
         this.publicOfferingService = publicOfferingService;
+        this.reservationOrderService = reservationOrderService;
+        this.estateService = estateService1;
     }
 
     @GetMapping("/mypage")
@@ -46,6 +56,7 @@ public class MyPageController {
             mav.setViewName("/index");
             return mav;
         }
+
         // 사용자 지갑
         WalletVO wallet = walletService.findWalletByMemberId(member.getId());
         mav.addObject("wallet", wallet);
@@ -61,6 +72,16 @@ public class MyPageController {
         // 청약 신청 내역
         List<MembersOrderPublicOfferingDTO> membersOrderPublicOfferingDTOList = publicOfferingService.findMembersOrderPublicationOfferingByWalletNumber(wallet.getWalletNumber());
         mav.addObject("membersOrderPublicOfferingDTOList", membersOrderPublicOfferingDTOList);
+        // 티끌모아 건물주
+        List<MembersReservationOrdersDTO> membersReservationOrdersDTOList = new ArrayList<>();
+        List<ReservationOrdersVO> reservationOrdersVOList = reservationOrderService.findByWN(wallet.getWalletNumber());
+        for(ReservationOrdersVO reservationOrdersVO : reservationOrdersVOList) {
+            MembersReservationOrdersDTO membersReservationOrdersDTO = new MembersReservationOrdersDTO();
+            membersReservationOrdersDTO.setReservationOrdersVO(reservationOrdersVO);
+            membersReservationOrdersDTO.setRealEstateInfoVO(estateService.findRealEstateInfoByLN(reservationOrdersVO.getListingNumber()));
+            membersReservationOrdersDTOList.add(membersReservationOrdersDTO);
+        }
+        mav.addObject("membersReservationOrdersDTOList", membersReservationOrdersDTOList);
 
         /*
         System.out.println(wallet.toString());
@@ -68,6 +89,7 @@ public class MyPageController {
         System.out.println(account.toString());
         bankTransactionList.stream().forEach(System.out::println);
         */
+
         return mav;
     }
 

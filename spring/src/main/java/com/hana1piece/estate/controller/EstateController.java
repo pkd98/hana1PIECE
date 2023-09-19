@@ -1,7 +1,12 @@
 package com.hana1piece.estate.controller;
 
+import com.hana1piece.estate.model.dto.ListedEstateListDTO;
 import com.hana1piece.estate.model.dto.OrderPublicOfferingDTO;
 import com.hana1piece.estate.model.dto.PublicOfferingListDTO;
+import com.hana1piece.estate.model.dto.RequestEstateEvaluationDTO;
+import com.hana1piece.estate.model.vo.PublicationInfoVO;
+import com.hana1piece.estate.model.vo.RealEstateInfoVO;
+import com.hana1piece.estate.model.vo.RealEstateSaleVO;
 import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.estate.service.PublicOfferingService;
 import com.hana1piece.member.model.vo.OneMembersVO;
@@ -10,6 +15,7 @@ import com.hana1piece.wallet.service.StosService;
 import com.hana1piece.wallet.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -120,12 +126,12 @@ public class EstateController {
     }
 
     /**
-     *  사용자 청약 주문 처리
+     * 사용자 청약 주문 처리
      */
     @PostMapping("/public-offering")
     public ResponseEntity orderPublicOffering(@Valid @RequestBody OrderPublicOfferingDTO orderPublicOfferingDTO, BindingResult br, HttpSession session) {
         System.out.println(orderPublicOfferingDTO.toString());
-        if(br.hasErrors()) {
+        if (br.hasErrors()) {
             return ResponseEntity.badRequest().body("Validation failed: " + br.getAllErrors());
         }
         OneMembersVO member = (OneMembersVO) session.getAttribute("member");
@@ -142,5 +148,25 @@ public class EstateController {
         }
     }
 
+    /**
+     * 토큰 가격 평가 [매일 오전 9시 실행]
+     */
+    @Scheduled(cron = "0 0 9 * * ?")
+    public void estateEvaluation() {
+        List<ListedEstateListDTO> listedEstateListDTOList = estateService.findListedEstateListDTO();
 
+        for (ListedEstateListDTO estate : listedEstateListDTOList) {
+            RealEstateSaleVO realEstateSaleVO = estateService.findRealEstateSaleByLN(estate.getListingNumber());
+            RealEstateInfoVO realEstateInfoVO = estateService.findRealEstateInfoByLN(estate.getListingNumber());
+            PublicationInfoVO publicationInfoVO = estateService.findPublicationInfoByLN(estate.getListingNumber());
+            RequestEstateEvaluationDTO requestEstateEvaluationDTO = new RequestEstateEvaluationDTO();
+            requestEstateEvaluationDTO.setBuildingName(estate.getBuildingName());
+            requestEstateEvaluationDTO.setLatitude(realEstateInfoVO.getLatitude());
+            requestEstateEvaluationDTO.setLongitude(realEstateInfoVO.getLongitude());
+            requestEstateEvaluationDTO.setSize(Integer.parseInt(realEstateInfoVO.getFloorArea()));
+            requestEstateEvaluationDTO.setPrice(estate.getPrice());
+            requestEstateEvaluationDTO.setVolume(publicationInfoVO.getVolume());
+            estateService.evaluateEstate(realEstateSaleVO, requestEstateEvaluationDTO);
+        }
+    }
 }

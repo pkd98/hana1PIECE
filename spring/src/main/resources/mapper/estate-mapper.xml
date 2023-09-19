@@ -5,6 +5,7 @@
 <mapper namespace="com.hana1piece.estate.model.mapper.EstateMapper">
     <resultMap type="com.hana1piece.estate.model.vo.RealEstateSaleVO" id="RealEstateSaleMap">
         <result column="listing_number" property="listingNumber"/>
+        <result column="reasonable_price" property="reasonablePrice"/>
     </resultMap>
     <resultMap type="com.hana1piece.estate.model.vo.RealEstateInfoVO" id="RealEstateInfoMap">
         <result column="listing_number" property="listingNumber"/>
@@ -129,6 +130,7 @@
             <if test="evaluation != null">evaluation = #{evaluation},</if>
             <if test="state != null">state = #{state},</if>
             <if test="price != null">price = #{price},</if>
+            <if test="reasonablePrice != null">reasonable_price = #{reasonablePrice},</if>
             <if test="introduction != null">introduction = #{introduction},</if>
         </set>
         WHERE listing_number = #{listingNumber}
@@ -189,7 +191,7 @@
 
     <select id="findListedEstateListDTO" resultType="com.hana1piece.estate.model.dto.ListedEstateListDTO">
         select *
-        from (select res.LISTING_NUMBER as listingNumber, evaluation, introduction, price, state, building_name as buildingName, image1
+        from (select res.LISTING_NUMBER as listingNumber, evaluation, reasonable_price as reasonablePrice, introduction, price, state, building_name as buildingName, image1
               from REAL_ESTATE_SALE res
                        inner join REAL_ESTATE_INFO rei
                                   on res.listing_number = rei.listing_number)

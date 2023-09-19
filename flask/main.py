@@ -70,10 +70,10 @@ class BuildingEvaluation(Resource):
             size = data.get("size") # 평수
             price = data.get("price") # 현재 토큰 가격
             issueVolume = data.get("volume") #발행량
-
+            print(data)
             # 네이버 부동산 페이지
             url = "https://m.land.naver.com/map/{}:{}:18:/APT:OPST:GM/A1".format(latitude, longitude)
-
+            print(url)
             # 크롬 옵션 설정
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument("--headless")  # headless 모드
@@ -87,20 +87,24 @@ class BuildingEvaluation(Resource):
 
             # 추출 대상 타겟 요소
             target = "//div[@ttl=\'{}\']".format(buildingName)
+            print(target)
 
             # 부동산 평단가 추출
             target_div = driver.find_element(By.XPATH, target)
+            print(target_div)
 
             # 평단가 문자 숫자 변환
             target_price = convert_currency_to_number(target_div.text)
+            print(target_price)
 
             # 현재 토큰 가격 평가
             evaluation = evaluate_price(price * issueVolume, target_price * size)
+            print("evaluation: " + evaluation)
 
             # JSON 형식으로 평가 결과 반환
             response_data = {
                 'evaluation': evaluation,
-                'resonablePrice': (target_price * size) / issueVolume
+                'reasonablePrice': (target_price * size) / issueVolume
             }
 
             response = json.dumps(response_data, ensure_ascii=False, indent=4)

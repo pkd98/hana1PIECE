@@ -7,5 +7,6 @@ public class RealEstateSaleVO {
     private String evaluation;
     private String introduction;
     private long price;
+    private long reasonablePrice;
     private String state;
 }

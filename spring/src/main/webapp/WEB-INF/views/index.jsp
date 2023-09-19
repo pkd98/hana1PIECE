@@ -31,7 +31,7 @@
                                               src="/resources/img/hana1piece_letter.png">에서!</h1>
                 <p>※ 원금 손실 가능 및 투자자 귀속</p>
                 <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">투자하기</a>
+                    <a class="btn btn-primary btn-lg" href="/estate-list" role="button">투자하기</a>
                 </p>
             </div>
             <div class="jumbotron_el">

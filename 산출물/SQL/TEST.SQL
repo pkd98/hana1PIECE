@@ -188,3 +188,12 @@ truncate table execution;
 update stos set amount = 100
 where WALLET_NUMBER = 6 and LISTING_NUMBER = 20;
 select * from stos;
+
+select * from RESERVATION_ORDERS;
+desc RESERVATION_ORDERS;
+
+select * from reservation_orders
+where wallet_number = 6 and not status = 'T'
+order by id desc;
+
+truncate table RESERVATION_ORDERS;
