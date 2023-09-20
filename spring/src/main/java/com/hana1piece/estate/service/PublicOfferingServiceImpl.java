@@ -42,7 +42,7 @@ public class PublicOfferingServiceImpl implements PublicOfferingService {
     public void order(OrderPublicOfferingDTO orderPublicOfferingDTO) throws Exception {
         try {
             int price = 5000;
-            long amount = orderPublicOfferingDTO.getQuantity() * price;
+            long amount = (long) orderPublicOfferingDTO.getQuantity() * (long) price;
             WalletVO wallet = walletService.findWalletByWN(orderPublicOfferingDTO.getWalletNumber());
 
             // 지갑 비밀번호 확인

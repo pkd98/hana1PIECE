@@ -9,6 +9,8 @@ import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.mapper.ManagerMapper;
 import com.hana1piece.manager.model.vo.ManagerVO;
 import com.hana1piece.member.model.mapper.MemberMapper;
+import com.hana1piece.trading.model.mapper.StoOrdersMapper;
+import com.hana1piece.trading.model.vo.StoOrdersVO;
 import com.hana1piece.wallet.model.mapper.StosMapper;
 import com.hana1piece.wallet.model.vo.StosVO;
 import com.hana1piece.member.service.MemberService;
@@ -35,12 +37,13 @@ public class ManagerServiceImpl implements ManagerService {
     private final StosMapper stosMapper;
     private final OrderBookMapper orderBookMapper;
     private final LoggerService loggerService;
+    private final StoOrdersMapper stoOrdersMapper;
 
     @Value("${imgFilePath}")
     private String imgFilePath;
 
     @Autowired
-    public ManagerServiceImpl(ManagerMapper managerMapper, EstateMapper estateMapper, PublicOfferingMapper publicOfferingMapper, MemberService memberService, MemberMapper memberMapper, StosMapper stosMapper, OrderBookMapper orderBookMapper, LoggerService loggerService) {
+    public ManagerServiceImpl(ManagerMapper managerMapper, EstateMapper estateMapper, PublicOfferingMapper publicOfferingMapper, MemberService memberService, MemberMapper memberMapper, StosMapper stosMapper, OrderBookMapper orderBookMapper, LoggerService loggerService, StoOrdersMapper stoOrdersMapper) {
         this.managerMapper = managerMapper;
         this.estateMapper = estateMapper;
         this.publicOfferingMapper = publicOfferingMapper;
@@ -48,6 +51,7 @@ public class ManagerServiceImpl implements ManagerService {
         this.stosMapper = stosMapper;
         this.orderBookMapper = orderBookMapper;
         this.loggerService = loggerService;
+        this.stoOrdersMapper = stoOrdersMapper;
     }
 
     @Override
@@ -157,7 +161,7 @@ public class ManagerServiceImpl implements ManagerService {
     /**
      * 매물 상장
      * 1. 매물 상태 청약 -> 거래 변경
-     * 2. 청약 신청 회원 보유 토큰 : 조각 지급
+     * 2. 청약 신청 회원 보유 토큰 : 조각 지급, 주문 테이블 기록
      * 3. 호가창 셋팅
      */
     @Override
@@ -169,14 +173,29 @@ public class ManagerServiceImpl implements ManagerService {
             realEstateSaleVO.setState("거래");
             estateMapper.updateRealEstateSale(realEstateSaleVO);
 
-            // 2. 토큰 지급
+
+            // 2. 토큰 지급 및 주문 테이블 기록
             List<PublicOfferingVO> publicOfferingVOList = publicOfferingMapper.findByListingNumber(listingNumber);
             for(PublicOfferingVO publicOfferingVO : publicOfferingVOList) {
+                // 토큰 지급
                 StosVO stos = new StosVO();
                 stos.setListingNumber(publicOfferingVO.getListingNumber());
                 stos.setWalletNumber(publicOfferingVO.getWalletNumber());
                 stos.setAmount(publicOfferingVO.getQuantity());
                 stosMapper.insertStos(stos);
+
+                // 주문 테이블 기록
+                StoOrdersVO order = new StoOrdersVO();
+                order.setListingNumber(publicOfferingVO.getListingNumber());
+                order.setWalletNumber(publicOfferingVO.getWalletNumber());
+                order.setOrderType("BUY");
+                order.setAmount(5000);
+                order.setQuantity(publicOfferingVO.getQuantity());
+                order.setStatus("C");
+                order.setExecutedQuantity(publicOfferingVO.getQuantity());
+                order.setExecutedPriceAvg(5000);
+
+                stoOrdersMapper.insertOrderForPublicOffering(order);
             }
 
             // 3. 호가창 셋팅

@@ -13,6 +13,8 @@ public interface StoOrdersMapper {
 
     void insertOrder(StoOrdersVO stoOrdersVO);
 
+    void insertOrderForPublicOffering(StoOrdersVO stoOrdersVO);
+
     void updateOrder(StoOrdersVO stoOrdersVO);
 
     List<StoOrdersVO> findBuyOrderDetailByAmountAndLN(@Param("amount")int amount, @Param("LN")int LN);

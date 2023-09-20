@@ -433,15 +433,15 @@
         const tokenPrice = parseFloat(document.getElementById("realEstatePrice").innerText);
         const differencePercentage = ((tokenPrice - reasonablePrice) / reasonablePrice) * 100;
         document.getElementById("percentageDifference").innerText = differencePercentage.toFixed(2) + '%';
-
+        console.log(differencePercentage);
         let evaluationText = '';
         if (differencePercentage <= -10) {
             evaluationText = '매우 저평가';
-        } else if (differencePercentage <= -5) {
+        } else if (-10 < differencePercentage && differencePercentage <= -5) {
             evaluationText = '저평가';
-        } else if (differencePercentage >= 5 || differencePercentage <= 10) {
+        } else if (-5 <= differencePercentage && differencePercentage < 5) {
             evaluationText = '적정가';
-        } else if (differencePercentage >= 5) {
+        } else if (5 <= differencePercentage && differencePercentage < 10) {
             evaluationText = '고평가';
         } else if (differencePercentage >= 10) {
             evaluationText = '매우 고평가';

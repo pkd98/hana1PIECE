@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.member.model.mapper.MypageMapper">
+
+    <select id="getMembersStosInfoDTOByWalletNumber" parameterType="int" resultType="com.hana1piece.member.model.dto.MembersStosInfoDTO">
+        SELECT
+        STOS.WALLET_NUMBER as walletNumber,
+        RE.LISTING_NUMBER as listingNumber,
+        RI.BUILDING_NAME AS buildingName,
+        round((STOS.amount * RE.PRICE) - (STOS.amount * STO.avgBuyPrice), 0) as profit,
+        round(((STOS.amount * RE.PRICE - STOS.amount * STO.avgBuyPrice) / (STOS.amount * STO.avgBuyPrice)) * 100, 2) as
+        ROI,
+        STOS.amount,
+        RE.PRICE AS currentPrice,
+        STOS.amount * RE.PRICE as assessmentAmount,
+        round(STO.avgBuyPrice, 0) as avgBuyPrice
+        FROM
+        REAL_ESTATE_SALE RE
+        JOIN
+        REAL_ESTATE_INFO RI
+        ON
+        RE.LISTING_NUMBER = RI.LISTING_NUMBER
+        LEFT JOIN
+        STOS
+        ON
+        RE.LISTING_NUMBER = STOS.LISTING_NUMBER
+        AND STOS.WALLET_NUMBER = #{walletNumber}
+        LEFT JOIN
+        (
+        SELECT
+        LISTING_NUMBER,
+        WALLET_NUMBER,
+        AVG(EXECUTED_PRICE_AVG) AS avgBuyPrice
+        FROM
+        STO_ORDERS
+        WHERE
+        WALLET_NUMBER = #{walletNumber}
+        AND ORDER_TYPE = 'BUY'
+        AND not STATUS = 'N'
+        GROUP BY
+        LISTING_NUMBER, WALLET_NUMBER
+        ) STO
+        ON
+        RE.LISTING_NUMBER = STO.LISTING_NUMBER
+        WHERE
+        STOS.WALLET_NUMBER = #{walletNumber}
+
+    </select>
+
+</mapper>

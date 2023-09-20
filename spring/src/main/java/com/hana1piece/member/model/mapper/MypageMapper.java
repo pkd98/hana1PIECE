@@ -1,11 +1,11 @@
-package com.hana1piece.member.service;
+package com.hana1piece.member.model.mapper;
 
 import com.hana1piece.member.model.dto.MembersStosInfoDTO;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-public interface MyPageService {
-
+@Mapper
+public interface MypageMapper {
     List<MembersStosInfoDTO> getMembersStosInfoDTOByWalletNumber(int walletNumber);
-
 }

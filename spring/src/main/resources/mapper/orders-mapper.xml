@@ -23,6 +23,12 @@
         values(#{listingNumber}, #{walletNumber}, #{orderType}, #{amount}, #{quantity})
     </insert>
 
+    <insert id="insertOrderForPublicOffering" parameterType="com.hana1piece.trading.model.vo.StoOrdersVO">
+        insert into sto_orders(listing_number, wallet_number, order_type, amount, quantity, status, executed_quantity, executed_price_avg)
+        values(#{listingNumber}, #{walletNumber}, #{orderType}, #{amount}, #{quantity} #{status}, #{executedQuantity}, #{executedPriceAvg})
+    </insert>
+
+
     <update id="updateOrder" parameterType="com.hana1piece.trading.model.vo.StoOrdersVO">
         update sto_orders
         <set>

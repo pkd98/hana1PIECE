@@ -32,20 +32,8 @@
 
     <div class="container mt-5">
         <div class="row">
-            <!-- 매물 1 -->
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                        <p class="text-danger small mb-2">저평가</p>
-                        <div class="text-right">
-                            <p class="small text-muted mb-1">1 STO 가격</p>
-                            <p>5,000원</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <c:forEach var="" items="">
 
             <!-- 매물 1 -->
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -55,57 +43,14 @@
                         <h5 class="card-title">롯데월드 타워 1층 1호</h5>
                         <p class="text-danger small mb-2">저평가</p>
                         <div class="text-right">
-                            <p class="small text-muted mb-1">1 STO 가격</p>
+                            <p class="small text-muted mb-1">매각액</p>
                             <p>5,000원</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 매물 1 -->
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                        <p class="text-danger small mb-2">저평가</p>
-                        <div class="text-right">
-                            <p class="small text-muted mb-1">1 STO 가격</p>
-                            <p>5,000원</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 매물 1 -->
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                        <p class="text-danger small mb-2">저평가</p>
-                        <div class="text-right">
-                            <p class="small text-muted mb-1">1 STO 가격</p>
-                            <p>5,000원</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 매물 1 -->
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                        <p class="text-danger small mb-2">저평가</p>
-                        <div class="text-right">
-                            <p class="small text-muted mb-1">1 STO 가격</p>
-                            <p>5,000원</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
 
         </div>
     </div>

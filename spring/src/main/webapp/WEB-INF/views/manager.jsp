@@ -201,9 +201,9 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">공모/청약 등록</h5>
+                                <h5 class="card-title">공지사항</h5>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
-                                        data-bs-target="#publicOfferModal">공모/청약 등록
+                                        data-bs-target="#publicOfferModal">공지 등록
                                 </button>
                             </div>
                         </div>
@@ -212,7 +212,7 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">매각 투표</h5>
+                                <h5 class="card-title">앱푸시 알림</h5>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
                                         data-bs-target="#saleVoteModal">매각투표 등록
                                 </button>

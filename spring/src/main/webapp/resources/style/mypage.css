@@ -10,14 +10,14 @@
 .card-header {
     display: flex;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
 }
 .card-body > h3 {
-    font-size: 2rem;
+    font-size: 2.5rem;
 }
 
 #total-asset-body > p {
-    font-size: 2.8vh;
+    font-size: 1.5rem;
 }
 
 .card-body > p {

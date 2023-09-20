@@ -122,8 +122,8 @@
     </select>
 
     <insert id="insertRealEstateSale">
-        insert into real_estate_sale(state)
-        values ('청약')
+        insert into real_estate_sale(state, price, reasonable_price)
+        values ('청약', 5000, 5000)
     </insert>
 
     <update id="updateRealEstateSale" parameterType="com.hana1piece.estate.model.vo.RealEstateSaleVO">
@@ -131,18 +131,18 @@
         <set>
             <if test="evaluation != null">evaluation = #{evaluation},</if>
             <if test="state != null">state = #{state},</if>
-            <if test="price != null">price = #{price},</if>
-            <if test="reasonablePrice != null">reasonable_price = #{reasonablePrice},</if>
+            <if test="price != 0">price = #{price},</if>
+            <if test="reasonablePrice != 0">reasonable_price = #{reasonablePrice},</if>
             <if test="introduction != null">introduction = #{introduction},</if>
         </set>
         WHERE listing_number = #{listingNumber}
     </update>
 
     <insert id="insertRealEstateInfo" parameterType="com.hana1piece.estate.model.vo.RealEstateInfoVO">
-        insert into real_estate_info(listing_number, building_name, address, floors, usage, land_area, floor_area,
+        insert into real_estate_info(listing_number, building_name, address, SUPPLY_AREA, floors, usage, land_area, floor_area,
                                      coverage_ratio, floor_area_ratio, completion_date, latitude, longitude, image1,
                                      image2, image3)
-        values (#{listingNumber}, #{buildingName}, #{address}, #{floors}, #{usage}, #{landArea}, #{floorArea},
+        values (#{listingNumber}, #{buildingName}, #{address}, #{supplyArea}, #{floors}, #{usage}, #{landArea}, #{floorArea},
                 #{coverageRatio}, #{floorAreaRatio}, #{completionDate}, #{latitude}, #{longitude}, #{image1}, #{image2},
                 #{image3})
     </insert>

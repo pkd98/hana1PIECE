@@ -1,10 +1,25 @@
 INSERT INTO MANAGER (ID, NAME, PASSWORD, ENROLL_DATE, IMAGE, POSITION, INTRODUCTION)
 VALUES ('admin', '관리자', 'admin', TO_DATE('2023-08-08', 'YYYY-MM-DD'), 'manager.jpg', 'Web Back-end Developer', '매사 긍정적이고 성실하게 배우려 노력하는<br>IT 개발자입니다.');
 
+select * from account;
+
+-- 계좌 입금
+BEGIN
+    hana_bank_mng.deposit(
+    p_account_number => '99900000016394',
+    p_amount=>500000000,
+    p_name=>'무통장 입금',
+    p_recipient_account_number=>'CD'
+    );
+END;
+/
+
 
 select * from ANNOUNCEMENT;
 insert into ANNOUNCEMENT(title, CONTENT) VALUES ('test', 'test');
 commit;
+
+
 
 desc ANNOUNCEMENT;
 desc ONE_MEMBERS;
@@ -19,7 +34,6 @@ WHERE rnum > 10 * (1 - 1);
 select count(*) from ANNOUNCEMENT;
 
 select * from ONE_MEMBERS;
-truncate table ONE_MEMBERS;
 
 select HANA1PIECE_MNG.GENERATE_REFERRAL_CODE from dual;
 
@@ -42,16 +56,6 @@ desc WALLET_TRANSACTION;
 commit;
 
 
--- 계좌 입금
-BEGIN
-    hana_bank_mng.deposit(
-    p_account_number => '99900000009394',
-    p_amount=>500000,
-    p_name=>'무통장 입금',
-    p_recipient_account_number=>'CD'
-    );
-END;
-/
 select * from account;
 select * from BANK_TRANSACTION;
 select * from manager;
@@ -72,11 +76,6 @@ select * from REAL_ESTATE_SALE;
 select * from REAL_ESTATE_INFO;
 select * from TENANT_INFO;
 select * from PUBLICATION_INFO;
-
-truncate table PUBLICATION_INFO;
-truncate table TENANT_INFO;
-truncate table REAL_ESTATE_INFO;
-truncate table REAL_ESTATE_SALE;
 
 select * from REAL_ESTATE_SALE where state='청약';
 
@@ -158,30 +157,6 @@ select * from STO_ORDERS;
 select * from stos;
 
 
--- 체결 테이블 구조 변경
-ALTER TABLE Execution
-ADD buy_order_id NUMBER(8) NOT NULL;
-
-ALTER TABLE Execution
-ADD sell_order_id NUMBER(8) NOT NULL;
-
--- 매수 주문 외래키 제약 조건 추가
-ALTER TABLE Execution
-ADD CONSTRAINT FK_EXECUTION_BUY_ORDER_ID FOREIGN KEY (buy_order_id) REFERENCES STO_ORDERS(order_id);
-
--- 매도 주문 외래키 제약 조건 추가
-ALTER TABLE Execution
-ADD CONSTRAINT FK_EXECUTION_SELL_ORDER_ID FOREIGN KEY (sell_order_id) REFERENCES STO_ORDERS(order_id);
-
-
--- EXECUTED_PRICE_AVG와 EXECUTED_QUANTITY 컬럼 추가
-ALTER TABLE STO_ORDERS
-ADD (EXECUTED_PRICE_AVG NUMBER(8) DEFAULT 0);
-
-
-truncate table STO_ORDERS;
-truncate table execution;
-
 update stos set amount = 100
 where WALLET_NUMBER = 6 and LISTING_NUMBER = 20;
 select * from stos;
@@ -193,8 +168,6 @@ select * from reservation_orders
 where wallet_number = 6 and not status = 'T'
 order by id desc;
 
-truncate table RESERVATION_ORDERS;
-
 select * from REAL_ESTATE_INFO;
 
 
@@ -205,5 +178,70 @@ commit;
 
 select * from REAL_ESTATE_SALE;
 
-ALTER TABLE REAL_ESTATE_SALE 
-MODIFY PRICE NUMBER(12) DEFAULT 5000;
+-- 토큰 현재 가격
+select LISTING_NUMBER, PRICE as currentPrice FROM REAL_ESTATE_SALE;
+
+-- 빌딩명
+select LISTING_NUMBER, BUILDING_NAME as buildingName FROM REAL_ESTATE_INFO;
+
+-- 보유 토큰 수량
+select * from STOS where WALLET_NUMBER = :walletNumber and LISTING_NUMBER = :listingNumber;
+
+-- 매수 평균 가격
+SELECT 
+    LISTING_NUMBER,
+    WALLET_NUMBER,
+    AVG(EXECUTED_PRICE_AVG) AS avgBuyAmount
+FROM 
+    STO_ORDERS
+WHERE 
+    WALLET_NUMBER = :walletNumber
+    AND ORDER_TYPE = 'BUY'
+    AND NOT STATUS = 'N'
+GROUP BY 
+    LISTING_NUMBER, WALLET_NUMBER;
+
+
+select * from wallet;
+
+
+SELECT
+    STOS.WALLET_NUMBER as walletNumber,
+    RE.LISTING_NUMBER as listingNumber,
+    RI.BUILDING_NAME AS buildingName,
+    round((STOS.amount * RE.PRICE) - (STOS.amount * STO.avgBuyPrice), 0) as profit,
+    round(((STOS.amount * RE.PRICE - STOS.amount * STO.avgBuyPrice) / (STOS.amount * STO.avgBuyPrice))  * 100, 2) as ROI,
+    STOS.amount,
+    RE.PRICE AS currentPrice,
+    STOS.amount * RE.PRICE as assessmentAmount,
+    round(STO.avgBuyPrice, 0) as avgBuyPrice
+FROM
+    REAL_ESTATE_SALE RE
+JOIN
+    REAL_ESTATE_INFO RI
+ON
+    RE.LISTING_NUMBER = RI.LISTING_NUMBER
+LEFT JOIN
+    STOS
+ON
+    RE.LISTING_NUMBER = STOS.LISTING_NUMBER
+    AND STOS.WALLET_NUMBER = :walletNumber
+LEFT JOIN
+    (
+        SELECT
+            LISTING_NUMBER,
+            WALLET_NUMBER,
+            AVG(EXECUTED_PRICE_AVG) AS avgBuyPrice
+        FROM
+            STO_ORDERS
+        WHERE
+            WALLET_NUMBER = :walletNumber
+            AND ORDER_TYPE = 'BUY'
+            AND not STATUS = 'N'
+        GROUP BY
+            LISTING_NUMBER, WALLET_NUMBER
+    ) STO
+ON
+    RE.LISTING_NUMBER = STO.LISTING_NUMBER
+WHERE
+    STOS.WALLET_NUMBER = :walletNumber;

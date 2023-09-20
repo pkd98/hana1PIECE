@@ -313,27 +313,30 @@
 
     <!-- 보유 빌딩 -->
     <div class="row equal-height-row">
-        <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-            <div class="card total-asset">
-                <div class="card-header">
-                    롯데월드타워 1층 1호
-                </div>
-                <div class="card-body flex1">
-                    <small>1STO가격</small>
-                    <h3 class="formatted-number">5,100원 <span class="percentage">(+4.00%)</span></h3>
-                    <hr>
-                    <p>보유수량: <span>123STO</span></p>
-                    <p>매수 평균가: <span class="formatted-number">4,400원</span></p>
-                    <p>평가금액: <span class="formatted-number">1,111,111원</span></p>
-                    <p>투자금액: <span class="formatted-number">1,000,000원</span></p>
-                    <div class="dividend-button-section">
-                        <button type="button" class="btn btn-primary" id="detailsTransaction" data-bs-toggle="modal"
-                                data-bs-target="#transactionModal">거래내역
-                        </button>
+        <c:forEach var="item" items="${membersStosInfoDTOList}">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                <div class="card total-asset">
+                    <div class="card-header">
+                        ${item.buildingName}
+                    </div>
+                    <div class="card-body flex1">
+                        <small>평가손익 (수익률)</small>
+                        <h3 class="formatted-number">${item.profit}원 <span class="percentage">(${item.ROI}%)</span></h3>
+                        <hr>
+                        <p>보유수량: <span>${item.amount}STO</span></p>
+                        <p>현재가: <span class="formatted-number">${item.currentPrice}원</span></p>
+                        <p>평가 금액: <span class="formatted-number">${item.assessmentAmount}원</span></p>
+                        <p>매수 평단가: <span class="formatted-number">${item.avgBuyPrice}원</span></p>
+                        <div class="dividend-button-section">
+                            <button type="button" class="btn btn-primary" id="detailsTransaction" data-bs-toggle="modal"
+                                    data-bs-target="#transactionModal">거래내역
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </c:forEach>
+
 
         <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel"
              aria-hidden="true">

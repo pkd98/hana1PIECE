@@ -6,6 +6,7 @@ import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.estate.service.PublicOfferingService;
 import com.hana1piece.member.model.dto.MembersOrderPublicOfferingDTO;
 import com.hana1piece.member.model.dto.MembersReservationOrdersDTO;
+import com.hana1piece.member.model.dto.MembersStosInfoDTO;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.member.service.MemberService;
 import com.hana1piece.member.service.MyPageService;
@@ -72,6 +73,10 @@ public class MyPageController {
         // 청약 신청 내역
         List<MembersOrderPublicOfferingDTO> membersOrderPublicOfferingDTOList = publicOfferingService.findMembersOrderPublicationOfferingByWalletNumber(wallet.getWalletNumber());
         mav.addObject("membersOrderPublicOfferingDTOList", membersOrderPublicOfferingDTOList);
+        // 보유 빌딩 정보
+        List<MembersStosInfoDTO> membersStosInfoDTOList = myPageService.getMembersStosInfoDTOByWalletNumber(wallet.getWalletNumber());
+        mav.addObject("membersStosInfoDTOList", membersStosInfoDTOList);
+        membersStosInfoDTOList.stream().forEach(System.out::println);
         // 티끌모아 건물주
         List<MembersReservationOrdersDTO> membersReservationOrdersDTOList = new ArrayList<>();
         List<ReservationOrdersVO> reservationOrdersVOList = reservationOrderService.findByWN(wallet.getWalletNumber());
@@ -83,12 +88,7 @@ public class MyPageController {
         }
         mav.addObject("membersReservationOrdersDTOList", membersReservationOrdersDTOList);
 
-        /*
-        System.out.println(wallet.toString());
-        walletTransactionList.stream().forEach(System.out::println);
-        System.out.println(account.toString());
-        bankTransactionList.stream().forEach(System.out::println);
-        */
+
 
         return mav;
     }
