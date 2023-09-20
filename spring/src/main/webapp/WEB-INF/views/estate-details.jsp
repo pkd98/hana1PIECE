@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -72,18 +73,17 @@
         <div class="card-body">
             <div class="card-content">
                 <p class="value-title">건물가치</p>
-                <h6 class="value">5,034원</h6>
-                <small>(23.07.30)</small>
+                <h6 class="value"><span id="resonablePrice" class="formatted-number">${realEstateSale.reasonablePrice}</span>원</h6>
+                <small id="yesterday"></small>
             </div>
             <div class="card-content">
                 <p class="value-title">토큰 가격</p>
-                <h6 class="value">${realEstateSale.price}원</h6>
-                <small>-17.7%</small>
+                <h6 class="value formatted-number" style="color: red; font-size: 2rem;"><span id="realEstatePrice">${realEstateSale.price}</span>원</h6>
             </div>
             <div class="card-content">
                 <p class="value-title">건물가치 대비</p>
-                <h6 class="value">-10%</h6>
-                <small>${realEstateSale.evaluation}</small>
+                <h6 class="value" id="percentageDifference"></h6>
+                <small id="evaluationText"></small>
             </div>
         </div>
     </div>
@@ -114,11 +114,11 @@
                     <h6 class="detail-value" id="firstDividendDate">${publicationInfo.firstDividendDate}일</h6>
                 </div>
                 <div class="card-content">
-                    <p class="detail-title">배당 지급일</p>
+                    <p class="detail-title">배당 주기</p>
                     <h6 class="detail-value">${publicationInfo.dividendCycle}개월</h6>
                 </div>
                 <div class="card-content">
-                    <p class="detail-title">토큰 분배금</p>
+                    <p class="detail-title">토큰 분배금(연)</p>
                     <h6 class="detail-value">${publicationInfo.dividend}원</h6>
                 </div>
             </div>
@@ -149,6 +149,10 @@
                 <span class="info-value">${realEstateInfo.address}</span>
             </div>
             <div class="info-item">
+                <span class="info-label">공급면적</span>
+                <span class="info-value">${realEstateInfo.supplyArea}평형</span>
+            </div>
+            <div class="info-item">
                 <span class="info-label">층수</span>
                 <span class="info-value">${realEstateInfo.floors}층</span>
             </div>
@@ -158,11 +162,11 @@
             </div>
             <div class="info-item">
                 <span class="info-label">대지면적</span>
-                <span class="info-value">${realEstateInfo.landArea}m²</span>
+                <span class="info-value formatted-number">${realEstateInfo.landArea}m²</span>
             </div>
             <div class="info-item">
                 <span class="info-label">연면적</span>
-                <span class="info-value">${realEstateInfo.floorArea}m²</span>
+                <span class="info-value formatted-number">${realEstateInfo.floorArea}m²</span>
             </div>
             <div class="info-item">
                 <span class="info-label">건폐율</span>
@@ -178,7 +182,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="wrapper">
         <div class="profit-header">
@@ -200,15 +203,15 @@
             </div>
             <div class="issue-item">
                 <span class="issue-label">발행 증권수</span>
-                <span class="issue-value">${publicationInfo.volume}주</span>
+                <span class="issue-value formatted-number">${publicationInfo.volume}주</span>
             </div>
             <div class="issue-item">
                 <span class="issue-label">발행가액</span>
-                <span class="issue-value">${publicationInfo.issuePrice}주</span>
+                <span class="issue-value formatted-number">${publicationInfo.issuePrice}원</span>
             </div>
             <div class="issue-item">
                 <span class="issue-label">총모집액</span>
-                <span class="issue-value">${publicationInfo.totalAmount}원</span>
+                <span class="issue-value formatted-number">${publicationInfo.totalAmount}원</span>
             </div>
             <div class="issue-item">
                 <span class="issue-label">청약일정</span>
@@ -341,6 +344,21 @@
     }
 
     /**
+     * 어제 일자 구하기
+     */
+    function getYesterday() {
+        let date = new Date();
+        date.setDate(date.getDate() - 1); // 어제 날짜 설정
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1을 해주고, 두 자리 수를 유지하기 위해 padStart 사용
+        const day = String(date.getDate()).padStart(2, '0'); // 일자 두 자리 유지
+
+        return '(' + year + '.' + month + '.' + day + ')';
+    }
+
+
+    /**
      * 천단위 구분
      */
     function formatNumbers() {
@@ -409,9 +427,35 @@
 
     window.onload = function () {
         /**
+         *  매물 평가 표기
+         */
+        const reasonablePrice = parseFloat(document.getElementById("resonablePrice").innerText);
+        const tokenPrice = parseFloat(document.getElementById("realEstatePrice").innerText);
+        const differencePercentage = ((tokenPrice - reasonablePrice) / reasonablePrice) * 100;
+        document.getElementById("percentageDifference").innerText = differencePercentage.toFixed(2) + '%';
+
+        let evaluationText = '';
+        if (differencePercentage <= -10) {
+            evaluationText = '매우 저평가';
+        } else if (differencePercentage <= -5) {
+            evaluationText = '저평가';
+        } else if (differencePercentage >= 5 || differencePercentage <= 10) {
+            evaluationText = '적정가';
+        } else if (differencePercentage >= 5) {
+            evaluationText = '고평가';
+        } else if (differencePercentage >= 10) {
+            evaluationText = '매우 고평가';
+        }
+        document.getElementById("evaluationText").innerText = evaluationText;
+
+        /**
          *  금액 천단위 구분 쉼표 추가
          */
         formatNumbers();
+        /**
+         * 어제 날짜 표기
+         */
+        document.getElementById("yesterday").innerText = getYesterday();
 
         /**
          *  수량 조절 관련 로직
@@ -508,18 +552,18 @@
             content: {
                 title: '하나1PIECE',
                 description: '지금바로 부동산 조각 매물을 확인해보세요!',
-                imageUrl: 'https://raw.githubusercontent.com/pkd98/hana1PIECE/c87221038bd864c65e8d8ff4bc09beb9bb94808c/spring/src/main/webapp/resources/img/lotterTower.jpg?token=GHSAT0AAAAAACEYJYU7V2Q7CXCMCF5462ZWZHNZBOQ',
+                imageUrl: 'http://127.0.0.1:8080/resources/upload/${realEstateInfo.listingNumber}/${realEstateInfo.image1}',
                 link: {
-                    mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
-                    webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                    mobileWebUrl: 'http://127.0.0.1:8080/',
+                    webUrl: 'http://127.0.0.1:8080/',
                 },
             },
             buttons: [
                 {
                     title: '지금 건물주 되기!',
                     link: {
-                        mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
-                        webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                        mobileWebUrl: 'http://127.0.0.1:8080/',
+                        webUrl: 'http://127.0.0.1:8080/',
                     },
                 },
             ],

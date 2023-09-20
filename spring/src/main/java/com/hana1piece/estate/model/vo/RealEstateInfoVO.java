@@ -7,6 +7,7 @@ public class RealEstateInfoVO {
     private int listingNumber;
     private String buildingName;
     private String address;
+    private int supplyArea;
     private int floors;
     private String usage;
     private String landArea;

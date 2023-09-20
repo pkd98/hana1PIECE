@@ -49,6 +49,11 @@ header {
     margin-right: 100px;
 }
 
+.carousel-item > img {
+    min-width: 500px;
+    height: 500px;
+}
+
 /* 로그인 회원가입 모달 */
 /* 모달 스타일 */
 .xButton {

@@ -97,7 +97,7 @@ public class MemberServiceImpl implements MemberService {
      * SMS 인증번호 요청 (CoolSMS 이용)
      */
     @Override
-    public void getSmsCertificationNumber(String phoneNumber, HttpSession session) throws CoolsmsException {
+    public void getSmsCertificationNumber(String phoneNumber, HttpSession session) {
         try {
             Random random = new Random();
             Message coolsms = new Message(smsApiKey, smsApiSecret);

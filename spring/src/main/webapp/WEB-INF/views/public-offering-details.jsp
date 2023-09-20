@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -54,11 +55,13 @@
                          alt="image3">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -80,12 +83,12 @@
             <div class="card-content">
                 <p class="value-title">공모 가격</p>
                 <h6 class="value">5,000원</h6>
-                <small>총 ${publicationInfo.totalAmount}원</small>
+                <small class="formatted-number">총 ${publicationInfo.totalAmount}원</small>
             </div>
             <div class="card-content">
                 <p class="value-title">연 수익 배당</p>
                 <h6 class="value">약 <span id="odds"></span>%</h6>
-                <small>1토큰당 ${publicationInfo.dividend}원</small>
+                <small class="formatted-number">1토큰당 ${publicationInfo.dividend}원</small>
             </div>
         </div>
     </div>
@@ -94,24 +97,33 @@
         <div class="subscription-card">
             <div class="flex-row">
                 <span class="rate-title">청약모집률</span>
-                <span class="count-number">${publicOfferingProgress.countWalletNumber}명(${publicOfferingProgress.sumQuantity}STO) 청약 완료</span>
+                <span class="count-number formatted-number">${publicOfferingProgress.countWalletNumber}명(${publicOfferingProgress.sumQuantity}STO) 청약 완료</span>
             </div>
             <div class="flex-row mt-2">
                 <c:choose>
                     <c:when test="${publicOfferingProgress.sumQuantity lt publicationInfo.volume}">
-                        <span class="rate-percentage">${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%</span>
+                        <span class="rate-percentage">
+                            <fmt:formatNumber value="${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}" pattern="#.##"/>%
+                        </span>
                         <span class="count-time">청약 마감까지 <span id="d-day2"></span>일 전</span>
                     </c:when>
                     <c:otherwise>
-                        <span class="rate-percentage" hidden>${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%</span>
+                        <span class="rate-percentage" hidden>
+                            <fmt:formatNumber value="${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}"
+                                              pattern="#.##"/>%
+                        </span>
                         <span class="count-time" hidden>청약 마감까지 <span id="d-day2"></span>일 전</span>
-                        <span class="rate-percentage">${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%</span>
+                        <span class="rate-percentage">
+                            <fmt:formatNumber value="${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}"
+                                              pattern="#.##"/>%
+                        </span>
                         <span class="count-time">조기 마감되었습니다!</span>
                     </c:otherwise>
                 </c:choose>
             </div>
             <div class="progress-bar mt-3">
-                <div class="progress-fill" style="width: ${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%; background-color: #008485;"></div>
+                <div class="progress-fill"
+                     style="width: ${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%; background-color: #008485;"></div>
             </div>
         </div>
         <!-- 청약 주문 -->
@@ -122,7 +134,7 @@
                     <input type="password" id="wallet-password" pattern="\d{4}" placeholder="4자리 숫자" maxlength="4"/>
                 </div>
                 <div class="able-amount">
-                    청약 가능 금액: <span id="orderAvailable">원</span>
+                    청약 가능 금액: <span id="orderAvailable" class="formatted-number">원</span>
                 </div>
                 <div class="price">
                     <span>공모가</span>
@@ -140,7 +152,10 @@
                     청약 주문 총 액: <span>0원</span>
                 </div>
                 <div class="order">
-                    <input class="btn btn-primary" type="button" <c:if test="${publicOfferingProgress.sumQuantity ge publicationInfo.volume}"> value="마감"</c:if> value="청약 주문" <c:if test="${publicOfferingProgress.sumQuantity ge publicationInfo.volume}"> disabled </c:if>>
+                    <input class="btn btn-primary" type="button"
+                    <c:if test="${publicOfferingProgress.sumQuantity ge publicationInfo.volume}"> value="마감"</c:if>
+                           value="청약 주문" <c:if test="${publicOfferingProgress.sumQuantity ge publicationInfo.volume}">
+                           disabled </c:if>>
                 </div>
             </div>
         </div>
@@ -171,6 +186,10 @@
                 <span class="info-value">${realEstateInfo.address}</span>
             </div>
             <div class="info-item">
+                <span class="info-label">공급면적</span>
+                <span class="info-value">${realEstateInfo.supplyArea}평형</span>
+            </div>
+            <div class="info-item">
                 <span class="info-label">층수</span>
                 <span class="info-value">${realEstateInfo.floors}층</span>
             </div>
@@ -180,11 +199,11 @@
             </div>
             <div class="info-item">
                 <span class="info-label">대지면적</span>
-                <span class="info-value">${realEstateInfo.landArea}m²</span>
+                <span class="info-value formatted-number">${realEstateInfo.landArea}m²</span>
             </div>
             <div class="info-item">
                 <span class="info-label">연면적</span>
-                <span class="info-value">${realEstateInfo.floorArea}m²</span>
+                <span class="info-value formatted-number">${realEstateInfo.floorArea}m²</span>
             </div>
             <div class="info-item">
                 <span class="info-label">건폐율</span>
@@ -222,15 +241,15 @@
             </div>
             <div class="issue-item">
                 <span class="issue-label">발행 증권수</span>
-                <span class="issue-value">${publicationInfo.volume}주</span>
+                <span class="issue-value formatted-number">${publicationInfo.volume}주</span>
             </div>
             <div class="issue-item">
                 <span class="issue-label">발행가액</span>
-                <span class="issue-value">${publicationInfo.issuePrice}주</span>
+                <span class="issue-value formatted-number">${publicationInfo.issuePrice}원</span>
             </div>
             <div class="issue-item">
                 <span class="issue-label">총모집액</span>
-                <span class="issue-value">${publicationInfo.totalAmount}원</span>
+                <span class="issue-value formatted-number">${publicationInfo.totalAmount}원</span>
             </div>
             <div class="issue-item">
                 <span class="issue-label">청약일정</span>
@@ -258,7 +277,8 @@
 
         <div class="tenant-card">
             <div class="tenant-header">
-                <span class="tenant-name">${tenantInfo.lessee}</span> | <span class="tenant-business">${tenantInfo.sector}</span>
+                <span class="tenant-name">${tenantInfo.lessee}</span> | <span
+                    class="tenant-business">${tenantInfo.sector}</span>
             </div>
             <div class="tenant-duration">
                 계약기간 : <span>${tenantInfo.contractDate} ~ ${tenantInfo.expirationDate}</span>
@@ -322,7 +342,7 @@
 
 <script>
     function formatNumbers() {
-        $('.formatted-number').each(function() {
+        $('.formatted-number').each(function () {
             var number = $(this).text();
             var formattedNumber = numberWithCommas(number);
             $(this).text(formattedNumber);
@@ -332,7 +352,6 @@
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-
 
 
     var listingNumber = ${publicationInfo.listingNumber};
@@ -481,11 +500,11 @@
                     quantity: quantity,
                     walletPassword: password
                 }),
-                success: function(response) {
+                success: function (response) {
                     btnElement.disabled = false;  // 버튼을 활성화
                     new bootstrap.Modal(document.getElementById('successModal')).show();
                 },
-                error: function(error) {
+                error: function (error) {
                     btnElement.disabled = false;  // 버튼을 활성화
                     new bootstrap.Modal(document.getElementById('errorModal')).show();
                 }

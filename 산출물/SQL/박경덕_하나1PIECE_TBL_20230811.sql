@@ -286,7 +286,7 @@ CREATE TABLE REAL_ESTATE_SALE (
   EVALUATION VARCHAR2(20) DEFAULT '평가없음',                         -- 평가
   INTRODUCTION VARCHAR2(300),                                       -- 소개글
   PRICE NUMBER(12) DEFAULT 5000,                                    -- 토큰 가격
-  REASONABLE_PRICE NUMBER(12) DEFAULT 0,                            -- 평가 가격
+  REASONABLE_PRICE NUMBER(12) DEFAULT 5000,                         -- 평가 가격
   STATE VARCHAR2(20) DEFAULT '청약' NOT NULL                         -- 상태
 );
 
@@ -295,6 +295,7 @@ CREATE TABLE REAL_ESTATE_INFO (
   LISTING_NUMBER NUMBER(8) PRIMARY KEY,         -- 매물번호
   BUILDING_NAME VARCHAR2(300) NOT NULL,         -- 건물명
   ADDRESS VARCHAR2(100) NOT NULL,               -- 건물 상세 주소
+  SUPPLY_AREA NUMBER(4),                        -- 공급 면적
   FLOORS NUMBER(3) NOT NULL,                    -- 층 수
   USAGE VARCHAR2(30) NOT NULL,                  -- 주 용도
   LAND_AREA VARCHAR2(10) NOT NULL,              -- 대지면적

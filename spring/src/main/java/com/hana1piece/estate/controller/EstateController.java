@@ -149,6 +149,19 @@ public class EstateController {
     }
 
     /**
+     *  매각된 건물 리스트 페이지
+     */
+    @GetMapping("/sold-list")
+    public ModelAndView soldList() {
+        ModelAndView mav = new ModelAndView("sold-list");
+//        List<> publicOfferingListDTOList = estateService.findPublicOfferingListDTO();
+//        mav.addObject("", );
+        return mav;
+    }
+
+
+
+    /**
      * 토큰 가격 평가 [매일 오전 9시 실행]
      */
     @Scheduled(cron = "0 0 9 * * ?")

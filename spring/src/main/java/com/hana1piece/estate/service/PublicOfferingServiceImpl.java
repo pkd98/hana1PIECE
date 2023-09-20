@@ -51,7 +51,7 @@ public class PublicOfferingServiceImpl implements PublicOfferingService {
             }
 
             // 주문 금액, 지갑 잔액 유효성
-            if(wallet.getBalance() < orderPublicOfferingDTO.getQuantity() * price) {
+            if(wallet.getBalance() < (long) orderPublicOfferingDTO.getQuantity() * (long) price) {
                 throw new Exception();
             }
 

@@ -338,6 +338,12 @@
                                     </div>
 
                                     <div class="row mb-2">
+                                        <div class="col-4 text-left">공급면적:</div>
+                                        <div class="col-8 text-right"><input id="supplyArea" type="number"
+                                                                             class="form-control"></div>
+                                    </div>
+
+                                    <div class="row mb-2">
                                         <div class="col-4 text-left">층 수:</div>
                                         <div class="col-8 text-right"><input id="floors" type="number"
                                                                              class="form-control"></div>
@@ -780,6 +786,7 @@
             // input 요소들의 값을 객체에 담기
             formData.append('buildingName', $("#building_name").val());
             formData.append('address', $("#address").val());
+            formData.append('supplyArea', $("#supplyArea").val());
             formData.append('floors', $("#floors").val());
             formData.append('usage', $("#usage").val());
             formData.append('landArea', $("#land_area").val());

@@ -41,10 +41,10 @@
                             <img class="d-block w-100" src="/resources/img/lotterTower.jpg" alt="">
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="/resources/img/lotterTower.jpg" alt="">
+                            <img class="d-block w-100" src="/resources/img/paju1.jpeg" alt="">
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="/resources/img/lotterTower.jpg" alt="">
+                            <img class="d-block w-100" src="/resources/img/xii1.jpeg" alt="">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

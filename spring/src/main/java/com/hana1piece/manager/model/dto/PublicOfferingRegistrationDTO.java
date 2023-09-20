@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PublicOfferingRegistrationDTO {
     private String buildingName;
     private String address;
+    private int supplyArea;
     private int floors;
     private String usage;
     private String landArea;

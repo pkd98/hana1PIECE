@@ -33,13 +33,10 @@ select * from BANK_TRANSACTION;
 select * from wallet;
 select * from WALLET_TRANSACTION;
 
-update wallet set BALANCE = BALANCE + 1000000 where wallet_number = 6;
+update wallet set BALANCE = BALANCE + 10000000000 where wallet_number = 6;
 
 select * from WALLET_TRANSACTION;
 desc WALLET_TRANSACTION;
-
-insert into WALLET_TRANSACTION()
-VALUES();
 
 
 commit;
@@ -197,3 +194,16 @@ where wallet_number = 6 and not status = 'T'
 order by id desc;
 
 truncate table RESERVATION_ORDERS;
+
+select * from REAL_ESTATE_INFO;
+
+
+select * from stos;
+select * from PUBLIC_OFFERING;
+delete from PUBLIC_OFFERING where WALLET_NUMBER = 6;
+commit;
+
+select * from REAL_ESTATE_SALE;
+
+ALTER TABLE REAL_ESTATE_SALE 
+MODIFY PRICE NUMBER(12) DEFAULT 5000;

@@ -10,6 +10,7 @@
     <resultMap type="com.hana1piece.estate.model.vo.RealEstateInfoVO" id="RealEstateInfoMap">
         <result column="listing_number" property="listingNumber"/>
         <result column="building_name" property="buildingName"/>
+        <result column="supply_area" property="supplyArea"/>
         <result column="land_area" property="landArea"/>
         <result column="floor_area" property="floorArea"/>
         <result column="coverage_ratio" property="coverageRatio"/>
@@ -81,6 +82,7 @@
         select listing_number,
                building_name,
                address,
+               supply_area,
                floors, usage, land_area, floor_area, coverage_ratio, floor_area_ratio, to_char(completion_date, 'YYYY.MM.DD') as completion_date, image1, image2, image3, latitude, longitude
         from real_estate_info
         where listing_number = #{LN}

@@ -100,6 +100,7 @@ public class ManagerServiceImpl implements ManagerService {
             realEstateInfoVO.setListingNumber(listingNumber);
             realEstateInfoVO.setBuildingName(publicOfferingRegistrationDTO.getBuildingName());
             realEstateInfoVO.setAddress(publicOfferingRegistrationDTO.getAddress());
+            realEstateInfoVO.setSupplyArea(publicOfferingRegistrationDTO.getSupplyArea());
             realEstateInfoVO.setFloors(publicOfferingRegistrationDTO.getFloors());
             realEstateInfoVO.setUsage(publicOfferingRegistrationDTO.getUsage());
             realEstateInfoVO.setLandArea(publicOfferingRegistrationDTO.getLandArea());
