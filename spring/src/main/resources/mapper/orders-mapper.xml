@@ -49,9 +49,14 @@
         order by order_id asc
     </select>
 
+    <select id="findByWN" parameterType="int" resultMap="StoOrdersMap">
+        select * from STO_ORDERS
+        where WALLET_NUMBER = #{WN}
+        order by order_id desc
+    </select>
+
     <select id="getOrderSeqCrrval" resultType="int">
         select ORDER_SEQ.CURRVAL from dual
     </select>
-
 
 </mapper>

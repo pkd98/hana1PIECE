@@ -4,8 +4,10 @@ import lombok.Data;
 
 @Data
 public class MembersTotalAssetDTO {
-    private long totalAsset;
-    private long totalDeposit;
-    private long investmentAmount;
-    private long investmentReturn;
+    private int walletNumber;
+    private long asset; // 총 자산
+    private double ROI; // 수익률
+    private long deposit; // 예치금
+    private long investmentAmount; // 투자금
+    private long investmentReturn; // 투자 수익
 }

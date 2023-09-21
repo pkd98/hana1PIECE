@@ -20,6 +20,22 @@
     font-size: 1.5rem;
 }
 
+.asset-container {
+    display: flex;
+    place-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.percentage {
+    font-size: 1.5rem;
+}
+
+.asset-container > h3 {
+    font-size: 2.8rem;
+}
+
+
 .card-body > p {
     font-size: 1.8vh;
 }
@@ -44,10 +60,6 @@
 .total-asset .card-header {
     background-color: #008485;
     color: white;
-}
-
-.percentage {
-    color: #008485;
 }
 
 .row.equal-height-row {

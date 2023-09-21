@@ -21,5 +21,7 @@ public interface StoOrdersMapper {
 
     List<StoOrdersVO> findSellOrderDetailByAmountAndLN(@Param("amount")int amount, @Param("LN")int LN);
 
+    List<StoOrdersVO> findByWN(int WN);
+
     int getOrderSeqCrrval();
 }

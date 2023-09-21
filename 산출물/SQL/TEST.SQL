@@ -185,7 +185,7 @@ select LISTING_NUMBER, PRICE as currentPrice FROM REAL_ESTATE_SALE;
 select LISTING_NUMBER, BUILDING_NAME as buildingName FROM REAL_ESTATE_INFO;
 
 -- 보유 토큰 수량
-select * from STOS where WALLET_NUMBER = :walletNumber and LISTING_NUMBER = :listingNumber;
+select * from STOS where WALLET_NUMBER = :walletNumber;
 
 -- 매수 평균 가격
 SELECT 
@@ -202,9 +202,24 @@ GROUP BY
     LISTING_NUMBER, WALLET_NUMBER;
 
 
-select * from wallet;
+-- 매수 평균 가격
+SELECT 
+    LISTING_NUMBER,
+    WALLET_NUMBER,
+    EXECUTED_PRICE_AVG * EXECUTED_QUANTITY
+FROM 
+    STO_ORDERS
+WHERE 
+    WALLET_NUMBER = :walletNumber
+    AND ORDER_TYPE = 'BUY'
+    AND NOT STATUS = 'N';
 
 
+select * from stos;
+
+
+
+-- 보유 빌딩 정보
 SELECT
     STOS.WALLET_NUMBER as walletNumber,
     RE.LISTING_NUMBER as listingNumber,

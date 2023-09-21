@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -22,16 +23,22 @@
     <!-- char.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
+        var buildingNames = [<c:forEach items="${membersStosInfoDTOList}" var="item" varStatus="status">'${item.buildingName}'<c:if test="${not status.last}">,</c:if></c:forEach>];
+        var assessmentAmounts = [<c:forEach items="${membersStosInfoDTOList}" var="item" varStatus="status">${item.assessmentAmount}<c:if test="${not status.last}">,</c:if></c:forEach>];
+
         document.addEventListener("DOMContentLoaded", function () {
             var ctx = document.getElementById('piechart').getContext('2d');
+            var combinedData = [${wallet.balance}].concat(assessmentAmounts); // wallet.balance와 평가금액들을 합칩니다.
+            var combinedLabels = ['현금'].concat(buildingNames); // '현금' 라벨과 건물명들을 합칩니다.
+
             var chart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['현금', '건물1', '건물2'],
+                    labels: combinedLabels,
                     datasets: [{
                         label: '보유 자산',
-                        backgroundColor: ['#008085', '#E90061', '#f3a505'],
-                        data: [50000, 150000, 75000]
+                        backgroundColor: ['#008085', '#E90061', '#f3a505', /* 필요한 만큼 다른 색상 추가 */],
+                        data: combinedData
                     }]
                 },
                 options: {
@@ -39,7 +46,7 @@
                     maintainAspectRatio: false,
                     title: {
                         display: true,
-                        text: '사용자님의 자산 분포',
+                        text: '${sessionScope.member.name}님의 자산 분포',
                         fontSize: 16
                     }
                 }
@@ -72,11 +79,14 @@
             <div class="card total-asset">
                 <div class="card-header">총 자산</div>
                 <div class="card-body flex1" id="total-asset-body">
-                    <h3 class="formatted-number">123,456원 <span class="percentage">(+0.00%)</span></h3>
+                    <div class="asset-container">
+                        <h3 class="formatted-number">${membersTotalAssetDTO.asset}원</h3><span class="percentage formatted-number" style="color: ${membersTotalAssetDTO.investmentReturn < 0 ? '#0074D9' : '#E63946'};">${membersTotalAssetDTO.investmentReturn} (${membersTotalAssetDTO.ROI}%)</span>
+                    </div>
                     <hr>
-                    <p class="formatted-number">예치금: 999,999원</p>
-                    <p class="formatted-number">투자 금액: 10,000원</p>
-                    <p class="formatted-number">투자 수익: 999,999,999,999원</p>
+                    <p class="formatted-number">예치금: ${membersTotalAssetDTO.deposit}원</p>
+                    <p class="formatted-number">투자 금액: ${membersTotalAssetDTO.investmentAmount}원</p>
+                    <p class="formatted-number">투자 수익: <span>${membersTotalAssetDTO.investmentReturn}원</span></p>
+                    <p class="formatted-number">투자 수익률: <span>${membersTotalAssetDTO.ROI}%</span></p>
                 </div>
             </div>
         </div>
@@ -317,66 +327,88 @@
             <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                 <div class="card total-asset">
                     <div class="card-header">
-                        ${item.buildingName}
+                            ${item.buildingName}
                     </div>
                     <div class="card-body flex1">
-                        <small>평가손익 (수익률)</small>
-                        <h3 class="formatted-number">${item.profit}원 <span class="percentage">(${item.ROI}%)</span></h3>
+                        <span>평가손익 (수익률)</span>
+                        <h3 class="formatted-number" style="color: ${item.profit < 0 ? '#0074D9' : '#E63946'};">
+                                ${item.profit}원 <span class="percentage">(${item.ROI}%)</span>
+                        </h3>
                         <hr>
-                        <p>보유수량: <span>${item.amount}STO</span></p>
+                        <p>보유수량: <span class="formatted-number">${item.amount}STO</span></p>
                         <p>현재가: <span class="formatted-number">${item.currentPrice}원</span></p>
                         <p>평가 금액: <span class="formatted-number">${item.assessmentAmount}원</span></p>
                         <p>매수 평단가: <span class="formatted-number">${item.avgBuyPrice}원</span></p>
                         <div class="dividend-button-section">
                             <button type="button" class="btn btn-primary" id="detailsTransaction" data-bs-toggle="modal"
-                                    data-bs-target="#transactionModal">거래내역
+                                    data-bs-target="#transactionModal-${item.listingNumber}">거래내역
                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="transactionModal-${item.listingNumber}" tabindex="-1"
+                 aria-labelledby="transactionModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center w-100 font-weight-bold">거래내역 [${item.buildingName}]</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                            <table class="table custom-table">
+                                <thead>
+                                <tr>
+                                    <th>#주문번호</th>
+                                    <th>유형</th>
+                                    <th>주문금액</th>
+                                    <th>주문수량</th>
+                                    <th>주문상태</th>
+                                    <th>체결수량</th>
+                                    <th>주문일시</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="order" items="${stoOrdersVOList}">
+                                    <c:choose>
+                                        <c:when test="${order.listingNumber eq item.listingNumber}">
+                                            <tr>
+                                                <td>${order.orderId}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${order.orderType eq 'BUY'}">구매</c:when>
+                                                        <c:otherwise>판매</c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td><fmt:formatNumber value="${order.amount}"
+                                                                      pattern="#,###"></fmt:formatNumber></td>
+                                                <td>${order.quantity}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${order.status eq 'C'}">체결</c:when>
+                                                        <c:when test="${order.status eq 'N'}">미체결</c:when>
+                                                        <c:otherwise>부분 체결</c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td>${order.executedQuantity}</td>
+                                                <td>${order.orderDate}</td>
+                                            </tr>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">이전</button>
                         </div>
                     </div>
                 </div>
             </div>
         </c:forEach>
 
-
-        <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-center w-100 font-weight-bold">거래내역</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table custom-table">
-                            <thead>
-                            <tr>
-                                <th>#주문번호</th>
-                                <th>유형</th>
-                                <th>주문금액</th>
-                                <th>주문수량</th>
-                                <th>주문상태</th>
-                                <th>주문일시</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- 예제 데이터; 필요에 따라 데이터를 추가하십시오. -->
-                            <tr>
-                                <td>12345678</td>
-                                <td>매수</td>
-                                <td>10,000</td>
-                                <td>5</td>
-                                <td>체결</td>
-                                <td>2023-08-21 13:00:00</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">이전</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- 배당금 지급 -->
@@ -471,7 +503,9 @@
                                 </div>
                             </div>
                             <div class="preorder-button-section">
-                                <button type="button" class="btn btn-primary cancel-button" data-id="${item.reservationOrdersVO.id}">취소하기</button>
+                                <button type="button" class="btn btn-primary cancel-button"
+                                        data-id="${item.reservationOrdersVO.id}">취소하기
+                                </button>
                             </div>
                         </div>
                     </c:forEach>
@@ -779,7 +813,7 @@
         /**
          *  티끌모아 건물주 취소하기
          */
-        $('.cancel-button').on('click', function() {
+        $('.cancel-button').on('click', function () {
             let reservationId = $(this).data('id');
 
             $.ajax({
@@ -789,11 +823,11 @@
                 data: JSON.stringify({
                     id: reservationId
                 }),
-                success: function(response) {
+                success: function (response) {
                     // 성공 모달 표시
                     $("#myPageSuccessModal").modal('show');
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     // 실패 모달 표시
                     $("#myPageErrorModal").modal('show');
                 }
