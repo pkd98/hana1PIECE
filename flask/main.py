@@ -51,7 +51,7 @@ def evaluate_price(current_price, market_price):
     elif percent_difference <= -5:
         return "저평가"
     elif percent_difference < 5:
-        return "적정"
+        return "적정가"
     elif percent_difference >= 5:
         return "고평가"
     elif percent_difference >= 10:
@@ -110,6 +110,7 @@ class BuildingEvaluation(Resource):
             response = json.dumps(response_data, ensure_ascii=False, indent=4)
             res = make_response(response)
             return res
+
 
         except Exception as e:
             error_response = {

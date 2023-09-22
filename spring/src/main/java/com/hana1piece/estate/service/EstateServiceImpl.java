@@ -130,18 +130,19 @@ public class EstateServiceImpl implements EstateService {
             // JSON 문자열을 ObjectMapper를 사용하여 JsonNode로 읽음
             try {
                 JsonNode root = objectMapper.readTree(responseBody);
-                JsonNode dataNode = root.get("response_data");
+                // 데이터 파싱
+                String evaluation = root.get("evaluation").asText();
+                int reasonablePrice = root.get("reasonablePrice").asInt();
 
-                // JsonNode를 List<BankTransactionVO>로 매핑
-                ResponseEstateEvaluationDTO responseEstateEvaluationDTO = objectMapper.readValue(
-                        dataNode.toString(),
-                        new TypeReference<ResponseEstateEvaluationDTO>() {}
-                );
+                ResponseEstateEvaluationDTO responseEstateEvaluationDTO = new ResponseEstateEvaluationDTO();
+                responseEstateEvaluationDTO.setEvaluation(evaluation);
+                responseEstateEvaluationDTO.setReasonablePrice(reasonablePrice);
 
                 realEstateSaleVO.setEvaluation(responseEstateEvaluationDTO.getEvaluation());
                 realEstateSaleVO.setReasonablePrice(responseEstateEvaluationDTO.getReasonablePrice());
                 estateMapper.updateRealEstateSale(realEstateSaleVO);
-
+                System.out.println(realEstateSaleVO);
+                System.out.println(responseEstateEvaluationDTO.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -152,8 +153,6 @@ public class EstateServiceImpl implements EstateService {
             System.out.println("요청 실패: " + responseEntity.getStatusCode());
             return false;
         }
-
-
 
     }
 }

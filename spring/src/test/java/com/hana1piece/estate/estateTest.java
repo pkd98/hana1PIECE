@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
-@Transactional
+// @Transactional
 public class estateTest {
 
     @Autowired
@@ -27,5 +27,4 @@ public class estateTest {
             fail("에러 발생" + e.getMessage());
         }
     }
-
 }

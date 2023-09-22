@@ -37,7 +37,7 @@
                     labels: combinedLabels,
                     datasets: [{
                         label: '보유 자산',
-                        backgroundColor: ['#008085', '#E90061', '#f3a505', /* 필요한 만큼 다른 색상 추가 */],
+                        backgroundColor: ['#2EC4B6', '#3FA2A3', '#E71D36', '#3498db', '#668D92', '#9b59b6', '#27ae60', '#FFC300', '#34495e'],
                         data: combinedData
                     }]
                 },
@@ -66,7 +66,7 @@
 </div>
 
 
-<div class="container mt-2">
+<div class="container mt-2 mb-3">
     <!-- 제목 -->
     <div class="mypage-title">
         <span class="username">${sessionScope.member.name}</span><span class="asset-title">님의 보유 자산</span>
@@ -294,10 +294,9 @@
         </div>
     </div>
 
-
 </div>
 
-<div class="container mt-2">
+<div class="container mt-2 mb-3">
     <!-- 제목 -->
     <div class="mypage-title">
         <span class="holding-title">보유 빌딩</span>

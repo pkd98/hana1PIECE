@@ -260,3 +260,7 @@ ON
     RE.LISTING_NUMBER = STO.LISTING_NUMBER
 WHERE
     STOS.WALLET_NUMBER = :walletNumber;
+
+
+
+select * from REAL_ESTATE_SALE;

@@ -176,7 +176,7 @@ public class EstateController {
             requestEstateEvaluationDTO.setBuildingName(estate.getBuildingName());
             requestEstateEvaluationDTO.setLatitude(realEstateInfoVO.getLatitude());
             requestEstateEvaluationDTO.setLongitude(realEstateInfoVO.getLongitude());
-            requestEstateEvaluationDTO.setSize(Integer.parseInt(realEstateInfoVO.getFloorArea()));
+            requestEstateEvaluationDTO.setSize(realEstateInfoVO.getSupplyArea());
             requestEstateEvaluationDTO.setPrice(estate.getPrice());
             requestEstateEvaluationDTO.setVolume(publicationInfoVO.getVolume());
             estateService.evaluateEstate(realEstateSaleVO, requestEstateEvaluationDTO);

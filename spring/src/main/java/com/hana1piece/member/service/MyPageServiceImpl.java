@@ -50,8 +50,7 @@ public class MyPageServiceImpl implements MyPageService {
         membersTotalAssetDTO.setWalletNumber(walletNumber);
         membersTotalAssetDTO.setDeposit(wallet.getBalance());
         membersTotalAssetDTO.setAsset(wallet.getBalance() + membersTotalAssetDTO.getInvestmentAmount());
-        membersTotalAssetDTO.setROI(Math.round(((double) membersTotalAssetDTO.getInvestmentReturn() / (double) membersTotalAssetDTO.getInvestmentAmount()) * 10000) / 100);
-        System.out.println((membersTotalAssetDTO.getInvestmentReturn() / membersTotalAssetDTO.getInvestmentAmount()) * 100);
+        membersTotalAssetDTO.setROI(Math.round(((double) membersTotalAssetDTO.getInvestmentReturn() / (double) membersTotalAssetDTO.getInvestmentAmount()) * 10000.0) / 100.0);
         return membersTotalAssetDTO;
     }
 
