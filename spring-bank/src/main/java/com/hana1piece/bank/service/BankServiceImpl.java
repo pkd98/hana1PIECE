@@ -53,10 +53,23 @@ public class BankServiceImpl implements BankService {
 
         if(findAccountByAccountNumber(sb.toString()) != null){
             // 생성한 계좌번호 리턴
+            initBankTransaction(sb.toString());
             return sb.toString();
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void initBankTransaction(String accountNumber) {
+        BankTransactionVO bankTransactionVO = new BankTransactionVO();
+        bankTransactionVO.setName("개설");
+        bankTransactionVO.setBalance(0);
+        bankTransactionVO.setAccountNumber(accountNumber);
+        bankTransactionVO.setAmount(0);
+        bankTransactionVO.setClassification("N");
+        bankTransactionVO.setRecipientAccountNumber("-");
+        bankMapper.insertBankTransaction(bankTransactionVO);
     }
 
     @Override

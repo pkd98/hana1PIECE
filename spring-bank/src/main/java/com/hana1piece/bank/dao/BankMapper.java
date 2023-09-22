@@ -26,6 +26,9 @@ public interface BankMapper {
     // 계좌 개설
     void callAccountOpening(AccountOpeningDTO accountOpeningDTO);
 
+    // 계좌 거래내역 초기화
+    void insertBankTransaction(BankTransactionVO bankTransactionVO);
+
     // 입금
     void callDeposit(DepositDTO depositDTO);
 

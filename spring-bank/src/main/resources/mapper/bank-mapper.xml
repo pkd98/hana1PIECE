@@ -21,6 +21,11 @@
         ORDER BY transactionNumber desc
     </select>
 
+    <insert id="insertBankTransaction" parameterType="com.hana1piece.bank.vo.BankTransactionVO">
+        insert into bank_transaction(account_number, classification, name, amount, balance, recipient_account_number)
+        values(#{accountNumber}, #{classification}, #{name}, #{amount}, #{balance}, #{recipientAccountNumber})
+    </insert>
+
     <insert id="callAccountOpening" parameterType="com.hana1piece.bank.dto.AccountOpeningDTO" statementType="CALLABLE">
         {CALL hana_bank_mng.account_opening(
                 p_account_number => #{accountNumber, jdbcType=VARCHAR},

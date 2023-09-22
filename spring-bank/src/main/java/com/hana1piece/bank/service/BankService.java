@@ -20,6 +20,9 @@ public interface BankService {
     // 계좌 개설
     String accountOpening(AccountOpeningDTO accountOpeningDTO);
 
+    // 거래내역 초기 세팅
+    void initBankTransaction(String accountNumber);
+
     // 입금
     void deposit(DepositDTO depositDTO);
 

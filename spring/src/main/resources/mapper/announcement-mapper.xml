@@ -11,7 +11,7 @@
     <select id="findByPageNo" parameterType="int" resultType="com.hana1piece.announcement.model.vo.AnnouncementVO">
         SELECT * FROM (
         SELECT a.*, ROWNUM rnum FROM (
-        SELECT id, title, content, to_char(write_date, 'yyyy-MM-dd') as writeDate, count FROM announcement ORDER BY write_date DESC
+        SELECT id, title, content, to_char(write_date, 'yyyy-MM-dd') as writeDate, count FROM announcement ORDER BY id DESC
         ) a WHERE ROWNUM &lt;= (10 * #{pageNo})
         )
         WHERE rnum > 10 * (#{pageNo} - 1)

@@ -55,6 +55,7 @@ public class AnnouncementController {
             announcementService.writeAnnouncement(announcementVO);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
         }
     }

@@ -203,7 +203,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">공지사항</h5>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
-                                        data-bs-target="#publicOfferModal">공지 등록
+                                        data-bs-target="#announcementModal">공지 등록
                                 </button>
                             </div>
                         </div>
@@ -240,7 +240,8 @@
                                     <div class="col-6 text-right">
                                         <select class="form-control" id="listingBuildingInput">
                                             <c:forEach var="item" items="${findPublicOfferingList}">
-                                                <option value="${item.listingNumber}">(${item.listingNumber}) ${item.buildingName}</option>
+                                                <option value="${item.listingNumber}">
+                                                    (${item.listingNumber}) ${item.buildingName}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -549,6 +550,41 @@
                 </div>
             </div>
 
+            <!-- 공지사항 등록 모달 -->
+            <div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="announcementModalLabel">공지사항 등록</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <!-- 제목 입력창 -->
+                                <div class="mb-3">
+                                    <label for="announcementTitle" class="form-label">제목</label>
+                                    <input type="text" class="form-control" id="announcementTitle"
+                                           placeholder="공지사항 제목을 입력하세요">
+                                </div>
+                                <!-- 내용 입력창 -->
+                                <div class="mb-3">
+                                    <label for="announcementContent" class="form-label">내용</label>
+                                    <textarea class="form-control" id="announcementContent" rows="4"
+                                              placeholder="공지사항 내용을 입력하세요"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer" style="justify-content: center;">
+                            <button id="writeAnnouncement" type="button" class="btn"
+                                    style="background-color: #008485; color: white;">등록
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="container mt-5">
                 <div class="mypage-title">
@@ -738,7 +774,8 @@
     </div>
 </div>
 <!-- 성공 모달 -->
-<div class="modal fade" id="managerSuccessModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+<div class="modal fade" id="managerSuccessModal" tabindex="-1" aria-labelledby="successModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body" style="padding: 50px; justify-content: center; text-align: center;">
@@ -884,6 +921,39 @@
                 }
             });
         });
+
+
+        /**
+         *  공지 등록
+         */
+        $('#writeAnnouncement').click(function() {
+            var title = $('#announcementTitle').val();
+            var content = $('#announcementContent').val();
+
+            $.ajax({
+                url: '/announcement',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "title": title,
+                    "content": content
+                }),
+                success: function(response) {
+                    // 모달 창 닫기
+                    $('#announcementModal').modal('hide');
+                    // 성공 모달 표시
+                    $("#managerSuccessModal").modal('show');
+                },
+                error: function(error) {
+                    console.log(error);
+                    // 모달 창 닫기
+                    $('#announcementModal').modal('hide');
+                    // 실패 모달 표시
+                    $("#managerErrorModal").modal('show');
+                }
+            });
+        });
+
 
     });
 </script>

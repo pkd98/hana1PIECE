@@ -14,11 +14,32 @@ BEGIN
 END;
 /
 
-
 select * from ANNOUNCEMENT;
-insert into ANNOUNCEMENT(title, CONTENT) VALUES ('test', 'test');
-commit;
+truncate table ANNOUNCEMENT;
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (1, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (2, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (3, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (4, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (5, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (6, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (7, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (8, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (9, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (10, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (11, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (12, 'test', 'test');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (44, '[하나1PIECE] 신뢰받는 조각투자 이젠 하나1PIECE에서!', ' ');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (45, '[하나1PIECE] 신뢰받는 조각투자 이젠 하나1PIECE에서!', ' ');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (46, '[하나1PIECE] 서비스 이용약관 안내', ' ');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (47, '[하나1PIECE] 하나은행 계좌 개설 후 서비스 이용 가능합니다.', ' ');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (48, '[하나1PIECE] 조각 투자가 처음이신가요?', ' ');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (49, '[청약] 디큐브시티(주상복합) 아파트 청약 공고 안내', '청약 공고');
+insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (50, '[상장] 디큐브시티(주상복합) 아파트 상장!', '많은 성원 끝에 청약 완판되어 상장되었습니다.');
 
+
+
+commit;
+select id, title, content, to_char(write_date, 'yyyy-MM-dd') as writeDate, count from announcement order by id desc;
 
 
 desc ANNOUNCEMENT;
