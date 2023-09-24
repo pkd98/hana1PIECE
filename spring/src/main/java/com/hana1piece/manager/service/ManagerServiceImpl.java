@@ -233,6 +233,11 @@ public class ManagerServiceImpl implements ManagerService {
         estateMapper.insertTenantInfo(tenantInfoVO);
     }
 
+    @Override
+    public void registerSaleVote(SoldBuildingVO soldBuildingVO) {
+        estateMapper.insertSoldBuilding(soldBuildingVO);
+    }
+
     /**
      * MultipartFile 타입에서 File 타입으로 변환
      */

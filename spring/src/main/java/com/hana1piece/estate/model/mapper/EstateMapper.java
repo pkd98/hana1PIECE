@@ -47,6 +47,7 @@ public interface EstateMapper {
     List<PublicOfferingListDTO> findPublicOfferingListDTO();
 
     List<ListedEstateListDTO> findListedEstateListDTO();
+
     List<EstateListDTO> findEstateListDTO();
 
 }

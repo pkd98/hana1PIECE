@@ -1,5 +1,6 @@
 package com.hana1piece.manager.controller;
 
+import com.hana1piece.estate.model.vo.SoldBuildingVO;
 import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
@@ -101,6 +102,19 @@ public class ManagerController {
     public ResponseEntity estateListing(@RequestParam int listingNumber) {
         try {
             managerService.estateListing(listingNumber);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+        }
+    }
+
+    /**
+     *  매각 투표 등록
+     */
+    @PostMapping("manager/sale-vote")
+    public ResponseEntity regiserToVote(@Valid @RequestBody SoldBuildingVO soldBuildingVO) {
+        try {
+            managerService.registerSaleVote(soldBuildingVO);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");

@@ -161,8 +161,8 @@
     </insert>
 
     <insert id="insertSoldBuilding" parameterType="com.hana1piece.estate.model.vo.SoldBuildingVO">
-        insert into sold_building(listing_number, sold_date, amount)
-        values (#{listing_number}, #{soldDate}, #{amount})
+        insert into sold_building(listing_number, sold_date, amount, start_date, expiration_date, dividend)
+        values (#{listing_number}, #{soldDate}, #{amount}, to_date(#{startDate}, 'YYYY-MM-DD'), to_date(#{expirationDate}, 'YYYY-MM-DD'), #{dividend})
     </insert>
 
     <select id="findPublicOfferingListDTO" resultType="com.hana1piece.estate.model.dto.PublicOfferingListDTO">

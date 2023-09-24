@@ -1,9 +1,6 @@
 package com.hana1piece.manager.service;
 
-import com.hana1piece.estate.model.vo.PublicationInfoVO;
-import com.hana1piece.estate.model.vo.RealEstateInfoVO;
-import com.hana1piece.estate.model.vo.RealEstateSaleVO;
-import com.hana1piece.estate.model.vo.TenantInfoVO;
+import com.hana1piece.estate.model.vo.*;
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 
@@ -39,4 +36,7 @@ public interface ManagerService {
 
     // 임차인 정보 등록
     void registerTenantInfo(TenantInfoVO tenantInfoVO);
+
+    // 매각 매물 등록 (투표)
+    void registerSaleVote(SoldBuildingVO soldBuildingVO);
 }

@@ -285,3 +285,4 @@ WHERE
 
 
 select * from REAL_ESTATE_SALE;
+

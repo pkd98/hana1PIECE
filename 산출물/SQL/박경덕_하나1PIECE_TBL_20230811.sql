@@ -374,6 +374,9 @@ CREATE TABLE SOLD_BUILDING (
   LISTING_NUMBER NUMBER(8) PRIMARY KEY,         -- 매물번호
   SOLD_DATE DATE DEFAULT SYSDATE NOT NULL,      -- 매각일
   AMOUNT NUMBER(13) NOT NULL,                   -- 매각액
+  START_DATE DATE NOT NULL,                     -- 투표 시작일
+  EXPIRATION_DATE NOT NULL,                     -- 투표 마감일
+  DIVIDEND NOT NULL,                            -- 토큰당 매각 배당금
   
   -- 외래키 지정 : 매물번호 - 1:1 식별관계
   CONSTRAINT FK_SOLD_BUILDING_LISTING_NUMBER FOREIGN KEY (LISTING_NUMBER) REFERENCES REAL_ESTATE_SALE(LISTING_NUMBER)

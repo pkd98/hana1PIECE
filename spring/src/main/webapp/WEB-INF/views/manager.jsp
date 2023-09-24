@@ -186,7 +186,7 @@
 
 
                 <div id="button-area2" class="row mt-3">
-                    <!-- First Card -->
+
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
@@ -197,7 +197,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Second Card -->
+
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
@@ -208,13 +208,13 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Third Card -->
+
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">앱푸시 알림</h5>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
-                                        data-bs-target="#saleVoteModal">매각투표 등록
+                                        data-bs-target="#appNotificationModal">알림 보내기
                                 </button>
                             </div>
                         </div>
@@ -511,8 +511,8 @@
                             </div>
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label for="buildingName">빌딩명</label>
-                                    <select class="form-control" id="buildingName">
+                                    <label for="saleVoteListingNumber">매각 대상</label>
+                                    <select class="form-control" id="saleVoteListingNumber">
                                         <!-- 여기에 선택 항목을 추가할 수 있습니다. -->
                                         <option>예시 빌딩 1</option>
                                         <option>예시 빌딩 2</option>
@@ -521,11 +521,11 @@
                                 <div class="mb-3">
                                     <label for="voteStartDate">투표기간</label>
                                     <div>
-                                        <input type="text" class="form-control datepicker d-inline-block"
+                                        <input id="voteStartDate" type="text" class="form-control datepicker d-inline-block"
                                                style="width: 47%;"
                                                placeholder="시작일">
                                         <span class="d-inline-block mx-1">~</span>
-                                        <input type="text" class="form-control datepicker d-inline-block"
+                                        <input id="voteExpirationDate" type="text" class="form-control datepicker d-inline-block"
                                                style="width: 47%;"
                                                placeholder="종료일">
                                     </div>
@@ -541,7 +541,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer" style="justify-content: center;">
-                                <button type="button" class="btn" style="background-color: #008485; color: white;">등록
+                                <button id="saleVoteConfirmBtn" type="button" class="btn" style="background-color: #008485; color: white;">등록
                                     확인
                                 </button>
                             </div>
@@ -769,7 +769,6 @@
                     </nav>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -922,6 +921,46 @@
             });
         });
 
+        /**
+         *  매각 투표 등록
+         */
+        $("#saleVoteConfirmBtn").click(function () {
+            // 매각 대상 건물
+            const listingNumber = $("#saleVoteListingNumber").val();
+            // 매각 투표 시작일
+            const voteStartDate = $("voteStartDate").val();
+            // 투표 마감일
+            const voteExpirationDate = $("voteExpirationDate").val();
+            // 매각액
+            const saleAmount = $("saleAmount").val();
+            // 매각 배당금
+            const saleDividend = $("saleDividend").val();
+
+            $.ajax({
+                url: '/manager/sale-vote',
+                type: 'POST',
+                data: JSON.stringify({
+                    "listingNumber": listingNumber,
+                    "startDate": voteStartDate,
+                    "expirationDate": voteExpirationDate,
+                    "amount": saleAmount,
+                    "dividend": saleDividend
+                }),
+                success: function(response) {
+                    // 기존 모달 닫기
+                    $("#saleVoteModal").modal('hide');
+                    // 성공 모달 표시
+                    $("#managerSuccessModal").modal('show');
+                },
+                error: function(error) {
+                    // 기존 모달 닫기
+                    $("#saleVoteModal").modal('hide');
+                    // 실패 모달 표시
+                    $("#managerErrorModal").modal('show');
+                }
+            })
+
+        });
 
         /**
          *  공지 등록
