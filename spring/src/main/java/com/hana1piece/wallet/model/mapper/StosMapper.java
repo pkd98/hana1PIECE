@@ -13,4 +13,5 @@ public interface StosMapper {
     StosVO findStosByWalletNumberAndListingNumber(@Param("walletNumber") int walletNumber, @Param("listingNumber") int listingNumber);
     void insertStos(StosVO stos);
     void updateAmount(StosVO stosVO);
+    void deleteStosByLN(int LN);
 }

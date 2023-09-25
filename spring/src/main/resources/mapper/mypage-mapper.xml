@@ -49,4 +49,32 @@
 
     </select>
 
+    <select id="getMembersSellVoteDTOByWalletNumber" parameterType="int" resultType="com.hana1piece.member.model.dto.MembersSellVoteDTO">
+        SELECT
+            SB.LISTING_NUMBER as listingNumber,
+            to_char(SB.START_DATE, 'yyyy-MM-dd') as startDate,
+            to_char(SB.EXPIRATION_DATE, 'yyyy-MM-dd') as expirationDate,
+            SB.DIVIDEND as dividend,
+            SB.AMOUNT as amount,
+            RE.BUILDING_NAME as buildingName,
+            PI.TOTAL_AMOUNT as publicOfferingAmount,
+            PI.VOLUME as publicOfferingVolume,
+            PI.ISSUE_PRICE as issuePrice,
+            stos.AMOUNT as memberAmount,
+            NVL(SV.total_quantity, 0) as sellVoteTotalQuantity
+        FROM REAL_ESTATE_INFO RE
+                 INNER JOIN REAL_ESTATE_SALE RES ON RES.LISTING_NUMBER = RE.LISTING_NUMBER
+                 INNER JOIN sold_building SB ON RE.listing_number = SB.listing_number
+                 INNER JOIN PUBLICATION_INFO PI ON RE.listing_number = PI.listing_number
+                 INNER JOIN stos ON re.LISTING_NUMBER = stos.LISTING_NUMBER
+                 LEFT JOIN (
+            SELECT
+                listing_number,
+                SUM(quantity) as total_quantity
+            FROM sell_vote
+            GROUP BY listing_number
+        ) SV ON SV.listing_number = RE.listing_number
+        WHERE wallet_number = #{walletNumber} and res.STATE = '거래'
+    </select>
+
 </mapper>

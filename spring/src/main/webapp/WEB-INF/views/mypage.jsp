@@ -23,8 +23,8 @@
     <!-- char.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
-        var buildingNames = [<c:forEach items="${membersStosInfoDTOList}" var="item" varStatus="status">'${item.buildingName}'<c:if test="${not status.last}">,</c:if></c:forEach>];
-        var assessmentAmounts = [<c:forEach items="${membersStosInfoDTOList}" var="item" varStatus="status">${item.assessmentAmount}<c:if test="${not status.last}">,</c:if></c:forEach>];
+        var buildingNames = [<c:forEach items="${membersStosInfoDTOList}" var="item" varStatus="status">'${item.buildingName}'<c:if test="${not status.last}">, </c:if></c:forEach>];
+        var assessmentAmounts = [<c:forEach items="${membersStosInfoDTOList}" var="item" varStatus="status">${item.assessmentAmount}<c:if test="${not status.last}">, </c:if></c:forEach>];
 
         document.addEventListener("DOMContentLoaded", function () {
             var ctx = document.getElementById('piechart').getContext('2d');
@@ -80,7 +80,9 @@
                 <div class="card-header">총 자산</div>
                 <div class="card-body flex1" id="total-asset-body">
                     <div class="asset-container">
-                        <h3 class="formatted-number">${membersTotalAssetDTO.asset}원</h3><span class="percentage formatted-number" style="color: ${membersTotalAssetDTO.investmentReturn < 0 ? '#0074D9' : '#E63946'};">${membersTotalAssetDTO.investmentReturn} (${membersTotalAssetDTO.ROI}%)</span>
+                        <h3 class="formatted-number">${membersTotalAssetDTO.asset}원</h3><span
+                            class="percentage formatted-number"
+                            style="color: ${membersTotalAssetDTO.investmentReturn < 0 ? '#0074D9' : '#E63946'};">${membersTotalAssetDTO.investmentReturn} (${membersTotalAssetDTO.ROI}%)</span>
                     </div>
                     <hr>
                     <p class="formatted-number">예치금: ${membersTotalAssetDTO.deposit}원</p>
@@ -518,90 +520,115 @@
         <div class="mypage-title">
             <span class="sold-title">매각 투표</span>
         </div>
-        <div class="no-sold">
-            <p>진행 중인 매각 투표가 없습니다.</p>
-        </div>
 
+        <c:choose>
+        <c:when test="${membersSellVoteDTOList == null || empty membersSellVoteDTOList}">
+            <div class="no-sold">
+                <p>진행 중인 매각 투표가 없습니다.</p>
+            </div>
+        </c:when>
+        <c:otherwise>
         <div class="row equal-height-row">
-
-            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                <div class="card total-asset">
-                    <div class="card-header">롯데월드타워 1층 1호</div>
-                    <div class="card-body flex1">
-                        <p>투표기간: <span>2023-01-01</span> ~ <span>2023-01-01</span></p>
-                        <p>공모금액: <span>1,000,000,000원</span></p>
-                        <p>매각금액: <span>1,300,000,000원</span></p>
-                        <p>1STO당 매각 배당금: <span>6,500원</span></p>
-                        <hr>
-                        <P style="font-weight: bold;">투표진행률(20%)</P>
-
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20"
-                                 aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-
-                        <div class="dividend-button-section">
-                            <button type="button" class="btn btn-primary" id="voteButton" data-bs-toggle="modal"
-                                    data-bs-target="#votingModal">투표하기
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 투표하기 버튼 모달 -->
-            <div class="modal fade" id="votingModal" tabindex="-1" aria-labelledby="votingModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center w-100 font-weight-bold">매각 투표</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" style="padding: 20px 40px;"> <!-- 양 끝쪽 여백 설정 -->
-                            <div class="row">
-                                <div class="col-md-6 text-left">건물명 :</div>
-                                <div class="col-md-6 text-right" style="font-weight: bold;">롯데월드타워 1층 1호</div>
-                                <!-- bold 처리 -->
-                                <div class="col-md-6 text-left">공모가 :</div>
-                                <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
-                                    1,000,000,000원
-                                </div>
-                                <!-- bold 처리 -->
-                                <div class="col-md-6 text-left">매각액 :</div>
-                                <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
-                                    1,300,000,000원
-                                </div>
-                                <!-- bold 처리 -->
-                                <div class="col-md-6 text-left">보유 STO :</div>
-                                <div class="col-md-6 text-right" style="font-weight: bold;">123STO</div>
-                                <!-- bold 처리 -->
-                                <div class="col-md-6 text-left">예상 매각 배당금 :</div>
-                                <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">6,500원
-                                </div>
-                                <!-- bold 처리 -->
-                            </div>
+            <c:forEach var="item" items="${membersSellVoteDTOList}">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                    <div class="card total-asset">
+                        <div class="card-header">${item.buildingName}</div>
+                        <div class="card-body flex1">
+                            <p>투표기간: <span>${item.startDate}</span> ~ <span>${item.expirationDate}</span></p>
+                            <p>총 모집액: <span class="formatted-number">${item.publicOfferingAmount}원</span></p>
+                            <p>총 발행량: <span class="formatted-number">${item.publicOfferingVolume}원</span></p>
+                            <p>매각 금액: <span class="formatted-number">${item.amount}원</span></p>
+                            <p>1STO 당 매각 배당금: <span class="formatted-number">${item.dividend}원</span></p>
                             <hr>
-                            <div class="text-center">
-                                <div class="custom-radio">
-                                    <input type="radio" id="approve" name="vote" value="approve">
-                                    <label for="approve">찬성</label>
+                            <P style="font-weight: bold;">
+                                투표 진행률 (<fmt:formatNumber value="${(item.sellVoteTotalQuantity / item.publicOfferingVolume) * 100}" pattern="#.##" />%)
+                            </P>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: ${(item.sellVoteTotalQuantity / item.publicOfferingVolume) * 100.0}%;" aria-valuenow="${(item.sellVoteTotalQuantity / item.publicOfferingVolume) * 100.0}"
+                                     aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                            <div class="dividend-button-section">
+                                <button type="button" class="btn btn-primary" id="voteButton" data-bs-toggle="modal"
+                                        data-bs-target="#votingModal-${item.listingNumber}">투표하기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 투표하기 버튼 모달 -->
+                <div class="modal fade" id="votingModal-${item.listingNumber}" tabindex="-1" aria-labelledby="votingModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center w-100 font-weight-bold">매각 투표</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="padding: 20px 40px;"> <!-- 양 끝쪽 여백 설정 -->
+                                <div class="row">
+                                    <div class="col-md-6 text-left">건물명 :</div>
+                                    <div class="col-md-6 text-right" style="font-weight: bold;">${item.buildingName}</div>
+                                    <div class="col-md-6 text-left">총 모집액 :</div>
+                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
+                                            ${item.publicOfferingAmount}원
+                                    </div>
+                                    <div class="col-md-6 text-left">총 발행량 :</div>
+                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
+                                            ${item.publicOfferingVolume}원
+                                    </div>
+                                    <!-- bold 처리 -->
+                                    <div class="col-md-6 text-left">매각액 :</div>
+                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
+                                            ${item.amount}원
+                                    </div>
+
+                                    <div class="col-md-6 text-left">공모가 :</div>
+                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
+                                        5,000원
+                                    </div>
+                                    <!-- bold 처리 -->
+                                    <div class="col-md-6 text-left">보유 STO :</div>
+                                    <div class="col-md-6 text-right" style="font-weight: bold;">${item.memberAmount}STO</div>
+                                    <!-- bold 처리 -->
+                                    <div class="col-md-6 text-left">내 매각 배당금 :</div>
+                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">${item.memberAmount * item.dividend}원
+                                    </div>
+                                    <!-- bold 처리 -->
                                 </div>
-                                <div class="custom-radio">
-                                    <input type="radio" id="oppose" name="vote" value="oppose">
-                                    <label for="oppose">반대</label>
-                                </div>
-                                <div>
-                                    <button type="button" class="btn btn-primary mt-3"
-                                            style="background-color: #008485; width: 50%;">투표하기
-                                    </button>
+                                <hr>
+                                <div class="text-center">
+                                    <div class="custom-radio">
+                                        <input type="radio" id="approve" name="vote" value="P">
+                                        <label for="approve">찬성</label>
+                                    </div>
+                                    <div class="custom-radio">
+                                        <input type="radio" id="oppose" name="vote" value="C">
+                                        <label for="oppose">반대</label>
+                                    </div>
+                                    <div>
+                                        <button id="voteFor${item.listingNumber}" type="button" class="btn btn-primary mt-3"
+                                                style="background-color: #008485; width: 50%;"
+                                                data-listing-number="${item.listingNumber}"
+                                                data-sto-amount="${item.memberAmount}">
+                                            투표하기
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </c:forEach>
         </div>
+
     </div>
+
+    </c:otherwise>
+    </c:choose>
+
+
     <!-- 성공 모달 -->
     <div class="modal fade" id="myPageSuccessModal" tabindex="-1" aria-labelledby="successModalLabel"
          aria-hidden="true">
@@ -827,6 +854,40 @@
                     $("#myPageSuccessModal").modal('show');
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    // 실패 모달 표시
+                    $("#myPageErrorModal").modal('show');
+                }
+            });
+        });
+
+        /**
+         *  매각 투표
+         */
+        $('[id^="voteFor"]').on('click', function() {
+            // 현재 클릭된 버튼에서 data 속성을 이용하여 정보를 가져옴
+            let listingNumber = $(this).data('listing-number');
+            let stoAmount = $(this).data('sto-amount');
+
+            // 해당 listingNumber의 모달에서 라디오 버튼의 선택 값을 가져옴
+            let voteValue = $("#votingModal-" + listingNumber + " input[name='vote']:checked").val();
+
+            // 데이터를 전송합니다.
+            $.ajax({
+                url: '/voting',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    prosCons: voteValue,
+                    quantity: stoAmount,
+                    listingNumber: listingNumber
+                }),
+                success: function(response) {
+                    $("#votingModal-" + listingNumber).modal('hide');
+                    // 성공 모달 표시
+                    $("#myPageSuccessModal").modal('show');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $("#votingModal-" + listingNumber).modal('hide');
                     // 실패 모달 표시
                     $("#myPageErrorModal").modal('show');
                 }

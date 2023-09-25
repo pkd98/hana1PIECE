@@ -4,10 +4,7 @@ import com.hana1piece.estate.model.mapper.PublicOfferingMapper;
 import com.hana1piece.estate.model.vo.RealEstateInfoVO;
 import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.estate.service.PublicOfferingService;
-import com.hana1piece.member.model.dto.MembersOrderPublicOfferingDTO;
-import com.hana1piece.member.model.dto.MembersReservationOrdersDTO;
-import com.hana1piece.member.model.dto.MembersStosInfoDTO;
-import com.hana1piece.member.model.dto.MembersTotalAssetDTO;
+import com.hana1piece.member.model.dto.*;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.member.service.MemberService;
 import com.hana1piece.member.service.MyPageService;
@@ -84,9 +81,9 @@ public class MyPageController {
         // 총자산
         MembersTotalAssetDTO membersTotalAssetDTO = myPageService.getMembersTotalAsset(wallet.getWalletNumber());
         mav.addObject("membersTotalAssetDTO", membersTotalAssetDTO);
-        // 자산 분포
-
-
+        // 매각 투표
+        List<MembersSellVoteDTO> membersSellVoteDTOList = myPageService.getMembersSellVoteDTOByWalletNumber(wallet.getWalletNumber());
+        mav.addObject("membersSellVoteDTOList", membersSellVoteDTOList);
         // 티끌모아 건물주
         List<MembersReservationOrdersDTO> membersReservationOrdersDTOList = new ArrayList<>();
         List<ReservationOrdersVO> reservationOrdersVOList = reservationOrderService.findByWN(wallet.getWalletNumber());

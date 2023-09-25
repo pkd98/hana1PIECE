@@ -156,6 +156,7 @@ public class WalletServiceImpl implements WalletService {
             /**
              *   3. 하나은행 관리자 계좌 -> 사용자 계좌 이체
              */
+            System.out.println(oldWallet.toString());
             TransferDTO transferDTO = new TransferDTO();
             transferDTO.setAccountNumber("99900000000394");
             transferDTO.setPassword(managerAccountPassword);

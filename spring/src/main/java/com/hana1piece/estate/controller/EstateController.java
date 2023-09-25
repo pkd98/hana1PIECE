@@ -1,19 +1,19 @@
 package com.hana1piece.estate.controller;
 
-import com.hana1piece.estate.model.dto.ListedEstateListDTO;
-import com.hana1piece.estate.model.dto.OrderPublicOfferingDTO;
-import com.hana1piece.estate.model.dto.PublicOfferingListDTO;
-import com.hana1piece.estate.model.dto.RequestEstateEvaluationDTO;
+import com.hana1piece.estate.model.dto.*;
 import com.hana1piece.estate.model.vo.PublicationInfoVO;
 import com.hana1piece.estate.model.vo.RealEstateInfoVO;
 import com.hana1piece.estate.model.vo.RealEstateSaleVO;
+import com.hana1piece.estate.model.vo.SellVoteVO;
 import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.estate.service.PublicOfferingService;
+import com.hana1piece.estate.service.SellVoteService;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.wallet.model.vo.WalletVO;
 import com.hana1piece.wallet.service.StosService;
 import com.hana1piece.wallet.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -34,13 +34,15 @@ public class EstateController {
     private final WalletService walletService;
     private final StosService stosService;
     private final PublicOfferingService publicOfferingService;
+    private final SellVoteService sellVoteService;
 
     @Autowired
-    public EstateController(EstateService estateService, WalletService walletService, StosService stosService, PublicOfferingService publicOfferingService) {
+    public EstateController(EstateService estateService, WalletService walletService, StosService stosService, PublicOfferingService publicOfferingService, SellVoteService sellVoteService) {
         this.estateService = estateService;
         this.walletService = walletService;
         this.stosService = stosService;
         this.publicOfferingService = publicOfferingService;
+        this.sellVoteService = sellVoteService;
     }
 
     /**
@@ -159,6 +161,31 @@ public class EstateController {
         return mav;
     }
 
+    /**
+     *  사용자의 매각 투표
+     */
+    @PostMapping("/voting")
+    public ResponseEntity voting(@Valid @RequestBody RequestSellVoteDTO requestSellVoteDTO, HttpSession session) {
+        System.out.println(requestSellVoteDTO);
+        OneMembersVO member = (OneMembersVO) session.getAttribute("member");
+        // 세션 만료 리턴
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+        }
+        try {
+            WalletVO wallet = walletService.findWalletByMemberId(member.getId());
+            SellVoteVO sellVote = new SellVoteVO();
+            sellVote.setListingNumber(requestSellVoteDTO.getListingNumber());
+            sellVote.setWalletNumber(wallet.getWalletNumber());
+            sellVote.setProsCons(requestSellVoteDTO.getProsCons());
+            sellVote.setQuantity(requestSellVoteDTO.getQuantity());
+            sellVoteService.voting(sellVote);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+        }
+    }
 
 
     /**

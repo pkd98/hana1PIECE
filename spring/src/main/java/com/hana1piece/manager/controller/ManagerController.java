@@ -7,7 +7,6 @@ import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.vo.ManagerVO;
 import com.hana1piece.manager.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,6 +35,7 @@ public class ManagerController {
         ManagerVO manager = (ManagerVO) session.getAttribute("manager");
         String view = (manager == null) ? "manager-login" : "manager";
         mav.addObject("findPublicOfferingList", estateService.findPublicOfferingListDTO());
+        mav.addObject("listedEstateList", estateService.findListedEstateListDTO());
         mav.setViewName(view);
         return mav;
     }
@@ -111,9 +111,10 @@ public class ManagerController {
     /**
      *  매각 투표 등록
      */
-    @PostMapping("manager/sale-vote")
-    public ResponseEntity regiserToVote(@Valid @RequestBody SoldBuildingVO soldBuildingVO) {
+    @PostMapping("/manager/sale-vote")
+    public ResponseEntity registerToVote(@Valid @RequestBody SoldBuildingVO soldBuildingVO) {
         try {
+            System.out.println(soldBuildingVO.toString());
             managerService.registerSaleVote(soldBuildingVO);
             return ResponseEntity.ok().build();
         } catch (Exception e) {

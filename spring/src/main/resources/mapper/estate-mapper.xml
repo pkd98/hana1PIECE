@@ -115,8 +115,8 @@
         where listing_number = #{LN}
     </select>
 
-    <select id="findSoldBuildingByLN" parameterType="int" resultMap="SoldBuildingMap">
-        select listing_number, to_char(sold_date, 'YYYY.MM.DD'), amount
+    <select id="findSoldBuildingByLN" parameterType="int" resultType="com.hana1piece.estate.model.vo.SoldBuildingVO">
+        select listing_number as listingNumber, to_char(sold_date, 'YYYY.MM.DD') as soldDate, amount, start_date as startDate, expiration_date as expirationDate, dividend
         from sold_building
         where listing_number = #{LN}
     </select>
@@ -161,8 +161,8 @@
     </insert>
 
     <insert id="insertSoldBuilding" parameterType="com.hana1piece.estate.model.vo.SoldBuildingVO">
-        insert into sold_building(listing_number, sold_date, amount, start_date, expiration_date, dividend)
-        values (#{listing_number}, #{soldDate}, #{amount}, to_date(#{startDate}, 'YYYY-MM-DD'), to_date(#{expirationDate}, 'YYYY-MM-DD'), #{dividend})
+        insert into sold_building(listing_number, amount, start_date, expiration_date, dividend)
+        values (#{listingNumber}, #{amount}, to_date(#{startDate}, 'YYYY-MM-DD'), to_date(#{expirationDate}, 'YYYY-MM-DD'), #{dividend})
     </insert>
 
     <select id="findPublicOfferingListDTO" resultType="com.hana1piece.estate.model.dto.PublicOfferingListDTO">

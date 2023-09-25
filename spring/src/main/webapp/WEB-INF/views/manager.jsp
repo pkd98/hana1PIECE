@@ -514,8 +514,9 @@
                                     <label for="saleVoteListingNumber">매각 대상</label>
                                     <select class="form-control" id="saleVoteListingNumber">
                                         <!-- 여기에 선택 항목을 추가할 수 있습니다. -->
-                                        <option>예시 빌딩 1</option>
-                                        <option>예시 빌딩 2</option>
+                                        <c:forEach var="item" items="${listedEstateList}">
+                                            <option value="${item.listingNumber}">(${item.listingNumber}) ${item.buildingName}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -928,17 +929,18 @@
             // 매각 대상 건물
             const listingNumber = $("#saleVoteListingNumber").val();
             // 매각 투표 시작일
-            const voteStartDate = $("voteStartDate").val();
+            const voteStartDate = $("#voteStartDate").val();
             // 투표 마감일
-            const voteExpirationDate = $("voteExpirationDate").val();
+            const voteExpirationDate = $("#voteExpirationDate").val();
             // 매각액
-            const saleAmount = $("saleAmount").val();
+            const saleAmount = $("#saleAmount").val();
             // 매각 배당금
-            const saleDividend = $("saleDividend").val();
+            const saleDividend = $("#saleDividend").val();
 
             $.ajax({
                 url: '/manager/sale-vote',
                 type: 'POST',
+                contentType: 'application/json',
                 data: JSON.stringify({
                     "listingNumber": listingNumber,
                     "startDate": voteStartDate,

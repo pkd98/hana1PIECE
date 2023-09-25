@@ -1,5 +1,6 @@
 package com.hana1piece.member.service;
 
+import com.hana1piece.member.model.dto.MembersSellVoteDTO;
 import com.hana1piece.member.model.dto.MembersStosInfoDTO;
 import com.hana1piece.member.model.dto.MembersTotalAssetDTO;
 import com.hana1piece.member.model.mapper.MypageMapper;
@@ -52,6 +53,11 @@ public class MyPageServiceImpl implements MyPageService {
         membersTotalAssetDTO.setAsset(wallet.getBalance() + membersTotalAssetDTO.getInvestmentAmount());
         membersTotalAssetDTO.setROI(Math.round(((double) membersTotalAssetDTO.getInvestmentReturn() / (double) membersTotalAssetDTO.getInvestmentAmount()) * 10000.0) / 100.0);
         return membersTotalAssetDTO;
+    }
+
+    @Override
+    public List<MembersSellVoteDTO> getMembersSellVoteDTOByWalletNumber(int walletNumber) {
+        return mypageMapper.getMembersSellVoteDTOByWalletNumber(walletNumber);
     }
 
 

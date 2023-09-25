@@ -1,6 +1,10 @@
 INSERT INTO MANAGER (ID, NAME, PASSWORD, ENROLL_DATE, IMAGE, POSITION, INTRODUCTION)
 VALUES ('admin', '관리자', 'admin', TO_DATE('2023-08-08', 'YYYY-MM-DD'), 'manager.jpg', 'Web Back-end Developer', '매사 긍정적이고 성실하게 배우려 노력하는<br>IT 개발자입니다.');
 
+INSERT INTO ACCOUNT (ACCOUNT_NUMBER, PASSWORD, BALANCE, RESIDENT_NUMBER1, RESIDENT_NUMBER2, NAME)
+VALUES ('99900000000394', '1234', 100000000, 981010, 0000000, '(주)하나1PIECE');
+
+
 select * from account;
 
 -- 계좌 입금
@@ -284,5 +288,74 @@ WHERE
 
 
 
-select * from REAL_ESTATE_SALE;
 
+select * from REAL_ESTATE_INFO;
+select * from sold_building;
+select * from PUBLICATION_INFO;
+
+-- 매각 투표 정보
+SELECT SB.LISTING_NUMBER as listingNumber, SB.START_DATE as startDate, SB.EXPIRATION_DATE as expirationDate, SB.DIVIDEND as dividend, SB.AMOUNT as amount, RE.BUILDING_NAME as buildingName, PI.TOTAL_AMOUNT as publicOfferingAmount, PI.VOLUME as publicOfferingVolume, PI.ISSUE_PRICE as issuePrice, stos.AMOUNT as memberAmount
+FROM REAL_ESTATE_INFO RE
+INNER JOIN sold_building SB ON RE.listing_number = SB.listing_number
+INNER JOIN PUBLICATION_INFO PI ON RE.listing_number = PI.listing_number
+inner join stos on re.LISTING_NUMBER = stos.LISTING_NUMBER
+where wallet_number = :walletNumebr;
+
+-- 찬반 수량 세기
+select sum(quantity)
+from sell_vote
+where listing_number = 13;
+
+
+-- 매각 투표 내용
+SELECT 
+    SB.LISTING_NUMBER as listingNumber, 
+    SB.START_DATE as startDate, 
+    SB.EXPIRATION_DATE as expirationDate, 
+    SB.DIVIDEND as dividend, 
+    SB.AMOUNT as amount, 
+    RE.BUILDING_NAME as buildingName, 
+    PI.TOTAL_AMOUNT as publicOfferingAmount, 
+    PI.VOLUME as publicOfferingVolume, 
+    PI.ISSUE_PRICE as issuePrice, 
+    stos.AMOUNT as memberAmount,
+    NVL(SV.total_quantity, 0) as sellVoteTotalQuantity
+FROM REAL_ESTATE_INFO RE
+INNER JOIN REAL_ESTATE_SALE RES ON RES.LISTING_NUMBER = RE.LISTING_NUMBER 
+INNER JOIN sold_building SB ON RE.listing_number = SB.listing_number
+INNER JOIN PUBLICATION_INFO PI ON RE.listing_number = PI.listing_number
+INNER JOIN stos ON re.LISTING_NUMBER = stos.LISTING_NUMBER
+LEFT JOIN (
+    SELECT 
+        listing_number, 
+        SUM(quantity) as total_quantity
+    FROM sell_vote
+    GROUP BY listing_number
+) SV ON SV.listing_number = RE.listing_number
+WHERE wallet_number = :walletNumebr and res.STATE = '거래';
+
+
+
+
+desc SOLD_BUILDING;
+select * from REAL_ESTATE_SALE order by LISTING_NUMBER desc;
+
+-- 찬성 수
+SELECT SUM(QUANTITY) AS totalProsQuantity
+FROM SELL_VOTE
+WHERE LISTING_NUMBER = :specific_listing_number AND PROS_CONS = 'P';
+
+-- 투표 수
+SELECT SUM(QUANTITY) AS totalProsQuantity
+FROM SELL_VOTE
+WHERE LISTING_NUMBER = :specific_listing_number;
+
+
+insert into stos(LISTING_NUMBER, WALLET_NUMBER, amount)
+values(31, 13, 100);
+
+select * from SOLD_BUILDING;
+select * from stos;
+select * from DIVIDEND_DETAILS;
+
+select * from stos;

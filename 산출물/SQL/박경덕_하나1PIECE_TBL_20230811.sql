@@ -387,7 +387,7 @@ CREATE TABLE STO_ORDERS (
   ORDER_ID NUMBER(8) DEFAULT ORDER_SEQ.NEXTVAL PRIMARY KEY,     -- 주문번호
   LISTING_NUMBER NUMBER(8),                                     -- 매물번호
   WALLET_NUMBER NUMBER(8),                                      -- 지갑번호
-  ORDER_TYPE VARCHAR2(4) NOT NULL,                              -- 주문 유형
+  ORDER_TYPE VARCHAR2(10) NOT NULL,                             -- 주문 유형
   AMOUNT NUMBER(8) NOT NULL,                                    -- 주문 금액
   QUANTITY NUMBER(8) NOT NULL,                                  -- 주문 수량
   STATUS VARCHAR2(10) DEFAULT 'N',                              -- 주문 상태

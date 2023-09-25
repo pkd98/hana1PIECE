@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.wallet.model.mapper.DividendMapper">
+    <resultMap type="com.hana1piece.wallet.model.vo.DividendDetailsVO" id="DividendDetailsMap">
+        <result column="payout_number" property="payoutNumber" />
+        <result column="wallet_number" property="walletNumber" />
+        <result column="listing_number" property="listingNumber" />
+        <result column="payout_date" property="payoutDate" />
+    </resultMap>
+
+    <select id="findAll" resultMap="DividendDetailsMap">
+        select * from dividend_details order by payout_number desc
+    </select>
+
+    <select id="findByWN" parameterType="int" resultMap="DividendDetailsMap">
+        select * from dividend_details where wallet_number = #{WN} order by payout_number desc
+    </select>
+
+    <select id="findByLN" parameterType="int" resultMap="DividendDetailsMap">
+        select * from dividend_details where listing_number = #{LN} order by payout_number desc
+    </select>
+
+    <insert id="insertDividendDetails" parameterType="com.hana1piece.wallet.model.vo.DividendDetailsVO">
+        insert into dividend_details(wallet_number, listing_number, payout)
+        values(#{walletNumber}, #{listingNumber}, #{payout})
+    </insert>
+
+</mapper>

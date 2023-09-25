@@ -35,4 +35,9 @@
         where wallet_number = #{walletNumber} and listing_number = #{listingNumber}
     </update>
 
+    <delete id="deleteStosByLN" parameterType="int">
+        delete from stos
+        where listing_number = #{LN}
+    </delete>
+
 </mapper>
