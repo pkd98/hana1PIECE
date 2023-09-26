@@ -75,7 +75,7 @@
                 <div class="container">
                     <p class="value-title"><img id="info" src="/resources/img/info.png" alt="info" width="18" height="18"> 실제 건물 가치</p>
                 </div>
-                <div class="info-description" id="description"><b>실건물의 평당가</b>를 환산한 가격 입니다. </br> * <i>네이버 부동산 제공</i></div>
+                <div class="info-description" id="description"><b style="color: #E90061;">실건물의 평당가</b>를 환산한 가격 입니다. </br> * <i>네이버 부동산 제공</i></div>
                 <h6 class="value"><span id="resonablePrice" class="formatted-number">${realEstateSale.reasonablePrice}</span>원</h6>
                 <small id="yesterday"></small>
             </div>

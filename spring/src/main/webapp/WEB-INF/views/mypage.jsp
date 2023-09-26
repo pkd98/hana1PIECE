@@ -37,7 +37,7 @@
                     labels: combinedLabels,
                     datasets: [{
                         label: '보유 자산',
-                        backgroundColor: ['#2EC4B6', '#3FA2A3', '#E71D36', '#3498db', '#668D92', '#9b59b6', '#27ae60', '#FFC300', '#34495e'],
+                        backgroundColor: ['#FFD700', '#90ee90', '#FF896F', '#007D73', '#668D92', '#9b59b6', '#27ae60', '#FFC300', '#34495e'],
                         data: combinedData
                     }]
                 },
