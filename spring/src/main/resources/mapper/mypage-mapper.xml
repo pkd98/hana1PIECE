@@ -5,48 +5,32 @@
 <mapper namespace="com.hana1piece.member.model.mapper.MypageMapper">
 
     <select id="getMembersStosInfoDTOByWalletNumber" parameterType="int" resultType="com.hana1piece.member.model.dto.MembersStosInfoDTO">
-        SELECT
-        STOS.WALLET_NUMBER as walletNumber,
-        RE.LISTING_NUMBER as listingNumber,
-        RI.BUILDING_NAME AS buildingName,
-        round((STOS.amount * RE.PRICE) - (STOS.amount * STO.avgBuyPrice), 0) as profit,
-        round(((STOS.amount * RE.PRICE - STOS.amount * STO.avgBuyPrice) / (STOS.amount * STO.avgBuyPrice)) * 100, 2) as
-        ROI,
-        STOS.amount,
-        RE.PRICE AS currentPrice,
-        STOS.amount * RE.PRICE as assessmentAmount,
-        round(STO.avgBuyPrice, 0) as avgBuyPrice
-        FROM
-        REAL_ESTATE_SALE RE
-        JOIN
-        REAL_ESTATE_INFO RI
-        ON
-        RE.LISTING_NUMBER = RI.LISTING_NUMBER
-        LEFT JOIN
-        STOS
-        ON
-        RE.LISTING_NUMBER = STOS.LISTING_NUMBER
-        AND STOS.WALLET_NUMBER = #{walletNumber}
-        LEFT JOIN
-        (
-        SELECT
-        LISTING_NUMBER,
-        WALLET_NUMBER,
-        AVG(EXECUTED_PRICE_AVG) AS avgBuyPrice
-        FROM
-        STO_ORDERS
-        WHERE
-        WALLET_NUMBER = #{walletNumber}
-        AND ORDER_TYPE = 'BUY'
-        AND not STATUS = 'N'
-        GROUP BY
-        LISTING_NUMBER, WALLET_NUMBER
-        ) STO
-        ON
-        RE.LISTING_NUMBER = STO.LISTING_NUMBER
-        WHERE
-        STOS.WALLET_NUMBER = #{walletNumber}
-
+        SELECT STOS.WALLET_NUMBER                                                   AS WALLETNUMBER,
+               RE.LISTING_NUMBER                                                    AS LISTINGNUMBER,
+               RI.BUILDING_NAME                                                     AS BUILDINGNAME,
+               ROUND((STOS.AMOUNT * RE.PRICE) - (STOS.AMOUNT * STO.AVGBUYPRICE), 0) AS PROFIT,
+               ROUND(((STOS.AMOUNT * RE.PRICE - STOS.AMOUNT * STO.AVGBUYPRICE) / (STOS.AMOUNT * STO.AVGBUYPRICE)) * 100,
+                     2)                                                             AS ROI,
+               STOS.AMOUNT,
+               RE.PRICE                                                             AS CURRENTPRICE,
+               STOS.AMOUNT * RE.PRICE                                               AS ASSESSMENTAMOUNT,
+               ROUND(STO.AVGBUYPRICE, 0)                                            AS AVGBUYPRICE
+        FROM REAL_ESTATE_SALE RE
+                 JOIN REAL_ESTATE_INFO RI
+                      ON RE.LISTING_NUMBER = RI.LISTING_NUMBER
+                 LEFT JOIN STOS
+                           ON RE.LISTING_NUMBER = STOS.LISTING_NUMBER
+                               AND STOS.WALLET_NUMBER = #{walletNumber}
+                 LEFT JOIN (SELECT LISTING_NUMBER,
+                                   WALLET_NUMBER,
+                                   SUM(EXECUTED_PRICE_AVG * EXECUTED_QUANTITY) / SUM(EXECUTED_QUANTITY) AS AVGBUYPRICE
+                            FROM STO_ORDERS
+                            WHERE WALLET_NUMBER = #{walletNumber}
+                              AND ORDER_TYPE = 'BUY'
+                              AND NOT STATUS = 'N'
+                            GROUP BY LISTING_NUMBER, WALLET_NUMBER) STO
+                           ON RE.LISTING_NUMBER = STO.LISTING_NUMBER
+        WHERE STOS.WALLET_NUMBER = #{walletNumber}
     </select>
 
     <select id="getMembersSellVoteDTOByWalletNumber" parameterType="int" resultType="com.hana1piece.member.model.dto.MembersSellVoteDTO">

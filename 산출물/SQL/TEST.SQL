@@ -955,24 +955,66 @@ SELECT
 FROM
     (
         SELECT
-            RES.LISTING_NUMBER AS LISTINGNUMBER,
+            RES.LISTING_NUMBER                  AS LISTINGNUMBER,
             STATE,
-            BUILDING_NAME      AS BUILDINGNAME,
+            BUILDING_NAME                       AS BUILDINGNAME,
             IMAGE1,
-            to_char(SB.SOLD_DATE, 'YYYY-MM-DD')       AS SOLDDATE,
-            SB.AMOUNT          AS AMOUNT,
-            SB.DIVIDEND        AS DIVIDEND,
-            PI.TOTAL_AMOUNT    AS publicationAmount
+            TO_CHAR(SB.SOLD_DATE, 'YYYY-MM-DD') AS SOLDDATE,
+            SB.AMOUNT                           AS AMOUNT,
+            SB.DIVIDEND                         AS DIVIDEND,
+            PI.TOTAL_AMOUNT                     AS PUBLICATIONAMOUNT
         FROM
             REAL_ESTATE_SALE RES
             INNER JOIN REAL_ESTATE_INFO REI
             ON RES.LISTING_NUMBER = REI.LISTING_NUMBER
             INNER JOIN SOLD_BUILDING SB
             ON RES.LISTING_NUMBER = SB.LISTING_NUMBER
-            INNER JOIN PUBLICATION_INFO PI 
+            INNER JOIN PUBLICATION_INFO PI
             ON RES.LISTING_NUMBER = PI.LISTING_NUMBER
     )
 WHERE
     STATE = '매각';
 
-    select * from PUBLICATION_INFO;
+SELECT
+    *
+FROM
+    PUBLICATION_INFO;
+
+SELECT
+    *
+FROM
+    STO_ORDERS;
+
+SELECT
+    STOS.WALLET_NUMBER                                                                                           AS WALLETNUMBER,
+    RE.LISTING_NUMBER                                                                                            AS LISTINGNUMBER,
+    RI.BUILDING_NAME                                                                                             AS BUILDINGNAME,
+    ROUND((STOS.AMOUNT * RE.PRICE) - (STOS.AMOUNT * STO.AVGBUYPRICE), 0)                                         AS PROFIT,
+    ROUND(((STOS.AMOUNT * RE.PRICE - STOS.AMOUNT * STO.AVGBUYPRICE) / (STOS.AMOUNT * STO.AVGBUYPRICE)) * 100, 2) AS ROI,
+    STOS.AMOUNT,
+    RE.PRICE                                                                                                     AS CURRENTPRICE,
+    STOS.AMOUNT * RE.PRICE                                                                                       AS ASSESSMENTAMOUNT,
+    ROUND(STO.AVGBUYPRICE, 0)                                                                                    AS AVGBUYPRICE
+FROM
+    REAL_ESTATE_SALE RE
+    JOIN REAL_ESTATE_INFO RI
+    ON RE.LISTING_NUMBER = RI.LISTING_NUMBER LEFT JOIN STOS
+    ON RE.LISTING_NUMBER = STOS.LISTING_NUMBER
+    AND STOS.WALLET_NUMBER = :WALLETNUMBER
+    LEFT JOIN (
+        SELECT
+            LISTING_NUMBER,
+            WALLET_NUMBER,
+            SUM(EXECUTED_PRICE_AVG * EXECUTED_QUANTITY) / SUM(EXECUTED_QUANTITY) AS AVGBUYPRICE
+        FROM
+            STO_ORDERS
+        WHERE
+            WALLET_NUMBER = :WALLETNUMBER
+            AND ORDER_TYPE = 'BUY'
+            AND NOT STATUS = 'N'
+        GROUP BY
+            LISTING_NUMBER, WALLET_NUMBER
+    ) STO
+    ON RE.LISTING_NUMBER = STO.LISTING_NUMBER
+WHERE
+    STOS.WALLET_NUMBER = :WALLETNUMBER;
