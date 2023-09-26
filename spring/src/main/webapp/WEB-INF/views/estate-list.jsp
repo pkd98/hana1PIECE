@@ -38,7 +38,18 @@
                 <div class="card clickable-card" data-listing="${item.listingNumber}">
                     <div class="card-body">
                         <h5 class="card-title">${item.buildingName}</h5>
-                        <p class="text-danger small mb-2">${item.evaluation}</p>
+
+                        <c:set var="percentageDifference" value="${((item.price - item.reasonablePrice) / item.reasonablePrice) * 100}" />
+
+                        <p class="text-danger small mb-2">
+                            <c:choose>
+                                <c:when test="${percentageDifference <= -10}">매우 저평가</c:when>
+                                <c:when test="${percentageDifference > -10 && percentageDifference <= -5}">저평가</c:when>
+                                <c:when test="${percentageDifference > -5 && percentageDifference <= 5}">적정가</c:when>
+                                <c:when test="${percentageDifference > 5 && percentageDifference <= 10}">고평가</c:when>
+                                <c:otherwise>매우 고평가</c:otherwise>
+                            </c:choose>
+                        </p>
                         <div class="text-right">
                             <p class="small text-muted mb-1">1 STO 가격</p>
                             <p>${item.price}원</p>

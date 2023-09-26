@@ -3,6 +3,7 @@ package com.hana1piece.estate.model.mapper;
 import com.hana1piece.estate.model.dto.EstateListDTO;
 import com.hana1piece.estate.model.dto.ListedEstateListDTO;
 import com.hana1piece.estate.model.dto.PublicOfferingListDTO;
+import com.hana1piece.estate.model.dto.SoldEstateListDTO;
 import com.hana1piece.estate.model.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -49,5 +50,7 @@ public interface EstateMapper {
     List<ListedEstateListDTO> findListedEstateListDTO();
 
     List<EstateListDTO> findEstateListDTO();
+
+    List<SoldEstateListDTO> findSoldEstateListDTO();
 
 }

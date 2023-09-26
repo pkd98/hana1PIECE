@@ -421,7 +421,7 @@
                         <span class="card-title dividend-title">최근 6개월 누적 배당금</span>
                     </div>
                     <div class="dividend-amount-container">
-                        <span class="card-title dividend-amount">총 <span class="formatted-number">550원</span></span>
+                        <span class="card-title dividend-amount">총 <span class="formatted-number">${totalDividendFor6month}원</span></span>
                     </div>
                 </div>
                 <div class="dividend-button-section">
@@ -455,14 +455,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- 예제 데이터 -->
-                        <tr>
-                            <td>12345678</td>
-                            <td>롯데월드타워 1층</td>
-                            <td>100원</td>
-                            <td>2023-08-20</td>
-                        </tr>
-                        <!-- 추가 데이터를 여기에 삽입할 수 있습니다 -->
+                        <c:forEach var="item" items="${dividendDetailsDTOList}">
+                            <tr>
+                                <td>${item.payoutNumber}</td>
+                                <td>${item.buildingName}</td>
+                                <td>${item.payout}원</td>
+                                <td>${item.payoutDate}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -522,111 +522,124 @@
         </div>
 
         <c:choose>
-        <c:when test="${membersSellVoteDTOList == null || empty membersSellVoteDTOList}">
-            <div class="no-sold">
-                <p>진행 중인 매각 투표가 없습니다.</p>
-            </div>
-        </c:when>
-        <c:otherwise>
-        <div class="row equal-height-row">
-            <c:forEach var="item" items="${membersSellVoteDTOList}">
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                    <div class="card total-asset">
-                        <div class="card-header">${item.buildingName}</div>
-                        <div class="card-body flex1">
-                            <p>투표기간: <span>${item.startDate}</span> ~ <span>${item.expirationDate}</span></p>
-                            <p>총 모집액: <span class="formatted-number">${item.publicOfferingAmount}원</span></p>
-                            <p>총 발행량: <span class="formatted-number">${item.publicOfferingVolume}원</span></p>
-                            <p>매각 금액: <span class="formatted-number">${item.amount}원</span></p>
-                            <p>1STO 당 매각 배당금: <span class="formatted-number">${item.dividend}원</span></p>
-                            <hr>
-                            <P style="font-weight: bold;">
-                                투표 진행률 (<fmt:formatNumber value="${(item.sellVoteTotalQuantity / item.publicOfferingVolume) * 100}" pattern="#.##" />%)
-                            </P>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: ${(item.sellVoteTotalQuantity / item.publicOfferingVolume) * 100.0}%;" aria-valuenow="${(item.sellVoteTotalQuantity / item.publicOfferingVolume) * 100.0}"
-                                     aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-
-                            <div class="dividend-button-section">
-                                <button type="button" class="btn btn-primary" id="voteButton" data-bs-toggle="modal"
-                                        data-bs-target="#votingModal-${item.listingNumber}">투표하기
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+            <c:when test="${membersSellVoteDTOList == null || empty membersSellVoteDTOList}">
+                <div class="no-sold">
+                    <p>진행 중인 매각 투표가 없습니다.</p>
                 </div>
-                <!-- 투표하기 버튼 모달 -->
-                <div class="modal fade" id="votingModal-${item.listingNumber}" tabindex="-1" aria-labelledby="votingModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title text-center w-100 font-weight-bold">매각 투표</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body" style="padding: 20px 40px;"> <!-- 양 끝쪽 여백 설정 -->
-                                <div class="row">
-                                    <div class="col-md-6 text-left">건물명 :</div>
-                                    <div class="col-md-6 text-right" style="font-weight: bold;">${item.buildingName}</div>
-                                    <div class="col-md-6 text-left">총 모집액 :</div>
-                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
-                                            ${item.publicOfferingAmount}원
-                                    </div>
-                                    <div class="col-md-6 text-left">총 발행량 :</div>
-                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
-                                            ${item.publicOfferingVolume}원
-                                    </div>
-                                    <!-- bold 처리 -->
-                                    <div class="col-md-6 text-left">매각액 :</div>
-                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
-                                            ${item.amount}원
+            </c:when>
+            <c:otherwise>
+                <div class="row equal-height-row">
+                    <c:forEach var="item" items="${membersSellVoteDTOList}">
+                        <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                            <div class="card total-asset">
+                                <div class="card-header">${item.buildingName}</div>
+                                <div class="card-body flex1">
+                                    <p>투표기간: <span>${item.startDate}</span> ~ <span>${item.expirationDate}</span></p>
+                                    <p>총 모집액: <span class="formatted-number">${item.publicOfferingAmount}원</span></p>
+                                    <p>총 발행량: <span class="formatted-number">${item.publicOfferingVolume}STO</span></p>
+                                    <p>매각 금액: <span class="formatted-number">${item.amount}원</span></p>
+                                    <p>1STO 당 매각 배당금: <span class="formatted-number">${item.dividend}원</span></p>
+                                    <hr>
+                                    <P style="font-weight: bold;">
+                                        투표 진행률 (<fmt:formatNumber
+                                            value="${(item.sellVoteTotalQuantity / item.publicOfferingVolume) * 100}"
+                                            pattern="#.##"/>%)
+                                    </P>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                             style="width: ${(item.sellVoteTotalQuantity / item.publicOfferingVolume) * 100.0}%;"
+                                             aria-valuenow="${(item.sellVoteTotalQuantity / item.publicOfferingVolume) * 100.0}"
+                                             aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
 
-                                    <div class="col-md-6 text-left">공모가 :</div>
-                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">
-                                        5,000원
-                                    </div>
-                                    <!-- bold 처리 -->
-                                    <div class="col-md-6 text-left">보유 STO :</div>
-                                    <div class="col-md-6 text-right" style="font-weight: bold;">${item.memberAmount}STO</div>
-                                    <!-- bold 처리 -->
-                                    <div class="col-md-6 text-left">내 매각 배당금 :</div>
-                                    <div class="col-md-6 text-right formatted-number" style="font-weight: bold;">${item.memberAmount * item.dividend}원
-                                    </div>
-                                    <!-- bold 처리 -->
-                                </div>
-                                <hr>
-                                <div class="text-center">
-                                    <div class="custom-radio">
-                                        <input type="radio" id="approve" name="vote" value="P">
-                                        <label for="approve">찬성</label>
-                                    </div>
-                                    <div class="custom-radio">
-                                        <input type="radio" id="oppose" name="vote" value="C">
-                                        <label for="oppose">반대</label>
-                                    </div>
-                                    <div>
-                                        <button id="voteFor${item.listingNumber}" type="button" class="btn btn-primary mt-3"
-                                                style="background-color: #008485; width: 50%;"
-                                                data-listing-number="${item.listingNumber}"
-                                                data-sto-amount="${item.memberAmount}">
-                                            투표하기
+                                    <div class="dividend-button-section">
+                                        <button type="button" class="btn btn-primary" id="voteButton"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#votingModal-${item.listingNumber}">투표하기
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <!-- 투표하기 버튼 모달 -->
+                        <div class="modal fade" id="votingModal-${item.listingNumber}" tabindex="-1"
+                             aria-labelledby="votingModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center w-100 font-weight-bold">매각 투표</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" style="padding: 20px 40px;"> <!-- 양 끝쪽 여백 설정 -->
+                                        <div class="row">
+                                            <div class="col-md-6 text-left">건물명 :</div>
+                                            <div class="col-md-6 text-right"
+                                                 style="font-weight: bold;">${item.buildingName}</div>
+                                            <div class="col-md-6 text-left">총 모집액 :</div>
+                                            <div class="col-md-6 text-right formatted-number"
+                                                 style="font-weight: bold;">
+                                                    ${item.publicOfferingAmount}원
+                                            </div>
+                                            <div class="col-md-6 text-left">총 발행량 :</div>
+                                            <div class="col-md-6 text-right formatted-number"
+                                                 style="font-weight: bold;">
+                                                    ${item.publicOfferingVolume}원
+                                            </div>
+                                            <!-- bold 처리 -->
+                                            <div class="col-md-6 text-left">매각액 :</div>
+                                            <div class="col-md-6 text-right formatted-number"
+                                                 style="font-weight: bold;">
+                                                    ${item.amount}원
+                                            </div>
+
+                                            <div class="col-md-6 text-left">공모가 :</div>
+                                            <div class="col-md-6 text-right formatted-number"
+                                                 style="font-weight: bold;">
+                                                5,000원
+                                            </div>
+                                            <!-- bold 처리 -->
+                                            <div class="col-md-6 text-left">보유 STO :</div>
+                                            <div class="col-md-6 text-right"
+                                                 style="font-weight: bold;">${item.memberAmount}STO
+                                            </div>
+                                            <!-- bold 처리 -->
+                                            <div class="col-md-6 text-left">내 매각 배당금 :</div>
+                                            <div class="col-md-6 text-right formatted-number"
+                                                 style="font-weight: bold;">${item.memberAmount * item.dividend}원
+                                            </div>
+                                            <!-- bold 처리 -->
+                                        </div>
+                                        <hr>
+                                        <div class="text-center">
+                                            <div class="custom-radio">
+                                                <input type="radio" id="approve" name="vote" value="P">
+                                                <label for="approve">찬성</label>
+                                            </div>
+                                            <div class="custom-radio">
+                                                <input type="radio" id="oppose" name="vote" value="C">
+                                                <label for="oppose">반대</label>
+                                            </div>
+                                            <div>
+                                                <button id="voteFor${item.listingNumber}" type="button"
+                                                        class="btn btn-primary mt-3"
+                                                        style="background-color: #008485; width: 50%;"
+                                                        data-listing-number="${item.listingNumber}"
+                                                        data-sto-amount="${item.memberAmount}">
+                                                    투표하기
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
-            </c:forEach>
-        </div>
-
+            </c:otherwise>
+        </c:choose>
     </div>
-
-    </c:otherwise>
-    </c:choose>
 
 
     <!-- 성공 모달 -->
@@ -863,7 +876,7 @@
         /**
          *  매각 투표
          */
-        $('[id^="voteFor"]').on('click', function() {
+        $('[id^="voteFor"]').on('click', function () {
             // 현재 클릭된 버튼에서 data 속성을 이용하여 정보를 가져옴
             let listingNumber = $(this).data('listing-number');
             let stoAmount = $(this).data('sto-amount');
@@ -881,12 +894,12 @@
                     quantity: stoAmount,
                     listingNumber: listingNumber
                 }),
-                success: function(response) {
+                success: function (response) {
                     $("#votingModal-" + listingNumber).modal('hide');
                     // 성공 모달 표시
                     $("#myPageSuccessModal").modal('show');
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     $("#votingModal-" + listingNumber).modal('hide');
                     // 실패 모달 표시
                     $("#myPageErrorModal").modal('show');

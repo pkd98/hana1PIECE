@@ -158,6 +158,8 @@ public class EstateController {
         ModelAndView mav = new ModelAndView("sold-list");
 //        List<> publicOfferingListDTOList = estateService.findPublicOfferingListDTO();
 //        mav.addObject("", );
+        List<SoldEstateListDTO> soldEstateListDTO = estateService.findSoldEstateListDTO();
+        mav.addObject("soldEstateListDTO", soldEstateListDTO);
         return mav;
     }
 

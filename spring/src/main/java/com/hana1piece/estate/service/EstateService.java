@@ -1,9 +1,6 @@
 package com.hana1piece.estate.service;
 
-import com.hana1piece.estate.model.dto.EstateListDTO;
-import com.hana1piece.estate.model.dto.ListedEstateListDTO;
-import com.hana1piece.estate.model.dto.PublicOfferingListDTO;
-import com.hana1piece.estate.model.dto.RequestEstateEvaluationDTO;
+import com.hana1piece.estate.model.dto.*;
 import com.hana1piece.estate.model.vo.*;
 
 import java.util.List;
@@ -36,6 +33,8 @@ public interface EstateService {
     List<ListedEstateListDTO> findListedEstateListDTO();
 
     List<EstateListDTO> findEstateListDTO();
+
+    List<SoldEstateListDTO> findSoldEstateListDTO();
 
     boolean evaluateEstate(RealEstateSaleVO realEstateSaleVO, RequestEstateEvaluationDTO requestEstateEvaluationDTO);
 

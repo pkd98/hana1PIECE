@@ -104,6 +104,11 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
+    public List<SoldEstateListDTO> findSoldEstateListDTO() {
+        return estateMapper.findSoldEstateListDTO();
+    }
+
+    @Override
     public boolean evaluateEstate(RealEstateSaleVO realEstateSaleVO, RequestEstateEvaluationDTO requestEstateEvaluationDTO) {
         String url = ServerUrl + "building-evaluation";
 

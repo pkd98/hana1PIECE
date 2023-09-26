@@ -1,361 +1,978 @@
-INSERT INTO MANAGER (ID, NAME, PASSWORD, ENROLL_DATE, IMAGE, POSITION, INTRODUCTION)
-VALUES ('admin', '관리자', 'admin', TO_DATE('2023-08-08', 'YYYY-MM-DD'), 'manager.jpg', 'Web Back-end Developer', '매사 긍정적이고 성실하게 배우려 노력하는<br>IT 개발자입니다.');
+INSERT INTO MANAGER (
+    ID,
+    NAME,
+    PASSWORD,
+    ENROLL_DATE,
+    IMAGE,
+    POSITION,
+    INTRODUCTION
+) VALUES (
+    'admin',
+    '관리자',
+    'admin',
+    TO_DATE('2023-08-08', 'YYYY-MM-DD'),
+    'manager.jpg',
+    'Web Back-end Developer',
+    '매사 긍정적이고 성실하게 배우려 노력하는<br>IT 개발자입니다.'
+);
 
-INSERT INTO ACCOUNT (ACCOUNT_NUMBER, PASSWORD, BALANCE, RESIDENT_NUMBER1, RESIDENT_NUMBER2, NAME)
-VALUES ('99900000000394', '1234', 100000000, 981010, 0000000, '(주)하나1PIECE');
+INSERT INTO ACCOUNT (
+    ACCOUNT_NUMBER,
+    PASSWORD,
+    BALANCE,
+    RESIDENT_NUMBER1,
+    RESIDENT_NUMBER2,
+    NAME
+) VALUES (
+    '99900000000394',
+    '1234',
+    100000000,
+    981010,
+    0000000,
+    '(주)하나1PIECE'
+);
 
-
-select * from account;
+SELECT
+    *
+FROM
+    ACCOUNT;
 
 -- 계좌 입금
 BEGIN
-    hana_bank_mng.deposit(
-    p_account_number => '99900000016394',
-    p_amount=>500000000,
-    p_name=>'무통장 입금',
-    p_recipient_account_number=>'CD'
+    HANA_BANK_MNG.DEPOSIT(
+        P_ACCOUNT_NUMBER => '99900000016394',
+        P_AMOUNT=>500000000,
+        P_NAME=>'무통장 입금',
+        P_RECIPIENT_ACCOUNT_NUMBER=>'CD'
     );
 END;
 /
 
-select * from ANNOUNCEMENT;
-truncate table ANNOUNCEMENT;
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (1, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (2, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (3, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (4, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (5, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (6, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (7, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (8, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (9, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (10, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (11, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (12, 'test', 'test');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (44, '[하나1PIECE] 신뢰받는 조각투자 이젠 하나1PIECE에서!', ' ');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (45, '[하나1PIECE] 신뢰받는 조각투자 이젠 하나1PIECE에서!', ' ');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (46, '[하나1PIECE] 서비스 이용약관 안내', ' ');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (47, '[하나1PIECE] 하나은행 계좌 개설 후 서비스 이용 가능합니다.', ' ');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (48, '[하나1PIECE] 조각 투자가 처음이신가요?', ' ');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (49, '[청약] 디큐브시티(주상복합) 아파트 청약 공고 안내', '청약 공고');
-insert into ANNOUNCEMENT(id, title, CONTENT) VALUES (50, '[상장] 디큐브시티(주상복합) 아파트 상장!', '많은 성원 끝에 청약 완판되어 상장되었습니다.');
+SELECT
+    *
+FROM
+    ANNOUNCEMENT;
 
+TRUNCATE TABLE ANNOUNCEMENT;
 
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    1,
+    'test',
+    'test'
+);
 
-commit;
-select id, title, content, to_char(write_date, 'yyyy-MM-dd') as writeDate, count from announcement order by id desc;
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    2,
+    'test',
+    'test'
+);
 
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    3,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    4,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    5,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    6,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    7,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    8,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    9,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    10,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    11,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    12,
+    'test',
+    'test'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    44,
+    '[하나1PIECE] 신뢰받는 조각투자 이젠 하나1PIECE에서!',
+    ' '
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    45,
+    '[하나1PIECE] 신뢰받는 조각투자 이젠 하나1PIECE에서!',
+    ' '
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    46,
+    '[하나1PIECE] 서비스 이용약관 안내',
+    ' '
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    47,
+    '[하나1PIECE] 하나은행 계좌 개설 후 서비스 이용 가능합니다.',
+    ' '
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    48,
+    '[하나1PIECE] 조각 투자가 처음이신가요?',
+    ' '
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    49,
+    '[청약] 디큐브시티(주상복합) 아파트 청약 공고 안내',
+    '청약 공고'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    50,
+    '[상장] 디큐브시티(주상복합) 아파트 상장!',
+    '많은 성원 끝에 청약 완판되어 상장되었습니다.'
+);
+
+COMMIT;
+
+SELECT
+    ID,
+    TITLE,
+    CONTENT,
+    TO_CHAR(WRITE_DATE, 'yyyy-MM-dd') AS WRITEDATE,
+    COUNT
+FROM
+    ANNOUNCEMENT
+ORDER BY
+    ID DESC;
 
 desc ANNOUNCEMENT;
+
 desc ONE_MEMBERS;
 
-SELECT * FROM (
-    SELECT a.*, ROWNUM rnum FROM (
-        SELECT * FROM announcement ORDER BY write_date DESC
-    ) a WHERE ROWNUM <= (10 * 1)
-)
-WHERE rnum > 10 * (1 - 1);
+SELECT
+    *
+FROM
+    (
+        SELECT
+            A.*,
+            ROWNUM RNUM
+        FROM
+            (
+                SELECT
+                    *
+                FROM
+                    ANNOUNCEMENT
+                ORDER BY
+                    WRITE_DATE DESC
+            ) A
+        WHERE
+            ROWNUM <= (10 * 1)
+    )
+WHERE
+    RNUM > 10 * (1 - 1);
 
-select count(*) from ANNOUNCEMENT;
+SELECT
+    COUNT(*)
+FROM
+    ANNOUNCEMENT;
 
-select * from ONE_MEMBERS;
+SELECT
+    *
+FROM
+    ONE_MEMBERS;
 
-select HANA1PIECE_MNG.GENERATE_REFERRAL_CODE from dual;
+SELECT
+    HANA1PIECE_MNG.GENERATE_REFERRAL_CODE
+FROM
+    DUAL;
 
-select * from EXCEPTION_LOG;
+SELECT
+    *
+FROM
+    EXCEPTION_LOG;
 
+SELECT
+    *
+FROM
+    ACCOUNT;
 
-select * from account;
-delete from account where not ACCOUNT_NUMBER = 99900000009394;
-select * from BANK_TRANSACTION;
+DELETE FROM ACCOUNT
+WHERE
+    NOT ACCOUNT_NUMBER = 99900000009394;
 
-select * from wallet;
-select * from WALLET_TRANSACTION;
+SELECT
+    *
+FROM
+    BANK_TRANSACTION;
 
-update wallet set BALANCE = BALANCE + 10000000000 where wallet_number = 6;
+SELECT
+    *
+FROM
+    WALLET;
 
-select * from WALLET_TRANSACTION;
+SELECT
+    *
+FROM
+    WALLET_TRANSACTION;
+
+UPDATE WALLET
+SET
+    BALANCE = BALANCE + 10000000000
+WHERE
+    WALLET_NUMBER = 6;
+
+SELECT
+    *
+FROM
+    WALLET_TRANSACTION;
+
 desc WALLET_TRANSACTION;
 
+COMMIT;
 
-commit;
+SELECT
+    *
+FROM
+    ACCOUNT;
 
+SELECT
+    *
+FROM
+    BANK_TRANSACTION;
 
-select * from account;
-select * from BANK_TRANSACTION;
-select * from manager;
-
+SELECT
+    *
+FROM
+    MANAGER;
 
 -- 매물 등록
-INSERT INTO REAL_ESTATE_SALE(STATE) VALUES ('청약');
+INSERT INTO REAL_ESTATE_SALE(
+    STATE
+) VALUES (
+    '청약'
+);
 
 -- 최근 매물 번호 가져오기
-select * from (select listing_number from real_estate_sale order by LISTING_NUMBER desc) where rownum = 1;
+SELECT
+    *
+FROM
+    (
+        SELECT
+            LISTING_NUMBER
+        FROM
+            REAL_ESTATE_SALE
+        ORDER BY
+            LISTING_NUMBER DESC
+    )
+WHERE
+    ROWNUM = 1;
 
-INSERT INTO TENANT_INFO(LISTING_NUMBER, LESSEE, SECTOR, CONTRACT_DATE, EXPIRATION_DATE)
-VALUES(1, 'test', 'test', TO_DATE('2023-01-01', 'YYYY-MM-DD'), TO_DATE('2023-01-02', 'YYYY-MM-DD'));
+INSERT INTO TENANT_INFO(
+    LISTING_NUMBER,
+    LESSEE,
+    SECTOR,
+    CONTRACT_DATE,
+    EXPIRATION_DATE
+) VALUES(
+    1,
+    'test',
+    'test',
+    TO_DATE('2023-01-01', 'YYYY-MM-DD'),
+    TO_DATE('2023-01-02', 'YYYY-MM-DD')
+);
 
 desc real_estate_sale;
 
-select * from REAL_ESTATE_SALE;
-select * from REAL_ESTATE_INFO;
-select * from TENANT_INFO;
-select * from PUBLICATION_INFO;
+SELECT
+    *
+FROM
+    REAL_ESTATE_SALE;
 
-select * from REAL_ESTATE_SALE where state='청약';
+SELECT
+    *
+FROM
+    REAL_ESTATE_INFO;
 
-select REI.LISTING_NUMBER as listingNumber, REI.IMAGE1 as image1, REI.IMAGE2 as image2, REI.IMAGE3 as image3, REI.BUILDING_NAME as buildingName, res.INTRODUCTION as introduction
-from real_estate_sale res INNER JOIN real_estate_info rei
-ON res.listing_number = rei.LISTING_NUMBER
-where state = '청약';
+SELECT
+    *
+FROM
+    TENANT_INFO;
 
-select REI.LISTING_NUMBER as listingNumber, REI.IMAGE1 as image1, REI.IMAGE2 as image2, REI.IMAGE3 as image3, REI.BUILDING_NAME as buildingName,res.EVALUATION as evaluation
-from real_estate_sale res INNER JOIN real_estate_info rei
-ON res.listing_number = rei.LISTING_NUMBER
-where state = '거래';
+SELECT
+    *
+FROM
+    PUBLICATION_INFO;
 
-select * from PUBLIC_OFFERING;
+SELECT
+    *
+FROM
+    REAL_ESTATE_SALE
+WHERE
+    STATE='청약';
 
-select pi.listing_number as listingNumber, WALLET_NUMBER as walletNumber, QUANTITY, image1, BUILDING_NAME as buildingName, EXPIRATION_DATE as expirationDate
-from (select po.listing_number as listing_number, po.wallet_number, po.QUANTITY, rei.BUILDING_NAME, rei.IMAGE1
-from PUBLIC_OFFERING po inner join real_estate_info rei 
-on po.LISTING_NUMBER = rei.LISTING_NUMBER) a inner join PUBLICATION_INFO pi
-on a.listing_number = pi.LISTING_NUMBER
-where wallet_number = 6;
+SELECT
+    REI.LISTING_NUMBER AS LISTINGNUMBER,
+    REI.IMAGE1         AS IMAGE1,
+    REI.IMAGE2         AS IMAGE2,
+    REI.IMAGE3         AS IMAGE3,
+    REI.BUILDING_NAME  AS BUILDINGNAME,
+    RES.INTRODUCTION   AS INTRODUCTION
+FROM
+    REAL_ESTATE_SALE RES
+    INNER JOIN REAL_ESTATE_INFO REI
+    ON RES.LISTING_NUMBER = REI.LISTING_NUMBER
+WHERE
+    STATE = '청약';
 
+SELECT
+    REI.LISTING_NUMBER AS LISTINGNUMBER,
+    REI.IMAGE1         AS IMAGE1,
+    REI.IMAGE2         AS IMAGE2,
+    REI.IMAGE3         AS IMAGE3,
+    REI.BUILDING_NAME  AS BUILDINGNAME,
+    RES.EVALUATION     AS EVALUATION
+FROM
+    REAL_ESTATE_SALE RES
+    INNER JOIN REAL_ESTATE_INFO REI
+    ON RES.LISTING_NUMBER = REI.LISTING_NUMBER
+WHERE
+    STATE = '거래';
 
-select listingNumber, walletNumber, QUANTITY, image1, buildingName, expirationDate, state from
-        (select pi.listing_number  as listingNumber,
-               WALLET_NUMBER   as walletNumber,
-               QUANTITY,
-               image1,
-               BUILDING_NAME   as buildingName,
-               EXPIRATION_DATE as expirationDate
-        from (select po.listing_number as listing_number, po.wallet_number, po.QUANTITY, rei.BUILDING_NAME, rei.IMAGE1
-              from PUBLIC_OFFERING po
-                       inner join real_estate_info rei
-                                  on po.LISTING_NUMBER = rei.LISTING_NUMBER) a
-                 inner join PUBLICATION_INFO pi
-                            on a.listing_number = pi.LISTING_NUMBER) b inner join REAL_ESTATE_SALE RES
-                                on b.LISTINGNUMBER = RES.LISTING_NUMBER
-        where walletNumber = 6 and state = '청약';
+SELECT
+    *
+FROM
+    PUBLIC_OFFERING;
 
+SELECT
+    PI.LISTING_NUMBER AS LISTINGNUMBER,
+    WALLET_NUMBER     AS WALLETNUMBER,
+    QUANTITY,
+    IMAGE1,
+    BUILDING_NAME     AS BUILDINGNAME,
+    EXPIRATION_DATE   AS EXPIRATIONDATE
+FROM
+    (
+        SELECT
+            PO.LISTING_NUMBER AS LISTING_NUMBER,
+            PO.WALLET_NUMBER,
+            PO.QUANTITY,
+            REI.BUILDING_NAME,
+            REI.IMAGE1
+        FROM
+            PUBLIC_OFFERING  PO
+            INNER JOIN REAL_ESTATE_INFO REI
+            ON PO.LISTING_NUMBER = REI.LISTING_NUMBER
+    )                A
+    INNER JOIN PUBLICATION_INFO PI
+    ON A.LISTING_NUMBER = PI.LISTING_NUMBER
+WHERE
+    WALLET_NUMBER = 6;
 
+SELECT
+    LISTINGNUMBER,
+    WALLETNUMBER,
+    QUANTITY,
+    IMAGE1,
+    BUILDINGNAME,
+    EXPIRATIONDATE,
+    STATE
+FROM
+    (
+        SELECT
+            PI.LISTING_NUMBER AS LISTINGNUMBER,
+            WALLET_NUMBER     AS WALLETNUMBER,
+            QUANTITY,
+            IMAGE1,
+            BUILDING_NAME     AS BUILDINGNAME,
+            EXPIRATION_DATE   AS EXPIRATIONDATE
+        FROM
+            (
+                SELECT
+                    PO.LISTING_NUMBER AS LISTING_NUMBER,
+                    PO.WALLET_NUMBER,
+                    PO.QUANTITY,
+                    REI.BUILDING_NAME,
+                    REI.IMAGE1
+                FROM
+                    PUBLIC_OFFERING  PO
+                    INNER JOIN REAL_ESTATE_INFO REI
+                    ON PO.LISTING_NUMBER = REI.LISTING_NUMBER
+            )                A
+            INNER JOIN PUBLICATION_INFO PI
+            ON A.LISTING_NUMBER = PI.LISTING_NUMBER
+    )                B
+    INNER JOIN REAL_ESTATE_SALE RES
+    ON B.LISTINGNUMBER = RES.LISTING_NUMBER
+WHERE
+    WALLETNUMBER = 6
+    AND STATE = '청약';
 
+SELECT
+    COUNT(WALLET_NUMBER) AS COUNTWALLETNUMBER,
+    NVL(SUM(QUANTITY), 0) AS SUMQUANTITY
+FROM
+    PUBLIC_OFFERING
+WHERE
+    LISTING_NUMBER = 19;
 
+SELECT
+    NVL(SUM(QUANTITY), 0) / VOLUME,
+    COUNT(WALLET_NUMBER)           AS COUNTWALLETNUMBER,
+    NVL(SUM(QUANTITY), 0)          AS SUMQUANTITY
+FROM
+    (
+        SELECT
+            PUBLIC_OFFERING.LISTING_NUMBER,
+            WALLET_NUMBER,
+            QUANTITY,
+            VOLUME
+        FROM
+            PUBLICATION_INFO
+            INNER JOIN PUBLIC_OFFERING
+            ON PUBLICATION_INFO.LISTING_NUMBER = PUBLIC_OFFERING.LISTING_NUMBER
+    )
+WHERE
+    LISTING_NUMBER = 19;
 
-select count(WALLET_NUMBER) AS countWalletNumber, NVL(sum(quantity), 0) as sumQuantity
-from public_offering
-where LISTING_NUMBER = 19;
+SELECT
+    *
+FROM
+    (
+        SELECT
+            RES.LISTING_NUMBER AS LISTINGNUMBER,
+            EVALUATION,
+            INTRODUCTION,
+            PRICE,
+            STATE,
+            BUILDING_NAME      AS BUILDINGNAME,
+            IMAGE1
+        FROM
+            REAL_ESTATE_SALE RES
+            INNER JOIN REAL_ESTATE_INFO REI
+            ON RES.LISTING_NUMBER = REI.LISTING_NUMBER
+    )
+WHERE
+    STATE = '거래';
 
+UPDATE ORDER_BOOK
+SET
+    AMOUNT = 1
+WHERE
+    LISTING_NUMBER = 20
+    AND TYPE = 'SELL'
+    AND PRICE >= 5000;
 
+UPDATE ORDER_BOOK
+SET
+    AMOUNT = 1
+WHERE
+    LISTING_NUMBER = 20
+    AND TYPE = 'BUY'
+    AND PRICE < 5000;
 
-select NVL(SUM(QUANTITY), 0) / VOLUME ,count(WALLET_NUMBER) AS countWalletNumber, NVL(sum(quantity), 0) as sumQuantity
-from (select PUBLIC_OFFERING.LISTING_NUMBER, WALLET_NUMBER, QUANTITY,volume
-from PUBLICATION_INFO inner join PUBLIC_OFFERING
-on publication_info.listing_number = PUBLIC_OFFERING.LISTING_NUMBER)
-where LISTING_NUMBER = 19;
+UPDATE ORDER_BOOK
+SET
+    AMOUNT = 0;
 
+COMMIT;
 
-select * from (
-select res.LISTING_NUMBER as listingNumber, evaluation, introduction, price, state, building_name as buildingName, image1 from REAL_ESTATE_SALE res inner join REAL_ESTATE_INFO rei
-on res.listing_number = rei.listing_number)
-where state = '거래';
+SELECT
+    *
+FROM
+    ORDER_BOOK;
 
-update order_book set amount = 1
-where listing_number = 20 and type = 'SELL' and price >= 5000;
-update order_book set amount = 1
-where listing_number = 20 and type = 'BUY' and price < 5000;
+SELECT
+    *
+FROM
+    ORDER_BOOK
+WHERE
+    LISTING_NUMBER = 20
+    AND AMOUNT > 0
+    AND TYPE = 'SELL'
+ORDER BY
+    PRICE DESC;
 
-update order_book set amount = 0;
-commit;
+SELECT
+    *
+FROM
+    ORDER_BOOK
+WHERE
+    LISTING_NUMBER = 20
+    AND AMOUNT > 0
+    AND TYPE = 'BUY'
+ORDER BY
+    PRICE DESC;
 
-select * from order_book;
-select * from order_book where listing_number = 20 and amount > 0 and type = 'SELL' order by price desc;
-select * from order_book where listing_number = 20 and amount > 0 and type = 'BUY' order by price desc;
+UPDATE ORDER_BOOK
+SET
+    AMOUNT = AMOUNT + 10
+WHERE
+    LISTING_NUMBER = 20
+    AND TYPE = 'BUY'
+    AND PRICE = 4990;
 
-        update order_book set amount = amount + 10
-        where listing_number = 20 and type = 'BUY' and price = 4990;
+SELECT
+    *
+FROM
+    EXECUTION;
 
-select * from EXECUTION;
-select * from STO_ORDERS;
-select * from stos;
+SELECT
+    *
+FROM
+    STO_ORDERS;
 
+SELECT
+    *
+FROM
+    STOS;
 
-update stos set amount = 100
-where WALLET_NUMBER = 6 and LISTING_NUMBER = 20;
-select * from stos;
+UPDATE STOS
+SET
+    AMOUNT = 100
+WHERE
+    WALLET_NUMBER = 6
+    AND LISTING_NUMBER = 20;
 
-select * from RESERVATION_ORDERS;
+SELECT
+    *
+FROM
+    STOS;
+
+SELECT
+    *
+FROM
+    RESERVATION_ORDERS;
+
 desc RESERVATION_ORDERS;
 
-select * from reservation_orders
-where wallet_number = 6 and not status = 'T'
-order by id desc;
+SELECT
+    *
+FROM
+    RESERVATION_ORDERS
+WHERE
+    WALLET_NUMBER = 6
+    AND NOT STATUS = 'T'
+ORDER BY
+    ID DESC;
 
-select * from REAL_ESTATE_INFO;
+SELECT
+    *
+FROM
+    REAL_ESTATE_INFO;
 
+SELECT
+    *
+FROM
+    STOS;
 
-select * from stos;
-select * from PUBLIC_OFFERING;
-delete from PUBLIC_OFFERING where WALLET_NUMBER = 6;
-commit;
+SELECT
+    *
+FROM
+    PUBLIC_OFFERING;
 
-select * from REAL_ESTATE_SALE;
+DELETE FROM PUBLIC_OFFERING
+WHERE
+    WALLET_NUMBER = 6;
+
+COMMIT;
+
+SELECT
+    *
+FROM
+    REAL_ESTATE_SALE;
 
 -- 토큰 현재 가격
-select LISTING_NUMBER, PRICE as currentPrice FROM REAL_ESTATE_SALE;
+SELECT
+    LISTING_NUMBER,
+    PRICE          AS CURRENTPRICE
+FROM
+    REAL_ESTATE_SALE;
 
 -- 빌딩명
-select LISTING_NUMBER, BUILDING_NAME as buildingName FROM REAL_ESTATE_INFO;
+SELECT
+    LISTING_NUMBER,
+    BUILDING_NAME  AS BUILDINGNAME
+FROM
+    REAL_ESTATE_INFO;
 
 -- 보유 토큰 수량
-select * from STOS where WALLET_NUMBER = :walletNumber;
+SELECT
+    *
+FROM
+    STOS
+WHERE
+    WALLET_NUMBER = :WALLETNUMBER;
 
 -- 매수 평균 가격
-SELECT 
+SELECT
     LISTING_NUMBER,
     WALLET_NUMBER,
-    AVG(EXECUTED_PRICE_AVG) AS avgBuyAmount
-FROM 
+    AVG(EXECUTED_PRICE_AVG) AS AVGBUYAMOUNT
+FROM
     STO_ORDERS
-WHERE 
-    WALLET_NUMBER = :walletNumber
+WHERE
+    WALLET_NUMBER = :WALLETNUMBER
     AND ORDER_TYPE = 'BUY'
     AND NOT STATUS = 'N'
-GROUP BY 
+GROUP BY
     LISTING_NUMBER, WALLET_NUMBER;
 
-
 -- 매수 평균 가격
-SELECT 
+SELECT
     LISTING_NUMBER,
     WALLET_NUMBER,
     EXECUTED_PRICE_AVG * EXECUTED_QUANTITY
-FROM 
+FROM
     STO_ORDERS
-WHERE 
-    WALLET_NUMBER = :walletNumber
+WHERE
+    WALLET_NUMBER = :WALLETNUMBER
     AND ORDER_TYPE = 'BUY'
     AND NOT STATUS = 'N';
 
-
-select * from stos;
-
-
+SELECT
+    *
+FROM
+    STOS;
 
 -- 보유 빌딩 정보
 SELECT
-    STOS.WALLET_NUMBER as walletNumber,
-    RE.LISTING_NUMBER as listingNumber,
-    RI.BUILDING_NAME AS buildingName,
-    round((STOS.amount * RE.PRICE) - (STOS.amount * STO.avgBuyPrice), 0) as profit,
-    round(((STOS.amount * RE.PRICE - STOS.amount * STO.avgBuyPrice) / (STOS.amount * STO.avgBuyPrice))  * 100, 2) as ROI,
-    STOS.amount,
-    RE.PRICE AS currentPrice,
-    STOS.amount * RE.PRICE as assessmentAmount,
-    round(STO.avgBuyPrice, 0) as avgBuyPrice
+    STOS.WALLET_NUMBER                                                                                           AS WALLETNUMBER,
+    RE.LISTING_NUMBER                                                                                            AS LISTINGNUMBER,
+    RI.BUILDING_NAME                                                                                             AS BUILDINGNAME,
+    ROUND((STOS.AMOUNT * RE.PRICE) - (STOS.AMOUNT * STO.AVGBUYPRICE), 0)                                         AS PROFIT,
+    ROUND(((STOS.AMOUNT * RE.PRICE - STOS.AMOUNT * STO.AVGBUYPRICE) / (STOS.AMOUNT * STO.AVGBUYPRICE)) * 100, 2) AS ROI,
+    STOS.AMOUNT,
+    RE.PRICE                                                                                                     AS CURRENTPRICE,
+    STOS.AMOUNT * RE.PRICE                                                                                       AS ASSESSMENTAMOUNT,
+    ROUND(STO.AVGBUYPRICE, 0)                                                                                    AS AVGBUYPRICE
 FROM
     REAL_ESTATE_SALE RE
-JOIN
-    REAL_ESTATE_INFO RI
-ON
-    RE.LISTING_NUMBER = RI.LISTING_NUMBER
-LEFT JOIN
-    STOS
-ON
-    RE.LISTING_NUMBER = STOS.LISTING_NUMBER
-    AND STOS.WALLET_NUMBER = :walletNumber
-LEFT JOIN
-    (
+    JOIN REAL_ESTATE_INFO RI
+    ON RE.LISTING_NUMBER = RI.LISTING_NUMBER LEFT JOIN STOS
+    ON RE.LISTING_NUMBER = STOS.LISTING_NUMBER
+    AND STOS.WALLET_NUMBER = :WALLETNUMBER
+    LEFT JOIN (
         SELECT
             LISTING_NUMBER,
             WALLET_NUMBER,
-            AVG(EXECUTED_PRICE_AVG) AS avgBuyPrice
+            AVG(EXECUTED_PRICE_AVG) AS AVGBUYPRICE
         FROM
             STO_ORDERS
         WHERE
-            WALLET_NUMBER = :walletNumber
+            WALLET_NUMBER = :WALLETNUMBER
             AND ORDER_TYPE = 'BUY'
-            AND not STATUS = 'N'
+            AND NOT STATUS = 'N'
         GROUP BY
             LISTING_NUMBER, WALLET_NUMBER
     ) STO
-ON
-    RE.LISTING_NUMBER = STO.LISTING_NUMBER
+    ON RE.LISTING_NUMBER = STO.LISTING_NUMBER
 WHERE
-    STOS.WALLET_NUMBER = :walletNumber;
+    STOS.WALLET_NUMBER = :WALLETNUMBER;
 
+SELECT
+    *
+FROM
+    REAL_ESTATE_INFO;
 
+SELECT
+    *
+FROM
+    SOLD_BUILDING;
 
-
-select * from REAL_ESTATE_INFO;
-select * from sold_building;
-select * from PUBLICATION_INFO;
+SELECT
+    *
+FROM
+    PUBLICATION_INFO;
 
 -- 매각 투표 정보
-SELECT SB.LISTING_NUMBER as listingNumber, SB.START_DATE as startDate, SB.EXPIRATION_DATE as expirationDate, SB.DIVIDEND as dividend, SB.AMOUNT as amount, RE.BUILDING_NAME as buildingName, PI.TOTAL_AMOUNT as publicOfferingAmount, PI.VOLUME as publicOfferingVolume, PI.ISSUE_PRICE as issuePrice, stos.AMOUNT as memberAmount
-FROM REAL_ESTATE_INFO RE
-INNER JOIN sold_building SB ON RE.listing_number = SB.listing_number
-INNER JOIN PUBLICATION_INFO PI ON RE.listing_number = PI.listing_number
-inner join stos on re.LISTING_NUMBER = stos.LISTING_NUMBER
-where wallet_number = :walletNumebr;
+SELECT
+    SB.LISTING_NUMBER  AS LISTINGNUMBER,
+    SB.START_DATE      AS STARTDATE,
+    SB.EXPIRATION_DATE AS EXPIRATIONDATE,
+    SB.DIVIDEND        AS DIVIDEND,
+    SB.AMOUNT          AS AMOUNT,
+    RE.BUILDING_NAME   AS BUILDINGNAME,
+    PI.TOTAL_AMOUNT    AS PUBLICOFFERINGAMOUNT,
+    PI.VOLUME          AS PUBLICOFFERINGVOLUME,
+    PI.ISSUE_PRICE     AS ISSUEPRICE,
+    STOS.AMOUNT        AS MEMBERAMOUNT
+FROM
+    REAL_ESTATE_INFO RE
+    INNER JOIN SOLD_BUILDING SB
+    ON RE.LISTING_NUMBER = SB.LISTING_NUMBER
+    INNER JOIN PUBLICATION_INFO PI
+    ON RE.LISTING_NUMBER = PI.LISTING_NUMBER
+    INNER JOIN STOS
+    ON RE.LISTING_NUMBER = STOS.LISTING_NUMBER
+WHERE
+    WALLET_NUMBER = :WALLETNUMEBR;
 
 -- 찬반 수량 세기
-select sum(quantity)
-from sell_vote
-where listing_number = 13;
-
+SELECT
+    SUM(QUANTITY)
+FROM
+    SELL_VOTE
+WHERE
+    LISTING_NUMBER = 13;
 
 -- 매각 투표 내용
-SELECT 
-    SB.LISTING_NUMBER as listingNumber, 
-    SB.START_DATE as startDate, 
-    SB.EXPIRATION_DATE as expirationDate, 
-    SB.DIVIDEND as dividend, 
-    SB.AMOUNT as amount, 
-    RE.BUILDING_NAME as buildingName, 
-    PI.TOTAL_AMOUNT as publicOfferingAmount, 
-    PI.VOLUME as publicOfferingVolume, 
-    PI.ISSUE_PRICE as issuePrice, 
-    stos.AMOUNT as memberAmount,
-    NVL(SV.total_quantity, 0) as sellVoteTotalQuantity
-FROM REAL_ESTATE_INFO RE
-INNER JOIN REAL_ESTATE_SALE RES ON RES.LISTING_NUMBER = RE.LISTING_NUMBER 
-INNER JOIN sold_building SB ON RE.listing_number = SB.listing_number
-INNER JOIN PUBLICATION_INFO PI ON RE.listing_number = PI.listing_number
-INNER JOIN stos ON re.LISTING_NUMBER = stos.LISTING_NUMBER
-LEFT JOIN (
-    SELECT 
-        listing_number, 
-        SUM(quantity) as total_quantity
-    FROM sell_vote
-    GROUP BY listing_number
-) SV ON SV.listing_number = RE.listing_number
-WHERE wallet_number = :walletNumebr and res.STATE = '거래';
-
-
-
+SELECT
+    SB.LISTING_NUMBER         AS LISTINGNUMBER,
+    SB.START_DATE             AS STARTDATE,
+    SB.EXPIRATION_DATE        AS EXPIRATIONDATE,
+    SB.DIVIDEND               AS DIVIDEND,
+    SB.AMOUNT                 AS AMOUNT,
+    RE.BUILDING_NAME          AS BUILDINGNAME,
+    PI.TOTAL_AMOUNT           AS PUBLICOFFERINGAMOUNT,
+    PI.VOLUME                 AS PUBLICOFFERINGVOLUME,
+    PI.ISSUE_PRICE            AS ISSUEPRICE,
+    STOS.AMOUNT               AS MEMBERAMOUNT,
+    NVL(SV.TOTAL_QUANTITY, 0) AS SELLVOTETOTALQUANTITY
+FROM
+    REAL_ESTATE_INFO RE
+    INNER JOIN REAL_ESTATE_SALE RES
+    ON RES.LISTING_NUMBER = RE.LISTING_NUMBER
+    INNER JOIN SOLD_BUILDING SB
+    ON RE.LISTING_NUMBER = SB.LISTING_NUMBER
+    INNER JOIN PUBLICATION_INFO PI
+    ON RE.LISTING_NUMBER = PI.LISTING_NUMBER
+    INNER JOIN STOS
+    ON RE.LISTING_NUMBER = STOS.LISTING_NUMBER
+    LEFT JOIN (
+        SELECT
+            LISTING_NUMBER,
+            SUM(QUANTITY) AS TOTAL_QUANTITY
+        FROM
+            SELL_VOTE
+        GROUP BY
+            LISTING_NUMBER
+    ) SV
+    ON SV.LISTING_NUMBER = RE.LISTING_NUMBER
+WHERE
+    WALLET_NUMBER = :WALLETNUMEBR
+    AND RES.STATE = '거래';
 
 desc SOLD_BUILDING;
-select * from REAL_ESTATE_SALE order by LISTING_NUMBER desc;
+
+SELECT
+    *
+FROM
+    REAL_ESTATE_SALE
+ORDER BY
+    LISTING_NUMBER DESC;
 
 -- 찬성 수
-SELECT SUM(QUANTITY) AS totalProsQuantity
-FROM SELL_VOTE
-WHERE LISTING_NUMBER = :specific_listing_number AND PROS_CONS = 'P';
+SELECT
+    SUM(QUANTITY) AS TOTALPROSQUANTITY
+FROM
+    SELL_VOTE
+WHERE
+    LISTING_NUMBER = :SPECIFIC_LISTING_NUMBER
+    AND PROS_CONS = 'P';
 
 -- 투표 수
-SELECT SUM(QUANTITY) AS totalProsQuantity
-FROM SELL_VOTE
-WHERE LISTING_NUMBER = :specific_listing_number;
+SELECT
+    SUM(QUANTITY) AS TOTALPROSQUANTITY
+FROM
+    SELL_VOTE
+WHERE
+    LISTING_NUMBER = :SPECIFIC_LISTING_NUMBER;
 
+INSERT INTO STOS(
+    LISTING_NUMBER,
+    WALLET_NUMBER,
+    AMOUNT
+) VALUES(
+    31,
+    13,
+    100
+);
 
-insert into stos(LISTING_NUMBER, WALLET_NUMBER, amount)
-values(31, 13, 100);
+SELECT
+    *
+FROM
+    SOLD_BUILDING;
 
-select * from SOLD_BUILDING;
-select * from stos;
-select * from DIVIDEND_DETAILS;
+SELECT
+    *
+FROM
+    STOS;
 
-select * from stos;
+SELECT
+    *
+FROM
+    DIVIDEND_DETAILS;
+
+SELECT
+    *
+FROM
+    STOS;
+
+SELECT
+    *
+FROM
+    WALLET_TRANSACTION
+ORDER BY
+    TRANSACTION_NUMBER DESC;
+
+SELECT
+    *
+FROM
+    PUBLIC_OFFERING;
+
+SELECT
+    DD.PAYOUT_NUMBER  AS PAYOUTNUMBER,
+    DD.PAYOUT_NUMBER  AS PAYOUTNUMBER,
+    DD.WALLET_NUMBER  AS WALLETNUMBER,
+    DD.LISTING_NUMBER AS LISTINGNUMBER,
+    DD.PAYOUT         AS PAYOUT,
+    DD.PAYOUT_DATE    AS PAYOUTDATE,
+    REI.BUILDING_NAME AS BUILDINGNAME
+FROM
+    DIVIDEND_DETAILS DD
+    INNER JOIN REAL_ESTATE_INFO REI
+    ON DD.LISTING_NUMBER = REI.LISTING_NUMBER
+WHERE
+    WALLET_NUMBER = 13
+ORDER BY
+    PAYOUT_NUMBER DESC;
+
+SELECT
+    *
+FROM
+    (
+        SELECT
+            RES.LISTING_NUMBER AS LISTINGNUMBER,
+            STATE,
+            BUILDING_NAME      AS BUILDINGNAME,
+            IMAGE1,
+            to_char(SB.SOLD_DATE, 'YYYY-MM-DD')       AS SOLDDATE,
+            SB.AMOUNT          AS AMOUNT,
+            SB.DIVIDEND        AS DIVIDEND,
+            PI.TOTAL_AMOUNT    AS publicationAmount
+        FROM
+            REAL_ESTATE_SALE RES
+            INNER JOIN REAL_ESTATE_INFO REI
+            ON RES.LISTING_NUMBER = REI.LISTING_NUMBER
+            INNER JOIN SOLD_BUILDING SB
+            ON RES.LISTING_NUMBER = SB.LISTING_NUMBER
+            INNER JOIN PUBLICATION_INFO PI 
+            ON RES.LISTING_NUMBER = PI.LISTING_NUMBER
+    )
+WHERE
+    STATE = '매각';
+
+    select * from PUBLICATION_INFO;

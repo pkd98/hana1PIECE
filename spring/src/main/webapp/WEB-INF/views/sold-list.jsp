@@ -33,18 +33,29 @@
     <div class="container mt-5">
         <div class="row">
 
-            <c:forEach var="" items="">
+            <c:forEach var="item" items="${soldEstateListDTO}">
 
             <!-- 매물 1 -->
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <img src="/resources/img/lotterTower.jpg" alt="부동산 이미지" class="img-fluid">
+                <img src="/resources/upload/${item.listingNumber}/${item.image1}" alt="부동산 이미지" class="img-fluid">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">롯데월드 타워 1층 1호</h5>
-                        <p class="text-danger small mb-2">저평가</p>
+                        <h5 class="card-title">${item.buildingName}</h5>
+                        <div class="text-right">
+                            <p class="small text-muted mb-1">매각일</p>
+                            <p>${item.soldDate}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="small text-muted mb-1">청약 모집액</p>
+                            <p class="formatted-number">${item.publicationAmount}원</p>
+                        </div>
                         <div class="text-right">
                             <p class="small text-muted mb-1">매각액</p>
-                            <p>5,000원</p>
+                            <p class="formatted-number">${item.amount}원</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="small text-muted mb-1">1STO 당 매각 배당금</p>
+                            <p class="formatted-number">${item.dividend}원</p>
                         </div>
                     </div>
                 </div>
@@ -58,6 +69,27 @@
 
 
 <%@ include file="include/footer.jsp" %>
+
+<script>
+    function formatNumbers() {
+        $('.formatted-number').each(function () {
+            var number = $(this).text();
+            var formattedNumber = numberWithCommas(number);
+            $(this).text(formattedNumber);
+        });
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    $(document).ready(function () {
+        /**
+         *  금액 천단위 구분 쉼표 추가
+         */
+        formatNumbers();
+    });
+</script>
 
 <!-- jQuery and Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

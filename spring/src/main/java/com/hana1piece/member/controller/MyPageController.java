@@ -1,7 +1,6 @@
 package com.hana1piece.member.controller;
 
 import com.hana1piece.estate.model.mapper.PublicOfferingMapper;
-import com.hana1piece.estate.model.vo.RealEstateInfoVO;
 import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.estate.service.PublicOfferingService;
 import com.hana1piece.member.model.dto.*;
@@ -11,12 +10,10 @@ import com.hana1piece.member.service.MyPageService;
 import com.hana1piece.trading.model.vo.ReservationOrdersVO;
 import com.hana1piece.trading.model.vo.StoOrdersVO;
 import com.hana1piece.trading.service.ReservationOrderService;
-import com.hana1piece.wallet.model.vo.AccountVO;
-import com.hana1piece.wallet.model.vo.BankTransactionVO;
-import com.hana1piece.wallet.model.vo.WalletTransactionVO;
-import com.hana1piece.wallet.model.vo.WalletVO;
+import com.hana1piece.wallet.model.dto.DividendDetailsDTO;
+import com.hana1piece.wallet.model.vo.*;
+import com.hana1piece.wallet.service.DividendService;
 import com.hana1piece.wallet.service.WalletService;
-import org.apache.commons.collections.list.SynchronizedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,15 +29,17 @@ public class MyPageController {
     private final MemberService memberService;
     private final MyPageService myPageService;
     private final WalletService walletService;
+    private final DividendService dividendService;
     private final PublicOfferingService publicOfferingService;
     private final ReservationOrderService reservationOrderService;
     private final EstateService estateService;
 
     @Autowired
-    public MyPageController(MemberService memberService, MyPageService myPageService, WalletService walletService, EstateService estateService, PublicOfferingMapper publicOfferingMapper, PublicOfferingService publicOfferingService, ReservationOrderService reservationOrderService, EstateService estateService1) {
+    public MyPageController(MemberService memberService, MyPageService myPageService, WalletService walletService, EstateService estateService, PublicOfferingMapper publicOfferingMapper, DividendService dividendService, PublicOfferingService publicOfferingService, ReservationOrderService reservationOrderService, EstateService estateService1) {
         this.memberService = memberService;
         this.myPageService = myPageService;
         this.walletService = walletService;
+        this.dividendService = dividendService;
         this.publicOfferingService = publicOfferingService;
         this.reservationOrderService = reservationOrderService;
         this.estateService = estateService1;
@@ -81,6 +80,11 @@ public class MyPageController {
         // 총자산
         MembersTotalAssetDTO membersTotalAssetDTO = myPageService.getMembersTotalAsset(wallet.getWalletNumber());
         mav.addObject("membersTotalAssetDTO", membersTotalAssetDTO);
+        // 6개월 누적 배당금
+        mav.addObject("totalDividendFor6month", dividendService.sumDividendFor6monthByWN(wallet.getWalletNumber()));
+        // 배당금 지급 내역
+        List<DividendDetailsDTO> dividendDetailsDTOList = dividendService.findByWN(wallet.getWalletNumber());
+        mav.addObject("dividendDetailsDTOList", dividendDetailsDTOList);
         // 매각 투표
         List<MembersSellVoteDTO> membersSellVoteDTOList = myPageService.getMembersSellVoteDTOByWalletNumber(wallet.getWalletNumber());
         mav.addObject("membersSellVoteDTOList", membersSellVoteDTOList);

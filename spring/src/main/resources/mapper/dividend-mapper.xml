@@ -14,12 +14,28 @@
         select * from dividend_details order by payout_number desc
     </select>
 
-    <select id="findByWN" parameterType="int" resultMap="DividendDetailsMap">
-        select * from dividend_details where wallet_number = #{WN} order by payout_number desc
+    <select id="findByWN" parameterType="int" resultType="com.hana1piece.wallet.model.dto.DividendDetailsDTO">
+        select DD.PAYOUT_NUMBER  as payoutNumber,
+               dd.PAYOUT_NUMBER  as payoutNumber,
+               DD.WALLET_NUMBER  as walletNumber,
+               DD.LISTING_NUMBER as listingNumber,
+               DD.PAYOUT         as payout,
+               DD.PAYOUT_DATE    as payoutDate,
+               rei.BUILDING_NAME as buildingName
+        from DIVIDEND_DETAILS dd
+                 inner join REAL_ESTATE_INFO rei
+                            on dd.listing_number = rei.LISTING_NUMBER
+        where wallet_number = #{WN}
+        order by payout_number desc
     </select>
 
     <select id="findByLN" parameterType="int" resultMap="DividendDetailsMap">
         select * from dividend_details where listing_number = #{LN} order by payout_number desc
+    </select>
+
+    <select id="sumDividendFor6monthByWN" parameterType="int" resultType="int">
+        select sum(payout) from dividend_details
+        where wallet_number = #{WN}
     </select>
 
     <insert id="insertDividendDetails" parameterType="com.hana1piece.wallet.model.vo.DividendDetailsVO">

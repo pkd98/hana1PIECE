@@ -200,4 +200,23 @@
         where state = '거래'
     </select>
 
+    <select id="findSoldEstateListDTO" resultType="com.hana1piece.estate.model.dto.SoldEstateListDTO">
+        SELECT *
+        FROM (SELECT RES.LISTING_NUMBER                  AS LISTINGNUMBER,
+                     STATE,
+                     BUILDING_NAME                       AS BUILDINGNAME,
+                     IMAGE1,
+                     to_char(SB.SOLD_DATE, 'YYYY-MM-DD') AS SOLDDATE,
+                     SB.AMOUNT                           AS AMOUNT,
+                     SB.DIVIDEND                         AS DIVIDEND,
+                     PI.TOTAL_AMOUNT                     AS publicationAmount
+              FROM REAL_ESTATE_SALE RES
+                       INNER JOIN REAL_ESTATE_INFO REI
+                                  ON RES.LISTING_NUMBER = REI.LISTING_NUMBER
+                       INNER JOIN SOLD_BUILDING SB
+                                  ON RES.LISTING_NUMBER = SB.LISTING_NUMBER
+                       INNER JOIN PUBLICATION_INFO PI
+                                  ON RES.LISTING_NUMBER = PI.LISTING_NUMBER)
+        WHERE STATE = '매각'    </select>
+
 </mapper>

@@ -72,7 +72,10 @@
         </div>
         <div class="card-body">
             <div class="card-content">
-                <p class="value-title">건물가치</p>
+                <div class="container">
+                    <p class="value-title"><img id="info" src="/resources/img/info.png" alt="info" width="18" height="18"> 실제 건물 가치</p>
+                </div>
+                <div class="info-description" id="description"><b>실건물의 평당가</b>를 환산한 가격 입니다. </br> * <i>네이버 부동산 제공</i></div>
                 <h6 class="value"><span id="resonablePrice" class="formatted-number">${realEstateSale.reasonablePrice}</span>원</h6>
                 <small id="yesterday"></small>
             </div>
@@ -81,7 +84,7 @@
                 <h6 class="value formatted-number" style="color: red; font-size: 2rem;"><span id="realEstatePrice">${realEstateSale.price}</span>원</h6>
             </div>
             <div class="card-content">
-                <p class="value-title">건물가치 대비</p>
+                <p class="value-title">실제 건물 대비</p>
                 <h6 class="value" id="percentageDifference"></h6>
                 <small id="evaluationText"></small>
             </div>
@@ -334,6 +337,26 @@
 <%@ include file="include/footer.jsp" %>
 
 <script>
+
+    /**
+     * mounse over info 구현
+     */
+    const valueTitle = document.getElementById('info');
+    const description = document.getElementById('description');
+
+    // 마우스가 요소에 들어갈 때
+    valueTitle.addEventListener('mouseenter', () => {
+        // 추가 설명 내용을 보이도록 스타일 변경
+        description.style.display = 'block';
+    });
+
+    // 마우스가 요소에서 나갈 때
+    valueTitle.addEventListener('mouseleave', () => {
+        // 추가 설명 내용을 숨기도록 스타일 변경
+        description.style.display = 'none';
+    });
+
+
     /**
      *  배당 기준일 문자 포멧 변경
      */
