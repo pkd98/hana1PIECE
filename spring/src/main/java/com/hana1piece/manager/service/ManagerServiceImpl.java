@@ -4,6 +4,7 @@ import com.hana1piece.estate.model.mapper.EstateMapper;
 import com.hana1piece.estate.model.mapper.PublicOfferingMapper;
 import com.hana1piece.estate.model.vo.*;
 import com.hana1piece.logger.service.LoggerService;
+import com.hana1piece.manager.model.dto.DividendPaymentDTO;
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.mapper.ManagerMapper;
@@ -231,6 +232,16 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void registerTenantInfo(TenantInfoVO tenantInfoVO) {
         estateMapper.insertTenantInfo(tenantInfoVO);
+    }
+
+    @Override
+    public void dividendPayment(DividendPaymentDTO dividendPaymentDTO) {
+
+    }
+
+    @Override
+    public void dividendPaymentUsingProcedure(DividendPaymentDTO dividendPaymentDTO) {
+        managerMapper.dividendPaymentUsingProcedure(dividendPaymentDTO);
     }
 
     @Override

@@ -4,8 +4,19 @@
 
 <mapper namespace="com.hana1piece.manager.model.mapper.ManagerMapper">
 
-    <select id="login" parameterType="com.hana1piece.manager.model.dto.ManagerLoginDTO" resultType="com.hana1piece.manager.model.vo.ManagerVO">
-        select id, name, enroll_date as enrollDate, image, position, introduction from manager where id = #{id} and password = #{password}
+    <select id="login" parameterType="com.hana1piece.manager.model.dto.ManagerLoginDTO"
+            resultType="com.hana1piece.manager.model.vo.ManagerVO">
+        select id, name, enroll_date as enrollDate, image, position, introduction
+        from manager
+        where id = #{id}
+          and password = #{password}
+    </select>
+
+    <select id="dividendPaymentUsingProcedure" parameterType="com.hana1piece.manager.model.dto.DividendPaymentDTO"
+            statementType="CALLABLE">
+        {CALL HANA1PIECE_MNG.PAY_DIVIDEND(
+                        p_listing_number => #{listingNumber}, p_payout => #{payout}
+            )}
     </select>
 
 </mapper>

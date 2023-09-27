@@ -270,28 +270,29 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-6 text-left">
-                                        <label for="buildingInput">빌딩</label>
+                                        <label for="targetBuilding">빌딩</label>
                                     </div>
                                     <div class="col-6 text-right">
-                                        <select class="form-control" id="buildingInput">
-                                            <!-- 여기에 선택 항목을 추가할 수 있습니다. -->
-                                            <option>예시 빌딩 1</option>
-                                            <option>예시 빌딩 2</option>
+                                        <select class="form-control" id="targetBuilding">
+                                            <c:forEach var="item" items="${listedEstateList}">
+                                                <option value="${item.listingNumber}">
+                                                    (${item.listingNumber}) ${item.buildingName}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-6 text-left">
-                                        <label for="amountInput">토큰당 지급액</label>
+                                        <label for="dividendAmount">토큰당 지급액</label>
                                     </div>
                                     <div class="col-6 text-right">
-                                        <input type="number" class="form-control" id="amountInput"
+                                        <input type="number" class="form-control" id="dividendAmount"
                                                placeholder="금액을 입력하세요">
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer" style="justify-content: center;">
-                                <button type="button" class="btn" style="background-color: #008485; color: white;">지급
+                                <button id="dividendPaymentSubmit" type="button" class="btn" style="background-color: #008485; color: white;">지급
                                     확인
                                 </button>
                             </div>
@@ -513,20 +514,22 @@
                                 <div class="mb-3">
                                     <label for="saleVoteListingNumber">매각 대상</label>
                                     <select class="form-control" id="saleVoteListingNumber">
-                                        <!-- 여기에 선택 항목을 추가할 수 있습니다. -->
                                         <c:forEach var="item" items="${listedEstateList}">
-                                            <option value="${item.listingNumber}">(${item.listingNumber}) ${item.buildingName}</option>
+                                            <option value="${item.listingNumber}">
+                                                (${item.listingNumber}) ${item.buildingName}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="voteStartDate">투표기간</label>
                                     <div>
-                                        <input id="voteStartDate" type="text" class="form-control datepicker d-inline-block"
+                                        <input id="voteStartDate" type="text"
+                                               class="form-control datepicker d-inline-block"
                                                style="width: 47%;"
                                                placeholder="시작일">
                                         <span class="d-inline-block mx-1">~</span>
-                                        <input id="voteExpirationDate" type="text" class="form-control datepicker d-inline-block"
+                                        <input id="voteExpirationDate" type="text"
+                                               class="form-control datepicker d-inline-block"
                                                style="width: 47%;"
                                                placeholder="종료일">
                                     </div>
@@ -542,7 +545,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer" style="justify-content: center;">
-                                <button id="saleVoteConfirmBtn" type="button" class="btn" style="background-color: #008485; color: white;">등록
+                                <button id="saleVoteConfirmBtn" type="button" class="btn"
+                                        style="background-color: #008485; color: white;">등록
                                     확인
                                 </button>
                             </div>
@@ -948,26 +952,57 @@
                     "amount": saleAmount,
                     "dividend": saleDividend
                 }),
-                success: function(response) {
+                success: function (response) {
                     // 기존 모달 닫기
                     $("#saleVoteModal").modal('hide');
                     // 성공 모달 표시
                     $("#managerSuccessModal").modal('show');
                 },
-                error: function(error) {
+                error: function (error) {
                     // 기존 모달 닫기
                     $("#saleVoteModal").modal('hide');
                     // 실패 모달 표시
                     $("#managerErrorModal").modal('show');
                 }
             })
+        });
 
+        /**
+         *  배당금 지급
+         */
+        $("#dividendPaymentSubmit").click(function () {
+            // 매각 대상 건물
+            const listingNumber = $("#targetBuilding").val();
+            // 매각 배당금
+            const payout = $("#dividendAmount").val();
+
+            $.ajax({
+                url: '/manager/dividend-payment',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "listingNumber": listingNumber,
+                    "payout": payout
+                }),
+                success: function (response) {
+                    // 기존 모달 닫기
+                    $("#dividendModal").modal('hide');
+                    // 성공 모달 표시
+                    $("#managerSuccessModal").modal('show');
+                },
+                error: function (error) {
+                    // 기존 모달 닫기
+                    $("#dividendModal").modal('hide');
+                    // 실패 모달 표시
+                    $("#managerErrorModal").modal('show');
+                }
+            })
         });
 
         /**
          *  공지 등록
          */
-        $('#writeAnnouncement').click(function() {
+        $('#writeAnnouncement').click(function () {
             var title = $('#announcementTitle').val();
             var content = $('#announcementContent').val();
 
@@ -979,13 +1014,13 @@
                     "title": title,
                     "content": content
                 }),
-                success: function(response) {
+                success: function (response) {
                     // 모달 창 닫기
                     $('#announcementModal').modal('hide');
                     // 성공 모달 표시
                     $("#managerSuccessModal").modal('show');
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                     // 모달 창 닫기
                     $('#announcementModal').modal('hide');

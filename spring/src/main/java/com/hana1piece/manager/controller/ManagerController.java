@@ -2,6 +2,7 @@ package com.hana1piece.manager.controller;
 
 import com.hana1piece.estate.model.vo.SoldBuildingVO;
 import com.hana1piece.estate.service.EstateService;
+import com.hana1piece.manager.model.dto.DividendPaymentDTO;
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.vo.ManagerVO;
@@ -102,6 +103,19 @@ public class ManagerController {
     public ResponseEntity estateListing(@RequestParam int listingNumber) {
         try {
             managerService.estateListing(listingNumber);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+        }
+    }
+
+    /**
+     *  배당금 지급
+     */
+    @PutMapping("/manager/dividend-payment")
+    public ResponseEntity dividend(@Valid @RequestBody DividendPaymentDTO dividendPaymentDTO) {
+        try {
+            managerService.dividendPaymentUsingProcedure(dividendPaymentDTO);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");

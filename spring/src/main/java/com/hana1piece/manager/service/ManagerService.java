@@ -1,6 +1,7 @@
 package com.hana1piece.manager.service;
 
 import com.hana1piece.estate.model.vo.*;
+import com.hana1piece.manager.model.dto.DividendPaymentDTO;
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 
@@ -37,6 +38,18 @@ public interface ManagerService {
     // 임차인 정보 등록
     void registerTenantInfo(TenantInfoVO tenantInfoVO);
 
-    // 매각 매물 등록 (투표)
+
+    /**
+     *  배당금 지급
+     */
+    void dividendPayment(DividendPaymentDTO dividendPaymentDTO);
+    void dividendPaymentUsingProcedure(DividendPaymentDTO dividendPaymentDTO);
+
+
+    /**
+     * 매각 매물 등록 (투표)
+      */
     void registerSaleVote(SoldBuildingVO soldBuildingVO);
+
+
 }
