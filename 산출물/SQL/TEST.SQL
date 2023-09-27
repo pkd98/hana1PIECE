@@ -40,7 +40,7 @@ FROM
 -- 계좌 입금
 BEGIN
     HANA_BANK_MNG.DEPOSIT(
-        P_ACCOUNT_NUMBER => '99900000016394',
+        P_ACCOUNT_NUMBER => '99900000019394',
         P_AMOUNT=>500000000,
         P_NAME=>'무통장 입금',
         P_RECIPIENT_ACCOUNT_NUMBER=>'CD'
@@ -1023,3 +1023,4 @@ WHERE
 BEGIN
     HANA1PIECE_MNG.PAY_DIVIDEND(p_listing_number => 26, p_payout => 10);
 END;
+/

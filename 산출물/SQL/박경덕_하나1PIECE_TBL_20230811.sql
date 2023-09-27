@@ -279,7 +279,7 @@ CREATE TABLE ONE_MEMBERS (
 
 -- 지갑
 CREATE TABLE WALLET (
-  WALLET_NUMBER NUMBER(8) DEFAULT WN_SEQ.NEXTVAL PRIMARY KEY,       -- 지갑번호
+  WALLET_NUMBER NUMBER(20) DEFAULT WN_SEQ.NEXTVAL PRIMARY KEY,         -- 지갑번호
   MEMBER_ID VARCHAR2(20) NOT NULL,                                     -- 회원 아이디
   ACCOUNT_NUMBER VARCHAR2(20) NOT NULL,                                -- 연동 계좌번호
   PASSWORD VARCHAR2(4) NOT NULL,                                       -- 지갑 비밀번호
