@@ -14,7 +14,7 @@
 
     <select id="dividendPaymentUsingProcedure" parameterType="com.hana1piece.manager.model.dto.DividendPaymentDTO"
             statementType="CALLABLE">
-        {CALL HANA1PIECE_MNG.PAY_DIVIDEND(
+        {CALL HANA1PIECE_MNG.PAY_DIVIDEND2(
                         p_listing_number => #{listingNumber}, p_payout => #{payout}
             )}
     </select>

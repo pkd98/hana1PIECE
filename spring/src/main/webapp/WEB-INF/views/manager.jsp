@@ -976,6 +976,10 @@
             // 매각 배당금
             const payout = $("#dividendAmount").val();
 
+            // 스피너 시작
+            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 처리중...');
+            $(this).prop('disabled', true);
+
             $.ajax({
                 url: '/manager/dividend-payment',
                 type: 'PUT',
@@ -985,6 +989,8 @@
                     "payout": payout
                 }),
                 success: function (response) {
+                    // 스피너 정지 및 초기화
+                    $("#dividendPaymentSubmit").html('지급 확인').prop('disabled', false);
                     // 기존 모달 닫기
                     $("#dividendModal").modal('hide');
                     // 성공 모달 표시

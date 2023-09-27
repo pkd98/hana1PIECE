@@ -35,7 +35,11 @@ public class DividendServiceImpl implements DividendService {
 
     @Override
     public int sumDividendFor6monthByWN(int WN) {
-        return dividendMapper.sumDividendFor6monthByWN(WN);
+        try {
+            return dividendMapper.sumDividendFor6monthByWN(WN);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override
