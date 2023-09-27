@@ -1,4 +1,4 @@
-# Created by https://www.toptal.com/developers/gitignore/api/flask
+Created by https://www.toptal.com/developers/gitignore/api/flask
 # Edit at https://www.toptal.com/developers/gitignore?templates=flask
 
 ### Flask ###
@@ -170,5 +170,5 @@ cython_debug/
 # End of https://www.toptal.com/developers/gitignore/api/flask
 
 # DB config file
-.DBconfig.env
-.Wallet_oracle/
+/DBconfig.env
+/Wallet_oracle/
