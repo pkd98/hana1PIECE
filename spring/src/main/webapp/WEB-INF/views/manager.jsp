@@ -104,7 +104,7 @@
                                         <a class="nav-link" href="#register"><span>배당금 | 공모/청약 | 매각 등록</span></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#transaction-analysis"><span>거래 분석</span></a>
+                                        <a class="nav-link" href="#transaction-analysis"><span>거래 현황</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#order-transaction-scan"><span>주문 트랜잭션 스캔</span></a>
@@ -235,7 +235,7 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-6 text-left">
-                                        <label for="buildingInput">빌딩명</label>
+                                        <label for="listingBuildingInput">빌딩명</label>
                                     </div>
                                     <div class="col-6 text-right">
                                         <select class="form-control" id="listingBuildingInput">
@@ -593,7 +593,36 @@
 
             <div class="container mt-5">
                 <div class="mypage-title">
-                    <h2 id="transaction-analysis">거래 분석</h2>
+                    <h2 id="transaction-analysis">거래 현황</h2>
+                </div>
+            </div>
+            <!-- 총 자산 & 파이 차트 영역 -->
+            <div class="row equal-height-row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                    <!-- 총 자산 -->
+                    <div class="card total-asset">
+                        <div class="card-header">총 예수금</div>
+                        <div class="card-body flex1" id="total-asset-body">
+                            <div class="asset-container">
+                                <h3 class="formatted-number">${membersTotalAssetDTO.asset}원</h3><span
+                                    class="percentage formatted-number"
+                                    style="color: ${membersTotalAssetDTO.investmentReturn < 0 ? '#0074D9' : '#E63946'};">${membersTotalAssetDTO.investmentReturn} (${membersTotalAssetDTO.ROI}%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                    <!-- 파이 차트 -->
+                    <div class="card total-asset">
+                        <div class="card-header">거래 대금</div>
+                        <div class="card-body flex1">
+                            <div class="asset-container">
+                                <h3 class="formatted-number">${membersTotalAssetDTO.asset}원</h3><span
+                                    class="percentage formatted-number"
+                                    style="color: ${membersTotalAssetDTO.investmentReturn < 0 ? '#0074D9' : '#E63946'};">${membersTotalAssetDTO.investmentReturn} (${membersTotalAssetDTO.ROI}%)</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -608,66 +637,30 @@
                     <table class="table table-bordered table-hover">
                         <thead class="thead-light">
                         <tr>
-                            <th>주문번호</th>
-                            <th>거래대상</th>
+                            <th>#주문번호</th>
+                            <th>매물번호</th>
                             <th>지갑번호</th>
                             <th>유형</th>
-                            <th>거래상태</th>
-                            <th>거래수량</th>
-                            <th>거래금액</th>
+                            <th>주문금액</th>
+                            <th>주문수량</th>
+                            <th>주문상태</th>
                             <th>주문일시</th>
+                            <th>체결수량</th>
+                            <th>체결평균가</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>1001</td>
-                            <td>롯데타워</td>
-                            <td>xyz12345abc</td>
-                            <td>매수</td>
-                            <td>완료</td>
-                            <td>10</td>
-                            <td>1,000,000원</td>
-                            <td>2023-08-25 10:00</td>
-                        </tr>
-                        <tr>
-                            <td>1002</td>
-                            <td>삼성타워</td>
-                            <td>abc78901xyz</td>
-                            <td>매도</td>
-                            <td>대기중</td>
-                            <td>20</td>
-                            <td>2,000,000원</td>
-                            <td>2023-08-25 11:00</td>
-                        </tr>
-                        <tr>
-                            <td>1003</td>
-                            <td>하나타워</td>
-                            <td>uvw45678rst</td>
-                            <td>매수</td>
-                            <td>완료</td>
-                            <td>30</td>
-                            <td>3,000,000원</td>
-                            <td>2023-08-26 10:00</td>
-                        </tr>
-                        <tr>
-                            <td>1004</td>
-                            <td>우리타워</td>
-                            <td>lmn23456opq</td>
-                            <td>매도</td>
-                            <td>대기중</td>
-                            <td>40</td>
-                            <td>4,000,000원</td>
-                            <td>2023-08-26 11:00</td>
-                        </tr>
-                        <tr>
-                            <td>1005</td>
-                            <td>KB타워</td>
-                            <td>ijk90123lmn</td>
-                            <td>매수</td>
-                            <td>완료</td>
-                            <td>50</td>
-                            <td>5,000,000원</td>
-                            <td>2023-08-27 10:00</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         </tbody>
                     </table>
@@ -688,6 +681,52 @@
 
             <div class="container mt-5">
                 <div class="mypage-title">
+                    <h2 id="execution-transaction-scan">체결 트랜잭션 스캔</h2>
+                </div>
+            </div>
+
+            <div class="announcement">
+                <div class="container mt-3">
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>#체결번호</th>
+                            <th>매수주문번호</th>
+                            <th>매도주문번호</th>
+                            <th>체결가</th>
+                            <th>체결수량</th>
+                            <th>체결일시</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+
+            <div class="container mt-5">
+                <div class="mypage-title">
                     <h2 id="dividend-scan">배당금 지급 내역</h2>
                 </div>
             </div>
@@ -697,66 +736,20 @@
                     <table class="table table-bordered table-hover">
                         <thead class="thead-light">
                         <tr>
-                            <th>주문번호</th>
-                            <th>거래대상</th>
+                            <th>#지급번호</th>
                             <th>지갑번호</th>
-                            <th>유형</th>
-                            <th>거래상태</th>
-                            <th>거래수량</th>
-                            <th>거래금액</th>
-                            <th>주문일시</th>
+                            <th>매물번호</th>
+                            <th>지급액</th>
+                            <th>지급일</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>1001</td>
-                            <td>롯데타워</td>
-                            <td>xyz12345abc</td>
-                            <td>매수</td>
-                            <td>완료</td>
-                            <td>10</td>
-                            <td>1,000,000원</td>
-                            <td>2023-08-25 10:00</td>
-                        </tr>
-                        <tr>
-                            <td>1002</td>
-                            <td>삼성타워</td>
-                            <td>abc78901xyz</td>
-                            <td>매도</td>
-                            <td>대기중</td>
-                            <td>20</td>
-                            <td>2,000,000원</td>
-                            <td>2023-08-25 11:00</td>
-                        </tr>
-                        <tr>
-                            <td>1003</td>
-                            <td>하나타워</td>
-                            <td>uvw45678rst</td>
-                            <td>매수</td>
-                            <td>완료</td>
-                            <td>30</td>
-                            <td>3,000,000원</td>
-                            <td>2023-08-26 10:00</td>
-                        </tr>
-                        <tr>
-                            <td>1004</td>
-                            <td>우리타워</td>
-                            <td>lmn23456opq</td>
-                            <td>매도</td>
-                            <td>대기중</td>
-                            <td>40</td>
-                            <td>4,000,000원</td>
-                            <td>2023-08-26 11:00</td>
-                        </tr>
-                        <tr>
-                            <td>1005</td>
-                            <td>KB타워</td>
-                            <td>ijk90123lmn</td>
-                            <td>매수</td>
-                            <td>완료</td>
-                            <td>50</td>
-                            <td>5,000,000원</td>
-                            <td>2023-08-27 10:00</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         </tbody>
                     </table>

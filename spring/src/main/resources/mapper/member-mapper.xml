@@ -22,6 +22,15 @@
         select * from one_members where id = #{id}
     </select>
 
+    <select id="findMemberByReferralCode" parameterType="string" resultMap="OneMembersMap">
+        select * from one_members where REFERRAL_CODE = #{refferalCode}
+    </select>
+
+    <update id="increaseReferralCount" parameterType="com.hana1piece.member.model.vo.OneMembersVO">
+        update one_members set referral_count = referral_count + 1
+        where id = #{id}
+    </update>
+
     <select id="login" parameterType="com.hana1piece.member.model.dto.LoginDTO" resultMap="OneMembersMap">
         select id, name, phone, email, referral_code, referral_count from one_members where id = #{id} and password = #{password}
     </select>

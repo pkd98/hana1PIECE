@@ -58,6 +58,12 @@ public class MyPageController {
 
         // 사용자 지갑
         WalletVO wallet = walletService.findWalletByMemberId(member.getId());
+
+        if (wallet == null) {
+            mav.setViewName("/account-opening");
+            return  mav;
+        }
+
         mav.addObject("wallet", wallet);
         // 지갑 거래 내역
         List<WalletTransactionVO> walletTransactionList = walletService.findWalletTransactionByWalletNumber(wallet.getWalletNumber());

@@ -8,8 +8,10 @@ import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.wallet.model.dto.AccountAndWalletOpeningDTO;
 import com.hana1piece.wallet.model.dto.AccountOpeningDTO;
 import com.hana1piece.wallet.model.dto.WalletOpeningDTO;
+import com.hana1piece.wallet.model.vo.WalletTransactionVO;
+import com.hana1piece.wallet.model.vo.WalletVO;
+import com.hana1piece.wallet.service.WalletService;
 import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
     private final LoggerService loggerService;
+    private final WalletService walletService;
 
     @Value("${coolsms.api.key}")
     private String smsApiKey;
@@ -43,9 +46,10 @@ public class MemberServiceImpl implements MemberService {
     private String bankServerUrl;
 
     @Autowired
-    public MemberServiceImpl(MemberMapper memberMapper, LoggerService loggerService) {
+    public MemberServiceImpl(MemberMapper memberMapper, LoggerService loggerService, WalletService walletService) {
         this.memberMapper = memberMapper;
         this.loggerService = loggerService;
+        this.walletService = walletService;
     }
 
     /**
@@ -231,7 +235,40 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public boolean event(String memberId, String referralCode) {
-        return false;
+        boolean state = false;
+        int bonus = 5000;
+        // 레퍼럴 코드 검증
+        OneMembersVO recommendedMember =  memberMapper.findMemberByReferralCode(referralCode);
+        if(recommendedMember != null) {
+            // 있는 레퍼럴 코드일 시, 5000원 추천인 추천자 지급
+            WalletVO recommendedWallet = walletService.findWalletByMemberId(recommendedMember.getId());
+            WalletVO recommenderWallet= walletService.findWalletByMemberId(memberId);
+
+            WalletTransactionVO recommendedTransaction = new WalletTransactionVO();
+            recommendedTransaction.setName("추천인 이벤트");
+            recommendedTransaction.setWalletNumber(recommendedWallet.getWalletNumber());
+            recommendedTransaction.setClassification("IN");
+            recommendedTransaction.setAmount(bonus);
+            recommendedTransaction.setBalance(recommendedWallet.getBalance() + bonus);
+
+            WalletTransactionVO recommenderTransaction = new WalletTransactionVO();
+            recommenderTransaction.setName("추천인 이벤트");
+            recommenderTransaction.setWalletNumber(recommenderWallet.getWalletNumber());
+            recommenderTransaction.setClassification("IN");
+            recommenderTransaction.setAmount(bonus);
+            recommenderTransaction.setBalance(recommenderWallet.getBalance() + bonus);
+
+            walletService.updateWalletBalance(recommendedWallet, recommendedTransaction);
+            walletService.updateWalletBalance(recommenderWallet, recommenderTransaction);
+
+            // 피 추천자 추천 카운트 + 1
+            memberMapper.increaseReferralCount(recommendedMember);
+
+            // 성공시 true
+            state = true;
+        }
+
+        return state;
     }
 
 

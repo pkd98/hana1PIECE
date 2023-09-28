@@ -1024,3 +1024,6 @@ BEGIN
     HANA1PIECE_MNG.PAY_DIVIDEND(p_listing_number => 26, p_payout => 10);
 END;
 /
+
+select * from ONE_MEMBERS where id = 'test123';
+

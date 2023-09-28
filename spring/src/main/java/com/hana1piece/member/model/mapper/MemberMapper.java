@@ -16,6 +16,10 @@ public interface MemberMapper {
 
     OneMembersVO findMemberById(String id);
 
+    OneMembersVO findMemberByReferralCode(String referralCode);
+
+    void increaseReferralCount(OneMembersVO oneMembersVO);
+
     OneMembersVO login(LoginDTO loginDTO);
 
     String getReferralCode();

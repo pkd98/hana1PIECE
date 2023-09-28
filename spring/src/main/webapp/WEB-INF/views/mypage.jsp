@@ -85,8 +85,8 @@
                             style="color: ${membersTotalAssetDTO.investmentReturn < 0 ? '#0074D9' : '#E63946'};">${membersTotalAssetDTO.investmentReturn} (${membersTotalAssetDTO.ROI}%)</span>
                     </div>
                     <hr>
-                    <p class="formatted-number">예치금: ${membersTotalAssetDTO.deposit}원</p>
-                    <p class="formatted-number">투자 금액: ${membersTotalAssetDTO.investmentAmount}원</p>
+                    <p class="formatted-number">예수금: ${membersTotalAssetDTO.deposit}원</p>
+                    <p class="formatted-number">투자 원금: ${membersTotalAssetDTO.investmentAmount}원</p>
                     <p class="formatted-number">투자 수익: <span>${membersTotalAssetDTO.investmentReturn}원</span></p>
                     <p class="formatted-number">투자 수익률: <span>${membersTotalAssetDTO.ROI}%</span></p>
                 </div>

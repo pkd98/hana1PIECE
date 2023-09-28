@@ -9,6 +9,7 @@ import com.hana1piece.estate.service.EstateService;
 import com.hana1piece.estate.service.PublicOfferingService;
 import com.hana1piece.estate.service.SellVoteService;
 import com.hana1piece.member.model.vo.OneMembersVO;
+import com.hana1piece.wallet.model.vo.StosVO;
 import com.hana1piece.wallet.model.vo.WalletVO;
 import com.hana1piece.wallet.service.StosService;
 import com.hana1piece.wallet.service.WalletService;
@@ -91,7 +92,11 @@ public class EstateController {
 
         WalletVO wallet = walletService.findWalletByMemberId(member.getId());
         mav.addObject("wallet", wallet);
-        mav.addObject("stos", stosService.findStosByWalletNumberAndListingNumber(wallet.getWalletNumber(), LN));
+        StosVO stos = stosService.findStosByWalletNumberAndListingNumber(wallet.getWalletNumber(), LN);
+        if(stos == null) {
+            stos = new StosVO();
+        }
+        mav.addObject("stos", stos);
         mav.addObject("realEstateInfo", estateService.findRealEstateInfoByLN(LN));
         return mav;
     }
