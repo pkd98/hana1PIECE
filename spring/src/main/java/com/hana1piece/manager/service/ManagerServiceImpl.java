@@ -7,12 +7,17 @@ import com.hana1piece.logger.service.LoggerService;
 import com.hana1piece.manager.model.dto.DividendPaymentDTO;
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
+import com.hana1piece.manager.model.dto.TransactionStatusDTO;
 import com.hana1piece.manager.model.mapper.ManagerMapper;
 import com.hana1piece.manager.model.vo.ManagerVO;
 import com.hana1piece.member.model.mapper.MemberMapper;
+import com.hana1piece.trading.model.mapper.ExecutionMapper;
 import com.hana1piece.trading.model.mapper.StoOrdersMapper;
+import com.hana1piece.trading.model.vo.ExecutionVO;
 import com.hana1piece.trading.model.vo.StoOrdersVO;
+import com.hana1piece.wallet.model.mapper.DividendMapper;
 import com.hana1piece.wallet.model.mapper.StosMapper;
+import com.hana1piece.wallet.model.vo.DividendDetailsVO;
 import com.hana1piece.wallet.model.vo.StosVO;
 import com.hana1piece.member.service.MemberService;
 import com.hana1piece.trading.model.mapper.OrderBookMapper;
@@ -39,12 +44,14 @@ public class ManagerServiceImpl implements ManagerService {
     private final OrderBookMapper orderBookMapper;
     private final LoggerService loggerService;
     private final StoOrdersMapper stoOrdersMapper;
+    private final ExecutionMapper executionMapper;
+    private final DividendMapper dividendMapper;
 
     @Value("${imgFilePath}")
     private String imgFilePath;
 
     @Autowired
-    public ManagerServiceImpl(ManagerMapper managerMapper, EstateMapper estateMapper, PublicOfferingMapper publicOfferingMapper, MemberService memberService, MemberMapper memberMapper, StosMapper stosMapper, OrderBookMapper orderBookMapper, LoggerService loggerService, StoOrdersMapper stoOrdersMapper) {
+    public ManagerServiceImpl(ManagerMapper managerMapper, EstateMapper estateMapper, PublicOfferingMapper publicOfferingMapper, MemberService memberService, MemberMapper memberMapper, StosMapper stosMapper, OrderBookMapper orderBookMapper, LoggerService loggerService, StoOrdersMapper stoOrdersMapper, ExecutionMapper executionMapper, DividendMapper dividendMapper) {
         this.managerMapper = managerMapper;
         this.estateMapper = estateMapper;
         this.publicOfferingMapper = publicOfferingMapper;
@@ -53,6 +60,8 @@ public class ManagerServiceImpl implements ManagerService {
         this.orderBookMapper = orderBookMapper;
         this.loggerService = loggerService;
         this.stoOrdersMapper = stoOrdersMapper;
+        this.executionMapper = executionMapper;
+        this.dividendMapper = dividendMapper;
     }
 
     @Override
@@ -248,6 +257,54 @@ public class ManagerServiceImpl implements ManagerService {
     public void registerSaleVote(SoldBuildingVO soldBuildingVO) {
         estateMapper.insertSoldBuilding(soldBuildingVO);
     }
+
+    @Override
+    public TransactionStatusDTO getTransactionStatus() {
+        return managerMapper.getTransactionStatus();
+    }
+
+    /**
+     * 전체 주문 내역 - 페이지 네이션 구분
+     */
+    @Override
+    public List<StoOrdersVO> getOrdersByPage(int pageNum) {
+        int pageSize = 10;
+        int offset = (pageNum - 1) * pageSize + 1;
+        int limit = pageNum * pageSize;
+        return stoOrdersMapper.getOrdersByPage(offset, limit);
+    }
+
+    @Override
+    public List<ExecutionVO> getExecutionsByPage(int pageNum) {
+        int pageSize = 10;
+        int offset = (pageNum - 1) * pageSize + 1;
+        int limit = pageNum * pageSize;
+        return executionMapper.getExecutionsByPage(offset, limit);
+    }
+
+    @Override
+    public List<DividendDetailsVO> getDividendDetailsByPage(int pageNum) {
+        int pageSize = 10;
+        int offset = (pageNum - 1) * pageSize + 1;
+        int limit = pageNum * pageSize;
+        return dividendMapper.getDividendDetailsByPage(offset, limit);
+    }
+
+    @Override
+    public int getTotalOrderCount() {
+        return stoOrdersMapper.getTotalOrderCount();
+    }
+
+    @Override
+    public int getTotalExecutionCount() {
+        return executionMapper.getTotalExecutionCount();
+    }
+
+    @Override
+    public int getTotalPaymentCount() {
+        return dividendMapper.getTotalPaymentCount();
+    }
+
 
     /**
      * MultipartFile 타입에서 File 타입으로 변환

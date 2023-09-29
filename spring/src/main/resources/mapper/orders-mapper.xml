@@ -5,27 +5,43 @@
 <mapper namespace="com.hana1piece.trading.model.mapper.StoOrdersMapper">
 
     <resultMap type="com.hana1piece.trading.model.vo.StoOrdersVO" id="StoOrdersMap">
-        <result column="order_id" property="orderId" />
-        <result column="listing_number" property="listingNumber" />
-        <result column="wallet_number" property="walletNumber" />
-        <result column="order_type" property="orderType" />
-        <result column="order_date" property="orderDate" />
-        <result column="executed_price_avg" property="executedPriceAvg" />
-        <result column="executed_quantity" property="executedQuantity" />
+        <result column="order_id" property="orderId"/>
+        <result column="listing_number" property="listingNumber"/>
+        <result column="wallet_number" property="walletNumber"/>
+        <result column="order_type" property="orderType"/>
+        <result column="order_date" property="orderDate"/>
+        <result column="executed_price_avg" property="executedPriceAvg"/>
+        <result column="executed_quantity" property="executedQuantity"/>
     </resultMap>
 
     <select id="findAll" resultMap="StoOrdersMap">
-        select * from sto_orders order by execution_id desc
+        select *
+        from sto_orders
+        order by execution_id desc
+    </select>
+
+    <select id="getOrdersByPage" parameterType="map" resultMap="StoOrdersMap">
+        SELECT *
+        FROM (SELECT so.*,
+                     ROW_NUMBER() OVER (ORDER BY order_id DESC) as rn
+              FROM STO_ORDERS so)
+        WHERE rn BETWEEN #{offset} AND #{limit}
+    </select>
+
+    <select id="getTotalOrderCount" resultType="int">
+        select count(*) from sto_orders
     </select>
 
     <insert id="insertOrder" parameterType="com.hana1piece.trading.model.vo.StoOrdersVO">
         insert into sto_orders(listing_number, wallet_number, order_type, amount, quantity)
-        values(#{listingNumber}, #{walletNumber}, #{orderType}, #{amount}, #{quantity})
+        values (#{listingNumber}, #{walletNumber}, #{orderType}, #{amount}, #{quantity})
     </insert>
 
     <insert id="insertOrderForPublicOffering" parameterType="com.hana1piece.trading.model.vo.StoOrdersVO">
-        insert into sto_orders(listing_number, wallet_number, order_type, amount, quantity, status, executed_quantity, executed_price_avg)
-        values(#{listingNumber}, #{walletNumber}, #{orderType}, #{amount}, #{quantity}, #{status}, #{executedQuantity}, #{executedPriceAvg})
+        insert into sto_orders(listing_number, wallet_number, order_type, amount, quantity, status, executed_quantity,
+                               executed_price_avg)
+        values (#{listingNumber}, #{walletNumber}, #{orderType}, #{amount}, #{quantity}, #{status}, #{executedQuantity},
+                #{executedPriceAvg})
     </insert>
 
     <update id="updateOrder" parameterType="com.hana1piece.trading.model.vo.StoOrdersVO">
@@ -39,23 +55,35 @@
     </update>
 
     <select id="findSellOrderDetailByAmountAndLN" parameterType="map" resultMap="StoOrdersMap">
-        select * from sto_orders where amount = #{amount} and listing_number = #{LN} and (status = 'N' or status = 'P') and order_type = 'SELL'
+        select *
+        from sto_orders
+        where amount = #{amount}
+          and listing_number = #{LN}
+          and (status = 'N' or status = 'P')
+          and order_type = 'SELL'
         order by order_id asc
     </select>
 
     <select id="findBuyOrderDetailByAmountAndLN" parameterType="map" resultMap="StoOrdersMap">
-        select * from sto_orders where amount = #{amount} and listing_number = #{LN} and (status = 'N' or status = 'P') and order_type = 'BUY'
+        select *
+        from sto_orders
+        where amount = #{amount}
+          and listing_number = #{LN}
+          and (status = 'N' or status = 'P')
+          and order_type = 'BUY'
         order by order_id asc
     </select>
 
     <select id="findByWN" parameterType="int" resultMap="StoOrdersMap">
-        select * from STO_ORDERS
+        select *
+        from STO_ORDERS
         where WALLET_NUMBER = #{WN}
         order by order_id desc
     </select>
 
     <select id="getOrderSeqCrrval" resultType="int">
-        select ORDER_SEQ.CURRVAL from dual
+        select ORDER_SEQ.CURRVAL
+        from dual
     </select>
 
 </mapper>

@@ -101,7 +101,7 @@
                                 <!-- Side Nav START -->
                                 <ul class="nav nav-link-secondary flex-column fw-bold gap-2">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#register"><span>배당금 | 공모/청약 | 매각 등록</span></a>
+                                        <a class="nav-link" href="#register"><span>공모/청약 | 배당금 | 매각 등록</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#transaction-analysis"><span>거래 현황</span></a>
@@ -110,26 +110,14 @@
                                         <a class="nav-link" href="#order-transaction-scan"><span>주문 트랜잭션 스캔</span></a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" href="#order-transaction-scan"><span>체결 트랜잭션 스캔</span></a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" href="#dividend-scan"><span>배당금 지급 내역</span></a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href=""><span>회원 관리</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href=""><span>시스템 에러 로그</span></a>
-                                    </li>
-                                    <hr>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href=""><span>하나은행 거래내역</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href=""><span>하나은행 에러 로그</span></a>
-                                    </li>
                                 </ul>
-                                <!-- Side Nav END -->
                             </div>
-                            <!-- Card body END -->
-                            <!-- Card footer -->
+
                             <div class="card-footer text-center py-2">
                                 <a class="btn btn-link btn-sm" href="/manager/logout"><img style="width: 200px;"
                                                                                            src="/resources/img/logo.png"></a>
@@ -604,9 +592,7 @@
                         <div class="card-header">총 예수금</div>
                         <div class="card-body flex1" id="total-asset-body">
                             <div class="asset-container">
-                                <h3 class="formatted-number">${membersTotalAssetDTO.asset}원</h3><span
-                                    class="percentage formatted-number"
-                                    style="color: ${membersTotalAssetDTO.investmentReturn < 0 ? '#0074D9' : '#E63946'};">${membersTotalAssetDTO.investmentReturn} (${membersTotalAssetDTO.ROI}%)</span>
+                                <h3 class="formatted-number">${transactionStatus.deposit}원</h3>
                             </div>
                         </div>
                     </div>
@@ -614,12 +600,10 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                     <!-- 파이 차트 -->
                     <div class="card total-asset">
-                        <div class="card-header">거래 대금</div>
+                        <div class="card-header">총 거래 대금</div>
                         <div class="card-body flex1">
                             <div class="asset-container">
-                                <h3 class="formatted-number">${membersTotalAssetDTO.asset}원</h3><span
-                                    class="percentage formatted-number"
-                                    style="color: ${membersTotalAssetDTO.investmentReturn < 0 ? '#0074D9' : '#E63946'};">${membersTotalAssetDTO.investmentReturn} (${membersTotalAssetDTO.ROI}%)</span>
+                                <h3 class="formatted-number">${transactionStatus.transactionAmount}원</h3>
                             </div>
                         </div>
                     </div>
@@ -634,7 +618,7 @@
 
             <div class="announcement">
                 <div class="container mt-3">
-                    <table class="table table-bordered table-hover">
+                    <table id="orders" class="table table-bordered table-hover">
                         <thead class="thead-light">
                         <tr>
                             <th>#주문번호</th>
@@ -650,32 +634,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
                         </tbody>
                     </table>
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                    <ul class="pagination justify-content-center" id="ordersPaginationControls">
+                        <li class="page-item"><a class="page-link" href="#" data-page="1">First</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="prev"><</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">Page 1 of 100</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="next">></a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="last">Last</a></li>
+                    </ul>
                 </div>
             </div>
 
@@ -687,7 +655,7 @@
 
             <div class="announcement">
                 <div class="container mt-3">
-                    <table class="table table-bordered table-hover">
+                    <table id="executions" class="table table-bordered table-hover">
                         <thead class="thead-light">
                         <tr>
                             <th>#체결번호</th>
@@ -699,28 +667,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
                         </tbody>
                     </table>
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                    <ul class="pagination justify-content-center" id="executionsPaginationControls">
+                        <li class="page-item"><a class="page-link" href="#" data-page="1">First</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="prev"><</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">Page 1 of 100</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="next">></a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="last">Last</a></li>
+                    </ul>
                 </div>
             </div>
 
@@ -733,7 +689,7 @@
 
             <div class="announcement">
                 <div class="container mt-3">
-                    <table class="table table-bordered table-hover">
+                    <table id="payments" class="table table-bordered table-hover">
                         <thead class="thead-light">
                         <tr>
                             <th>#지급번호</th>
@@ -744,27 +700,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
                         </tbody>
                     </table>
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                    <ul class="pagination justify-content-center" id="paymentsPaginationControls">
+                        <li class="page-item"><a class="page-link" href="#" data-page="1">First</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="prev"><</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">Page 1 of 100</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="next">></a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="last">Last</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -801,11 +746,231 @@
 </div>
 
 <script>
+    let ordersCurrentPage = 1;
+    let ordersTotalPage = 1;
+    let executionsCurrentPage = 1;
+    let executionsTotalPage = 1;
+    let paymentsCurrentPage = 1;
+    let paymentsTotalPage = 1;
+
+    function formatNumbers() {
+        $('.formatted-number').each(function () {
+            var number = $(this).text();
+            var formattedNumber = numberWithCommas(number);
+            $(this).text(formattedNumber);
+        });
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+
     function redirectToManager() {
         window.location.href = "/manager";
     }
 
+    function loadOrders(pageNum) {
+        $.ajax({
+            url: "/manager/orders?page=" + pageNum,
+            type: "GET",
+            dataType: "json",
+            success: function(response) {
+                updateOrderTable(response.orders);
+
+                // 페이지네이션 텍스트 업데이트
+                ordersCurrentPage = response.currentPage;
+                ordersTotalPage = response.totalPages;
+                $('#ordersPaginationControls .page-item.disabled .page-link').text("Page "+ ordersCurrentPage +" of " + ordersTotalPage);
+            },
+            error: function(xhr, status, error) {
+                console.error("Failed to fetch orders:", error);
+            }
+        });
+    }
+
+    function loadExecutions(pageNum) {
+        $.ajax({
+            url: "/manager/executions?page=" + pageNum,
+            type: "GET",
+            dataType: "json",
+            success: function(response) {
+                updateExecutionTable(response.executions);
+
+                // 페이지네이션 텍스트 업데이트
+                executionsCurrentPage = response.currentPage;
+                executionsTotalPage = response.totalPages;
+                $('#executionsPaginationControls .page-item.disabled .page-link').text("Page "+ executionsCurrentPage +" of " + executionsTotalPage);
+            },
+            error: function(xhr, status, error) {
+                console.error("Failed to fetch orders:", error);
+            }
+        });
+    }
+
+    function loadPayments(pageNum) {
+        $.ajax({
+            url: "/manager/payments?page=" + pageNum,
+            type: "GET",
+            dataType: "json",
+            success: function(response) {
+                updatePaymentTable(response.payments);
+
+                // 페이지네이션 텍스트 업데이트
+                paymentsCurrentPage = response.currentPage;
+                paymentsTotalPage = response.totalPages;
+                $('#paymentsPaginationControls .page-item.disabled .page-link').text("Page "+ paymentsCurrentPage +" of " + paymentsTotalPage);
+            },
+            error: function(xhr, status, error) {
+                console.error("Failed to fetch orders:", error);
+            }
+        });
+
+    }
+
+
+    function updateOrderTable(orders) {
+        let tbody = $("#orders tbody");
+        tbody.empty();
+
+        $.each(orders, function(index, order) {
+            let row = "<tr>" +
+                "<td>" + order.orderId + "</td>" +
+                "<td>" + order.listingNumber + "</td>" +
+                "<td>" + order.walletNumber + "</td>" +
+                "<td>" + order.orderType + "</td>" +
+                "<td>" + order.amount + "</td>" +
+                "<td>" + order.quantity + "</td>" +
+                "<td>" + order.status + "</td>" +
+                "<td>" + order.orderDate + "</td>" +
+                "<td>" + order.executedQuantity + "</td>" +
+                "<td>" + order.executedPriceAvg + "</td>" +
+                "</tr>";
+            tbody.append(row);
+        });
+    }
+
+    function updateExecutionTable(executions) {
+        let tbody = $("#executions tbody");
+        tbody.empty();
+
+        $.each(executions, function(index, execution) {
+            let row = "<tr>" +
+                "<td>" + execution.executionId + "</td>" +
+                "<td>" + execution.buyOrderId + "</td>" +
+                "<td>" + execution.sellOrderId + "</td>" +
+                "<td>" + execution.executedPrice + "</td>" +
+                "<td>" + execution.executedQuantity + "</td>" +
+                "<td>" + execution.executionDate + "</td>" +
+                "</tr>";
+            tbody.append(row);
+        });
+    }
+
+    function updatePaymentTable(payments) {
+        let tbody = $("#payments tbody");
+        tbody.empty();
+
+        $.each(payments, function(index, payment) {
+            let row = "<tr>" +
+                "<td>" + payment.payoutNumber + "</td>" +
+                "<td>" + payment.walletNumber + "</td>" +
+                "<td>" + payment.listingNumber + "</td>" +
+                "<td>" + payment.payout + "</td>" +
+                "<td>" + payment.payoutDate + "</td>" +
+                "</tr>";
+            tbody.append(row);
+        });
+    }
+
+
     $(document).ready(function () {
+        /**
+         *  금액 천단위 구분 쉼표 추가
+         */
+        formatNumbers();
+        /**
+         * 페이지 로딩 시 첫 번째 페이지 데이터 로드
+          */
+        loadOrders(1);
+        loadExecutions(1);
+        loadPayments(1);
+
+        /**
+         *  페이지 네이션 버튼 클릭 이벤트
+         */
+        $(document).on('click', '#ordersPaginationControls > li', function(e) {
+            e.preventDefault();
+
+            let clickedPageLink = $(this).find('.page-link');
+            let clickedPage = clickedPageLink.data('page');
+
+            if (clickedPage === 'next') {
+                ordersCurrentPage += 1;
+                if (ordersCurrentPage > ordersTotalPage) {
+                    ordersCurrentPage = ordersTotalPage;
+                }
+            } else if (clickedPage === 'prev') {
+                ordersCurrentPage = Math.max(1, ordersCurrentPage - 1);  // 페이지 번호가 1 미만으로 내려가지 않게 함
+            } else if (clickedPage === 'last') {
+                ordersCurrentPage = ordersTotalPage;
+            } else if (clickedPage == 1) {
+                ordersCurrentPage = 1;
+            }
+
+            if (clickedPage) {
+                loadOrders(ordersCurrentPage);
+            }
+        });
+
+        $(document).on('click', '#executionsPaginationControls > li', function(e) {
+            e.preventDefault();
+
+            let clickedPageLink = $(this).find('.page-link');
+            let clickedPage = clickedPageLink.data('page');
+
+            if (clickedPage === 'next') {
+                executionsCurrentPage += 1;
+                if(executionsCurrentPage > executionsTotalPage) {
+                    executionsCurrentPage = executionsTotalPage;
+                }
+            } else if (clickedPage === 'prev') {
+                executionsCurrentPage = Math.max(1, executionsCurrentPage - 1);  // 페이지 번호가 1 미만으로 내려가지 않게 함
+            } else if (clickedPage === 'last') {
+                executionsCurrentPage = executionsTotalPage;
+            } else if (clickedPage == 1) {
+                executionsCurrentPage = 1;
+            }
+
+            if (clickedPage) {
+                loadExecutions(executionsCurrentPage);
+            }
+        });
+
+        $(document).on('click', '#paymentsPaginationControls > li', function(e) {
+            e.preventDefault();
+
+            let clickedPageLink = $(this).find('.page-link');
+            let clickedPage = clickedPageLink.data('page');
+
+            if (clickedPage === 'next') {
+                paymentsCurrentPage += 1;
+                if (paymentsCurrentPage > paymentsTotalPage) {
+                    paymentsCurrentPage = paymentsTotalPage;
+                }
+            } else if (clickedPage === 'prev') {
+                paymentsCurrentPage = Math.max(1, paymentsCurrentPage - 1);  // 페이지 번호가 1 미만으로 내려가지 않게 함
+            } else if (clickedPage === 'last') {
+                paymentsCurrentPage = paymentsTotalPage;
+            } else if (clickedPage == 1) {
+                paymentsCurrentPage = 1;
+            }
+            if (clickedPage) {
+                loadPayments(paymentsCurrentPage);
+            }
+        });
+
+
         /**
          *  공모/청약 등록
          */

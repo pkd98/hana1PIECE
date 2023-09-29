@@ -11,6 +11,8 @@ public interface StoOrdersMapper {
 
     List<StoOrdersVO> findAll();
 
+    List<StoOrdersVO> getOrdersByPage(@Param("offset") int offset, @Param("limit") int limit);
+
     void insertOrder(StoOrdersVO stoOrdersVO);
 
     void insertOrderForPublicOffering(StoOrdersVO stoOrdersVO);
@@ -24,4 +26,5 @@ public interface StoOrdersMapper {
     List<StoOrdersVO> findByWN(int WN);
 
     int getOrderSeqCrrval();
+    int getTotalOrderCount();
 }

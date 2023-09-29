@@ -41,7 +41,7 @@ public class OcrService {
     }
 
     /**
-     * Tessact OCR 이용 주민등록번호 검출
+     * Clova OCR 이용 주민등록번호 검출
      */
     public OcrDTO getReadRegistrationCard(MultipartFile multipartFile) throws IOException {
         OcrDTO ocrDTO = new OcrDTO();

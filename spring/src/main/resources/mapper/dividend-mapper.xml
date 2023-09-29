@@ -33,6 +33,14 @@
         select * from dividend_details where listing_number = #{LN} order by payout_number desc
     </select>
 
+    <select id="getDividendDetailsByPage" parameterType="map" resultMap="DividendDetailsMap">
+        SELECT *
+        FROM (SELECT DIVIDEND_DETAILS.*,
+                     ROW_NUMBER() OVER (ORDER BY payout_number DESC) as rn
+              FROM DIVIDEND_DETAILS)
+        WHERE rn BETWEEN #{offset} AND #{limit}
+    </select>
+
     <select id="sumDividendFor6monthByWN" parameterType="int" resultType="int">
         select sum(payout) from dividend_details
         where wallet_number = #{WN}
@@ -42,5 +50,9 @@
         insert into dividend_details(wallet_number, listing_number, payout)
         values(#{walletNumber}, #{listingNumber}, #{payout})
     </insert>
+
+    <select id="getTotalPaymentCount" resultType="int">
+        select count(*) from dividend_details
+    </select>
 
 </mapper>

@@ -1027,3 +1027,40 @@ END;
 
 select * from ONE_MEMBERS where id = 'test123';
 
+
+select * from (select nvl(sum(balance), 0) as deposit from wallet), (select nvl(sum(EXECUTED_QUANTITY * EXECUTED_PRICE_AVG), 0) as transactionAmount from STO_ORDERS);
+
+SELECT 
+    *
+FROM (
+    SELECT 
+        so.*,
+        ROW_NUMBER() OVER (ORDER BY order_id DESC) as rn
+    FROM STO_ORDERS so
+) WHERE rn BETWEEN 1 AND 10;
+
+SELECT 
+    *
+FROM (
+    SELECT 
+        execution.*,
+        ROW_NUMBER() OVER (ORDER BY execution_id DESC) as rn
+    FROM execution
+) WHERE rn BETWEEN 1 AND 20;
+
+
+SELECT 
+    *
+FROM (
+    SELECT 
+        DIVIDEND_DETAILS.*,
+        ROW_NUMBER() OVER (ORDER BY payout_number DESC) as rn
+    FROM DIVIDEND_DETAILS
+) WHERE rn BETWEEN 1 AND 20;
+
+desc DIVIDEND_DETAILS;
+
+select * from wallet where member_id = 'test123';
+select * from stos where WALLET_NUMBER = 16;
+
+select * from PUBLICATION_INFO;

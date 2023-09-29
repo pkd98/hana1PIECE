@@ -17,9 +17,20 @@
         select * from execution order by execution_id desc
     </select>
 
+    <select id="getExecutionsByPage" parameterType="map" resultMap="ExecutionMap">
+        SELECT *
+        FROM (SELECT execution.*,
+                     ROW_NUMBER() OVER (ORDER BY execution_id DESC) as rn
+              FROM execution)
+        WHERE rn BETWEEN #{offset} AND #{limit}
+    </select>
+
     <insert id="insertExecution" parameterType="com.hana1piece.trading.model.vo.ExecutionVO">
         insert into execution(buy_order_id, sell_order_id, executed_price, executed_quantity)
         values(#{buyOrderId}, #{sellOrderId}, #{executedPrice}, #{executedQuantity})
     </insert>
 
+    <select id="getTotalExecutionCount" resultType="int">
+        select count(*) from execution
+    </select>
 </mapper>

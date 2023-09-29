@@ -7,6 +7,9 @@ import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.vo.ManagerVO;
 import com.hana1piece.manager.service.ManagerService;
+import com.hana1piece.trading.model.vo.ExecutionVO;
+import com.hana1piece.trading.model.vo.StoOrdersVO;
+import com.hana1piece.wallet.model.vo.DividendDetailsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +21,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ManagerController {
     private final ManagerService managerService;
     private final EstateService estateService;
+    private final int itemsPerPage = 10;
+
 
     @Autowired
     public ManagerController(ManagerService managerService, EstateService estateService) {
@@ -37,6 +45,7 @@ public class ManagerController {
         String view = (manager == null) ? "manager-login" : "manager";
         mav.addObject("findPublicOfferingList", estateService.findPublicOfferingListDTO());
         mav.addObject("listedEstateList", estateService.findListedEstateListDTO());
+        mav.addObject("transactionStatus", managerService.getTransactionStatus());
         mav.setViewName(view);
         return mav;
     }
@@ -135,5 +144,59 @@ public class ManagerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
         }
     }
+
+    /**
+     *  주문 내역
+     */
+    @GetMapping("/manager/orders")
+    @ResponseBody
+    public Map<String, Object> getOrdersByPage(@RequestParam int page) {
+        int totalCount = managerService.getTotalOrderCount(); // 전체 데이터의 개수를 조회
+        int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage); // 전체 페이지 수 계산
+
+        List<StoOrdersVO> orders = managerService.getOrdersByPage(page);
+        Map<String, Object> response = new HashMap<>();
+        response.put("orders", orders);
+        response.put("currentPage", page); // 현재 페이지 번호
+        response.put("totalPages", totalPages); // 전체 페이지 수
+        return response;
+    }
+
+    /**
+     *  체결 내역
+     */
+    @GetMapping("/manager/executions")
+    @ResponseBody
+    public Map<String, Object> getExecutionsByPage(@RequestParam int page) {
+        int totalCount = managerService.getTotalExecutionCount(); // 전체 데이터의 개수를 조회
+        int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage); // 전체 페이지 수 계산
+
+        List<ExecutionVO> executions = managerService.getExecutionsByPage(page);
+        Map<String, Object> response = new HashMap<>();
+        response.put("executions", executions);
+        response.put("currentPage", page); // 현재 페이지 번호
+        response.put("totalPages", totalPages); // 전체 페이지 수
+        return response;
+    }
+
+
+    /**
+     *  배당금 지급 내역
+     */
+    @GetMapping("/manager/payments")
+    @ResponseBody
+    public Map<String, Object> getPaymentsByPage(@RequestParam int page) {
+        int totalCount = managerService.getTotalPaymentCount(); // 전체 데이터의 개수를 조회
+        int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage); // 전체 페이지 수 계산
+
+        List<DividendDetailsVO> payments = managerService.getDividendDetailsByPage(page);
+        Map<String, Object> response = new HashMap<>();
+        response.put("payments", payments);
+        response.put("currentPage", page); // 현재 페이지 번호
+        response.put("totalPages", totalPages); // 전체 페이지 수
+        return response;
+    }
+
+
 
 }

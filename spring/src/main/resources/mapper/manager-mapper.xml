@@ -15,8 +15,14 @@
     <select id="dividendPaymentUsingProcedure" parameterType="com.hana1piece.manager.model.dto.DividendPaymentDTO"
             statementType="CALLABLE">
         {CALL HANA1PIECE_MNG.PAY_DIVIDEND2(
-                        p_listing_number => #{listingNumber}, p_payout => #{payout}
+                        p_listing_number = > #{listingNumber}, p_payout = > #{payout}
             )}
+    </select>
+
+    <select id="getTransactionStatus" resultType="com.hana1piece.manager.model.dto.TransactionStatusDTO">
+        select *
+        from (select nvl(sum(balance), 0) as deposit from wallet),
+             (select nvl(sum(EXECUTED_QUANTITY * EXECUTED_PRICE_AVG), 0) as transactionAmount from STO_ORDERS)
     </select>
 
 </mapper>
