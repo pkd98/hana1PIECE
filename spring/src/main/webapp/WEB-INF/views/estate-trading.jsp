@@ -75,7 +75,7 @@
                            maxlength="4"/>
                 </div>
                 <div class="able-amount">
-                    <span id="ableAmountName">거래 가능 금액:</span> <span id="ableAmountValue">${wallet.balance} 원</span>
+                    <span id="ableAmountName">거래 가능 금액:</span> <span id="ableAmountValue" class="formatted-number">${wallet.balance}원</span>
                 </div>
                 <div class="price">
                     <span>구매 희망 단가</span>
@@ -178,6 +178,21 @@
 <%@ include file="include/footer.jsp" %>
 
 <script>
+    /**
+     * 천단위 구분
+     */
+    function formatNumbers() {
+        $('.formatted-number').each(function() {
+            var number = $(this).text();
+            var formattedNumber = numberWithCommas(number);
+            $(this).text(formattedNumber);
+        });
+    }
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+
     let walletBalance = ${wallet.balance} !== null ? ${wallet.balance} : "";
     let stosAmount = ${stos.amount} !== null ? ${stos.amount} : "";
 
@@ -266,6 +281,13 @@
 </script>
 <script>
     window.onload = function () {
+        /**
+         *  금액 천단위 구분 쉼표 추가
+         */
+        formatNumbers();
+        /**
+         *  웹소켓 서버로부터 실시간 호가 정보 받아옴
+         */
         connect();
 
         /**
@@ -307,13 +329,14 @@
             quantityLabel.textContent = mode + ' 희망 수량';
             if (mode === '구매') {
                 ableAmountName.innerText = "거래 가능 금액: ";
-                ableAmountValue.innerText = walletBalance;
+                ableAmountValue.innerText = walletBalance + "원";
                 submitButton.value = '매수';
             } else {
                 ableAmountName.innerText = "매도 가능 수량: ";
-                ableAmountValue.innerText = stosAmount;
+                ableAmountValue.innerText = stosAmount + "(STO)";
                 submitButton.value = '매도';
             }
+            formatNumbers();
         }
 
         /**
@@ -417,6 +440,12 @@
 
         function sendOrder(orderType, price, quantity, btnElement) {
             var password = document.getElementById("wallet-password").value;
+            var modal;
+            if(orderType === 'BUY') {
+                modal = bootstrap.Modal.getInstance(document.getElementById('buyModal'));
+            } else if (orderType === 'SELL') {
+                modal = bootstrap.Modal.getInstance(document.getElementById('sellModal'));
+            }
 
             $.ajax({
                 url: '/order',
@@ -433,6 +462,7 @@
                     walletPassword: password
                 }),
                 success: function () {
+                    modal.hide();
                     new bootstrap.Modal(document.getElementById('successModal')).show();
 
                     // 원래 버튼 상태로 복원
@@ -445,6 +475,7 @@
                     btnElement.disabled = false;  // 버튼을 활성화
                 },
                 error: function () {
+                    modal.hide();
                     new bootstrap.Modal(document.getElementById('errorModal')).show();
 
                     // 원래 버튼 상태로 복원
