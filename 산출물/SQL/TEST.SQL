@@ -1064,3 +1064,5 @@ select * from wallet where member_id = 'test123';
 select * from stos where WALLET_NUMBER = 16;
 
 select * from PUBLICATION_INFO;
+
+select * from execution;

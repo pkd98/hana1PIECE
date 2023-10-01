@@ -359,6 +359,12 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-default filter-btn3 active" data-filter="all">전체</button>
+                                <button class="btn btn-default filter-btn3" data-filter="미체결">미체결 주문</button>
+                                <button class="btn btn-default filter-btn3" data-filter="체결">체결 주문</button>
+                                <button class="btn btn-default filter-btn3" data-filter="체결상세">체결 상세</button>
+                            </div>
                             <table class="table custom-table">
                                 <thead>
                                 <tr>
@@ -814,6 +820,31 @@
                 }
             });
         });
+        /**
+         *  토큰 거래내역 필터링
+         */
+        $('.filter-btn3').on('click', function () {
+            $('.filter-btn3').removeClass('active');  // 모든 버튼의 active 클래스를 제거
+            $(this).addClass('active');  // 현재 클릭된 버튼에 active 클래스를 추가
+
+            var filterValue = $(this).data('filter');
+
+            $('tbody tr').each(function () {
+                var status = $(this).find('td:nth-child(5)').text().trim();
+                // console.log("status: " + status);
+                // console.log("filterValue: " + filterValue);
+                if (filterValue === 'all') {
+                    $(this).show();
+                } else {
+                    if (status === filterValue) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+            });
+        });
+
     });
 
     window.onload = function () {

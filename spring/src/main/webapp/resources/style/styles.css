@@ -82,8 +82,10 @@ header {
 footer {
     margin: 0;
     display: flex;
+    flex-direction: column;
     width: 100%;
     min-height: 150px;
+    justify-content: center;
     align-items: center;
     place-items: center;
     background: #d9d9d9;
@@ -93,13 +95,12 @@ footer {
     margin: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     place-items: center;
     padding-left: 10px;
     padding-right: 10px;
 }
-
 .address-text,
 .menu-links {
     font-size: 2vw;
@@ -114,7 +115,6 @@ footer {
     max-width: 200px;
     width: 10vw;
     height: auto;
-
 }
 
 @media (max-width: 768px) {
@@ -132,11 +132,20 @@ footer {
 }
 
 @media (max-width: 480px) {
+    .footerLogo {
+        max-width: 150px;
+    }
 
-    .address-text,
+    .footerLogo img {
+        width: 5vw;
+    }
+
+    .address-text {
+        font-size: 1vw;
+    }
+
     .menu-links {
         font-size: 2vw;
-        /* 작은 화면에서는 글자 크기를 좀 더 크게 */
     }
 }
 
@@ -157,6 +166,10 @@ footer {
     width: 500px;
     height: 500px;
     margin-bottom: 25px;
+}
+
+.jumbotron_el > p {
+    color: #777777;
 }
 
 @media (max-width: 1055px) {

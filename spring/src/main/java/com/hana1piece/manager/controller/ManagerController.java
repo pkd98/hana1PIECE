@@ -2,10 +2,12 @@ package com.hana1piece.manager.controller;
 
 import com.hana1piece.estate.model.vo.SoldBuildingVO;
 import com.hana1piece.estate.service.EstateService;
+import com.hana1piece.manager.model.dto.AppNotificationDTO;
 import com.hana1piece.manager.model.dto.DividendPaymentDTO;
 import com.hana1piece.manager.model.dto.ManagerLoginDTO;
 import com.hana1piece.manager.model.dto.PublicOfferingRegistrationDTO;
 import com.hana1piece.manager.model.vo.ManagerVO;
+import com.hana1piece.manager.service.FirebaseService;
 import com.hana1piece.manager.service.ManagerService;
 import com.hana1piece.trading.model.vo.ExecutionVO;
 import com.hana1piece.trading.model.vo.StoOrdersVO;
@@ -29,13 +31,15 @@ import java.util.Map;
 public class ManagerController {
     private final ManagerService managerService;
     private final EstateService estateService;
+    private final FirebaseService firebaseService;
     private final int itemsPerPage = 10;
 
 
     @Autowired
-    public ManagerController(ManagerService managerService, EstateService estateService) {
+    public ManagerController(ManagerService managerService, EstateService estateService, FirebaseService firebaseService) {
         this.managerService = managerService;
         this.estateService = estateService;
+        this.firebaseService = firebaseService;
     }
 
     @GetMapping("/manager")
@@ -144,6 +148,22 @@ public class ManagerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
         }
     }
+
+    /**
+     *  앱 푸시 알림 보내기
+     */
+    @PostMapping("/manager/app-notification")
+    public ResponseEntity transmitPushAppNotification(@RequestBody AppNotificationDTO appNotificationDTO) {
+        try {
+            System.out.println(appNotificationDTO);
+            firebaseService.transmitPushAppNotification(appNotificationDTO);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+        }
+    }
+
 
     /**
      *  주문 내역

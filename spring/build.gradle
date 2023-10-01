@@ -69,6 +69,10 @@ dependencies {
 
 	// CoolSMS
 	implementation 'net.nurigo:sdk:4.3.0'
+
+	// Firebase
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
+
 }
 
 tasks.named('test') {

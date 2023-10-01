@@ -142,6 +142,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">공모/청약 등록</h5>
+                                <img src="/resources/img/free-icon-contract-4631631.png" width="50px"/>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
                                         data-bs-target="#publicOfferModal">공모/청약 등록
                                 </button>
@@ -153,6 +154,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">매물 상장</h5>
+                                <img src="/resources/img/free-icon-stockbroker-8991253.png" width="50px"/>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
                                         data-bs-target="#listingModal">매물 상장
                                 </button>
@@ -164,6 +166,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">매각 투표</h5>
+                                <img src="/resources/img/free-icon-manual-voting-3179299.png" width="50px"/>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
                                         data-bs-target="#saleVoteModal">매각투표 등록
                                 </button>
@@ -179,6 +182,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">배당금 지급</h5>
+                                <img src="/resources/img/free-icon-dividends-3529115.png" width="50px"/>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
                                         data-bs-target="#dividendModal">배당금 지급
                                 </button>
@@ -190,6 +194,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">공지사항</h5>
+                                <img src="/resources/img/free-icon-announcement-4048821.png" width="50px"/>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
                                         data-bs-target="#announcementModal">공지 등록
                                 </button>
@@ -201,13 +206,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">앱푸시 알림</h5>
+                                <img src="/resources/img/free-icon-alarm-1347881.png" width="50px"/>
                                 <button class="btn btn-custom-color btn-block" data-bs-toggle="modal"
                                         data-bs-target="#appNotificationModal">알림 보내기
                                 </button>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- 매물 상장 모달 -->
@@ -578,6 +583,42 @@
                 </div>
             </div>
 
+            <!-- 앱 푸시 알림 등록 모달 -->
+            <div class="modal fade" id="appNotificationModal" tabindex="-1" aria-labelledby="announcementModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="appNotificationModalLabel">앱 알림 보내기</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <!-- 제목 입력창 -->
+                                <div class="mb-3">
+                                    <label for="announcementTitle" class="form-label">제목</label>
+                                    <input type="text" class="form-control" id="appNotificationTitle"
+                                           placeholder="알림 제목을 입력하세요">
+                                </div>
+                                <!-- 내용 입력창 -->
+                                <div class="mb-3">
+                                    <label for="announcementContent" class="form-label">내용</label>
+                                    <textarea class="form-control" id="appNotificationContent" rows="4"
+                                              placeholder="알림 내용을 입력하세요"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer" style="justify-content: center;">
+                            <button id="appNotificationTransmit" type="button" class="btn"
+                                    style="background-color: #008485; color: white;">등록
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
             <div class="container mt-5">
                 <div class="mypage-title">
@@ -589,7 +630,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                     <!-- 총 자산 -->
                     <div class="card total-asset">
-                        <div class="card-header">총 예수금</div>
+                        <div class="card-header">총 고객 예수금</div>
                         <div class="card-body flex1" id="total-asset-body">
                             <div class="asset-container">
                                 <h3 class="formatted-number">${transactionStatus.deposit}원</h3>
@@ -619,8 +660,8 @@
             <div class="announcement">
                 <div class="container mt-3">
                     <table id="orders" class="table table-bordered table-hover">
-                        <thead class="thead-light">
-                        <tr>
+                        <thead>
+                        <tr class="table-light text-center">
                             <th>#주문번호</th>
                             <th>매물번호</th>
                             <th>지갑번호</th>
@@ -656,8 +697,8 @@
             <div class="announcement">
                 <div class="container mt-3">
                     <table id="executions" class="table table-bordered table-hover">
-                        <thead class="thead-light">
-                        <tr>
+                        <thead>
+                        <tr class="table-light text-center">
                             <th>#체결번호</th>
                             <th>매수주문번호</th>
                             <th>매도주문번호</th>
@@ -690,8 +731,8 @@
             <div class="announcement">
                 <div class="container mt-3">
                     <table id="payments" class="table table-bordered table-hover">
-                        <thead class="thead-light">
-                        <tr>
+                        <thead>
+                        <tr class="table-light text-center">
                             <th>#지급번호</th>
                             <th>지갑번호</th>
                             <th>매물번호</th>
@@ -1188,6 +1229,36 @@
                     console.log(error);
                     // 모달 창 닫기
                     $('#announcementModal').modal('hide');
+                    // 실패 모달 표시
+                    $("#managerErrorModal").modal('show');
+                }
+            });
+        });
+        /**
+         *  앱 알림 보내기
+         */
+        $('#appNotificationTransmit').click(function () {
+            var title = $('#appNotificationTitle').val();
+            var body = $('#appNotificationContent').val();
+
+            $.ajax({
+                url: '/manager/app-notification',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "title": title,
+                    "body": body
+                }),
+                success: function (response) {
+                    // 모달 창 닫기
+                    $('#appNotificationModal').modal('hide');
+                    // 성공 모달 표시
+                    $("#managerSuccessModal").modal('show');
+                },
+                error: function (error) {
+                    console.log(error);
+                    // 모달 창 닫기
+                    $('#appNotificationModal').modal('hide');
                     // 실패 모달 표시
                     $("#managerErrorModal").modal('show');
                 }
