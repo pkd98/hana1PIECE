@@ -113,8 +113,6 @@
                     <p><span>가격:</span><span id="buyModalPrice">원</span></p>
                     <p><span>수량:</span> <span id="buyModalQuantity">STOS</span></p>
                     <p><span>주문금액:</span><span id="buyModalTotal">원</span></p>
-                    <p><span>거래 수수료 (0.015%):</span> <span id="buyModalFee">원</span></p>
-                    <p><span>정산금액:</span><span id="buyModalNet">원</span></p>
                 </div>
                 <div class="modal-footer" style="justify-content: center;">
                     <button type="button" class="btn btn-danger" id="confirmBuy">매수하기</button>
@@ -136,8 +134,6 @@
                     <p><span>가격:</span><span id="sellModalPrice">5,500원</span></p>
                     <p>수량: <span id="sellModalQuantity">10 STOS</span></p>
                     <p>주문금액: <span id="sellModalTotal">55,000원</span></p>
-                    <p>거래 수수료 (0.015%): <span id="sellModalFee">원</span></p>
-                    <p>정산금액: <span id="sellModalNet">원</span></p>
                 </div>
                 <div class="modal-footer" style="justify-content: center;">
                     <button type="button" class="btn btn-primary" id="confirmSell">매도하기</button>
@@ -384,14 +380,10 @@
         const buyModalPrice = document.getElementById('buyModalPrice');
         const buyModalQuantity = document.getElementById('buyModalQuantity');
         const buyModalTotal = document.getElementById('buyModalTotal');
-        const buyModalFee = document.getElementById('buyModalFee');
-        const buyModalNet = document.getElementById('buyModalNet');
 
         const sellModalPrice = document.getElementById('sellModalPrice');
         const sellModalQuantity = document.getElementById('sellModalQuantity');
         const sellModalTotal = document.getElementById('sellModalTotal');
-        const sellModalFee = document.getElementById('sellModalFee');
-        const sellModalNet = document.getElementById('sellModalNet');
 
 
         submitButton.addEventListener('click', function () {
@@ -405,8 +397,6 @@
                 buyModalPrice.textContent = price.toLocaleString('ko-KR') + ' 원';
                 buyModalQuantity.textContent = quantity + ' STOS';
                 buyModalTotal.textContent = total.toLocaleString('ko-KR') + ' 원';
-                buyModalFee.textContent = fee.toLocaleString('ko-KR') + ' 원';
-                buyModalNet.textContent = net.toLocaleString('ko-KR') + ' 원';
 
                 new bootstrap.Modal(document.getElementById('buyModal')).show();
             } else if (submitButton.value === "매도") {
@@ -414,8 +404,6 @@
                 sellModalPrice.textContent = price.toLocaleString('ko-KR') + ' 원';
                 sellModalQuantity.textContent = quantity + ' STOS';
                 sellModalTotal.textContent = total.toLocaleString('ko-KR') + ' 원';
-                sellModalFee.textContent = fee.toLocaleString('ko-KR') + ' 원';
-                sellModalNet.textContent = net.toLocaleString('ko-KR') + ' 원';
 
                 new bootstrap.Modal(document.getElementById('sellModal')).show();
             }
