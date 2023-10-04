@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         // 웹뷰 초기 설정 및 로드
         myWebView = findViewById(R.id.webView)
         configureWebView()
-        myWebView.loadUrl("http:/localhost:8080/")
+        myWebView.loadUrl("http:/192.168.64.39:8080/")
 
         // Firebase 초기화
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
