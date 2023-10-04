@@ -36,12 +36,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+            // PendingIntent 설정
             int flags = PendingIntent.FLAG_UPDATE_CURRENT;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 flags |= PendingIntent.FLAG_IMMUTABLE;
             }
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, flags);
 
+            // 알림 빌더 설정
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(title)
@@ -51,11 +53,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setVibrate(new long[]{1, 1000})
                     .setContentIntent(contentIntent); // 여기로 옮깁니다.
 
+            // 알림 표시
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
             notificationManager.notify(0, mBuilder.build());
 
-
+            // 알림을 표시한 후 PendingIntent 설정
             mBuilder.setContentIntent(contentIntent);
         } else {
             System.out.println("test");
@@ -63,6 +65,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void createNotificationChannel() {
+        // 알림 채널 생성 (API 26 이상에서 필요)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "HANA1PIECE";
             String description = "hana1piece notification";

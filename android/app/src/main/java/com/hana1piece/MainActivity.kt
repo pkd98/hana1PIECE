@@ -1,11 +1,8 @@
 package com.hana1piece
 
-import android.provider.Settings
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,8 +17,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessaging
 import java.io.File
 import java.text.SimpleDateFormat
@@ -51,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         // 웹뷰 초기 설정 및 로드
         myWebView = findViewById(R.id.webView)
         configureWebView()
-        myWebView.loadUrl("http:/192.168.64.39:8080/")
+        myWebView.loadUrl("http://www.hana1piece.store/")
 
         // Firebase 초기화
         FirebaseMessaging.getInstance().isAutoInitEnabled = true

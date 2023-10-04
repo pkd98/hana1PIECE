@@ -223,6 +223,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void walletOpening(WalletOpeningDTO walletOpeningDTO) {
+        System.out.println(walletOpeningDTO);
         memberMapper.insertWallet(walletOpeningDTO);
     }
 
