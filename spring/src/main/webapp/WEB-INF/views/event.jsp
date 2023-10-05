@@ -40,9 +40,8 @@
         </div>
         <button type="button" class="btn btn-primary" onclick="kakaoShare()"><img src="/resources/img/kakao.svg"
                 alt="">공유하기</button>
-        <h6>나를 추천한 사람 : ${sessionScope.member.referralCount}</h6>
+        <h6>나를 추천한 사람 수: ${sessionScope.member.referralCount}</h6>
     </div>
-
 
 
     <%@ include file="include/footer.jsp" %>

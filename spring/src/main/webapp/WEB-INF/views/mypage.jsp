@@ -363,7 +363,6 @@
                                 <button class="btn btn-default filter-btn3 active" data-filter="all">전체</button>
                                 <button class="btn btn-default filter-btn3" data-filter="미체결">미체결 주문</button>
                                 <button class="btn btn-default filter-btn3" data-filter="체결">체결 주문</button>
-                                <button class="btn btn-default filter-btn3" data-filter="체결상세">체결 상세</button>
                             </div>
                             <table class="table custom-table">
                                 <thead>
@@ -374,6 +373,7 @@
                                     <th>주문수량</th>
                                     <th>주문상태</th>
                                     <th>체결수량</th>
+                                    <th>체결평균가</th>
                                     <th>주문일시</th>
                                 </tr>
                                 </thead>
@@ -400,6 +400,7 @@
                                                     </c:choose>
                                                 </td>
                                                 <td>${order.executedQuantity}</td>
+                                                <td>${order.executedPriceAvg}</td>
                                                 <td>${order.orderDate}</td>
                                             </tr>
                                         </c:when>
@@ -427,7 +428,8 @@
                         <span class="card-title dividend-title">최근 6개월 누적 배당금</span>
                     </div>
                     <div class="dividend-amount-container">
-                        <span class="card-title dividend-amount">총 <span class="formatted-number">${totalDividendFor6month}원</span></span>
+                        <span class="card-title dividend-amount">총 <span
+                                class="formatted-number">${totalDividendFor6month}원</span></span>
                     </div>
                 </div>
                 <div class="dividend-button-section">
@@ -836,10 +838,18 @@
                 if (filterValue === 'all') {
                     $(this).show();
                 } else {
-                    if (status === filterValue) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
+                    if (filterValue === "미체결") {
+                        if (status === filterValue || status === "부분 체결") {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    } else if (filterValue === "체결") {
+                        if (status === filterValue) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
                     }
                 }
             });

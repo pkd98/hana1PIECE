@@ -63,7 +63,7 @@
 <script>
     var customDiv = document.querySelector(".custom-div");
 
-    customDiv.addEventListener("click", function() {
+    customDiv.addEventListener("click", function () {
         // 페이지 이동
         window.location.href = "/accountOpeningProcess1";
     });

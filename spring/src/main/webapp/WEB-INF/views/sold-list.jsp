@@ -25,15 +25,15 @@
 
 <%@ include file="include/header.jsp" %>
 
-    <div class="titleBar">
-        <h2>매각된 매물</h2>
-        <hr>
-    </div>
+<div class="titleBar">
+    <h2>매각된 매물</h2>
+    <hr>
+</div>
 
-    <div class="container mt-5">
-        <div class="row">
+<div class="container mt-5">
+    <div class="row">
 
-            <c:forEach var="item" items="${soldEstateListDTO}">
+        <c:forEach var="item" items="${soldEstateListDTO}">
 
             <!-- 매물 1 -->
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -61,11 +61,10 @@
                 </div>
             </div>
 
-            </c:forEach>
+        </c:forEach>
 
-        </div>
     </div>
-
+</div>
 
 
 <%@ include file="include/footer.jsp" %>

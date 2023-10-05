@@ -75,7 +75,8 @@
                            maxlength="4"/>
                 </div>
                 <div class="able-amount">
-                    <span id="ableAmountName">거래 가능 금액:</span> <span id="ableAmountValue" class="formatted-number">${wallet.balance}원</span>
+                    <span id="ableAmountName">거래 가능 금액:</span> <span id="ableAmountValue"
+                                                                     class="formatted-number">${wallet.balance}원</span>
                 </div>
                 <div class="price">
                     <span>구매 희망 단가</span>
@@ -178,29 +179,35 @@
      * 천단위 구분
      */
     function formatNumbers() {
-        $('.formatted-number').each(function() {
+        $('.formatted-number').each(function () {
             var number = $(this).text();
             var formattedNumber = numberWithCommas(number);
             $(this).text(formattedNumber);
         });
     }
+
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
 
-    let walletBalance = ${wallet.balance} !== null ? ${wallet.balance} : "";
-    let stosAmount = ${stos.amount} !== null ? ${stos.amount} : "";
+    let walletBalance =
+    ${wallet.balance} !==
+    null ? ${wallet.balance} : "";
+    let stosAmount =
+    ${stos.amount} !==
+    null ? ${stos.amount} : "";
 
     let stompClient;
     let LN = ${realEstateInfo.listingNumber};
+
     function connect() {
         let socket = new SockJS("/gs-guide-websocket"); // 웹소켓 엔드포인트 설정
         stompClient = Stomp.over(socket);
 
         stompClient.connect({},
-            function(frame) { // Connection success callback
-                stompClient.subscribe("/topic/orderBook/" + LN, function(message) {
+            function (frame) { // Connection success callback
+                stompClient.subscribe("/topic/orderBook/" + LN, function (message) {
                     try {
                         // console.log("Received message:", message.body);
                         updateOrderBookTable(JSON.parse(message.body));
@@ -211,7 +218,7 @@
                 // Send an initial message to the server
                 stompClient.send("/app/orderBook/" + LN);
             },
-            function(error) { // Error callback
+            function (error) { // Error callback
                 console.error('STOMP error:', error);
             }
         );
@@ -429,7 +436,7 @@
         function sendOrder(orderType, price, quantity, btnElement) {
             var password = document.getElementById("wallet-password").value;
             var modal;
-            if(orderType === 'BUY') {
+            if (orderType === 'BUY') {
                 modal = bootstrap.Modal.getInstance(document.getElementById('buyModal'));
             } else if (orderType === 'SELL') {
                 modal = bootstrap.Modal.getInstance(document.getElementById('sellModal'));

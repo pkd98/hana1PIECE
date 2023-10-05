@@ -4,7 +4,9 @@ import com.hana1piece.member.model.dto.MembersSellVoteDTO;
 import com.hana1piece.member.model.dto.MembersStosInfoDTO;
 import com.hana1piece.member.model.dto.MembersTotalAssetDTO;
 import com.hana1piece.member.model.mapper.MypageMapper;
+import com.hana1piece.trading.model.mapper.ExecutionMapper;
 import com.hana1piece.trading.model.mapper.StoOrdersMapper;
+import com.hana1piece.trading.model.vo.ExecutionVO;
 import com.hana1piece.trading.model.vo.StoOrdersVO;
 import com.hana1piece.wallet.model.vo.WalletVO;
 import com.hana1piece.wallet.service.WalletService;
@@ -18,12 +20,14 @@ public class MyPageServiceImpl implements MyPageService {
 
     private final MypageMapper mypageMapper;
     private final StoOrdersMapper stoOrdersMapper;
+    private final ExecutionMapper executionMapper;
     private final WalletService walletService;
 
     @Autowired
-    public MyPageServiceImpl(MypageMapper mypageMapper, StoOrdersMapper stoOrdersMapper, WalletService walletService) {
+    public MyPageServiceImpl(MypageMapper mypageMapper, StoOrdersMapper stoOrdersMapper, ExecutionMapper executionMapper, WalletService walletService) {
         this.mypageMapper = mypageMapper;
         this.stoOrdersMapper = stoOrdersMapper;
+        this.executionMapper = executionMapper;
         this.walletService = walletService;
     }
 
@@ -36,6 +40,7 @@ public class MyPageServiceImpl implements MyPageService {
     public List<StoOrdersVO> getMembersStoOrdersByWalletNumber(int walletNumber) {
         return stoOrdersMapper.findByWN(walletNumber);
     }
+
 
     @Override
     public MembersTotalAssetDTO getMembersTotalAsset(int walletNumber) {

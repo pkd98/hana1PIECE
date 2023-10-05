@@ -1562,7 +1562,7 @@
 
     nextButton.addEventListener("click", function () {
         if (allAgreeCheckbox.checked) {
-           window.location.href = "/accountOpeningProcess2";
+            window.location.href = "/accountOpeningProcess2";
         }
     });
 </script>

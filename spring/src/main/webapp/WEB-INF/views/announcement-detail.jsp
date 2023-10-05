@@ -30,7 +30,8 @@
     <div class="notice-detail">
         <h2 class="notice-title">${announcement.title}</h2>
         <div class="notice-info">
-            <span class="notice-date">${announcement.writeDate}</span> | <span class="notice-views">조회수: ${announcement.count}</span>
+            <span class="notice-date">${announcement.writeDate}</span> | <span
+                class="notice-views">조회수: ${announcement.count}</span>
         </div>
         <hr>
         <br>

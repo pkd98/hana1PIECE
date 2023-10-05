@@ -39,7 +39,8 @@
                     <div class="card-body">
                         <h5 class="card-title">${item.buildingName}</h5>
 
-                        <c:set var="percentageDifference" value="${((item.price - item.reasonablePrice) / item.reasonablePrice) * 100}" />
+                        <c:set var="percentageDifference"
+                               value="${((item.price - item.reasonablePrice) / item.reasonablePrice) * 100}"/>
 
                         <p class="text-danger small mb-2">
                             <c:choose>

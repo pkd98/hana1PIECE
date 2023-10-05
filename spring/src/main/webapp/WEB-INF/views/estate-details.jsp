@@ -13,14 +13,14 @@
     <link rel="stylesheet" href="/resources/style/font.css">
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <!-- animation cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <!-- fabicon -->
     <link rel="icon" href="/resources/img/favicon.png">
     <!-- kakao map api -->
     <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5082aba073eeee4dbd5606104fd17280"></script>
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5082aba073eeee4dbd5606104fd17280"></script>
     <!-- ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>하나1PIECE</title>
@@ -53,11 +53,13 @@
                          alt="image3">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -73,15 +75,19 @@
         <div class="card-body">
             <div class="card-content">
                 <div class="container">
-                    <p class="value-title"><img id="info" src="/resources/img/info.png" alt="info" width="18" height="18"> 실제 건물 가치</p>
+                    <p class="value-title"><img id="info" src="/resources/img/info.png" alt="info" width="18"
+                                                height="18"> 실제 건물 가치</p>
                 </div>
-                <div class="info-description" id="description"><b style="color: #E90061;">실건물의 평당가</b>를 환산한 가격 입니다. </br> * <i>네이버 부동산 제공</i></div>
-                <h6 class="value"><span id="resonablePrice" class="formatted-number">${realEstateSale.reasonablePrice}</span>원</h6>
+                <div class="info-description" id="description"><b style="color: #E90061;">실건물의 평당가</b>를 환산한 가격
+                    입니다. </br> * <i>네이버 부동산 제공</i></div>
+                <h6 class="value"><span id="resonablePrice"
+                                        class="formatted-number">${realEstateSale.reasonablePrice}</span>원</h6>
                 <small id="yesterday"></small>
             </div>
             <div class="card-content">
                 <p class="value-title">토큰 가격</p>
-                <h6 class="value formatted-number" style="color: red; font-size: 2rem;"><span id="realEstatePrice">${realEstateSale.price}</span>원</h6>
+                <h6 class="value formatted-number" style="color: red; font-size: 2rem;"><span
+                        id="realEstatePrice">${realEstateSale.price}</span>원</h6>
             </div>
             <div class="card-content">
                 <p class="value-title">실제 건물 대비</p>
@@ -101,7 +107,8 @@
         <!-- 친구에게 공유하기 버튼 추가 -->
         <div class="mt-1 kakao-share">
             <button type="button" class="btn btn-primary" onclick="javascript:kakaoShare()"><img
-                    src="/resources/img/kakao.svg" al기t="">친구에게 공유하기</button>
+                    src="/resources/img/kakao.svg" al기t="">친구에게 공유하기
+            </button>
         </div>
     </div>
 
@@ -242,7 +249,8 @@
 
         <div class="tenant-card">
             <div class="tenant-header">
-                <span class="tenant-name">${tenantInfo.lessee}</span> | <span class="tenant-business">${tenantInfo.sector}</span>
+                <span class="tenant-name">${tenantInfo.lessee}</span> | <span
+                    class="tenant-business">${tenantInfo.sector}</span>
             </div>
             <div class="tenant-duration">
                 계약기간 : <span>${tenantInfo.contractDate} ~ ${tenantInfo.expirationDate}</span>
@@ -267,7 +275,7 @@
                         <div class="trading-items">
                             <div class="quantity">
                                 <button class="decrease">-</button>
-                                <input type="number" placeholder="수량" />
+                                <input type="number" placeholder="수량"/>
                                 <button class="increase">+</button>
                             </div>
                             <div class="explanation">
@@ -293,7 +301,7 @@
                     <div class="wallet-pw">
                         <label for="wallet-password">지갑 비밀번호</label>
                         <input type="password" id="wallet-password" pattern="\d{4}" placeholder="4자리 숫자"
-                            maxlength="4" />
+                               maxlength="4"/>
                     </div>
                     <div class="modal-footer" style="justify-content: center;">
                         <button type="button" class="btn btn-primary" id="cancle">취소</button>
@@ -385,12 +393,13 @@
      * 천단위 구분
      */
     function formatNumbers() {
-        $('.formatted-number').each(function() {
+        $('.formatted-number').each(function () {
             var number = $(this).text();
             var formattedNumber = numberWithCommas(number);
             $(this).text(formattedNumber);
         });
     }
+
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -508,7 +517,7 @@
 
         function handleOrder(btnElement) {
             // Spinner 추가 및 버튼텍스트 숨김
-            btnElement.innerHTML =  '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+            btnElement.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
             btnElement.disabled = true;  // 버튼을 비활성화
 
             sendOrder(quantityInput.value, btnElement);

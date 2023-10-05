@@ -46,7 +46,7 @@
                                   on a.listing_number = pi.LISTING_NUMBER) b
                  inner join REAL_ESTATE_SALE RES
                             on b.LISTINGNUMBER = RES.LISTING_NUMBER
-        where walletNumber = 6
+        where walletNumber = #{walletNumber}
           and state = '청약'
     </select>
 

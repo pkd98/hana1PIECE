@@ -107,13 +107,13 @@
                                         <a class="nav-link" href="#transaction-analysis"><span>거래 현황</span></a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" href="#dividend-scan"><span>배당금 지급 내역</span></a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" href="#order-transaction-scan"><span>주문 트랜잭션 스캔</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#order-transaction-scan"><span>체결 트랜잭션 스캔</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#dividend-scan"><span>배당금 지급 내역</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -653,6 +653,39 @@
 
             <div class="container mt-5">
                 <div class="mypage-title">
+                    <h2 id="dividend-scan">배당금 지급 내역</h2>
+                </div>
+            </div>
+
+            <div class="announcement">
+                <div class="container mt-3">
+                    <table id="payments" class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="table-light text-center">
+                            <th>#지급번호</th>
+                            <th>지갑번호</th>
+                            <th>매물번호</th>
+                            <th>지급액</th>
+                            <th>지급일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                    <ul class="pagination justify-content-center" id="paymentsPaginationControls">
+                        <li class="page-item"><a class="page-link" href="#" data-page="1">First</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="prev"><</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">Page 1 of 100</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="next">></a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="last">Last</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="container mt-5">
+                <div class="mypage-title">
                     <h2 id="order-transaction-scan">주문 트랜잭션 스캔</h2>
                 </div>
             </div>
@@ -712,39 +745,6 @@
                     </table>
 
                     <ul class="pagination justify-content-center" id="executionsPaginationControls">
-                        <li class="page-item"><a class="page-link" href="#" data-page="1">First</a></li>
-                        <li class="page-item"><a class="page-link" href="#" data-page="prev"><</a></li>
-                        <li class="page-item disabled"><a class="page-link" href="#">Page 1 of 100</a></li>
-                        <li class="page-item"><a class="page-link" href="#" data-page="next">></a></li>
-                        <li class="page-item"><a class="page-link" href="#" data-page="last">Last</a></li>
-                    </ul>
-                </div>
-            </div>
-
-
-            <div class="container mt-5">
-                <div class="mypage-title">
-                    <h2 id="dividend-scan">배당금 지급 내역</h2>
-                </div>
-            </div>
-
-            <div class="announcement">
-                <div class="container mt-3">
-                    <table id="payments" class="table table-bordered table-hover">
-                        <thead>
-                        <tr class="table-light text-center">
-                            <th>#지급번호</th>
-                            <th>지갑번호</th>
-                            <th>매물번호</th>
-                            <th>지급액</th>
-                            <th>지급일</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-
-                    <ul class="pagination justify-content-center" id="paymentsPaginationControls">
                         <li class="page-item"><a class="page-link" href="#" data-page="1">First</a></li>
                         <li class="page-item"><a class="page-link" href="#" data-page="prev"><</a></li>
                         <li class="page-item disabled"><a class="page-link" href="#">Page 1 of 100</a></li>

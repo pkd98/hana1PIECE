@@ -12,9 +12,7 @@ public interface ExecutionMapper {
 
     List<ExecutionVO> findAll();
     List<ExecutionVO> getExecutionsByPage(@Param("offset") int offset, @Param("limit") int limit);
-
     void insertExecution(ExecutionVO executionVO);
-
     int getTotalExecutionCount();
 
 }

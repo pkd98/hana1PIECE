@@ -7,6 +7,7 @@ import com.hana1piece.member.model.dto.*;
 import com.hana1piece.member.model.vo.OneMembersVO;
 import com.hana1piece.member.service.MemberService;
 import com.hana1piece.member.service.MyPageService;
+import com.hana1piece.trading.model.vo.ExecutionVO;
 import com.hana1piece.trading.model.vo.ReservationOrdersVO;
 import com.hana1piece.trading.model.vo.StoOrdersVO;
 import com.hana1piece.trading.service.ReservationOrderService;

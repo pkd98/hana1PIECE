@@ -103,7 +103,8 @@
                 <c:choose>
                     <c:when test="${publicOfferingProgress.sumQuantity lt publicationInfo.volume}">
                         <span class="rate-percentage">
-                            <fmt:formatNumber value="${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}" pattern="#.##"/>%
+                            <fmt:formatNumber value="${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}"
+                                              pattern="#.##"/>%
                         </span>
                         <span class="count-time">청약 마감까지 <span id="d-day2"></span>일 전</span>
                     </c:when>

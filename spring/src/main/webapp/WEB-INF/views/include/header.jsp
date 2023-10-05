@@ -66,13 +66,15 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/signup', // 실제 서버 URL로 변경해야 합니다.
+                url: '/signup',
                 data: JSON.stringify(formData),
                 contentType: 'application/json',
                 success: function () {
+                    $("#signUpModal").modal('hide');
                     showSuccessModal();
                 },
                 error: function (error) {
+                    $("#signUpModal").modal('hide');
                     showErrorModal();
                     console.error('error:', error);
                 }
@@ -107,7 +109,22 @@
 
     });
 </script>
+<style>
+    .centered-dropdown-item {
+        text-align: center;
+    }
 
+    .dropdown-item.active {
+        background-color: #008485 !important;
+        color: #fff !important;
+    }
+
+    .dropdown-item:focus {
+        background-color: #008485 !important;
+        color: #fff !important;
+    }
+
+</style>
 <header>
     <!-- 로그인 표시 바 -->
     <div id="loginBar">
@@ -152,13 +169,14 @@
                     </div>
                 </div>
             </c:when>
-                <c:otherwise>
-                    <button id="memberNameButton" type="button" class="btn btn-link no-underline-black" onclick="redirectToMypage()">${sessionScope.member.name}님
-                    </button>
+            <c:otherwise>
+                <button id="memberNameButton" type="button" class="btn btn-link no-underline-black"
+                        onclick="redirectToMypage()">${sessionScope.member.name}님
+                </button>
 
-                    <button id="logoutButton" type="button" class="btn btn-link no-underline-black" onclick="logout()">로그아웃
-                    </button>
-                </c:otherwise>
+                <button id="logoutButton" type="button" class="btn btn-link no-underline-black" onclick="logout()">로그아웃
+                </button>
+            </c:otherwise>
         </c:choose>
 
         <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
@@ -230,9 +248,10 @@
                             투자하기
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/estate-list">부동산 거래 가능 종목</a>
+                            <a class="dropdown-item centered-dropdown-item" href="/estate-list">부동산 거래 가능 종목</a>
+                            <a class="dropdown-item centered-dropdown-item" href="/sold-list">부동산 매각 완료 종목</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/sold-list">부동산 매각 완료 종목</a>
+                            <a class="dropdown-item centered-dropdown-item" href="/transaction-scan">주문/체결 스캔</a>
                         </div>
                     </li>
 
@@ -250,11 +269,11 @@
                             고객지원
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/announcement">공지사항</a>
+                            <a class="dropdown-item centered-dropdown-item" href="/announcement">공지사항</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">자주 묻는 질문</a>
+                            <a class="dropdown-item centered-dropdown-item" href="#">자주 묻는 질문</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">약관 및 정책</a>
+                            <a class="dropdown-item centered-dropdown-item" href="#">약관 및 정책</a>
                         </div>
                     </li>
                 </ul>

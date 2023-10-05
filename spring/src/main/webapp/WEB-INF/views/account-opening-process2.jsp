@@ -55,7 +55,8 @@
                 <h3 class="sub-title"><strong>휴대폰 인증</strong></h3>
                 <input type="text" id="phoneInput" class="form-control" placeholder="01012345678 (-) 제외"
                        style="margin-bottom: 5px;">
-                <input type="text" id="phoneCodeInput" class="form-control" placeholder="인증 번호" style="margin-bottom: 10px;"
+                <input type="text" id="phoneCodeInput" class="form-control" placeholder="인증 번호"
+                       style="margin-bottom: 10px;"
                        hidden>
                 <small id="InvalidPhoneNumber" class="verification-status text-danger" hidden>유효하지 않은 전화번호입니다.</small>
                 <small id="InvalidCode" class="verification-status text-danger" hidden>인증실패. 다시 시도해주세요.</small>
@@ -97,9 +98,11 @@
                 <input type="text" id="account" class="form-control" value="하나1PIECE 종합매매 계좌" readonly>
                 <br>
                 <label for="accountPw1">계좌 비밀번호 설정(숫자 4자리)</label>
-                <input id="accountPw1" type="password" class="form-control" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                <input id="accountPw1" type="password" class="form-control" maxlength="4"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                 <label for="accountPw2">계좌 비밀번호 확인</label>
-                <input id="accountPw2" type="password" class="form-control" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                <input id="accountPw2" type="password" class="form-control" maxlength="4"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                 <small id="accountPwMismatch" class="password-status text-danger" hidden>비밀번호가 다릅니다.</small>
                 <small id="accountPwMatch" class="password-status text-success" hidden>비밀번호가 일치합니다.</small>
             </div>
@@ -109,9 +112,11 @@
                 <h3 class="sub-title"><strong>지갑 연동</strong></h3>
 
                 <label for="walletPw1">지갑 비밀번호 설정 (숫자 4자리)</label>
-                <input type="password" id="walletPw1" class="form-control" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                <input type="password" id="walletPw1" class="form-control" maxlength="4"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                 <label for="walletPw2">지갑 비밀번호 확인</label>
-                <input type="password" id="walletPw2" class="form-control" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                <input type="password" id="walletPw2" class="form-control" maxlength="4"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                 <small id="walletPwMismatch" class="password-status text-danger" hidden>비밀번호가 다릅니다.</small>
                 <small id="walletPwMatch" class="password-status text-success" hidden>비밀번호가 일치합니다.</small>
                 <br>
@@ -189,7 +194,7 @@
                         document.getElementById("InvalidCode").hidden = true;
                         document.getElementById("phoneCodeSubmitButton").disabled = true;
                         authenticationCheck++;
-                        if(authenticationCheck == 2) {
+                        if (authenticationCheck == 2) {
                             document.getElementById("account-wallet-container").hidden = false;
                         }
                     },
@@ -229,7 +234,7 @@
                         $("#validRecognize").removeAttr("hidden");
                         document.getElementById("InvalidRecognize").hidden = true;
                         authenticationCheck++;
-                        if(authenticationCheck == 2) {
+                        if (authenticationCheck == 2) {
                             document.getElementById("account-wallet-container").hidden = false;
                         }
                     },
@@ -251,7 +256,7 @@
         /**
          *  최종 계좌 개설 및 지갑 연동 요청
          */
-        $("#completeAccountOpening").click(function() {
+        $("#completeAccountOpening").click(function () {
             // 사용자로부터 입력된 데이터 가져오기
             const registrationNumber1 = $("#registrationNumber1").val();
             const registrationNumber2 = $("#registrationNumber2").val();
@@ -269,11 +274,11 @@
                     walletPassword: walletPassword,
                     referralCode: referral
                 },
-                success: function(response) {
+                success: function (response) {
                     // 성공시 서버단에서 완료페이지로 리다이렉트
                     window.location.href = "/account-opening-complete?event=" + response.event;
                 },
-                error: function(error) {
+                error: function (error) {
                     // 에러 처리
                     console.error(error);
                     alert("예기치 못한 에러");

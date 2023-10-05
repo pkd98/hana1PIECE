@@ -50,8 +50,8 @@
     /**
      *  카드 요소 누르면 상세 페이지 이동
      */
-    $(document).ready(function(){
-        $(".clickable-card").click(function(){
+    $(document).ready(function () {
+        $(".clickable-card").click(function () {
             var listingNumber = $(this).data("listing");
             window.location.href = "/public-offering/" + listingNumber;
         });
