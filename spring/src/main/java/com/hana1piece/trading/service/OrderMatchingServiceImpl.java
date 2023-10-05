@@ -56,18 +56,18 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
      * 1. 주문 등록
      * 2. 매칭 가능한 매도 호가 조회 : 매도 가격이 가장 낮은 순서부터 조회
      * 3. 해당 호가의 매도 주문을 조회 : 오래된 순서대로 체결
-     *
+     * <p>
      * [바로 체결된 경우]
-     *   - (1) 체결 테이블 등록,
-     *   - (2) 매수자 금액 차감 및 토큰 지급,
-     *   - (3) 매도자 금액 지급
-     *   - (4) 체결된 매수/매도 주문 상태 및 체결 수량 업데이트
-     *   - (5) 호가창에 수량 반영
-     *   - (6) 토큰 가격 시세 반영
-     *
+     * - (1) 체결 테이블 등록,
+     * - (2) 매수자 금액 차감 및 토큰 지급,
+     * - (3) 매도자 금액 지급
+     * - (4) 체결된 매수/매도 주문 상태 및 체결 수량 업데이트
+     * - (5) 호가창에 수량 반영
+     * - (6) 토큰 가격 시세 반영
+     * <p>
      * [미체결 매수 주문]
-     *   - (1) 미체결 예수금 차감
-     *   - (2) 미체결 수량만큼 호가창 반영
+     * - (1) 미체결 예수금 차감
+     * - (2) 미체결 수량만큼 호가창 반영
      */
     private void matchBuyOrder(StoOrdersVO order) {
         // 1. 주문 등록
@@ -110,7 +110,7 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
                         // 매수자 토큰 지급
                         StosVO stos = stosService.findStosByWalletNumberAndListingNumber(order.getWalletNumber(), order.getListingNumber());
 
-                        if(stos != null) {
+                        if (stos != null) {
                             stos.setAmount(stos.getAmount() + executedQuantity);
                             stosService.updateAmount(stos);
                         } else {
@@ -214,17 +214,17 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
      * 1. 주문 등록
      * 2. 매칭 가능한 매수 호가 조회 : 매수 가격이 가장 낮은 순서부터 조회
      * 3. 해당 호가의 매수 주문을 조회 : 오래된 순서대로 체결
-     *
+     * <p>
      * [바로 체결된 경우]
-     *   - (1) 체결 테이블 등록,
-     *   - (2) 매도자 금액 지급 및 토큰 차감,
-     *   - (3) 매수자 금액 지급
-     *   - (4) 체결된 매수/매도 주문 상태 및 체결 수량 업데이트
-     *   - (5) 호가창에 수량 반영
-     *
+     * - (1) 체결 테이블 등록,
+     * - (2) 매도자 금액 지급 및 토큰 차감,
+     * - (3) 매수자 금액 지급
+     * - (4) 체결된 매수/매도 주문 상태 및 체결 수량 업데이트
+     * - (5) 호가창에 수량 반영
+     * <p>
      * [미체결 매수 주문]
-     *   - (1) 미체결 토큰 차감
-     *   - (2) 미체결 수량만큼 호가창 반영
+     * - (1) 미체결 토큰 차감
+     * - (2) 미체결 수량만큼 호가창 반영
      */
     private void matchSellOrder(StoOrdersVO order) {
         // 1. 주문 등록
@@ -271,7 +271,7 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
                         // 매수자 토큰 지급
                         StosVO buyerStos = stosService.findStosByWalletNumberAndListingNumber(order.getWalletNumber(), order.getListingNumber());
 
-                        if(buyerStos != null) {
+                        if (buyerStos != null) {
                             buyerStos.setAmount(buyerStos.getAmount() + executedQuantity);
                             stosService.updateAmount(buyerStos);
                         } else {

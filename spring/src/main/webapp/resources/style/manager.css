@@ -63,7 +63,7 @@ header {
     margin-top: 30px;
 }
 
-.titleBar>h2 {
+.titleBar > h2 {
     display: flex;
     justify-content: center;
     font-family: 'Hana2-Regular', sans-serif;
@@ -71,7 +71,7 @@ header {
     -webkit-text-size-adjust: 100%;
 }
 
-.titleBar>hr {
+.titleBar > hr {
     display: flex;
     width: 90%;
 }
@@ -97,7 +97,7 @@ header {
     align-items: center;
 }
 
-.button-area>button {
+.button-area > button {
     width: 50%;
     background-color: #008485;
     border-color: #008485;
@@ -118,7 +118,7 @@ header {
 }
 
 
-.card-body>button {
+.card-body > button {
     background-color: #008485;
     border-color: #008485;
     color: #ffffff;
@@ -127,8 +127,8 @@ header {
 }
 
 /* 트랜잭션 스캔 */
-.announcement>.table-bordered th,
-.announcement>.table-bordered td {
+.announcement > .table-bordered th,
+.announcement > .table-bordered td {
     border-color: #aaa;
 }
 
@@ -168,7 +168,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(rgba(100,100,100,0.0), rgba(1000,1000,1000,100.0)), url('/resources/img/hanati_building.jpeg');
+    background: linear-gradient(rgba(100, 100, 100, 0.0), rgba(1000, 1000, 1000, 100.0)), url('/resources/img/hanati_building.jpeg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

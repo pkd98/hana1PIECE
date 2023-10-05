@@ -18,10 +18,10 @@ public class tradingTest {
 
     @Test
     @DisplayName("예약 주문 스케줄러 테스트")
-    void estate(){
+    void estate() {
         try {
             tradingController.orderForReservation();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("에러 발생" + e.getMessage());
         }

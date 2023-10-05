@@ -7,14 +7,14 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 /**
- *  웹소켓 활성화 및 STOMP 메시지 사용 설정
+ * 웹소켓 활성화 및 STOMP 메시지 사용 설정
  */
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry){
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
         // 스프링이 제공하는 내장 브로커 사용
         // "/prefix" 붙은 메시지 송신되었을 때 그 메시지를 브로커가 구독자들에게 전달함.
         registry.enableSimpleBroker("/topic");
@@ -25,7 +25,7 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
     }
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry){
-        registry.addEndpoint("/gs-guide-websocket").withSockJS();;
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/gs-guide-websocket").withSockJS();
     }
 }

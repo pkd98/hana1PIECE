@@ -96,7 +96,7 @@ public class ManagerController {
     }
 
     /**
-     *  청약 공모 등록
+     * 청약 공모 등록
      */
     @PostMapping("/manager/public-offering/registration")
     public ResponseEntity publicOfferingRegistration(@ModelAttribute PublicOfferingRegistrationDTO publicOfferingRegistrationDTO) {
@@ -110,7 +110,7 @@ public class ManagerController {
     }
 
     /**
-     *  매물 상장
+     * 매물 상장
      */
     @PutMapping("/manager/estate-listing")
     public ResponseEntity estateListing(@RequestParam int listingNumber) {
@@ -123,7 +123,7 @@ public class ManagerController {
     }
 
     /**
-     *  배당금 지급
+     * 배당금 지급
      */
     @PutMapping("/manager/dividend-payment")
     public ResponseEntity dividend(@Valid @RequestBody DividendPaymentDTO dividendPaymentDTO) {
@@ -136,7 +136,7 @@ public class ManagerController {
     }
 
     /**
-     *  매각 투표 등록
+     * 매각 투표 등록
      */
     @PostMapping("/manager/sale-vote")
     public ResponseEntity registerToVote(@Valid @RequestBody SoldBuildingVO soldBuildingVO) {
@@ -150,7 +150,7 @@ public class ManagerController {
     }
 
     /**
-     *  앱 푸시 알림 보내기
+     * 앱 푸시 알림 보내기
      */
     @PostMapping("/manager/app-notification")
     public ResponseEntity transmitPushAppNotification(@RequestBody AppNotificationDTO appNotificationDTO) {
@@ -166,7 +166,7 @@ public class ManagerController {
 
 
     /**
-     *  주문 내역
+     * 주문 내역
      */
     @GetMapping("/manager/orders")
     @ResponseBody
@@ -183,7 +183,7 @@ public class ManagerController {
     }
 
     /**
-     *  체결 내역
+     * 체결 내역
      */
     @GetMapping("/manager/executions")
     @ResponseBody
@@ -201,7 +201,7 @@ public class ManagerController {
 
 
     /**
-     *  배당금 지급 내역
+     * 배당금 지급 내역
      */
     @GetMapping("/manager/payments")
     @ResponseBody
@@ -216,7 +216,6 @@ public class ManagerController {
         response.put("totalPages", totalPages); // 전체 페이지 수
         return response;
     }
-
 
 
 }

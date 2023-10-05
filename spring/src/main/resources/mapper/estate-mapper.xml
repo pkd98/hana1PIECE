@@ -96,8 +96,8 @@
                volume,
                issue_price,
                total_amount,
-               to_char(start_date, 'YYYY.MM.DD') as start_date,
-               to_char(expiration_date, 'YYYY.MM.DD') as expiration_date,
+               to_char(start_date, 'YYYY.MM.DD')          as start_date,
+               to_char(expiration_date, 'YYYY.MM.DD')     as expiration_date,
                to_char(first_dividend_date, 'YYYY.MM.DD') as first_dividend_date,
                dividend_cycle,
                dividend
@@ -116,7 +116,12 @@
     </select>
 
     <select id="findSoldBuildingByLN" parameterType="int" resultType="com.hana1piece.estate.model.vo.SoldBuildingVO">
-        select listing_number as listingNumber, to_char(sold_date, 'YYYY.MM.DD') as soldDate, amount, start_date as startDate, expiration_date as expirationDate, dividend
+        select listing_number                   as listingNumber,
+               to_char(sold_date, 'YYYY.MM.DD') as soldDate,
+               amount,
+               start_date                       as startDate,
+               expiration_date                  as expirationDate,
+               dividend
         from sold_building
         where listing_number = #{LN}
     </select>
@@ -139,10 +144,12 @@
     </update>
 
     <insert id="insertRealEstateInfo" parameterType="com.hana1piece.estate.model.vo.RealEstateInfoVO">
-        insert into real_estate_info(listing_number, building_name, address, SUPPLY_AREA, floors, usage, land_area, floor_area,
+        insert into real_estate_info(listing_number, building_name, address, SUPPLY_AREA, floors, usage, land_area,
+                                     floor_area,
                                      coverage_ratio, floor_area_ratio, completion_date, latitude, longitude, image1,
                                      image2, image3)
-        values (#{listingNumber}, #{buildingName}, #{address}, #{supplyArea}, #{floors}, #{usage}, #{landArea}, #{floorArea},
+        values (#{listingNumber}, #{buildingName}, #{address}, #{supplyArea}, #{floors}, #{usage}, #{landArea},
+                #{floorArea},
                 #{coverageRatio}, #{floorAreaRatio}, #{completionDate}, #{latitude}, #{longitude}, #{image1}, #{image2},
                 #{image3})
     </insert>
@@ -162,7 +169,8 @@
 
     <insert id="insertSoldBuilding" parameterType="com.hana1piece.estate.model.vo.SoldBuildingVO">
         insert into sold_building(listing_number, amount, start_date, expiration_date, dividend)
-        values (#{listingNumber}, #{amount}, to_date(#{startDate}, 'YYYY-MM-DD'), to_date(#{expirationDate}, 'YYYY-MM-DD'), #{dividend})
+        values (#{listingNumber}, #{amount}, to_date(#{startDate}, 'YYYY-MM-DD'),
+                to_date(#{expirationDate}, 'YYYY-MM-DD'), #{dividend})
     </insert>
 
     <select id="findPublicOfferingListDTO" resultType="com.hana1piece.estate.model.dto.PublicOfferingListDTO">
@@ -193,7 +201,14 @@
 
     <select id="findListedEstateListDTO" resultType="com.hana1piece.estate.model.dto.ListedEstateListDTO">
         select *
-        from (select res.LISTING_NUMBER as listingNumber, evaluation, reasonable_price as reasonablePrice, introduction, price, state, building_name as buildingName, image1
+        from (select res.LISTING_NUMBER as listingNumber,
+                     evaluation,
+                     reasonable_price   as reasonablePrice,
+                     introduction,
+                     price,
+                     state,
+                     building_name      as buildingName,
+                     image1
               from REAL_ESTATE_SALE res
                        inner join REAL_ESTATE_INFO rei
                                   on res.listing_number = rei.listing_number)

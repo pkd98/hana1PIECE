@@ -93,7 +93,7 @@ public class EstateController {
         WalletVO wallet = walletService.findWalletByMemberId(member.getId());
         mav.addObject("wallet", wallet);
         StosVO stos = stosService.findStosByWalletNumberAndListingNumber(wallet.getWalletNumber(), LN);
-        if(stos == null) {
+        if (stos == null) {
             stos = new StosVO();
         }
         mav.addObject("stos", stos);
@@ -156,7 +156,7 @@ public class EstateController {
     }
 
     /**
-     *  매각된 건물 리스트 페이지
+     * 매각된 건물 리스트 페이지
      */
     @GetMapping("/sold-list")
     public ModelAndView soldList() {
@@ -169,7 +169,7 @@ public class EstateController {
     }
 
     /**
-     *  사용자의 매각 투표
+     * 사용자의 매각 투표
      */
     @PostMapping("/voting")
     public ResponseEntity voting(@Valid @RequestBody RequestSellVoteDTO requestSellVoteDTO, HttpSession session) {

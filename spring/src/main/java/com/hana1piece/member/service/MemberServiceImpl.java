@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 
-
 @Service
 @Transactional
 public class MemberServiceImpl implements MemberService {
@@ -134,7 +133,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
-     *  인증번호 확인 검사
+     * 인증번호 확인 검사
      */
     @Override
     public boolean isVerifySms(String userInput, HttpSession session) {
@@ -151,7 +150,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
-     *  계좌 개설 및 지갑 연동 프로세스
+     * 계좌 개설 및 지갑 연동 프로세스
+     *
      * @param member
      * @param accountAndWalletOpeningDTO
      */
@@ -171,7 +171,7 @@ public class MemberServiceImpl implements MemberService {
             walletOpeningDTO.setMemberId(member.getId());
             walletOpeningDTO.setPassword(accountAndWalletOpeningDTO.getWalletPassword());
             walletOpening(walletOpeningDTO);
-        } catch (Exception e){
+        } catch (Exception e) {
             loggerService.logException("ERR", "accountAndWalletOpening", e.getMessage(), "");
             e.printStackTrace();
             throw e;
@@ -180,6 +180,7 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 하나은행 모듈에 계좌 개설 요청
+     *
      * @param accountOpeningDTO
      * @return
      */
@@ -218,6 +219,7 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 지갑 개설
+     *
      * @param walletOpeningDTO
      */
     @Override
@@ -229,6 +231,7 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 추천인 이벤트: 추천인 추천자 5000원 지급
+     *
      * @param memberId
      * @param referralCode
      * @return
@@ -239,11 +242,11 @@ public class MemberServiceImpl implements MemberService {
         boolean state = false;
         int bonus = 5000;
         // 레퍼럴 코드 검증
-        OneMembersVO recommendedMember =  memberMapper.findMemberByReferralCode(referralCode);
-        if(recommendedMember != null) {
+        OneMembersVO recommendedMember = memberMapper.findMemberByReferralCode(referralCode);
+        if (recommendedMember != null) {
             // 있는 레퍼럴 코드일 시, 5000원 추천인 추천자 지급
             WalletVO recommendedWallet = walletService.findWalletByMemberId(recommendedMember.getId());
-            WalletVO recommenderWallet= walletService.findWalletByMemberId(memberId);
+            WalletVO recommenderWallet = walletService.findWalletByMemberId(memberId);
 
             WalletTransactionVO recommendedTransaction = new WalletTransactionVO();
             recommendedTransaction.setName("추천인 이벤트");

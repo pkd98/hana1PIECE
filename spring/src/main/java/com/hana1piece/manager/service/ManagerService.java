@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface ManagerService {
     /**
-     *  로그인
+     * 로그인
      */
     boolean login(ManagerLoginDTO loginDTO, HttpSession session);
 
@@ -25,7 +25,7 @@ public interface ManagerService {
     void publicOfferingRegistration(PublicOfferingRegistrationDTO publicOfferingRegistrationDTO) throws IOException;
 
     /**
-     *  매물 상장
+     * 매물 상장
      */
     void estateListing(int listingNumber);
 
@@ -45,34 +45,35 @@ public interface ManagerService {
 
 
     /**
-     *  배당금 지급
+     * 배당금 지급
      */
     void dividendPayment(DividendPaymentDTO dividendPaymentDTO);
+
     void dividendPaymentUsingProcedure(DividendPaymentDTO dividendPaymentDTO);
 
 
     /**
      * 매각 매물 등록 (투표)
-      */
+     */
     void registerSaleVote(SoldBuildingVO soldBuildingVO);
 
     /**
-     *  거래 현황
+     * 거래 현황
      */
     TransactionStatusDTO getTransactionStatus();
 
     /**
-     *  주문 내역 (페이지 네이션)
+     * 주문 내역 (페이지 네이션)
      */
     public List<StoOrdersVO> getOrdersByPage(int pageNum);
 
     /**
-     *  체결 내역 (페이지 네이션)
+     * 체결 내역 (페이지 네이션)
      */
     public List<ExecutionVO> getExecutionsByPage(int pageNum);
 
     /**
-     *  배당금 지급 내역 (페이지 네이션)
+     * 배당금 지급 내역 (페이지 네이션)
      */
     public List<DividendDetailsVO> getDividendDetailsByPage(int pageNum);
 
@@ -80,7 +81,9 @@ public interface ManagerService {
      * 총 테이블 수
      */
     int getTotalOrderCount();
+
     int getTotalExecutionCount();
+
     int getTotalPaymentCount();
 
 }

@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 public class AutoAppConfig {
 
     /**
-     *  RestTemplate 빈 등록
+     * RestTemplate 빈 등록
      */
     @Bean
     public RestTemplate restTemplate() {

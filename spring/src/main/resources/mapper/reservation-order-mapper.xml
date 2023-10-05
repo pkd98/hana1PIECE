@@ -5,45 +5,52 @@
 <mapper namespace="com.hana1piece.trading.model.mapper.ReservationOrdersMapper">
 
     <resultMap type="com.hana1piece.trading.model.vo.ReservationOrdersVO" id="ReservationOrdersMap">
-        <result column="listing_number" property="listingNumber" />
-        <result column="wallet_number" property="walletNumber" />
-        <result column="order_date" property="orderDate" />
-        <result column="termination_date" property="terminationDate" />
+        <result column="listing_number" property="listingNumber"/>
+        <result column="wallet_number" property="walletNumber"/>
+        <result column="order_date" property="orderDate"/>
+        <result column="termination_date" property="terminationDate"/>
     </resultMap>
 
     <select id="findAll" resultMap="ReservationOrdersMap">
-        select * from reservation_orders
+        select *
+        from reservation_orders
         where not status = 'T'
         order by id desc
     </select>
 
     <select id="findByWN" parameterType="int" resultMap="ReservationOrdersMap">
-        select * from reservation_orders
-        where wallet_number = #{WN} and not status = 'T'
+        select *
+        from reservation_orders
+        where wallet_number = #{WN}
+          and not status = 'T'
         order by id desc
     </select>
 
     <select id="findByLN" parameterType="int" resultMap="ReservationOrdersMap">
-        select * from reservation_orders
+        select *
+        from reservation_orders
         where listing_number = #{LN}
         order by id desc
     </select>
 
     <select id="findById" parameterType="int" resultMap="ReservationOrdersMap">
-        select * from reservation_orders
+        select *
+        from reservation_orders
         where id = #{id}
         order by id desc
     </select>
 
     <select id="findByWNAndLN" parameterType="map" resultMap="ReservationOrdersMap">
-        select * from reservation_orders
-        where wallet_number = #{WN} and listing_number = #{LN}
+        select *
+        from reservation_orders
+        where wallet_number = #{WN}
+          and listing_number = #{LN}
         order by id desc
     </select>
 
     <insert id="insertReservation" parameterType="com.hana1piece.trading.model.vo.ReservationOrdersVO">
         insert into reservation_orders(listing_number, wallet_number, quantity)
-        values(#{listingNumber}, #{walletNumber}, #{quantity})
+        values (#{listingNumber}, #{walletNumber}, #{quantity})
     </insert>
 
     <update id="updateReservation" parameterType="com.hana1piece.trading.model.vo.ReservationOrdersVO">

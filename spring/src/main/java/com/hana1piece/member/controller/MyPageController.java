@@ -62,7 +62,7 @@ public class MyPageController {
 
         if (wallet == null) {
             mav.setViewName("/account-opening");
-            return  mav;
+            return mav;
         }
 
         mav.addObject("wallet", wallet);
@@ -98,14 +98,13 @@ public class MyPageController {
         // 티끌모아 건물주
         List<MembersReservationOrdersDTO> membersReservationOrdersDTOList = new ArrayList<>();
         List<ReservationOrdersVO> reservationOrdersVOList = reservationOrderService.findByWN(wallet.getWalletNumber());
-        for(ReservationOrdersVO reservationOrdersVO : reservationOrdersVOList) {
+        for (ReservationOrdersVO reservationOrdersVO : reservationOrdersVOList) {
             MembersReservationOrdersDTO membersReservationOrdersDTO = new MembersReservationOrdersDTO();
             membersReservationOrdersDTO.setReservationOrdersVO(reservationOrdersVO);
             membersReservationOrdersDTO.setRealEstateInfoVO(estateService.findRealEstateInfoByLN(reservationOrdersVO.getListingNumber()));
             membersReservationOrdersDTOList.add(membersReservationOrdersDTO);
         }
         mav.addObject("membersReservationOrdersDTOList", membersReservationOrdersDTOList);
-
 
 
         return mav;

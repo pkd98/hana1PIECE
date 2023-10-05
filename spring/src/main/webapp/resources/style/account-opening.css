@@ -113,7 +113,7 @@
     align-items: center;
     margin-bottom: 10px;
     text-align: left; /* 왼쪽 정렬 추가 */
-    width: 100%; 
+    width: 100%;
 }
 
 .accordion {
@@ -131,7 +131,8 @@
     font-size: 18px; /* 글자 크기 조절 */
     min-width: 100px;
 }
-.button-wrapper :last-child{
+
+.button-wrapper :last-child {
     background-color: #E90061;
 }
 

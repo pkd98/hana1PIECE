@@ -47,7 +47,7 @@ header {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     font-weight: normal;
-    font-size:larger;
+    font-size: larger;
 
 }
 
@@ -59,21 +59,21 @@ main {
     font-size: x-large;
 }
 
-main>h2 {
+main > h2 {
     font-family: 'Hana2-Bold', sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     font-size: xx-large;
 }
 
-main>#jumbotron {
+main > #jumbotron {
     font-family: 'Hana2-Bold', sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     font-size: x-large;
 }
 
-.square>a>p {
+.square > a > p {
     font-family: Hana2-Heavy;
     src: url('../font/Hana2.0_TTF/Hana2-Heavy.ttf') format('truetype');
     font-weight: normal;
@@ -86,5 +86,5 @@ main>#jumbotron {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     font-weight: normal;
-    font-size:xx-small;
+    font-size: xx-small;
 }

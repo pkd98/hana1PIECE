@@ -25,7 +25,7 @@ public class OcrController {
     }
 
     /**
-     *  신분증 이미지 OCR 판독
+     * 신분증 이미지 OCR 판독
      */
     @PostMapping("/upload/ocr")
     public ResponseEntity registrationCardOcr(@RequestParam("file") MultipartFile multipartFile) {

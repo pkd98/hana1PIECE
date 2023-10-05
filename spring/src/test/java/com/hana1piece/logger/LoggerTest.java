@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
- *  Oracle - Mybatis  통합 테스트
- *  LoggerService 예외 로그 작성 테스트
+ * Oracle - Mybatis  통합 테스트
+ * LoggerService 예외 로그 작성 테스트
  */
 @SpringBootTest
 @Transactional
@@ -23,7 +23,7 @@ public class LoggerTest {
 
     @Test
     @DisplayName("LoggerService 예외 로그 작성 테스트")
-    void insertLogTest(){
+    void insertLogTest() {
         Log log = new Log();
         log.setLogCode("err");
         log.setProgram("Test");
@@ -32,7 +32,7 @@ public class LoggerTest {
 
         try {
             loggerService.logging(log);
-        } catch(Exception e) {
+        } catch (Exception e) {
             fail("로깅중 에러 발생" + e.getMessage());
         }
     }

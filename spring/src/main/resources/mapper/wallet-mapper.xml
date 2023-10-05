@@ -4,55 +4,71 @@
 
 <mapper namespace="com.hana1piece.wallet.model.mapper.WalletMapper">
     <resultMap type="com.hana1piece.wallet.model.vo.WalletVO" id="WalletMap">
-        <result column="wallet_number" property="walletNumber" />
-        <result column="member_id" property="memberId" />
-        <result column="account_number" property="accountNumber" />
-        <result column="opening_date" property="openingDate" />
+        <result column="wallet_number" property="walletNumber"/>
+        <result column="member_id" property="memberId"/>
+        <result column="account_number" property="accountNumber"/>
+        <result column="opening_date" property="openingDate"/>
     </resultMap>
 
     <resultMap type="com.hana1piece.wallet.model.vo.WalletTransactionVO" id="WalletTransactionMap">
-        <result column="transaction_number" property="transactionNumber" />
-        <result column="wallet_number" property="walletNumber" />
-        <result column="transaction_date" property="transactionDate" />
+        <result column="transaction_number" property="transactionNumber"/>
+        <result column="wallet_number" property="walletNumber"/>
+        <result column="transaction_date" property="transactionDate"/>
     </resultMap>
 
     <select id="findAllWallet" resultMap="WalletMap">
-        select * from wallet order by wallet_number desc
+        select *
+        from wallet
+        order by wallet_number desc
     </select>
 
     <select id="findWalletByWN" parameterType="int" resultMap="WalletMap">
-        select * from wallet where wallet_number = #{WN}
+        select *
+        from wallet
+        where wallet_number = #{WN}
     </select>
 
     <select id="findWalletByMemberId" parameterType="string" resultMap="WalletMap">
-        select * from wallet where member_id = #{memberId}
+        select *
+        from wallet
+        where member_id = #{memberId}
     </select>
 
     <select id="findAllWalletTransaction" resultMap="WalletTransactionMap">
-        select * from wallet_transaction order by transaction_number desc
+        select *
+        from wallet_transaction
+        order by transaction_number desc
     </select>
 
     <select id="findWalletTransactionByWN" parameterType="int" resultMap="WalletTransactionMap">
-        select * from wallet_transaction
+        select *
+        from wallet_transaction
         where wallet_number = #{WN}
         order by transaction_number desc
     </select>
 
     <update id="deposit" parameterType="com.hana1piece.wallet.model.dto.DepositDTO">
-        update wallet set balance = balance + #{amount} where wallet_number = #{walletNumber}
+        update wallet
+        set balance = balance + #{amount}
+        where wallet_number = #{walletNumber}
     </update>
 
     <update id="withdraw" parameterType="com.hana1piece.wallet.model.dto.WithdrawDTO">
-        update wallet set balance = balance - #{amount} where wallet_number = #{walletNumber} and password = #{walletPassword}
+        update wallet
+        set balance = balance - #{amount}
+        where wallet_number = #{walletNumber}
+          and password = #{walletPassword}
     </update>
 
     <update id="updateWalletBalance" parameterType="com.hana1piece.wallet.model.dto.UpdateWalletBalanceDTO">
-        update wallet set balance = balance + #{amount} where wallet_number = #{walletNumber}
+        update wallet
+        set balance = balance + #{amount}
+        where wallet_number = #{walletNumber}
     </update>
 
     <insert id="insertWalletTransaction" parameterType="com.hana1piece.wallet.model.vo.WalletTransactionVO">
         insert into wallet_transaction(wallet_number, classification, name, amount, balance)
-        values(#{walletNumber}, #{classification}, #{name}, #{amount}, #{balance})
+        values (#{walletNumber}, #{classification}, #{name}, #{amount}, #{balance})
     </insert>
 
 </mapper>

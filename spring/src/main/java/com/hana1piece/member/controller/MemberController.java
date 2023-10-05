@@ -81,7 +81,7 @@ public class MemberController {
     }
 
     /**
-     *  이벤트 페이지
+     * 이벤트 페이지
      */
     @GetMapping("/event")
     public String event() {
@@ -97,7 +97,7 @@ public class MemberController {
     }
 
     /**
-     *  계좌 개설 및 지갑 연동 서비스 처리
+     * 계좌 개설 및 지갑 연동 서비스 처리
      */
     @PostMapping("/account-opening")
     public ResponseEntity accountOpeningProcess(@Valid AccountAndWalletOpeningDTO accountAndWalletOpeningDTO, BindingResult br, HttpSession session) {
@@ -172,7 +172,7 @@ public class MemberController {
     }
 
     /**
-     *  사용자 입력 인증코드 검증
+     * 사용자 입력 인증코드 검증
      */
     @PostMapping("/sms")
     public ResponseEntity verifySmsCode(@RequestParam("phoneCodeInput") String phoneCodeInput, HttpSession session) {

@@ -5,16 +5,18 @@
 <mapper namespace="com.hana1piece.trading.model.mapper.ExecutionMapper">
 
     <resultMap type="com.hana1piece.trading.model.vo.ExecutionVO" id="ExecutionMap">
-        <result column="execution_id" property="executionId" />
-        <result column="buy_order_id" property="buyOrderId" />
-        <result column="sell_order_id" property="sellOrderId" />
-        <result column="executed_price" property="executedPrice" />
-        <result column="executed_quantity" property="executedQuantity" />
-        <result column="execution_date" property="executionDate" />
+        <result column="execution_id" property="executionId"/>
+        <result column="buy_order_id" property="buyOrderId"/>
+        <result column="sell_order_id" property="sellOrderId"/>
+        <result column="executed_price" property="executedPrice"/>
+        <result column="executed_quantity" property="executedQuantity"/>
+        <result column="execution_date" property="executionDate"/>
     </resultMap>
 
     <select id="findAll" resultMap="ExecutionMap">
-        select * from execution order by execution_id desc
+        select *
+        from execution
+        order by execution_id desc
     </select>
 
     <select id="getExecutionsByPage" parameterType="map" resultMap="ExecutionMap">
@@ -27,10 +29,11 @@
 
     <insert id="insertExecution" parameterType="com.hana1piece.trading.model.vo.ExecutionVO">
         insert into execution(buy_order_id, sell_order_id, executed_price, executed_quantity)
-        values(#{buyOrderId}, #{sellOrderId}, #{executedPrice}, #{executedQuantity})
+        values (#{buyOrderId}, #{sellOrderId}, #{executedPrice}, #{executedQuantity})
     </insert>
 
     <select id="getTotalExecutionCount" resultType="int">
-        select count(*) from execution
+        select count(*)
+        from execution
     </select>
 </mapper>

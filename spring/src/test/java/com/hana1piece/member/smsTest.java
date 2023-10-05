@@ -31,7 +31,7 @@ public class smsTest {
     public void smsTest() {
         try {
             memberService.getSmsCertificationNumber("01012341234", session);
-        } catch(Exception e) {
+        } catch (Exception e) {
             fail("SMS 에러 발생" + e.getMessage());
         }
     }

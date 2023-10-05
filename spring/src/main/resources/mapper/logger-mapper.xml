@@ -6,7 +6,7 @@
 
     <insert id="insertLog" parameterType="com.hana1piece.logger.model.vo.Log">
         insert into exception_log(log_code, program, msg, note)
-        values(#{logCode}, #{program}, #{msg}, #{note})
+        values (#{logCode}, #{program}, #{msg}, #{note})
     </insert>
 
 </mapper>

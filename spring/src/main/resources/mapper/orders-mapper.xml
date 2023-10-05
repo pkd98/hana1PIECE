@@ -29,7 +29,8 @@
     </select>
 
     <select id="getTotalOrderCount" resultType="int">
-        select count(*) from sto_orders
+        select count(*)
+        from sto_orders
     </select>
 
     <insert id="insertOrder" parameterType="com.hana1piece.trading.model.vo.StoOrdersVO">

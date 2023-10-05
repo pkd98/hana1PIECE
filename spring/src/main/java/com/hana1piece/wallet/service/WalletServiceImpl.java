@@ -76,7 +76,7 @@ public class WalletServiceImpl implements WalletService {
             /**
              *  계좌 비밀번호 유효성 검사
              */
-            if(!requestBankAccount(oldWallet.getAccountNumber()).getPassword().equals(deposit.getAccountPassword())){
+            if (!requestBankAccount(oldWallet.getAccountNumber()).getPassword().equals(deposit.getAccountPassword())) {
                 throw new Exception();
             }
 
@@ -138,7 +138,7 @@ public class WalletServiceImpl implements WalletService {
             /**
              *  지갑 비밀번호 유효성 검사
              */
-            if(!withdraw.getWalletPassword().equals(oldWallet.getPassword())) {
+            if (!withdraw.getWalletPassword().equals(oldWallet.getPassword())) {
                 throw new Exception();
             }
 
@@ -176,7 +176,7 @@ public class WalletServiceImpl implements WalletService {
     }
 
     /**
-     *  지갑 잔액 업데이트
+     * 지갑 잔액 업데이트
      */
     @Override
     public void updateWalletBalance(WalletVO walletVO, WalletTransactionVO walletTransactionVO) {
@@ -307,7 +307,8 @@ public class WalletServiceImpl implements WalletService {
                 // JsonNode를 List<BankTransactionVO>로 매핑
                 List<BankTransactionVO> transactionList = objectMapper.readValue(
                         dataNode.toString(),
-                        new TypeReference<List<BankTransactionVO>>() {}
+                        new TypeReference<List<BankTransactionVO>>() {
+                        }
                 );
                 return transactionList;
             } catch (Exception e) {

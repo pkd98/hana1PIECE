@@ -10,23 +10,30 @@
     </resultMap>
 
     <select id="findAll" resultMap="PublicOfferingMap">
-        select * from public_offering order by id desc
+        select *
+        from public_offering
+        order by id desc
     </select>
 
     <select id="findByWalletNumber" parameterType="int" resultMap="PublicOfferingMap">
-        select * from public_offering where wallet_number = #{walletNumber}
+        select *
+        from public_offering
+        where wallet_number = #{walletNumber}
     </select>
 
     <select id="findByListingNumber" parameterType="int" resultMap="PublicOfferingMap">
-        select * from public_offering where listing_number = ${listingNumber}
+        select *
+        from public_offering
+        where listing_number = ${listingNumber}
     </select>
 
     <insert id="insertPublicOffering" parameterType="com.hana1piece.estate.model.vo.PublicOfferingVO">
         insert into public_offering(listing_number, wallet_number, quantity)
-        values(#{listingNumber}, #{walletNumber}, #{quantity})
+        values (#{listingNumber}, #{walletNumber}, #{quantity})
     </insert>
 
-    <select id="findMembersOrderPublicationOfferingByWalletNumber" parameterType="int" resultType="com.hana1piece.member.model.dto.MembersOrderPublicOfferingDTO">
+    <select id="findMembersOrderPublicationOfferingByWalletNumber" parameterType="int"
+            resultType="com.hana1piece.member.model.dto.MembersOrderPublicOfferingDTO">
         select listingNumber, walletNumber, QUANTITY, image1, buildingName, expirationDate, state
         from (select pi.listing_number as listingNumber,
                      WALLET_NUMBER     as walletNumber,
@@ -50,7 +57,8 @@
           and state = '청약'
     </select>
 
-    <select id="findPublicOfferingProgressByListingNumber" parameterType="int" resultType="com.hana1piece.estate.model.dto.PublicOfferingProgressDTO">
+    <select id="findPublicOfferingProgressByListingNumber" parameterType="int"
+            resultType="com.hana1piece.estate.model.dto.PublicOfferingProgressDTO">
         select count(WALLET_NUMBER) AS countWalletNumber, NVL(sum(quantity), 0) as sumQuantity
         from public_offering
         where LISTING_NUMBER = #{LN}

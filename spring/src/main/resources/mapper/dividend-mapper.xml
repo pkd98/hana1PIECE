@@ -4,14 +4,16 @@
 
 <mapper namespace="com.hana1piece.wallet.model.mapper.DividendMapper">
     <resultMap type="com.hana1piece.wallet.model.vo.DividendDetailsVO" id="DividendDetailsMap">
-        <result column="payout_number" property="payoutNumber" />
-        <result column="wallet_number" property="walletNumber" />
-        <result column="listing_number" property="listingNumber" />
-        <result column="payout_date" property="payoutDate" />
+        <result column="payout_number" property="payoutNumber"/>
+        <result column="wallet_number" property="walletNumber"/>
+        <result column="listing_number" property="listingNumber"/>
+        <result column="payout_date" property="payoutDate"/>
     </resultMap>
 
     <select id="findAll" resultMap="DividendDetailsMap">
-        select * from dividend_details order by payout_number desc
+        select *
+        from dividend_details
+        order by payout_number desc
     </select>
 
     <select id="findByWN" parameterType="int" resultType="com.hana1piece.wallet.model.dto.DividendDetailsDTO">
@@ -30,7 +32,10 @@
     </select>
 
     <select id="findByLN" parameterType="int" resultMap="DividendDetailsMap">
-        select * from dividend_details where listing_number = #{LN} order by payout_number desc
+        select *
+        from dividend_details
+        where listing_number = #{LN}
+        order by payout_number desc
     </select>
 
     <select id="getDividendDetailsByPage" parameterType="map" resultMap="DividendDetailsMap">
@@ -42,17 +47,19 @@
     </select>
 
     <select id="sumDividendFor6monthByWN" parameterType="int" resultType="int">
-        select sum(payout) from dividend_details
+        select sum(payout)
+        from dividend_details
         where wallet_number = #{WN}
     </select>
 
     <insert id="insertDividendDetails" parameterType="com.hana1piece.wallet.model.vo.DividendDetailsVO">
         insert into dividend_details(wallet_number, listing_number, payout)
-        values(#{walletNumber}, #{listingNumber}, #{payout})
+        values (#{walletNumber}, #{listingNumber}, #{payout})
     </insert>
 
     <select id="getTotalPaymentCount" resultType="int">
-        select count(*) from dividend_details
+        select count(*)
+        from dividend_details
     </select>
 
 </mapper>

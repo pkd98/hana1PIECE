@@ -35,6 +35,7 @@ public class PublicOfferingServiceImpl implements PublicOfferingService {
 
     /**
      * 청약 주문
+     *
      * @param orderPublicOfferingDTO
      * @throws Exception
      */
@@ -51,7 +52,7 @@ public class PublicOfferingServiceImpl implements PublicOfferingService {
             }
 
             // 주문 금액, 지갑 잔액 유효성
-            if(wallet.getBalance() < (long) orderPublicOfferingDTO.getQuantity() * (long) price) {
+            if (wallet.getBalance() < (long) orderPublicOfferingDTO.getQuantity() * (long) price) {
                 throw new Exception();
             }
 
@@ -80,6 +81,7 @@ public class PublicOfferingServiceImpl implements PublicOfferingService {
 
     /**
      * 사용자 마이페이지 청약 내역
+     *
      * @param walletNumber
      * @return
      */

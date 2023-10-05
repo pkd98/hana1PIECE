@@ -186,7 +186,7 @@ public class ManagerServiceImpl implements ManagerService {
 
             // 2. 토큰 지급 및 주문 테이블 기록
             List<PublicOfferingVO> publicOfferingVOList = publicOfferingMapper.findByListingNumber(listingNumber);
-            for(PublicOfferingVO publicOfferingVO : publicOfferingVOList) {
+            for (PublicOfferingVO publicOfferingVO : publicOfferingVOList) {
                 // 토큰 지급
                 StosVO stos = new StosVO();
                 stos.setListingNumber(publicOfferingVO.getListingNumber());

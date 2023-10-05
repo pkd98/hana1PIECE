@@ -11,12 +11,16 @@
     </resultMap>
 
     <select id="findAll" resultMap="SellVoteMap">
-        select * from sell_vote order by id desc
+        select *
+        from sell_vote
+        order by id desc
     </select>
 
     <select id="findByLNAndWN" resultMap="SellVoteMap">
-        select * from sell_vote
-        where listing_number = #{LN} and wallet_number = #{WN}
+        select *
+        from sell_vote
+        where listing_number = #{LN}
+          and wallet_number = #{WN}
     </select>
 
     <select id="findTotalQuantityByLN" parameterType="int" resultType="long">
@@ -28,12 +32,13 @@
     <select id="findTotalProsQuantityByLN" parameterType="int" resultType="long">
         SELECT NVL(SUM(QUANTITY), 0) AS totalProsQuantity
         FROM SELL_VOTE
-        WHERE LISTING_NUMBER = #{LN} AND PROS_CONS = 'P'
+        WHERE LISTING_NUMBER = #{LN}
+          AND PROS_CONS = 'P'
     </select>
 
     <insert id="insertSellVote" parameterType="com.hana1piece.estate.model.vo.SellVoteVO">
         insert into sell_vote(listing_number, wallet_number, pros_cons, quantity)
-        values(#{listingNumber}, #{walletNumber}, #{prosCons}, #{quantity})
+        values (#{listingNumber}, #{walletNumber}, #{prosCons}, #{quantity})
     </insert>
 
     <update id="updateSellVote" parameterType="com.hana1piece.estate.model.vo.SellVoteVO">
@@ -45,7 +50,6 @@
         </set>
         where listing_number = #{listingNumber} and wallet_number = #{walletNumber}
     </update>
-
 
 
 </mapper>

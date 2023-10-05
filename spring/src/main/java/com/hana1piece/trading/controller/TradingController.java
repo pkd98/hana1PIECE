@@ -62,15 +62,14 @@ public class TradingController {
 
             StoOrdersVO order = requestDTO.getStoOrdersVO();
 
-            if(order.getOrderType().equals("BUY")){
+            if (order.getOrderType().equals("BUY")) {
                 // 잔액 부족
-                if((long) order.getAmount() * (long )order.getQuantity() > wallet.getBalance()) {
+                if ((long) order.getAmount() * (long) order.getQuantity() > wallet.getBalance()) {
                     return ResponseEntity.badRequest().build();
                 }
-            }
-            else if(order.getOrderType().equals("SELL")){
+            } else if (order.getOrderType().equals("SELL")) {
                 // 토큰 부족
-                if(stosService.findStosByWalletNumberAndListingNumber(wallet.getWalletNumber(), order.getListingNumber()).getAmount() < order.getQuantity()) {
+                if (stosService.findStosByWalletNumberAndListingNumber(wallet.getWalletNumber(), order.getListingNumber()).getAmount() < order.getQuantity()) {
                     return ResponseEntity.badRequest().build();
                 }
             } else {
@@ -93,7 +92,7 @@ public class TradingController {
 
     @PostMapping("/reservation-order")
     public ResponseEntity reservationOrder(@Valid @RequestBody ReservationOrderRequestDTO reservationOrderRequestDTO, BindingResult br, HttpSession session) {
-        if(br.hasErrors()) {
+        if (br.hasErrors()) {
             return ResponseEntity.badRequest().body("Validation failed: " + br.getAllErrors());
         }
         OneMembersVO member = (OneMembersVO) session.getAttribute("member");
@@ -103,7 +102,7 @@ public class TradingController {
         }
         try {
             WalletVO wallet = walletService.findWalletByMemberId(member.getId());
-            if(!wallet.getPassword().equals(reservationOrderRequestDTO.getWalletPassword())) {
+            if (!wallet.getPassword().equals(reservationOrderRequestDTO.getWalletPassword())) {
                 return ResponseEntity.badRequest().build();
             }
             reservationOrderService.insertReservation(reservationOrderRequestDTO.getReservationOrdersVO());
@@ -134,19 +133,19 @@ public class TradingController {
     }
 
     /**
-     *  오전 9시에 예약 주문 실행
+     * 오전 9시에 예약 주문 실행
      */
     @Scheduled(cron = "0 0 9 * * ?")
     public void orderForReservation() {
         try {
             List<ReservationOrdersVO> reservationOrdersVOList = reservationOrderService.findAll();
 
-            for(ReservationOrdersVO reservationOrdersVO : reservationOrdersVOList) {
+            for (ReservationOrdersVO reservationOrdersVO : reservationOrdersVOList) {
                 WalletVO wallet = walletService.findWalletByWN(reservationOrdersVO.getWalletNumber());
                 RealEstateSaleVO estate = estateService.findRealEstateSaleByLN(reservationOrdersVO.getListingNumber());
 
                 // 잔액 부족 예약 주문 취소
-                if(wallet.getBalance() < reservationOrdersVO.getQuantity() * estate.getPrice()) {
+                if (wallet.getBalance() < reservationOrdersVO.getQuantity() * estate.getPrice()) {
                     reservationOrdersVO.setTerminationDate("Terminated");
                     reservationOrdersVO.setStatus("T");
                     reservationOrderService.updateReservation(reservationOrdersVO);

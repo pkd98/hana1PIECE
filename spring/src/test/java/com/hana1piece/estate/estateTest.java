@@ -19,10 +19,10 @@ public class estateTest {
 
     @Test
     @DisplayName("estate 평가 서버 연동 및 스케줄러 테스트")
-    void estate(){
+    void estate() {
         try {
             estateController.estateEvaluation();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("에러 발생" + e.getMessage());
         }
