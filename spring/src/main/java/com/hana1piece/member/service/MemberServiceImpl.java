@@ -12,6 +12,7 @@ import com.hana1piece.wallet.model.vo.WalletTransactionVO;
 import com.hana1piece.wallet.model.vo.WalletVO;
 import com.hana1piece.wallet.service.WalletService;
 import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -100,7 +101,7 @@ public class MemberServiceImpl implements MemberService {
      * SMS 인증번호 요청 (CoolSMS 이용)
      */
     @Override
-    public void getSmsCertificationNumber(String phoneNumber, HttpSession session) {
+    public void getSmsCertificationNumber(String phoneNumber, HttpSession session) throws CoolsmsException {
         try {
             Random random = new Random();
             Message coolsms = new Message(smsApiKey, smsApiSecret);
@@ -116,7 +117,7 @@ public class MemberServiceImpl implements MemberService {
             params.put("from", myPhone); // 발신 전화번호
             params.put("type", "sms");
             params.put("text", "[하나1PIECE] \n인증번호는 [" + numStr + "] 입니다.");
-            //coolsms.send(params);
+            coolsms.send(params);
 
             // 세션에 인증번호 저장 (유효기간 3분)
             session.setAttribute("smsCertificationNumber", numStr);

@@ -143,8 +143,10 @@
     let authenticationCheck = 0;
     let accountCheck = 0;
     let walletCheck = 0;
+    let timeLeft = 180;
 
     $(document).ready(function () {
+
         /**
          * 휴대폰 인증번호 요청 버튼 클릭
          */
@@ -159,10 +161,24 @@
                         phone: phone
                     },
                     success: function () {
-                        // 인증번호 입력창 띄우기
+                        // 인증번호 입력창 및 확인 버튼 띄우기
                         $("#phoneCodeInput").removeAttr("hidden");
-                        document.getElementById("requestCodeButton").disabled = true;
-                        document.getElementById("phoneCodeSubmitButton").hidden = false;
+                        $("#phoneCodeSubmitButton").removeAttr("hidden");
+
+                        // 타이머 시작 (180초)
+                        $("#requestCodeButton").prop("disabled", true); // 버튼 비활성화
+                        let timerId = setInterval(function () {
+                            if (timeLeft === 0) {
+                                clearInterval(timerId); // 타이머 종료
+                                $("#requestCodeButton").text("인증번호 요청").prop("disabled", false); // 버튼 복원
+                            } else {
+                                $("#requestCodeButton").text("남은 시간: " + timeLeft + "초");
+                                if(timeLeft < 0) {
+                                    $("#requestCodeButton").text("인증번호 요청")
+                                }
+                            }
+                            timeLeft--; // 시간 감소
+                        }, 1000);
                     },
                     error: function (error) {
                         // 유효하지 않은 휴대전화
@@ -189,17 +205,20 @@
                         phoneCodeInput: code
                     },
                     success: function () {
-                        // 인증번호 입력창 띄우기
+                        // 인증 성공 메시지 띄우기
                         $("#validCode").removeAttr("hidden");
-                        document.getElementById("InvalidCode").hidden = true;
-                        document.getElementById("phoneCodeSubmitButton").disabled = true;
+                        $("#InvalidCode").attr("hidden", true);
+                        $("#requestCodeButton").text("인증번호 요청")
+                        timeLeft = -1;
+                        $("#phoneCodeSubmitButton").prop("disabled", true); // 확인 버튼 비활성화
+
                         authenticationCheck++;
                         if (authenticationCheck == 2) {
-                            document.getElementById("account-wallet-container").hidden = false;
+                            $("#account-wallet-container").attr("hidden", false);
                         }
                     },
                     error: function (error) {
-                        // 유효하지 않은 휴대전화
+                        // 인증 실패 메시지 띄우기
                         $("#InvalidCode").removeAttr("hidden");
                     }
                 });

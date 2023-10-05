@@ -583,19 +583,19 @@
             objectType: 'feed',
             content: {
                 title: '하나1PIECE',
-                description: '지금바로 부동산 조각 매물을 확인해보세요!',
-                imageUrl: 'http://127.0.0.1:8080/resources/upload/${realEstateInfo.listingNumber}/${realEstateInfo.image1}',
+                description: '지금바로 ${realEstateInfo.buildingName} 건물주가 되어보세요!',
+                imageUrl: 'https://hana1piece.store/resources/upload/${realEstateInfo.listingNumber}/${realEstateInfo.image1}',
                 link: {
-                    mobileWebUrl: 'http://127.0.0.1:8080/',
-                    webUrl: 'http://127.0.0.1:8080/',
+                    mobileWebUrl: 'https://naver.me/5zlH0iWG',
+                    webUrl: 'https://hana1piece.store',
                 },
             },
             buttons: [
                 {
                     title: '지금 건물주 되기!',
                     link: {
-                        mobileWebUrl: 'http://127.0.0.1:8080/',
-                        webUrl: 'http://127.0.0.1:8080/',
+                        mobileWebUrl: 'https://naver.me/5zlH0iWG',
+                        webUrl: 'https://hana1piece.store',
                     },
                 },
             ],

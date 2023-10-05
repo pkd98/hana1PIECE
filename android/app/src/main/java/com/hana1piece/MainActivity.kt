@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
+import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.webkit.SslErrorHandler
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         // 웹뷰 초기 설정 및 로드
         myWebView = findViewById(R.id.webView)
         configureWebView()
-        myWebView.loadUrl("http://www.hana1piece.store/")
+        myWebView.loadUrl("https://www.hana1piece.store/")
 
         // Firebase 초기화
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
@@ -81,6 +83,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         myWebView.webViewClient = WebViewClient()
+
+        myWebView.webViewClient = object : WebViewClient() {
+            override fun onReceivedSslError(
+                view: WebView?,
+                handler: SslErrorHandler?,
+                error: SslError?
+            ) {
+                handler?.proceed() // 정상적이지 않은 SSL 인증서도 허용
+            }
+        }
+
         myWebView.webChromeClient = object : WebChromeClient() {
 
             // 웹뷰에서 파일 선택을 요청할 때 호출되는 메서드
@@ -98,14 +111,18 @@ class MainActivity : AppCompatActivity() {
 
                         if (photoFile != null) {
                             cameraPath = "file:${photoFile.absolutePath}"
-                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile))
+                            takePictureIntent.putExtra(
+                                MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(photoFile)
+                            )
                         } else {
                             takePictureIntent = null
                         }
                     }
 
                     // 이미지 선택을 위한 인텐트
-                    val contentSelectionIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    val contentSelectionIntent =
+                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     contentSelectionIntent.type = "image/*"
 
                     var intentArray: Array<Intent?>
@@ -133,29 +150,31 @@ class MainActivity : AppCompatActivity() {
         @SuppressLint("SimpleDateFormat")
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "img_" + timeStamp + "_"
-        val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val storageDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(imageFileName, ".jpg", storageDir)
     }
 
     // Activity 결과를 처리하는 함수
-    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val intent = result.data
+    val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val intent = result.data
 
-            if (intent == null) {
-                // 바로 사진을 찍은 경우
-                val results = arrayOf(Uri.parse(cameraPath))
-                mWebViewImageUpload!!.onReceiveValue(results)
+                if (intent == null) {
+                    // 바로 사진을 찍은 경우
+                    val results = arrayOf(Uri.parse(cameraPath))
+                    mWebViewImageUpload!!.onReceiveValue(results)
+                } else {
+                    // 이미지 앱을 통해 선택한 경우
+                    val results = intent.data
+                    mWebViewImageUpload!!.onReceiveValue(arrayOf(results!!))
+                }
             } else {
-                // 이미지 앱을 통해 선택한 경우
-                val results = intent.data
-                mWebViewImageUpload!!.onReceiveValue(arrayOf(results!!))
+                mWebViewImageUpload!!.onReceiveValue(null)
+                mWebViewImageUpload = null
             }
-        } else {
-            mWebViewImageUpload!!.onReceiveValue(null)
-            mWebViewImageUpload = null
         }
-    }
 
     // 뒤로 가기 버튼 이벤트
     override fun onBackPressed() {

@@ -31,6 +31,7 @@
             });
         });
     </script>
+    <title>하나1PIECE</title>
 </head>
 
 <body>

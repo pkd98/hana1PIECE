@@ -66,18 +66,18 @@
                 content: {
                     title: '하나1PIECE',
                     description: '지금바로 건물주가 되어보세요! \n' + '추천인 코드:' + code,
-                    imageUrl: 'https://raw.githubusercontent.com/pkd98/hana1PIECE/a6f34790baf143f6cfc04afb534caa5a76e4df8d/spring/src/main/webapp/resources/img/event_share_img.jpeg?token=GHSAT0AAAAAACEYJYU7XCMW2BDIJZ7HYVUMZHOSLFQ',
+                    imageUrl: 'https://hana1piece.store/resources/img/event_share_img.jpeg',
                     link: {
-                        mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
-                        webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                        mobileWebUrl: 'https://naver.me/5zlH0iWG',
+                        webUrl: 'https://hana1piece.store',
                     },
                 },
                 buttons: [
                     {
                         title: '지금 건물주 되기!',
                         link: {
-                            mobileWebUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
-                            webUrl: 'http://127.0.0.1:5501/WEB-INF/views/estate-list.html',
+                            mobileWebUrl: 'https://naver.me/5zlH0iWG',
+                            webUrl: 'https://hana1piece.store',
                         },
                     },
                 ],
