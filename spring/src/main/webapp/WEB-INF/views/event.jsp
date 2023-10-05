@@ -76,8 +76,8 @@
                     {
                         title: '지금 건물주 되기!',
                         link: {
-                            mobileWebUrl: 'https://naver.me/5zlH0iWG',
-                            webUrl: 'https://hana1piece.store',
+                            mobileWebUrl: 'http://naver.me/IxWD58b5',
+                            webUrl: 'http://naver.me/IxWD58b5',
                         },
                     },
                 ],
