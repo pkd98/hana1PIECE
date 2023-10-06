@@ -66,7 +66,7 @@
             objectType: 'feed',
             content: {
                 title: '하나1PIECE',
-                description: '지금바로 건물주가 되어보세요! \n' + '추천인 코드:' + code,
+                description: '지금 바로 건물주가 되어보세요! \n' + '추천인 코드:' + code,
                 imageUrl: 'https://hana1piece.store/resources/img/event_share_img.jpeg',
                 link: {
                     mobileWebUrl: 'http://naver.me/IxWD58b5',
