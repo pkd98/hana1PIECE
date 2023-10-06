@@ -583,7 +583,7 @@
             objectType: 'feed',
             content: {
                 title: '하나1PIECE',
-                description: '지금바로 ${realEstateInfo.buildingName} 건물주가 되어보세요!',
+                description: '지금 바로 [${realEstateInfo.buildingName}] 건물주가 되어보세요!',
                 imageUrl: 'https://hana1piece.store/resources/upload/${realEstateInfo.listingNumber}/${realEstateInfo.image1}',
                 link: {
                     mobileWebUrl: 'https://naver.me/5zlH0iWG',
