@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         // 웹뷰 초기 설정 및 로드
         myWebView = findViewById(R.id.webView)
         configureWebView()
-        myWebView.loadUrl("https://www.hana1piece.store/")
+        myWebView.loadUrl("http://52.231.109.57:8080/")
 
         // Firebase 초기화
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
