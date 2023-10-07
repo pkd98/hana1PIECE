@@ -60,18 +60,27 @@
                     </button>
                 </div>
             </div>
+
         </div>
     </div>
 </main>
 
 <aside>
-    <a href="/account-opening">
-        <img src="/resources/img/banner1.png" alt="banner">
+    <div class="aside-div">
+        <a href="/account-opening" style="width: 100%">
+            <img src="/resources/img/banner1.png" alt="banner">
+        </a>
 
-    </a>
-    <a href="/event">
-        <img src="/resources/img/banner2.png" alt="banner">
-    </a>
+        <a href="https://naver.me/5zlH0iWG">
+            <img src="/resources/img/banner3.png" alt="banner" >
+        </a>
+
+        <a href="/event">
+            <img src="/resources/img/banner2-2.png" alt="banner">
+        </a>
+    </div>
+
+
 </aside>
 
 <%@ include file="include/footer.jsp" %>

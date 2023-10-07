@@ -29,7 +29,7 @@
 
 <aside>
     <a href="#">
-        <img src="/resources/img/banner2.png" alt="">
+        <img src="/resources/img/banner2-2.png" alt="">
     </a>
 </aside>
 

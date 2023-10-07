@@ -3,6 +3,7 @@ html, body {
     margin: 0;
     padding: 0;
     min-width: 456px;
+    min-height: 100vh;
 }
 
 /* header */
@@ -186,6 +187,19 @@ footer {
         margin-right: 10px;
     }
 
+    .aside-div > a {
+        min-width: 100%;
+    }
+
+    aside a img {
+        width: 100%;
+        /* 넓이를 화면에 맞게 설정 */
+        height: auto;
+        min-height: 300px;
+        display: block;
+        /* 이미지의 밑에 생기는 작은 여백을 없애기 위해 block으로 설정 */
+    }
+
 }
 
 .lead {
@@ -200,6 +214,18 @@ footer {
 }
 
 /* aside 배너 */
+.aside-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(181,181,181,0.1);
+}
+
+.aside-div > a {
+    width: 80%;
+}
+
 aside a img {
     width: 100%;
     /* 넓이를 화면에 맞게 설정 */
@@ -240,9 +266,7 @@ aside a img {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* 수평 가운데 정렬 */
     text-align: center;
-    /* 내부 텍스트 가운데 정렬 */
 }
 
 .event > div {
@@ -254,11 +278,12 @@ aside a img {
     align-items: center;
     justify-content: center;
     margin-bottom: 15px;
+    min-width: 200px;
 }
 
 .event p {
     margin: 0;
-    font-size: 2.8vw;
+    font-size: 2.8rem;
     /* 뷰포트 너비의 2% */
 }
 
@@ -270,6 +295,7 @@ aside a img {
     background-color: #FAE100;
     color: #000000;
     padding: 5px 15px;
+    min-width: 200px;
 }
 
 .event > button > img {
