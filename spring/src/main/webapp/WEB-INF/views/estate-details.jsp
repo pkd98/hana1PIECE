@@ -138,7 +138,7 @@
     <div class="wrapper">
         <div class="profit-header">
             <h3 class="profit-title">주변 살펴보기</h3>
-            <p class="address">서울시 송파구</p>
+            <p class="address">${realEstateInfo.address}</p>
         </div>
 
         <div id="map"></div>
