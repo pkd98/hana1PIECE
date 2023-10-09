@@ -71,6 +71,8 @@ class BuildingEvaluation(Resource):
             price = data.get("price") # 현재 토큰 가격
             issueVolume = data.get("volume") #발행량
             print(data)
+            if buildingName == "롯데월드타워(시그니엘레지던스)":
+                buildingName = "롯데월드타워앤드롯데월드몰(시그니엘레지던스)"
             # 네이버 부동산 페이지
             url = "https://m.land.naver.com/map/{}:{}:18:/APT:OPST:GM/A1".format(latitude, longitude)
             print(url)

@@ -35,13 +35,14 @@ INSERT INTO ACCOUNT (
 SELECT
     *
 FROM
-    ACCOUNT;
+    ACCOUNT
+where name = '박하나';
 
 -- 계좌 입금
 BEGIN
     HANA_BANK_MNG.DEPOSIT(
-        P_ACCOUNT_NUMBER => '99900000019394',
-        P_AMOUNT=>500000000,
+        P_ACCOUNT_NUMBER => '99900000026394',
+        P_AMOUNT=>30000000,
         P_NAME=>'무통장 입금',
         P_RECIPIENT_ACCOUNT_NUMBER=>'CD'
     );
@@ -1067,3 +1068,14 @@ select * from PUBLICATION_INFO;
 
 select * from execution;
 select * from account;
+
+select * from REAL_ESTATE_SALE;
+
+delete from PUBLIC_OFFERING where WALLET_NUMBER = 16;
+
+
+
+select * from REAL_ESTATE_INFO;
+
+update REAL_ESTATE_INFO set BUILDING_NAME = '롯데월드타워(시그니엘레지던스)' where LISTING_NUMBER = 35;
+update REAL_ESTATE_SALE set price = 6610 where LISTING_NUMBER = 35;
