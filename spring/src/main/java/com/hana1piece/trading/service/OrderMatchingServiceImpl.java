@@ -71,6 +71,7 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
      *   - (1) 미체결 예수금 차감
      *   - (2) 미체결 수량만큼 호가창 반영
      */
+    @Transactional
     private void matchBuyOrder(StoOrdersVO order) {
         // 1. 주문 등록
         stoOrdersMapper.insertOrder(order);
@@ -228,6 +229,7 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
      *   - (1) 미체결 토큰 차감
      *   - (2) 미체결 수량만큼 호가창 반영
      */
+    @Transactional
     private void matchSellOrder(StoOrdersVO order) {
         // 1. 주문 등록
         stoOrdersMapper.insertOrder(order);
