@@ -97,7 +97,7 @@
         <div class="subscription-card">
             <div class="flex-row">
                 <span class="rate-title">청약모집률</span>
-                <span class="count-number formatted-number">${publicOfferingProgress.countWalletNumber}명(${publicOfferingProgress.sumQuantity}STO) 청약 완료</span>
+                <span class="count-number formatted-number">${publicOfferingProgress.sumQuantity} STO 청약 완료</span>
             </div>
             <div class="flex-row mt-2">
                 <c:choose>
@@ -126,6 +126,7 @@
                 <div class="progress-fill"
                      style="width: ${publicOfferingProgress.sumQuantity * 100/publicationInfo.volume}%; background-color: #008485;"></div>
             </div>
+            <span class="formatted-number">${publicOfferingProgress.sumQuantity} STO / ${publicationInfo.volume} STO</span>
         </div>
         <!-- 청약 주문 -->
         <div class="trading">
