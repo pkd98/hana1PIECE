@@ -13,6 +13,7 @@ import com.hana1piece.wallet.model.vo.WalletTransactionVO;
 import com.hana1piece.wallet.model.vo.WalletVO;
 import com.hana1piece.wallet.service.StosService;
 import com.hana1piece.wallet.service.WalletService;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,6 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@Transactional
 public class OrderMatchingServiceImpl implements OrderMatchingService {
 
     private final OrderBookMapper orderBookMapper;
@@ -30,15 +30,17 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
     private final StosService stosService;
     private final WalletService walletService;
     private final EstateMapper estateMapper;
+    private final SqlSessionTemplate sqlSessionTemplate;
 
     @Autowired
-    public OrderMatchingServiceImpl(OrderBookMapper orderBookMapper, ExecutionMapper executionMapper, StoOrdersMapper stoOrdersMapper, StosService stosService, WalletService walletService, EstateMapper estateMapper) {
+    public OrderMatchingServiceImpl(OrderBookMapper orderBookMapper, ExecutionMapper executionMapper, StoOrdersMapper stoOrdersMapper, StosService stosService, WalletService walletService, EstateMapper estateMapper, SqlSessionTemplate sqlSessionTemplate) {
         this.orderBookMapper = orderBookMapper;
         this.executionMapper = executionMapper;
         this.stoOrdersMapper = stoOrdersMapper;
         this.stosService = stosService;
         this.walletService = walletService;
         this.estateMapper = estateMapper;
+        this.sqlSessionTemplate = sqlSessionTemplate;
     }
 
     @Override
@@ -279,6 +281,7 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
                             newStos.setListingNumber(buyOrderDetail.getListingNumber());
                             newStos.setWalletNumber(buyOrderDetail.getWalletNumber());
                             newStos.setAmount(executedQuantity);
+                            System.out.println(newStos);
                             stosService.insertStos(newStos);
                         }
 
