@@ -41,7 +41,6 @@ public class MyPageServiceImpl implements MyPageService {
         return stoOrdersMapper.findByWN(walletNumber);
     }
 
-
     @Override
     public MembersTotalAssetDTO getMembersTotalAsset(int walletNumber) {
         WalletVO wallet = walletService.findWalletByWN(walletNumber);
@@ -55,7 +54,7 @@ public class MyPageServiceImpl implements MyPageService {
         }
         membersTotalAssetDTO.setWalletNumber(walletNumber);
         membersTotalAssetDTO.setDeposit(wallet.getBalance());
-        membersTotalAssetDTO.setAsset(wallet.getBalance() + membersTotalAssetDTO.getInvestmentAmount());
+        membersTotalAssetDTO.setAsset(wallet.getBalance() + membersTotalAssetDTO.getInvestmentAmount() + membersTotalAssetDTO.getInvestmentReturn());
         membersTotalAssetDTO.setROI(Math.round(((double) membersTotalAssetDTO.getInvestmentReturn() / (double) membersTotalAssetDTO.getInvestmentAmount()) * 10000.0) / 100.0);
         return membersTotalAssetDTO;
     }
@@ -64,6 +63,5 @@ public class MyPageServiceImpl implements MyPageService {
     public List<MembersSellVoteDTO> getMembersSellVoteDTOByWalletNumber(int walletNumber) {
         return mypageMapper.getMembersSellVoteDTOByWalletNumber(walletNumber);
     }
-
 
 }

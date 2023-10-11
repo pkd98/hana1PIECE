@@ -29,4 +29,5 @@
     height: 100%;
     object-fit: cover; /* 이미지를 컨테이너에 꽉 차게 표시 */
     min-height: 416px; /* 이미지의 최소 높이 설정 */
+    max-height: 416px;
 }

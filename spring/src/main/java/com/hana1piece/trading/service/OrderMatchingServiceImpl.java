@@ -98,7 +98,7 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
 
                         // 매수자 금액 차감
                         WalletVO walletVO = walletService.findWalletByWN(order.getWalletNumber());
-                        walletVO.setBalance(walletVO.getBalance() - (sellOrder.getPrice() * executedQuantity));
+                        // walletVO.setBalance(walletVO.getBalance() - (sellOrder.getPrice() * executedQuantity));
                         WalletTransactionVO walletTransactionVO = new WalletTransactionVO();
                         walletTransactionVO.setWalletNumber(walletVO.getWalletNumber());
                         walletTransactionVO.setClassification("OUT");
@@ -126,7 +126,7 @@ public class OrderMatchingServiceImpl implements OrderMatchingService {
 
                         // 매도자 금액 지급
                         WalletVO sellerWallet = walletService.findWalletByWN(sellOrderDetail.getWalletNumber());
-                        sellerWallet.setBalance(sellerWallet.getBalance() + (sellOrder.getPrice() * executedQuantity));
+                        // sellerWallet.setBalance(sellerWallet.getBalance() + (sellOrder.getPrice() * executedQuantity));
                         WalletTransactionVO sellerWalletTransactionVO = new WalletTransactionVO();
                         sellerWalletTransactionVO.setWalletNumber(sellerWallet.getWalletNumber());
                         sellerWalletTransactionVO.setClassification("IN");

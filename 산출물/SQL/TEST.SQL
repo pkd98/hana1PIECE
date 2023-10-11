@@ -246,6 +246,47 @@ INSERT INTO ANNOUNCEMENT(
     '많은 성원 끝에 청약 완판되어 상장되었습니다.'
 );
 
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    51,
+    '[청약] 반포센트럴자이 아파트 청약 공고 안내',
+    ' '
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    52,
+    '[상장] 반포센트럴자이 아파트 상장!',
+    '많은 성원 끝에 청약 완판되어 상장되었습니다.'
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    53,
+    '[청약] 롯데월드타워(시그니엘레지던스) 아파트 청약 공고 안내',
+    ' '
+);
+
+INSERT INTO ANNOUNCEMENT(
+    ID,
+    TITLE,
+    CONTENT
+) VALUES (
+    54,
+    '[상장] 롯데월드타워(시그니엘레지던스) 아파트 상장!',
+    '많은 성원 끝에 청약 완판되어 상장되었습니다.'
+);
+
+
 COMMIT;
 
 SELECT
@@ -1076,6 +1117,85 @@ delete from PUBLIC_OFFERING where WALLET_NUMBER = 16;
 
 
 select * from REAL_ESTATE_INFO;
+select * from REAL_ESTATE_SALE where LISTING_NUMBER = 26;
 
-update REAL_ESTATE_INFO set BUILDING_NAME = '롯데월드타워(시그니엘레지던스)' where LISTING_NUMBER = 35;
-update REAL_ESTATE_SALE set price = 6610 where LISTING_NUMBER = 35;
+
+select * from wallet where member_id = 'hana123';
+select * from stos where wallet_number = 24;
+
+insert into stos(LISTING_NUMBER, WALLET_NUMBER, AMOUNT)
+values(26, 24, 50);
+
+
+SELECT 
+    SID,
+    SERIAL#,
+    USERNAME,
+    STATUS,
+    OSUSER,
+    MACHINE,
+    PROGRAM
+FROM 
+    V$SESSION;
+
+
+select * from SOLD_BUILDING;
+select * from REAL_ESTATE_SALE;
+select * from SELL_VOTE;
+
+select * from dividend_details order by payout_number desc;
+ALTER SESSION DISABLE PARALLEL DML;
+
+begin
+HANA1PIECE_MNG.PAY_DIVIDEND2(
+    p_listing_number=>26,
+    p_payout=>21
+);
+END;
+/
+
+insert into DIVIDEND_DETAILS(PAYOUT_NUMBER, WALLET_NUMBER, LISTING_NUMBER, PAYOUT)
+values(1, 24, 26, 21*903);
+
+select * from wallet where member_id = 'hana123';
+
+select * from DIVIDEND_DETAILS;
+desc DIVIDEND_DETAILS;
+select * from EXCEPTION_LOG;
+
+select * from PUBLICATION_INFO;
+
+
+
+update WALLET_TRANSACTION SET BALANCE = 19765000
+where TRANSACTION_NUMBER = 1472529;
+
+update WALLET_TRANSACTION SET BALANCE = 18316000
+where TRANSACTION_NUMBER = 1472531;
+
+update WALLET_TRANSACTION SET BALANCE = 17937700
+where TRANSACTION_NUMBER = 1472748;
+
+update WALLET_TRANSACTION SET BALANCE = 17840300
+where TRANSACTION_NUMBER = 1472750;
+
+update WALLET_TRANSACTION SET BALANCE = 16864300
+where TRANSACTION_NUMBER = 1472752;
+
+update WALLET_TRANSACTION SET BALANCE = 16595350
+where TRANSACTION_NUMBER = 1472754;
+
+update WALLET_TRANSACTION SET BALANCE = 15615350
+where TRANSACTION_NUMBER = 1472756;
+
+update WALLET_TRANSACTION SET BALANCE = 14880350
+where TRANSACTION_NUMBER = 1472758;
+
+update WALLET_TRANSACTION SET BALANCE = 4880350
+where TRANSACTION_NUMBER = 1472766;
+
+update WALLET_TRANSACTION SET BALANCE = 4865260
+where TRANSACTION_NUMBER = 1472770;
+
+update WALLET_TRANSACTION SET BALANCE = 4884223
+where TRANSACTION_NUMBER = 1558660;

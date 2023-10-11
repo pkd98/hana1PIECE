@@ -445,7 +445,7 @@
     <!-- 모달 -->
     <div class="modal fade" id="dividendModal" tabindex="-1" role="dialog" aria-labelledby="dividendModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title text-center w-100 font-weight-bold">배당금 지급 내역</h5>

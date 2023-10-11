@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-@Transactional
 public class ManagerServiceImpl implements ManagerService {
 
     private final ManagerMapper managerMapper;
@@ -96,6 +95,7 @@ public class ManagerServiceImpl implements ManagerService {
      * @throws IOException
      */
     @Override
+    @Transactional
     public void publicOfferingRegistration(PublicOfferingRegistrationDTO publicOfferingRegistrationDTO) throws IOException {
         try {
             // 매물 등록
@@ -175,6 +175,7 @@ public class ManagerServiceImpl implements ManagerService {
      * 3. 호가창 셋팅
      */
     @Override
+    @Transactional
     public void estateListing(int listingNumber) {
         try {
             // 1. 매물 상태 변경
@@ -219,6 +220,7 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
+    @Transactional
     public void registerEstateSale() {
         estateMapper.insertRealEstateSale();
     }
@@ -229,16 +231,19 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
+    @Transactional
     public void registerEstateInfo(RealEstateInfoVO realEstateInfoVO) {
         estateMapper.insertRealEstateInfo(realEstateInfoVO);
     }
 
     @Override
+    @Transactional
     public void registerPublicationInfo(PublicationInfoVO publicationInfoVO) {
         estateMapper.insertPublicationInfo(publicationInfoVO);
     }
 
     @Override
+    @Transactional
     public void registerTenantInfo(TenantInfoVO tenantInfoVO) {
         estateMapper.insertTenantInfo(tenantInfoVO);
     }
@@ -250,10 +255,15 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public void dividendPaymentUsingProcedure(DividendPaymentDTO dividendPaymentDTO) {
-        managerMapper.dividendPaymentUsingProcedure(dividendPaymentDTO);
+        try {
+            managerMapper.dividendPaymentUsingProcedure(dividendPaymentDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
+    @Transactional
     public void registerSaleVote(SoldBuildingVO soldBuildingVO) {
         estateMapper.insertSoldBuilding(soldBuildingVO);
     }
