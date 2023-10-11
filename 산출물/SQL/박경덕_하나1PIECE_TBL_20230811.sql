@@ -459,7 +459,7 @@ CREATE TABLE DIVIDEND_DETAILS (
   PAYOUT_NUMBER NUMBER(8) DEFAULT PN_SEQ.NEXTVAL PRIMARY KEY,       -- 배당금 지급 번호
   WALLET_NUMBER NUMBER(8) NOT NULL,                                  -- 지갑 번호
   LISTING_NUMBER NUMBER(8) NOT NULL,                                -- 매물 번호
-  PAYOUT NUMBER(8) NOT NULL,                                        -- 지급액
+  PAYOUT NUMBER(13) NOT NULL,                                        -- 지급액
   PAYOUT_DATE DATE DEFAULT SYSDATE NOT NULL,                        -- 지급일
   
   -- 외래키 지정 : 회원 아이디, 매물 번호

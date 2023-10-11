@@ -82,7 +82,7 @@ public class SellVoteServiceImpl implements SellVoteService {
                     dividendMapper.insertDividendDetails(dividendDetailsVO);
 
                     // 지갑 거래내역 기록
-                    WalletVO wallet = walletService.findWalletByWN(sellVoteVO.getWalletNumber());
+                    WalletVO wallet = walletService.findWalletByWN(stosVO.getWalletNumber());
                     wallet.setBalance(wallet.getBalance() + totalDividend);
 
                     WalletTransactionVO walletTransactionVO = new WalletTransactionVO();
@@ -98,7 +98,5 @@ public class SellVoteServiceImpl implements SellVoteService {
                 stosMapper.deleteStosByLN(sellVoteVO.getListingNumber());
             }
         }
-
-
     }
 }
