@@ -1,0 +1,255 @@
+/* 계좌 개설 페이지 */
+.account-opening {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.account-opening-title {
+    font-family: 'Hana2-Bold', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* 기본 스타일 */
+.custom-div {
+    width: 100%;
+    /* 기본적으로 100%로 설정 */
+    max-width: 100%;
+    background-color: #008485;
+    padding: 10px 20px;
+    padding-right: 5rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.custom-div:hover {
+    cursor: pointer; /* 마우스 포인터를 손가락 아이콘으로 변경 */
+}
+
+.imgContainer {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+    border-radius: 10%;
+    width: 100px;
+    height: 100px;
+}
+
+.custom-div img {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    width: 80px;
+}
+
+/* 중간 크기의 화면에 대한 스타일 */
+@media (min-width: 768px) {
+    .custom-div {
+        width: 60%;
+        max-height: 10%;
+    }
+
+    .checkbox-wrapper {
+        width: 100%;
+    }
+
+    .accordion {
+        width: 100%;
+    }
+
+    .imgContainer {
+        margin-left: 2rem;
+    }
+}
+
+
+.custom-div .text-content {
+    color: white;
+    flex: 1;
+    /* 화면 크기에 따라 콘텐츠 크기 조절 */
+}
+
+.custom-div .text-content h4,
+.custom-div .text-content p {
+    margin: 0;
+}
+
+/* 계좌 개설 약관 */
+.pagination {
+    margin-top: 20px;
+}
+
+.account-opening-process {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.terms-agreement {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    text-align: left; /* 왼쪽 정렬 추가 */
+    width: 100%;
+}
+
+.accordion {
+    width: 100%; /* 약관 내용의 너비를 화면의 70%로 조절 */
+}
+
+.button-wrapper {
+    margin-top: 20px;
+}
+
+.button-wrapper .btn {
+    background-color: #008485;
+    color: white;
+    padding: 10px 20px; /* 버튼의 크기를 키우기 위해 패딩 조절 */
+    font-size: 18px; /* 글자 크기 조절 */
+    min-width: 100px;
+}
+
+.button-wrapper :last-child {
+    background-color: #E90061;
+}
+
+.pagination .page-link {
+    color: black;
+    background-color: #F8F9FA;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #008485;
+    border-color: #008485;
+    color: white;
+}
+
+#all-agree {
+    margin-right: 10px;
+}
+
+.checkbox-wrapper > label {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+/* 체크박스의 크기 조절 */
+.checkbox-wrapper input[type="checkbox"] {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #F8F9FA;
+    border: 1px solid #ced4da;
+    position: relative;
+    border-radius: 4px;
+}
+
+/* 체크되었을 때의 스타일 */
+.checkbox-wrapper input[type="checkbox"]:checked {
+    background-color: #008485;
+    border-color: #008485;
+}
+
+/* 체크되었을 때 체크 표시 (✔) */
+.checkbox-wrapper input[type="checkbox"]:checked:after {
+    content: '\2713'; /* 체크 표시 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* 계좌 개설 폼 */
+.account-opening-process2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-title {
+    margin-top: 30px;
+}
+
+.RRNContainer {
+    display: flex;
+    align-items: center;
+    max-width: 359px;
+}
+
+.RRNContainer > span {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+/* 계좌 개설 완료 */
+.account-opening-complete {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.content-text {
+    font-size: 1.7rem;
+    margin-top: 50px;
+    margin-bottom: 80px;
+}
+
+#event-participation {
+    font-size: 1.2rem;
+}
+
+.account-opening-complete > button {
+    background-color: #E90061;
+}
+
+/* 버튼 스타일링 */
+.account-opening-complete button.btn-primary {
+    border: none; /* 테두리 제거 */
+    background-color: #E90061;
+    transition: background-color 0.3s; /* 호버 애니메이션 */
+    border-radius: 20px; /* 더 둥글게 만들기 */
+    padding: 10px 20px; /* 내용과의 간격 설정 */
+
+}
+
+.account-opening-complete button.btn-primary:hover {
+    background-color: #CC004F; /* 호버 시 배경색 변경 */
+}

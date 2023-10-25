@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.bank.dao.BankMapper">
+    <select id="getAccountSerialNumber" resultType="int">
+        select ACCOUNT_SERIAL_NUMBER_SEQ.nextval from dual
+    </select>
+
+    <select id="findAccountByAccountNumber" parameterType="string" resultType="com.hana1piece.bank.vo.AccountVO">
+        SELECT account_number as accountNumber, password, balance, to_char(opening_date, 'yyyy-MM-dd HH:mm:ss') as openingDate, resident_number1 as residentNumber1, resident_number2 as residentNumber2, name
+        FROM account
+        WHERE account_number = #{accountNumber}
+    </select>
+
+    <select id="findBankTransactionByAccountNumber" parameterType="string"
+            resultType="com.hana1piece.bank.vo.BankTransactionVO">
+        SELECT transaction_number as transactionNumber, account_number as accountNumber, classification, name, amount, balance, bank_code as bankCode, recipient_account_number as recipientAccountNumber, to_char(transaction_date, 'yyyy-MM-dd HH:mm:ss') as transactionDate
+        FROM BANK_TRANSACTION
+        WHERE ACCOUNT_NUMBER = #{accountNumber}
+        ORDER BY transactionNumber desc
+    </select>
+
+    <insert id="insertBankTransaction" parameterType="com.hana1piece.bank.vo.BankTransactionVO">
+        insert into bank_transaction(account_number, classification, name, amount, balance, recipient_account_number)
+        values(#{accountNumber}, #{classification}, #{name}, #{amount}, #{balance}, #{recipientAccountNumber})
+    </insert>
+
+    <insert id="callAccountOpening" parameterType="com.hana1piece.bank.dto.AccountOpeningDTO" statementType="CALLABLE">
+        {CALL hana_bank_mng.account_opening(
+                p_account_number => #{accountNumber, jdbcType=VARCHAR},
+                p_password=> #{password, jdbcType=VARCHAR},
+                p_resident_number1=> #{residentNumber1, jdbcType=VARCHAR},
+                p_resident_number2=> #{residentNumber2, jdbcType=VARCHAR},
+                p_name=> #{name, jdbcType=VARCHAR}
+        )}
+    </insert>
+
+    <update id="callDeposit" parameterType="com.hana1piece.bank.dto.DepositDTO" statementType="CALLABLE">
+        {CALL hana_bank_mng.deposit(
+                p_account_number => #{accountNumber, jdbcType=VARCHAR},
+                p_amount => #{amount, jdbcType=DECIMAL},
+                p_name => #{name, jdbcType=VARCHAR},
+                p_recipient_account_number => #{recipientAccountNumber, jdbcType=VARCHAR}
+        )}
+    </update>
+
+    <update id="callWithdraw" parameterType="com.hana1piece.bank.dto.WithdrawDTO" statementType="CALLABLE">
+        {CALL hana_bank_mng.withdraw(
+                p_account_number => #{accountNumber, jdbcType=VARCHAR},
+                p_password => #{password, jdbcType=VARCHAR},
+                p_amount => #{amount, jdbcType=DECIMAL},
+                p_name => #{name, jdbcType=VARCHAR},
+                p_recipient_account_number => #{recipientAccountNumber, jdbcType=VARCHAR}
+        )}
+    </update>
+
+    <update id="callTransfer" parameterType="com.hana1piece.bank.dto.TransferDTO" statementType="CALLABLE">
+        {CALL hana_bank_mng.transfer(
+                p_account_number => #{accountNumber, jdbcType=VARCHAR},
+                p_password => #{password, jdbcType=VARCHAR},
+                p_amount => #{amount, jdbcType=DECIMAL},
+                p_name => #{name, jdbcType=VARCHAR},
+                p_recipient_account_number => #{recipientAccountNumber, jdbcType=VARCHAR}
+        )}
+    </update>
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.manager.model.mapper.ManagerMapper">
+
+    <select id="login" parameterType="com.hana1piece.manager.model.dto.ManagerLoginDTO"
+            resultType="com.hana1piece.manager.model.vo.ManagerVO">
+        select id, name, enroll_date as enrollDate, image, position, introduction
+        from manager
+        where id = #{id}
+          and password = #{password}
+    </select>
+
+    <select id="dividendPaymentUsingProcedure" parameterType="com.hana1piece.manager.model.dto.DividendPaymentDTO" statementType="CALLABLE">
+        {call HANA1PIECE_MNG.PAY_DIVIDEND2(
+                #{listingNumber, mode=IN, jdbcType=NUMERIC},
+                #{payout, mode=IN, jdbcType=NUMERIC}
+            )}
+    </select>
+
+    <select id="getTransactionStatus" resultType="com.hana1piece.manager.model.dto.TransactionStatusDTO">
+        select *
+        from (select nvl(sum(balance), 0) as deposit from wallet),
+             (select nvl(sum(EXECUTED_QUANTITY * EXECUTED_PRICE_AVG), 0) as transactionAmount from STO_ORDERS)
+    </select>
+
+</mapper>

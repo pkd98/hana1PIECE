@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.trading.model.mapper.ExecutionMapper">
+
+    <resultMap type="com.hana1piece.trading.model.vo.ExecutionVO" id="ExecutionMap">
+        <result column="execution_id" property="executionId"/>
+        <result column="buy_order_id" property="buyOrderId"/>
+        <result column="sell_order_id" property="sellOrderId"/>
+        <result column="executed_price" property="executedPrice"/>
+        <result column="executed_quantity" property="executedQuantity"/>
+        <result column="execution_date" property="executionDate"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="ExecutionMap">
+        select *
+        from execution
+        order by execution_id desc
+    </select>
+
+    <select id="getExecutionsByPage" parameterType="map" resultMap="ExecutionMap">
+        SELECT *
+        FROM (SELECT execution.*,
+                     ROW_NUMBER() OVER (ORDER BY execution_id DESC) as rn
+              FROM execution)
+        WHERE rn BETWEEN #{offset} AND #{limit}
+    </select>
+
+    <insert id="insertExecution" parameterType="com.hana1piece.trading.model.vo.ExecutionVO">
+        insert into execution(buy_order_id, sell_order_id, executed_price, executed_quantity)
+        values (#{buyOrderId}, #{sellOrderId}, #{executedPrice}, #{executedQuantity})
+    </insert>
+
+    <select id="getTotalExecutionCount" resultType="int">
+        select count(*)
+        from execution
+    </select>
+</mapper>

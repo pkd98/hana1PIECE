@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.wallet.model.mapper.StosMapper">
+
+    <resultMap type="com.hana1piece.wallet.model.vo.StosVO" id="StosMap">
+        <result column="wallet_number" property="walletNumber"/>
+        <result column="listing_number" property="listingNumber"/>
+    </resultMap>
+
+    <insert id="insertStos" parameterType="com.hana1piece.wallet.model.vo.StosVO">
+        insert into stos(wallet_number, listing_number, amount)
+        values (#{walletNumber}, #{listingNumber}, #{amount})
+    </insert>
+
+    <select id="findStosByWalletNumber" parameterType="int" resultMap="StosMap">
+        select *
+        from stos
+        where wallet_number = #{walletNumber}
+    </select>
+
+    <select id="findStosByListingNumber" parameterType="int" resultMap="StosMap">
+        select *
+        from stos
+        where listing_number = #{listingNumber}
+    </select>
+
+    <select id="findStosByWalletNumberAndListingNumber" parameterType="map" resultMap="StosMap">
+        SELECT *
+        FROM stos
+        WHERE wallet_number = #{walletNumber}
+          AND listing_number = #{listingNumber}
+    </select>
+
+    <update id="updateAmount" parameterType="com.hana1piece.wallet.model.vo.StosVO">
+        update stos
+        set amount = #{amount}
+        where wallet_number = #{walletNumber}
+          and listing_number = #{listingNumber}
+    </update>
+
+    <delete id="deleteStosByLN" parameterType="int">
+        delete
+        from stos
+        where listing_number = #{LN}
+    </delete>
+
+</mapper>

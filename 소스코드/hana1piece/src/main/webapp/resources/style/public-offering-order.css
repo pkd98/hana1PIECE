@@ -1,0 +1,418 @@
+/* 투자하기 - 매물 상세페이지 */
+.estate-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.imageCarousel {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 456px;
+    height: 456px;
+}
+
+.carousel-item > img {
+    width: 456px;
+    height: 456px;
+    max-height: 456px;
+    max-width: 456px;
+}
+
+.card-header {
+    text-align: left;
+}
+
+.card-header > p {
+    margin-bottom: 0;
+}
+
+.card-title {
+    font-size: 1.6em;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.address {
+    font-size: 0.8em;
+    margin-top: 5px;
+    color: #777;
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-content {
+    width: 33%;
+    text-align: center;
+    border: 1px solid #e0e0e0; /* 모든 구역에 테두리 적용 */
+}
+
+.value {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+small {
+    color: blue;
+}
+
+/* 청약 */
+.public-offering-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.subscription-card {
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.rate-title,
+.count-time {
+    font-size: 1rem;
+}
+
+.count-number,
+.rate-percentage {
+    font-weight: bold;
+}
+
+.rate-percentage {
+    font-size: 2em;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    position: relative;
+    margin-top: 15px;
+}
+
+.progress-fill {
+    position: absolute;
+    height: 100%;
+    transition: width 0.5s ease;
+}
+
+.kakao-share {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.kakao-share > button {
+    width: 100%;
+    background-color: #FAE100;
+    color: #000000;
+    padding: 5px 15px;
+    font-weight: bold;
+    border-radius: 10px;
+
+}
+
+.kakao-share > button > img {
+    width: 3.5vh;
+    margin-right: 15px;
+}
+
+/* 수익배당 */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.profit-title {
+    font-size: 1.6em;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.profit-header {
+    width: 100%;
+    padding-left: 15px; /* 좌측 여백 설정 */
+    text-align: left;
+}
+
+/* 지도 */
+#map {
+    max-width: 500px;
+    min-width: 456px;
+    min-height: 456px;
+    height: 100px;
+    width: 100%;
+}
+
+.detail-title {
+    font-size: 1.1rem;
+    color: #777;
+}
+
+.detail-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.info-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.info-label {
+    font-size: 1.0em;
+    text-align: left;
+}
+
+.info-value {
+    font-size: 1.0em;
+    text-align: right;
+}
+
+/* 발행 정보 */
+.issue-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.issue-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.issue-label {
+    font-size: 1em;
+    text-align: left;
+}
+
+.issue-value {
+    font-size: 1em;
+    text-align: right;
+}
+
+/* 임차인 */
+.tenant-card {
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.tenant-header {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.tenant-name,
+.tenant-business {
+    font-weight: bold;
+}
+
+.tenant-duration {
+    font-size: 1em;
+}
+
+/* 청약 주문 */
+.trading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid lightgray;
+    border-radius: 5px; /* 둥근 모서리 설정 */
+    width: 100%;
+    height: 350px;
+    margin-top: 10px;
+}
+
+.trading-items {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Bootstrap Button Group (설치 및 링크 필요) */
+.btn-group .btn.active {
+    background-color: #E90061 !important; /* active 버튼 색상 */
+}
+
+.btn-group .btn:not(.active) {
+    background-color: #bbbbbb !important; /* 비active 버튼 색상 */
+}
+
+/* 판매 버튼이 active 상태일 때의 배경색 */
+.btn-group .btn.sell-active {
+    background-color: #0074D9 !important;
+}
+
+.wallet-pw {
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    align-items: center;
+}
+
+.wallet-pw > label {
+    margin-right: 10px;
+    font-size: 1.1rem;
+    color: #8d8d8d;
+}
+
+.wallet-pw input {
+    width: 100px; /* 또는 원하는 폭 설정 */
+    text-align: center;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.able-amount {
+    width: 100%;
+    background-color: rgb(219, 219, 219);
+    color: black;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.price, .quantity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 사이 간격 최대로 설정 */
+    padding: 5px 0;
+}
+
+.price input {
+    width: 120px; /* 또는 원하는 폭 설정 */
+    text-align: center;
+    padding: 5px;
+    margin: 0 5px;
+    margin-right: 40px;
+}
+
+.quantity-area {
+    width: 200px;
+}
+
+.quantity-area > input {
+    width: 120px;
+    text-align: center;
+    padding: 5px;
+    margin: 0 5px;
+
+}
+
+
+.total-amount {
+    width: 100%;
+    background-color: #FFD3D9;
+    color: #E63946;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.order > input {
+    margin-top: 10px;
+    width: 50%;
+    height: 80%;
+    background-color: #E90061;
+    border-radius: 50px;
+    font-size: 1.5rem;
+}
+
+.price button, .quantity button {
+    background-color: #333; /* 버튼 배경색 (어두운 회색) */
+    color: white; /* 버튼 글자색 (흰색) */
+    border: none; /* 테두리 없애기 */
+    border-radius: 50%; /* 둥글게 만들기 */
+    width: 30px; /* 버튼 크기 조정 */
+    height: 30px;
+    cursor: pointer; /* 마우스 커서 변경 */
+    font-size: 1.2rem; /* 폰트 크기 조정 */
+    transition: 0.3s; /* 호버 효과 부드럽게 */
+}
+
+/* 호버 효과 */
+.price button:hover, .quantity button:hover {
+    background-color: #555; /* 호버 시 버튼 배경색 */
+}
+
+.modal-body > p {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.modal-footer {
+    justify-content: center;
+}
+
+.modal-footer > button {
+    width: 50%;
+    border-radius: 50px;
+}

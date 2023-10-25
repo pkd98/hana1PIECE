@@ -1,0 +1,304 @@
+/* 마이페이지 */
+/* 보유 자산 */
+.mypage-title {
+    display: flex;
+    place-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: center;
+    font-size: 1.7rem;
+}
+
+.card-body > h3 {
+    font-size: 2.5rem;
+}
+
+#total-asset-body > p {
+    font-size: 1.5rem;
+}
+
+.asset-container {
+    display: flex;
+    place-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.percentage {
+    font-size: 1.5rem;
+}
+
+.asset-container > h3 {
+    font-size: 2.8rem;
+}
+
+
+.card-body > p {
+    font-size: 1.8vh;
+}
+
+.username {
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.asset-title {
+    color: #008485;
+    font-size: 2rem;
+}
+
+.total-asset {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.total-asset .card-header {
+    background-color: #008485;
+    color: white;
+}
+
+.row.equal-height-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row.equal-height-row > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex1 {
+    flex: 1;
+}
+
+.my-wallet {
+    margin-top: 10px;
+}
+
+.wallet-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.wallet-amount {
+    font-size: 1.3rem;
+    text-align: right;
+    font-weight: bold;
+}
+
+.bank-logo {
+    width: 50px; /* 이미지의 크기를 조정해 원하는 크기로 변경 */
+    height: 50px; /* 이미지의 크기를 조정해 원하는 크기로 변경 */
+    border-radius: 50%; /* 이미지를 원형으로 만듭니다 */
+    object-fit: cover; /* 이미지가 비율을 유지한 상태로 보이도록 설정합니다 */
+}
+
+.bank-logo > span {
+    font-weight: bold;
+}
+
+.bank-btn {
+    background-color: #E90061;
+    color: white;
+    border: none;
+    margin-top: 20px;
+}
+
+.button-right {
+    text-align: right; /* 오른쪽 정렬 */
+}
+
+.bank-btn {
+    background-color: #E90061 !important;
+    color: white !important;
+    border: none;
+    margin-top: 20px;
+    width: 80px; /* 버튼 폭을 80px로 설정. 원하는 크기에 따라 조절하세요. */
+    margin-left: 5px; /* 버튼 사이의 간격 조정 */
+    margin-right: 5px; /* 버튼 사이의 간격 조정 */
+}
+
+.bank-transaction-btn {
+    background-color: #00B894 !important;
+    color: white !important;
+    border: none;
+    margin-top: 20px;
+    width: 120px; /* 버튼 폭을 80px로 설정. 원하는 크기에 따라 조절하세요. */
+    margin-left: 5px; /* 버튼 사이의 간격 조정 */
+    margin-right: 5px; /* 버튼 사이의 간격 조정 */
+
+}
+
+.btn-group > button {
+    color: #000000;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 0px; /* 버튼의 모서리를 사각형으로 만듭니다 */
+}
+
+.btn-group > button.active, .btn-group > button:hover {
+    background-color: #E90061;
+    color: white;
+}
+
+.btn-group > button:not(:last-child) {
+    border-right: none; /* 마지막 버튼이 아닌 버튼의 오른쪽 테두리를 제거 */
+}
+
+
+/* 보유 빌딩 */
+.public-offering {
+    margin-bottom: 20px;
+}
+
+.holding-title {
+    margin-top: 20px;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.building-name {
+    margin-left: 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.dividend {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+
+.dividend-title {
+    text-align: left;
+}
+
+.dividend-amount {
+    text-align: right;
+}
+
+.dividend-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.dividend-title-container {
+    flex: 1;
+    text-align: left;
+}
+
+.dividend-amount-container {
+    flex: 1;
+    text-align: right;
+}
+
+.dividend-button-section {
+    width: 100%;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+}
+
+.dividend-button-section > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    background-color: #008485;
+    width: 30%;
+    height: 30px;
+}
+
+/* 티끌모아 건물주 */
+.no-preorder {
+    display: flex;
+    place-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.no-preorder > p {
+    color: #008485;
+    font-size: 2rem;
+    margin-bottom: 50px;
+}
+
+.preorder-button-section {
+    width: 100%;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.preorder-button-section > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    background-color: #E90061;
+    width: 23%;
+    height: 30px;
+    border-color: white;
+}
+
+/* 매각 투표 */
+.sold-title {
+    margin-top: 50px;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.no-sold {
+    display: flex;
+    place-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.no-sold > p {
+    color: #008485;
+    font-size: 2rem;
+}
+
+.progress .progress-bar {
+    background-color: #E90061;
+}
+
+/* 거래내역 모달 */
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.custom-table thead th {
+    background-color: #008485;
+    color: white;
+    border-bottom: 1px solid lightgray; /* 헤더 밑 테두리 설정 */
+    border-top: 1px solid lightgray; /* 헤더 위 테두리 설정 */
+}
+
+.custom-table tbody td {
+    border-top: 1px solid lightgray; /* 셀 위 테두리 설정 */
+}
+
+/* 매각 투표 모달 */
+.custom-radio {
+    display: inline-block;
+    margin-right: 10px;
+}

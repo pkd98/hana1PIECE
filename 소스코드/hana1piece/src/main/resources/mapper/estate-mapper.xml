@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.estate.model.mapper.EstateMapper">
+    <resultMap type="com.hana1piece.estate.model.vo.RealEstateSaleVO" id="RealEstateSaleMap">
+        <result column="listing_number" property="listingNumber"/>
+        <result column="reasonable_price" property="reasonablePrice"/>
+    </resultMap>
+    <resultMap type="com.hana1piece.estate.model.vo.RealEstateInfoVO" id="RealEstateInfoMap">
+        <result column="listing_number" property="listingNumber"/>
+        <result column="building_name" property="buildingName"/>
+        <result column="supply_area" property="supplyArea"/>
+        <result column="land_area" property="landArea"/>
+        <result column="floor_area" property="floorArea"/>
+        <result column="coverage_ratio" property="coverageRatio"/>
+        <result column="floor_area_ratio" property="floorAreaRatio"/>
+        <result column="completion_date" property="completionDate"/>
+    </resultMap>
+    <resultMap type="com.hana1piece.estate.model.vo.PublicationInfoVO" id="PublicationInfoMap">
+        <result column="listing_number" property="listingNumber"/>
+        <result column="issue_price" property="issuePrice"/>
+        <result column="total_amount" property="totalAmount"/>
+        <result column="start_date" property="startDate"/>
+        <result column="expiration_date" property="expirationDate"/>
+        <result column="first_dividend_date" property="firstDividendDate"/>
+        <result column="dividend_cycle" property="dividendCycle"/>
+    </resultMap>
+    <resultMap type="com.hana1piece.estate.model.vo.TenantInfoVO" id="TenantInfoMap">
+        <result column="listing_number" property="listingNumber"/>
+        <result column="contract_date" property="contractDate"/>
+        <result column="expiration_date" property="expirationDate"/>
+    </resultMap>
+    <resultMap type="com.hana1piece.estate.model.vo.SoldBuildingVO" id="SoldBuildingMap">
+        <result column="listing_number" property="listingNumber"/>
+        <result column="sold_date" property="soldDate"/>
+    </resultMap>
+
+    <select id="getRecentListingNumber" resultType="int">
+        select *
+        from (select listing_number from real_estate_sale order by LISTING_NUMBER desc)
+        where rownum = 1
+    </select>
+
+    <select id="findRealEstateSaleAll" resultMap="RealEstateSaleMap">
+        select *
+        from real_estate_sale
+        order by listing_number desc
+    </select>
+
+    <select id="findRealEstateInfoAll" resultMap="RealEstateInfoMap">
+        select *
+        from real_estate_info
+        order by listing_number desc
+    </select>
+
+    <select id="findPublicationInfoAll" resultMap="PublicationInfoMap">
+        select *
+        from publication_info
+        order by listing_number desc
+    </select>
+
+    <select id="findTenantInfoAll" resultMap="TenantInfoMap">
+        select *
+        from tenant_info
+        order by listing_number desc
+    </select>
+
+    <select id="findSoldBuildingAll" resultMap="SoldBuildingMap">
+        select *
+        from sold_building
+        order by listing_number desc
+    </select>
+
+    <select id="findRealEstateSaleByLN" parameterType="int" resultMap="RealEstateSaleMap">
+        select *
+        from real_estate_sale
+        where listing_number = #{LN}
+    </select>
+
+    <select id="findRealEstateInfoByLN" parameterType="int" resultMap="RealEstateInfoMap">
+        select listing_number,
+               building_name,
+               address,
+               supply_area,
+               floors, usage, land_area, floor_area, coverage_ratio, floor_area_ratio, to_char(completion_date, 'YYYY.MM.DD') as completion_date, image1, image2, image3, latitude, longitude
+        from real_estate_info
+        where listing_number = #{LN}
+    </select>
+
+    <select id="findPublicationInfoByLN" parameterType="int" resultMap="PublicationInfoMap">
+        select listing_number,
+               subject,
+               type,
+               publisher,
+               volume,
+               issue_price,
+               total_amount,
+               to_char(start_date, 'YYYY.MM.DD')          as start_date,
+               to_char(expiration_date, 'YYYY.MM.DD')     as expiration_date,
+               to_char(first_dividend_date, 'YYYY.MM.DD') as first_dividend_date,
+               dividend_cycle,
+               dividend
+        from publication_info
+        where listing_number = #{LN}
+    </select>
+
+    <select id="findTenantInfoByLN" parameterType="int" resultMap="TenantInfoMap">
+        select listing_number,
+               lessee,
+               sector,
+               to_char(contract_date, 'YYYY.MM.DD')   as contract_date,
+               to_char(expiration_date, 'YYYY.MM.DD') as expiration_date
+        from tenant_info
+        where listing_number = #{LN}
+    </select>
+
+    <select id="findSoldBuildingByLN" parameterType="int" resultType="com.hana1piece.estate.model.vo.SoldBuildingVO">
+        select listing_number                   as listingNumber,
+               to_char(sold_date, 'YYYY.MM.DD') as soldDate,
+               amount,
+               start_date                       as startDate,
+               expiration_date                  as expirationDate,
+               dividend
+        from sold_building
+        where listing_number = #{LN}
+    </select>
+
+    <insert id="insertRealEstateSale">
+        insert into real_estate_sale(state, price, reasonable_price)
+        values ('청약', 5000, 5000)
+    </insert>
+
+    <update id="updateRealEstateSale" parameterType="com.hana1piece.estate.model.vo.RealEstateSaleVO">
+        UPDATE real_estate_sale
+        <set>
+            <if test="evaluation != null">evaluation = #{evaluation},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="price != 0">price = #{price},</if>
+            <if test="reasonablePrice != 0">reasonable_price = #{reasonablePrice},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+        </set>
+        WHERE listing_number = #{listingNumber}
+    </update>
+
+    <insert id="insertRealEstateInfo" parameterType="com.hana1piece.estate.model.vo.RealEstateInfoVO">
+        insert into real_estate_info(listing_number, building_name, address, SUPPLY_AREA, floors, usage, land_area,
+                                     floor_area,
+                                     coverage_ratio, floor_area_ratio, completion_date, latitude, longitude, image1,
+                                     image2, image3)
+        values (#{listingNumber}, #{buildingName}, #{address}, #{supplyArea}, #{floors}, #{usage}, #{landArea},
+                #{floorArea},
+                #{coverageRatio}, #{floorAreaRatio}, #{completionDate}, #{latitude}, #{longitude}, #{image1}, #{image2},
+                #{image3})
+    </insert>
+
+    <insert id="insertPublicationInfo" parameterType="com.hana1piece.estate.model.vo.PublicationInfoVO">
+        insert into publication_info(LISTING_NUMBER, SUBJECT, TYPE, PUBLISHER, VOLUME, ISSUE_PRICE, TOTAL_AMOUNT,
+                                     START_DATE, EXPIRATION_DATE, FIRST_DIVIDEND_DATE, DIVIDEND_CYCLE, DIVIDEND)
+        values (#{listingNumber}, #{subject}, #{type}, #{publisher}, #{volume}, #{issuePrice}, #{totalAmount},
+                #{startDate}, #{expirationDate}, #{firstDividendDate}, #{dividendCycle}, #{dividend})
+    </insert>
+
+    <insert id="insertTenantInfo" parameterType="com.hana1piece.estate.model.vo.TenantInfoVO">
+        insert into tenant_info(LISTING_NUMBER, LESSEE, SECTOR, CONTRACT_DATE, EXPIRATION_DATE)
+        values (#{listingNumber}, #{lessee}, #{sector}, to_date(#{contractDate}, 'YYYY-MM-DD'),
+                to_date(#{expirationDate}, 'YYYY-MM-DD'))
+    </insert>
+
+    <insert id="insertSoldBuilding" parameterType="com.hana1piece.estate.model.vo.SoldBuildingVO">
+        insert into sold_building(listing_number, amount, start_date, expiration_date, dividend)
+        values (#{listingNumber}, #{amount}, to_date(#{startDate}, 'YYYY-MM-DD'),
+                to_date(#{expirationDate}, 'YYYY-MM-DD'), #{dividend})
+    </insert>
+
+    <select id="findPublicOfferingListDTO" resultType="com.hana1piece.estate.model.dto.PublicOfferingListDTO">
+        select REI.LISTING_NUMBER as listingNumber,
+               REI.IMAGE1         as image1,
+               REI.IMAGE2         as image2,
+               REI.IMAGE3         as image3,
+               REI.BUILDING_NAME  as buildingName,
+               res.INTRODUCTION   as introduction
+        from real_estate_sale res
+                 INNER JOIN real_estate_info rei
+                            ON res.listing_number = rei.LISTING_NUMBER
+        where state = '청약'
+    </select>
+
+    <select id="findEstateListDTO" resultType="com.hana1piece.estate.model.dto.EstateListDTO">
+        select REI.LISTING_NUMBER as listingNumber,
+               REI.IMAGE1         as image1,
+               REI.IMAGE2         as image2,
+               REI.IMAGE3         as image3,
+               REI.BUILDING_NAME  as buildingName,
+               res.EVALUATION     as evaluation
+        from real_estate_sale res
+                 INNER JOIN real_estate_info rei
+                            ON res.listing_number = rei.LISTING_NUMBER
+        where state = '거래'
+    </select>
+
+    <select id="findListedEstateListDTO" resultType="com.hana1piece.estate.model.dto.ListedEstateListDTO">
+        select *
+        from (select res.LISTING_NUMBER as listingNumber,
+                     evaluation,
+                     reasonable_price   as reasonablePrice,
+                     introduction,
+                     price,
+                     state,
+                     building_name      as buildingName,
+                     image1
+              from REAL_ESTATE_SALE res
+                       inner join REAL_ESTATE_INFO rei
+                                  on res.listing_number = rei.listing_number)
+        where state = '거래'
+    </select>
+
+    <select id="findSoldEstateListDTO" resultType="com.hana1piece.estate.model.dto.SoldEstateListDTO">
+        SELECT *
+        FROM (SELECT RES.LISTING_NUMBER                  AS LISTINGNUMBER,
+                     STATE,
+                     BUILDING_NAME                       AS BUILDINGNAME,
+                     IMAGE1,
+                     to_char(SB.SOLD_DATE, 'YYYY-MM-DD') AS SOLDDATE,
+                     SB.AMOUNT                           AS AMOUNT,
+                     SB.DIVIDEND                         AS DIVIDEND,
+                     PI.TOTAL_AMOUNT                     AS publicationAmount
+              FROM REAL_ESTATE_SALE RES
+                       INNER JOIN REAL_ESTATE_INFO REI
+                                  ON RES.LISTING_NUMBER = REI.LISTING_NUMBER
+                       INNER JOIN SOLD_BUILDING SB
+                                  ON RES.LISTING_NUMBER = SB.LISTING_NUMBER
+                       INNER JOIN PUBLICATION_INFO PI
+                                  ON RES.LISTING_NUMBER = PI.LISTING_NUMBER)
+        WHERE STATE = '매각'    </select>
+
+</mapper>

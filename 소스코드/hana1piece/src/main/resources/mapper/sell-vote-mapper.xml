@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hana1piece.estate.model.mapper.SellVoteMapper">
+    <resultMap type="com.hana1piece.estate.model.vo.SellVoteVO" id="SellVoteMap">
+        <result column="wallet_number" property="walletNumber"/>
+        <result column="listing_number" property="listingNumber"/>
+        <result column="pros_cons" property="prosCons"/>
+        <result column="sell_vote_date" property="sellVoteDate"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="SellVoteMap">
+        select *
+        from sell_vote
+        order by id desc
+    </select>
+
+    <select id="findByLNAndWN" resultMap="SellVoteMap">
+        select *
+        from sell_vote
+        where listing_number = #{LN}
+          and wallet_number = #{WN}
+    </select>
+
+    <select id="findTotalQuantityByLN" parameterType="int" resultType="long">
+        SELECT NVL(SUM(QUANTITY), 0) AS totalQuantity
+        FROM SELL_VOTE
+        WHERE LISTING_NUMBER = #{LN}
+    </select>
+
+    <select id="findTotalProsQuantityByLN" parameterType="int" resultType="long">
+        SELECT NVL(SUM(QUANTITY), 0) AS totalProsQuantity
+        FROM SELL_VOTE
+        WHERE LISTING_NUMBER = #{LN}
+          AND PROS_CONS = 'P'
+    </select>
+
+    <insert id="insertSellVote" parameterType="com.hana1piece.estate.model.vo.SellVoteVO">
+        insert into sell_vote(listing_number, wallet_number, pros_cons, quantity)
+        values (#{listingNumber}, #{walletNumber}, #{prosCons}, #{quantity})
+    </insert>
+
+    <update id="updateSellVote" parameterType="com.hana1piece.estate.model.vo.SellVoteVO">
+        update sell_vote
+        <set>
+            <if test="prosCons != null">pros_cons = #{prosCons},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            sell_vote_date = sysdate
+        </set>
+        where listing_number = #{listingNumber} and wallet_number = #{walletNumber}
+    </update>
+
+
+</mapper>
