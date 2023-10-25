@@ -58,11 +58,11 @@
 
 #### 2-3-1 하나은행 OPEN API 문서
 https://gifted-lungfish-f7d.notion.site/OPEN-API-a134a44e62b64eb697ee7a16a49cd99f?pvs=4
-![Alt text](image-5.png)
+![Alt text](img/api-1.png)
 
 #### 2-3-2 부동산 토큰 가격 평가 API 문서
 https://gifted-lungfish-f7d.notion.site/API-d9c9e2da0a964bd8a2f5943b35cf7376?pvs=4
-![Alt text](image-3.png)
+![Alt text](img/api-2.png)
 
 ### 2-4. 서비스 아키텍처
 <img src="img/12.png"/> <br/>
@@ -87,7 +87,7 @@ https://gifted-lungfish-f7d.notion.site/API-d9c9e2da0a964bd8a2f5943b35cf7376?pvs
 [발표자료<img src="img/17.png"/>](/산출물/최종발표PPT/하나1PIECE(조각투자중계플랫폼)_최종발표_박경덕.pdf) <br/>
 
 ### 3-3. 시연 동영상
-<a href="https://youtu.be/HvK63AAM3xg">![Alt text](image-7.png)</a><br/>
+<a href="https://youtu.be/HvK63AAM3xg"><img src="img/thumbnail.png"></a><br/>
 # 4. 본인 소개
 
 | 구분           | 내용                                                                                          | 비고                                       |
